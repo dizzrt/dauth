@@ -1,0 +1,13 @@
+[server.grpc]
+addr = ":50051"
+
+[server.http]
+addr = ":8081"
+
+[log]
+file = ""
+symlink = ""
+level = "debug"
+max_age = 7
+max_backups = 3
+output_type = "console"
