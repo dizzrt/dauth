@@ -3,12 +3,12 @@ package server
 import (
 	"github.com/dizzrt/dauth/api/gen/example"
 	"github.com/dizzrt/dauth/internal/conf"
-	"github.com/dizzrt/dauth/internal/iface"
+	"github.com/dizzrt/dauth/internal/handler"
 	"github.com/dizzrt/ellie/log"
 	"github.com/dizzrt/ellie/transport/http"
 )
 
-func NewHTTPServer(c *conf.Bootstrap, logger log.LogWriter, exampleHandler *iface.ExampleHandler) *http.Server {
+func NewHTTPServer(c *conf.Bootstrap, logger log.LogWriter, exampleHandler *handler.ExampleHandler) *http.Server {
 	opts := []http.ServerOption{}
 
 	httpServerConf := c.Server.HTTP

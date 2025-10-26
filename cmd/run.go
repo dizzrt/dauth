@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -8,6 +9,8 @@ import (
 	"github.com/dizzrt/ellie/log/zlog"
 	"github.com/dizzrt/ellie/transport/grpc"
 	"github.com/dizzrt/ellie/transport/http"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 
 	"github.com/dizzrt/ellie"
 	"github.com/dizzrt/ellie/config"
@@ -41,12 +44,19 @@ var runCmd = &cobra.Command{
 			panic(err)
 		}
 
+		fmt.Println(bootstrap.Log.File)
+
 		logger, err := log.NewStdLoggerWriter(bootstrap.Log.File,
 			zlog.Symlink(bootstrap.Log.Symlink),
 			zlog.Level(zlog.ParseLevel(bootstrap.Log.Level)),
 			zlog.MaxAge(time.Duration(bootstrap.Log.MaxAge)*time.Second),
 			zlog.MaxBackups(uint(bootstrap.Log.MaxBackups)),
 			zlog.OutputType(zlog.ParseOutputType(bootstrap.Log.OutputType)),
+			zlog.ZapOpts(
+				zap.AddCaller(),
+				zap.AddStacktrace(zapcore.ErrorLevel),
+				zap.AddCallerSkip(2),
+			),
 		)
 
 		if err != nil {

@@ -1,4 +1,4 @@
-package iface
+package handler
 
 import "github.com/google/wire"
 

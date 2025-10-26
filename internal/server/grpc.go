@@ -3,12 +3,12 @@ package server
 import (
 	"github.com/dizzrt/dauth/api/gen/example"
 	"github.com/dizzrt/dauth/internal/conf"
-	"github.com/dizzrt/dauth/internal/iface"
+	"github.com/dizzrt/dauth/internal/handler"
 	"github.com/dizzrt/ellie/log"
 	"github.com/dizzrt/ellie/transport/grpc"
 )
 
-func NewGRPCServer(c *conf.Bootstrap, logger log.LogWriter, exampleHandler *iface.ExampleHandler) *grpc.Server {
+func NewGRPCServer(c *conf.Bootstrap, logger log.LogWriter, exampleHandler *handler.ExampleHandler) *grpc.Server {
 	opts := []grpc.ServerOption{}
 
 	grpcServerConf := c.Server.GRPC

@@ -18,10 +18,8 @@ github.com/cpuguy83/go-md2man/v2 v2.0.6/go.mod h1:oOW0eioCTA6cOiMLiUPZOpcVxMig6N
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/dizzrt/ellie v0.2.2 h1:t5On6XTs+vSeppxFVxRfDAEGNZKdyHB9rW/SVsz3H+o=
-github.com/dizzrt/ellie v0.2.2/go.mod h1:Mq6B0kbp6ZnSaHSDPfRgew5OvOgh/g/jaLrI0sNI6p0=
-github.com/dizzrt/ellie v0.2.4 h1:6iIHSXv0YYpmvOTqlyckbmiH77nbcKD+prDi8R3jmoI=
-github.com/dizzrt/ellie v0.2.4/go.mod h1:5yApWIQp63vrbTGz6UxRXKqTmQv6dX9Nfq7KKA8GU4I=
+github.com/dizzrt/ellie v0.3.1 h1:UQ3HQ3eDAaPjaOEL58RqrEzBuG1QXABpiDUUrc33GrY=
+github.com/dizzrt/ellie v0.3.1/go.mod h1:5yApWIQp63vrbTGz6UxRXKqTmQv6dX9Nfq7KKA8GU4I=
 github.com/dizzrt/filerotator v0.2.1 h1:z+iZNd/b7RuN34ISjCOJVTCVyFMswYAr0oMurzK2xv8=
 github.com/dizzrt/filerotator v0.2.1/go.mod h1:ZJbjn0WXXvDYuZxZd63qzqlDuy3D7jNeHsaxpgkiTuU=
 github.com/envoyproxy/go-control-plane v0.13.4 h1:zEqyPVyku6IvWCFwux4x9RxkLOMUL+1vC9xUFv5l2/M=

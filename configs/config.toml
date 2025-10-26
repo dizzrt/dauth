@@ -5,9 +5,9 @@ addr = ":50051"
 addr = ":8081"
 
 [log]
-file = ""
-symlink = ""
+file = "logs/{{YYYY}}{{MM}}{{DD}}{{hh}}.log"
+symlink = "logs/dauth.log"
 level = "debug"
 max_age = 7
 max_backups = 3
-output_type = "console"
+output_type = "both"

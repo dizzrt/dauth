@@ -28,9 +28,8 @@ go.work.sum
 # env file
 .env
 
-# Editor/IDE
-# .idea/
-# .vscode/
+# log file
+logs
 
 # Apple Desktop services store
 .DS_Store
