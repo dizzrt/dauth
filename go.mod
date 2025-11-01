@@ -4,7 +4,7 @@ go 1.25
 
 require (
 	connectrpc.com/connect v1.19.0
-	github.com/dizzrt/ellie v0.3.1
+	github.com/dizzrt/ellie v0.3.2
 	github.com/gin-gonic/gin v1.11.0
 	github.com/google/wire v0.7.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2

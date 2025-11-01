@@ -20,6 +20,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dizzrt/ellie v0.3.1 h1:UQ3HQ3eDAaPjaOEL58RqrEzBuG1QXABpiDUUrc33GrY=
 github.com/dizzrt/ellie v0.3.1/go.mod h1:5yApWIQp63vrbTGz6UxRXKqTmQv6dX9Nfq7KKA8GU4I=
+github.com/dizzrt/ellie v0.3.2 h1:cSi/YaLvINAPYQbc9MnsPJrsF2+YpDPvH5DMgZzs9uQ=
+github.com/dizzrt/ellie v0.3.2/go.mod h1:5yApWIQp63vrbTGz6UxRXKqTmQv6dX9Nfq7KKA8GU4I=
 github.com/dizzrt/filerotator v0.2.1 h1:z+iZNd/b7RuN34ISjCOJVTCVyFMswYAr0oMurzK2xv8=
 github.com/dizzrt/filerotator v0.2.1/go.mod h1:ZJbjn0WXXvDYuZxZd63qzqlDuy3D7jNeHsaxpgkiTuU=
 github.com/envoyproxy/go-control-plane v0.13.4 h1:zEqyPVyku6IvWCFwux4x9RxkLOMUL+1vC9xUFv5l2/M=
