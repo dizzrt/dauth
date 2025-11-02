@@ -6,9 +6,11 @@
 - [user/user.proto](#user_user-proto)
     - [CreateUserRequest](#user-CreateUserRequest)
     - [CreateUserResponse](#user-CreateUserResponse)
+    - [GetUserByEmailRequest](#user-GetUserByEmailRequest)
     - [GetUserByIDRequest](#user-GetUserByIDRequest)
-    - [GetUserByIDResponse](#user-GetUserByIDResponse)
+    - [GetUserResponse](#user-GetUserResponse)
     - [User](#user-User)
+    - [UserLoginRequest](#user-UserLoginRequest)
   
     - [Errors](#user-Errors)
   
@@ -57,6 +59,21 @@
 
 
 
+<a name="user-GetUserByEmailRequest"></a>
+
+### GetUserByEmailRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| email | [string](#string) |  |  |
+
+
+
+
+
+
 <a name="user-GetUserByIDRequest"></a>
 
 ### GetUserByIDRequest
@@ -72,9 +89,9 @@
 
 
 
-<a name="user-GetUserByIDResponse"></a>
+<a name="user-GetUserResponse"></a>
 
-### GetUserByIDResponse
+### GetUserResponse
 
 
 
@@ -103,6 +120,22 @@
 | created_at | [uint64](#uint64) |  |  |
 | updated_at | [uint64](#uint64) |  |  |
 | deleted_at | [uint64](#uint64) |  |  |
+
+
+
+
+
+
+<a name="user-UserLoginRequest"></a>
+
+### UserLoginRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| account | [string](#string) |  | only email yet |
+| password | [string](#string) |  |  |
 
 
 
@@ -138,7 +171,9 @@
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | CreateUser | [CreateUserRequest](#user-CreateUserRequest) | [CreateUserResponse](#user-CreateUserResponse) |  |
-| GetUserByID | [GetUserByIDRequest](#user-GetUserByIDRequest) | [GetUserByIDResponse](#user-GetUserByIDResponse) |  |
+| GetUserByID | [GetUserByIDRequest](#user-GetUserByIDRequest) | [GetUserResponse](#user-GetUserResponse) |  |
+| GetUserByEmail | [GetUserByEmailRequest](#user-GetUserByEmailRequest) | [GetUserResponse](#user-GetUserResponse) |  |
+| UserLogin | [UserLoginRequest](#user-UserLoginRequest) | [GetUserResponse](#user-GetUserResponse) |  |
 
  
 

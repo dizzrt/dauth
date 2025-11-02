@@ -30,6 +30,54 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /user/email/{email}:
+        get:
+            tags:
+                - UserService
+            operationId: UserService_GetUserByEmail
+            parameters:
+                - name: email
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetUserResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /user/login:
+        post:
+            tags:
+                - UserService
+            operationId: UserService_UserLogin
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UserLoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetUserResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /user/{id}:
         get:
             tags:
@@ -48,7 +96,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/GetUserByIDResponse'
+                                $ref: '#/components/schemas/GetUserResponse'
                 default:
                     description: Default error response
                     content:
@@ -72,7 +120,7 @@ components:
                 id:
                     type: integer
                     format: uint32
-        GetUserByIDResponse:
+        GetUserResponse:
             type: object
             properties:
                 user:
@@ -121,6 +169,13 @@ components:
                 updatedAt:
                     type: string
                 deletedAt:
+                    type: string
+        UserLoginRequest:
+            type: object
+            properties:
+                account:
+                    type: string
+                password:
                     type: string
 tags:
     - name: UserService

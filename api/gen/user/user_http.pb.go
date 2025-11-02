@@ -32,17 +32,23 @@ var _ = v1_21_0.HTTPRequestMethodKey
 
 const TRACER_NAME = "github.com/dizzrt/dauth/api/gen/user"
 const OperationUserServiceCreateUser = "/UserService/CreateUser"
+const OperationUserServiceGetUserByEmail = "/UserService/GetUserByEmail"
 const OperationUserServiceGetUserByID = "/UserService/GetUserByID"
+const OperationUserServiceUserLogin = "/UserService/UserLogin"
 
 type UserServiceHTTPServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
-	GetUserByID(context.Context, *GetUserByIDRequest) (*GetUserByIDResponse, error)
+	GetUserByEmail(context.Context, *GetUserByEmailRequest) (*GetUserResponse, error)
+	GetUserByID(context.Context, *GetUserByIDRequest) (*GetUserResponse, error)
+	UserLogin(context.Context, *UserLoginRequest) (*GetUserResponse, error)
 }
 
 func RegisterUserServiceHTTPServer(hs *http.Server, srv UserServiceHTTPServer) {
 	r := hs.Engine()
 	r.POST("/user", _UserService_CreateUser_0_HTTP_Handler(hs, srv))
 	r.GET("/user/:id", _UserService_GetUserByID_0_HTTP_Handler(hs, srv))
+	r.GET("/user/email/:email", _UserService_GetUserByEmail_0_HTTP_Handler(hs, srv))
+	r.POST("/user/login", _UserService_UserLogin_0_HTTP_Handler(hs, srv))
 }
 func _UserService_CreateUser_0_HTTP_Handler(hs *http.Server, srv UserServiceHTTPServer) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -114,6 +120,86 @@ func _UserService_GetUserByID_0_HTTP_Handler(hs *http.Server, srv UserServiceHTT
 		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
 
 		res, err := srv.GetUserByID(rctx, &req)
+		ctx.Request = ctx.Request.WithContext(rctx)
+		if err != nil {
+			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))
+			ctx.Abort()
+			return
+		}
+
+		hs.EncodeResponse(ctx, res, err)
+	}
+}
+func _UserService_GetUserByEmail_0_HTTP_Handler(hs *http.Server, srv UserServiceHTTPServer) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req GetUserByEmailRequest
+		if err := ginx.DecodeRequest(ctx, &req); err != nil {
+			ctx.JSON(http.StatusBadRequest, hs.WrapHTTPResponse(nil, err))
+			ctx.Abort()
+			return
+		}
+
+		greq := ctx.Request
+		rctx := greq.Context()
+		rctx = log.ExtractFromTextMapCarrier(rctx, propagation.HeaderCarrier(greq.Header))
+		attributes := []attribute.KeyValue{
+			v1_21_0.HTTPRequestMethodKey.String(greq.Method),
+			v1_21_0.HTTPRouteKey.String(greq.URL.String()),
+			attribute.String("log.id", log.LogIDFromContext(rctx)),
+		}
+
+		tracer := otel.Tracer(TRACER_NAME)
+		rctx, span := tracer.Start(rctx, "_UserService_GetUserByEmail_0_HTTP_Handler",
+			trace.WithSpanKind(trace.SpanKindServer),
+			trace.WithAttributes(attributes...),
+		)
+		defer span.End()
+
+		sctx := span.SpanContext()
+		rctx = log.WithTraceID(rctx, sctx.TraceID().String())
+		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
+
+		res, err := srv.GetUserByEmail(rctx, &req)
+		ctx.Request = ctx.Request.WithContext(rctx)
+		if err != nil {
+			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))
+			ctx.Abort()
+			return
+		}
+
+		hs.EncodeResponse(ctx, res, err)
+	}
+}
+func _UserService_UserLogin_0_HTTP_Handler(hs *http.Server, srv UserServiceHTTPServer) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req UserLoginRequest
+		if err := ginx.DecodeRequest(ctx, &req); err != nil {
+			ctx.JSON(http.StatusBadRequest, hs.WrapHTTPResponse(nil, err))
+			ctx.Abort()
+			return
+		}
+
+		greq := ctx.Request
+		rctx := greq.Context()
+		rctx = log.ExtractFromTextMapCarrier(rctx, propagation.HeaderCarrier(greq.Header))
+		attributes := []attribute.KeyValue{
+			v1_21_0.HTTPRequestMethodKey.String(greq.Method),
+			v1_21_0.HTTPRouteKey.String(greq.URL.String()),
+			attribute.String("log.id", log.LogIDFromContext(rctx)),
+		}
+
+		tracer := otel.Tracer(TRACER_NAME)
+		rctx, span := tracer.Start(rctx, "_UserService_UserLogin_0_HTTP_Handler",
+			trace.WithSpanKind(trace.SpanKindServer),
+			trace.WithAttributes(attributes...),
+		)
+		defer span.End()
+
+		sctx := span.SpanContext()
+		rctx = log.WithTraceID(rctx, sctx.TraceID().String())
+		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
+
+		res, err := srv.UserLogin(rctx, &req)
 		ctx.Request = ctx.Request.WithContext(rctx)
 		if err != nil {
 			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))

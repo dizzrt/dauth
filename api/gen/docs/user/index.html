@@ -187,15 +187,23 @@
                 </li>
               
                 <li>
+                  <a href="#user.GetUserByEmailRequest"><span class="badge">M</span>GetUserByEmailRequest</a>
+                </li>
+              
+                <li>
                   <a href="#user.GetUserByIDRequest"><span class="badge">M</span>GetUserByIDRequest</a>
                 </li>
               
                 <li>
-                  <a href="#user.GetUserByIDResponse"><span class="badge">M</span>GetUserByIDResponse</a>
+                  <a href="#user.GetUserResponse"><span class="badge">M</span>GetUserResponse</a>
                 </li>
               
                 <li>
                   <a href="#user.User"><span class="badge">M</span>User</a>
+                </li>
+              
+                <li>
+                  <a href="#user.UserLoginRequest"><span class="badge">M</span>UserLoginRequest</a>
                 </li>
               
               
@@ -286,6 +294,30 @@
 
         
       
+        <h3 id="user.GetUserByEmailRequest">GetUserByEmailRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>email</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="user.GetUserByIDRequest">GetUserByIDRequest</h3>
         <p></p>
 
@@ -310,7 +342,7 @@
 
         
       
-        <h3 id="user.GetUserByIDResponse">GetUserByIDResponse</h3>
+        <h3 id="user.GetUserResponse">GetUserResponse</h3>
         <p></p>
 
         
@@ -407,6 +439,37 @@
 
         
       
+        <h3 id="user.UserLoginRequest">UserLoginRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>account</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>only email yet </p></td>
+                </tr>
+              
+                <tr>
+                  <td>password</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
         <h3 id="user.Errors">Errors</h3>
@@ -472,7 +535,21 @@
               <tr>
                 <td>GetUserByID</td>
                 <td><a href="#user.GetUserByIDRequest">GetUserByIDRequest</a></td>
-                <td><a href="#user.GetUserByIDResponse">GetUserByIDResponse</a></td>
+                <td><a href="#user.GetUserResponse">GetUserResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetUserByEmail</td>
+                <td><a href="#user.GetUserByEmailRequest">GetUserByEmailRequest</a></td>
+                <td><a href="#user.GetUserResponse">GetUserResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>UserLogin</td>
+                <td><a href="#user.UserLoginRequest">UserLoginRequest</a></td>
+                <td><a href="#user.GetUserResponse">GetUserResponse</a></td>
                 <td><p></p></td>
               </tr>
             
@@ -511,6 +588,26 @@
                 <td>GET</td>
                 <td>/user/{id}</td>
                 <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetUserByEmail</td>
+                <td>GET</td>
+                <td>/user/email/{email}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>UserLogin</td>
+                <td>POST</td>
+                <td>/user/login</td>
+                <td>*</td>
               </tr>
               
             

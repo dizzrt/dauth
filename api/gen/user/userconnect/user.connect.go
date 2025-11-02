@@ -37,12 +37,19 @@ const (
 	UserServiceCreateUserProcedure = "/user.UserService/CreateUser"
 	// UserServiceGetUserByIDProcedure is the fully-qualified name of the UserService's GetUserByID RPC.
 	UserServiceGetUserByIDProcedure = "/user.UserService/GetUserByID"
+	// UserServiceGetUserByEmailProcedure is the fully-qualified name of the UserService's
+	// GetUserByEmail RPC.
+	UserServiceGetUserByEmailProcedure = "/user.UserService/GetUserByEmail"
+	// UserServiceUserLoginProcedure is the fully-qualified name of the UserService's UserLogin RPC.
+	UserServiceUserLoginProcedure = "/user.UserService/UserLogin"
 )
 
 // UserServiceClient is a client for the user.UserService service.
 type UserServiceClient interface {
 	CreateUser(context.Context, *connect.Request[user.CreateUserRequest]) (*connect.Response[user.CreateUserResponse], error)
-	GetUserByID(context.Context, *connect.Request[user.GetUserByIDRequest]) (*connect.Response[user.GetUserByIDResponse], error)
+	GetUserByID(context.Context, *connect.Request[user.GetUserByIDRequest]) (*connect.Response[user.GetUserResponse], error)
+	GetUserByEmail(context.Context, *connect.Request[user.GetUserByEmailRequest]) (*connect.Response[user.GetUserResponse], error)
+	UserLogin(context.Context, *connect.Request[user.UserLoginRequest]) (*connect.Response[user.GetUserResponse], error)
 }
 
 // NewUserServiceClient constructs a client for the user.UserService service. By default, it uses
@@ -62,10 +69,22 @@ func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(userServiceMethods.ByName("CreateUser")),
 			connect.WithClientOptions(opts...),
 		),
-		getUserByID: connect.NewClient[user.GetUserByIDRequest, user.GetUserByIDResponse](
+		getUserByID: connect.NewClient[user.GetUserByIDRequest, user.GetUserResponse](
 			httpClient,
 			baseURL+UserServiceGetUserByIDProcedure,
 			connect.WithSchema(userServiceMethods.ByName("GetUserByID")),
+			connect.WithClientOptions(opts...),
+		),
+		getUserByEmail: connect.NewClient[user.GetUserByEmailRequest, user.GetUserResponse](
+			httpClient,
+			baseURL+UserServiceGetUserByEmailProcedure,
+			connect.WithSchema(userServiceMethods.ByName("GetUserByEmail")),
+			connect.WithClientOptions(opts...),
+		),
+		userLogin: connect.NewClient[user.UserLoginRequest, user.GetUserResponse](
+			httpClient,
+			baseURL+UserServiceUserLoginProcedure,
+			connect.WithSchema(userServiceMethods.ByName("UserLogin")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -73,8 +92,10 @@ func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 
 // userServiceClient implements UserServiceClient.
 type userServiceClient struct {
-	createUser  *connect.Client[user.CreateUserRequest, user.CreateUserResponse]
-	getUserByID *connect.Client[user.GetUserByIDRequest, user.GetUserByIDResponse]
+	createUser     *connect.Client[user.CreateUserRequest, user.CreateUserResponse]
+	getUserByID    *connect.Client[user.GetUserByIDRequest, user.GetUserResponse]
+	getUserByEmail *connect.Client[user.GetUserByEmailRequest, user.GetUserResponse]
+	userLogin      *connect.Client[user.UserLoginRequest, user.GetUserResponse]
 }
 
 // CreateUser calls user.UserService.CreateUser.
@@ -83,14 +104,26 @@ func (c *userServiceClient) CreateUser(ctx context.Context, req *connect.Request
 }
 
 // GetUserByID calls user.UserService.GetUserByID.
-func (c *userServiceClient) GetUserByID(ctx context.Context, req *connect.Request[user.GetUserByIDRequest]) (*connect.Response[user.GetUserByIDResponse], error) {
+func (c *userServiceClient) GetUserByID(ctx context.Context, req *connect.Request[user.GetUserByIDRequest]) (*connect.Response[user.GetUserResponse], error) {
 	return c.getUserByID.CallUnary(ctx, req)
+}
+
+// GetUserByEmail calls user.UserService.GetUserByEmail.
+func (c *userServiceClient) GetUserByEmail(ctx context.Context, req *connect.Request[user.GetUserByEmailRequest]) (*connect.Response[user.GetUserResponse], error) {
+	return c.getUserByEmail.CallUnary(ctx, req)
+}
+
+// UserLogin calls user.UserService.UserLogin.
+func (c *userServiceClient) UserLogin(ctx context.Context, req *connect.Request[user.UserLoginRequest]) (*connect.Response[user.GetUserResponse], error) {
+	return c.userLogin.CallUnary(ctx, req)
 }
 
 // UserServiceHandler is an implementation of the user.UserService service.
 type UserServiceHandler interface {
 	CreateUser(context.Context, *connect.Request[user.CreateUserRequest]) (*connect.Response[user.CreateUserResponse], error)
-	GetUserByID(context.Context, *connect.Request[user.GetUserByIDRequest]) (*connect.Response[user.GetUserByIDResponse], error)
+	GetUserByID(context.Context, *connect.Request[user.GetUserByIDRequest]) (*connect.Response[user.GetUserResponse], error)
+	GetUserByEmail(context.Context, *connect.Request[user.GetUserByEmailRequest]) (*connect.Response[user.GetUserResponse], error)
+	UserLogin(context.Context, *connect.Request[user.UserLoginRequest]) (*connect.Response[user.GetUserResponse], error)
 }
 
 // NewUserServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -112,12 +145,28 @@ func NewUserServiceHandler(svc UserServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(userServiceMethods.ByName("GetUserByID")),
 		connect.WithHandlerOptions(opts...),
 	)
+	userServiceGetUserByEmailHandler := connect.NewUnaryHandler(
+		UserServiceGetUserByEmailProcedure,
+		svc.GetUserByEmail,
+		connect.WithSchema(userServiceMethods.ByName("GetUserByEmail")),
+		connect.WithHandlerOptions(opts...),
+	)
+	userServiceUserLoginHandler := connect.NewUnaryHandler(
+		UserServiceUserLoginProcedure,
+		svc.UserLogin,
+		connect.WithSchema(userServiceMethods.ByName("UserLogin")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/user.UserService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case UserServiceCreateUserProcedure:
 			userServiceCreateUserHandler.ServeHTTP(w, r)
 		case UserServiceGetUserByIDProcedure:
 			userServiceGetUserByIDHandler.ServeHTTP(w, r)
+		case UserServiceGetUserByEmailProcedure:
+			userServiceGetUserByEmailHandler.ServeHTTP(w, r)
+		case UserServiceUserLoginProcedure:
+			userServiceUserLoginHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -131,6 +180,14 @@ func (UnimplementedUserServiceHandler) CreateUser(context.Context, *connect.Requ
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("user.UserService.CreateUser is not implemented"))
 }
 
-func (UnimplementedUserServiceHandler) GetUserByID(context.Context, *connect.Request[user.GetUserByIDRequest]) (*connect.Response[user.GetUserByIDResponse], error) {
+func (UnimplementedUserServiceHandler) GetUserByID(context.Context, *connect.Request[user.GetUserByIDRequest]) (*connect.Response[user.GetUserResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("user.UserService.GetUserByID is not implemented"))
+}
+
+func (UnimplementedUserServiceHandler) GetUserByEmail(context.Context, *connect.Request[user.GetUserByEmailRequest]) (*connect.Response[user.GetUserResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("user.UserService.GetUserByEmail is not implemented"))
+}
+
+func (UnimplementedUserServiceHandler) UserLogin(context.Context, *connect.Request[user.UserLoginRequest]) (*connect.Response[user.GetUserResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("user.UserService.UserLogin is not implemented"))
 }

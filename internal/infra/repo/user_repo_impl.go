@@ -8,7 +8,6 @@ import (
 	user_repo "github.com/dizzrt/dauth/internal/domain/user/repo"
 	"github.com/dizzrt/dauth/internal/infra/common"
 	"github.com/dizzrt/dauth/internal/infra/repo/model"
-	"github.com/dizzrt/ellie/log"
 )
 
 var _ user_repo.UserRepo = (*UserRepoImpl)(nil)
@@ -21,8 +20,6 @@ func NewUserRepoImpl() user_repo.UserRepo {
 }
 
 func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (uint, error) {
-	log.CtxInfof(ctx, "[CreateUser] repo req: %v", user)
-
 	model := &model.User{
 		Email:         user.Email,
 		Password:      user.Password,
@@ -40,11 +37,29 @@ func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (ui
 }
 
 func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.User, error) {
-	log.CtxInfof(ctx, "[GetUserByID] repo req: %v", uid)
-
 	var model model.User
 	db := common.DB().WithContext(ctx)
 	if err := db.Where("id = ?", uid).First(&model).Error; err != nil {
+		return nil, err
+	}
+
+	return &entity.User{
+		ID:            model.ID,
+		Email:         model.Email,
+		Username:      model.Username,
+		Password:      model.Password,
+		Status:        model.Status,
+		LastLoginTime: model.LastLoginTime,
+		CreatedAt:     model.CreatedAt,
+		UpdatedAt:     model.UpdatedAt,
+		DeletedAt:     model.DeletedAt,
+	}, nil
+}
+
+func (impl *UserRepoImpl) GetUserByEmail(ctx context.Context, email string) (*entity.User, error) {
+	var model model.User
+	db := common.DB().WithContext(ctx)
+	if err := db.Where("email = ?", email).First(&model).Error; err != nil {
 		return nil, err
 	}
 

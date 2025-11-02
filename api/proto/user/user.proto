@@ -23,8 +23,19 @@ service UserService {
     };
   }
 
-  rpc GetUserByID(GetUserByIDRequest) returns (GetUserByIDResponse) {
+  rpc GetUserByID(GetUserByIDRequest) returns (GetUserResponse) {
     option (google.api.http) = {get: "/user/{id}"};
+  }
+
+  rpc GetUserByEmail(GetUserByEmailRequest) returns (GetUserResponse) {
+    option (google.api.http) = {get: "/user/email/{email}"};
+  }
+
+  rpc UserLogin(UserLoginRequest) returns (GetUserResponse) {
+    option (google.api.http) = {
+        post: "/user/login"
+        body: "*"
+    };
   }
 }
 
@@ -39,12 +50,6 @@ message User {
     uint64 deleted_at = 8;
 }
 
-message CreateUserRequest {
-    string email = 1;
-    string password = 2;
-    string username = 3;
-}
-
 message CreateUserResponse {
     uint32 id = 1;
 }
@@ -53,6 +58,21 @@ message GetUserByIDRequest {
     uint32 id = 1;
 }
 
-message GetUserByIDResponse {
+message CreateUserRequest {
+    string email = 1;
+    string password = 2;
+    string username = 3;
+}
+
+message GetUserResponse {
     User user = 1;
+}
+
+message GetUserByEmailRequest {
+    string email = 1;
+}
+
+message UserLoginRequest {
+    string account = 1; // only email yet
+    string password = 2;
 }
