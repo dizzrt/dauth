@@ -1,14 +1,16 @@
 package cmd
 
 import (
-	"fmt"
+	"context"
 	"os"
 	"time"
 
 	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/ellie/log/zlog"
+	"github.com/dizzrt/ellie/middleware/tracing"
 	"github.com/dizzrt/ellie/transport/grpc"
 	"github.com/dizzrt/ellie/transport/http"
+	"go.opentelemetry.io/otel/sdk/trace"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
@@ -34,6 +36,9 @@ var runCmd = &cobra.Command{
 	Use:   "run",
 	Short: "Start this service",
 	Run: func(cmd *cobra.Command, args []string) {
+		ctx := context.Background()
+
+		// load configs
 		conf := config.NewStdViperConfig()
 		if err := conf.Load(); err != nil {
 			panic(err)
@@ -44,25 +49,18 @@ var runCmd = &cobra.Command{
 			panic(err)
 		}
 
-		fmt.Println(bootstrap.Log.File)
+		// init logger
+		logger := initLogger(bootstrap)
 
-		logger, err := log.NewStdLoggerWriter(bootstrap.Log.File,
-			zlog.Symlink(bootstrap.Log.Symlink),
-			zlog.Level(zlog.ParseLevel(bootstrap.Log.Level)),
-			zlog.MaxAge(time.Duration(bootstrap.Log.MaxAge)*time.Second),
-			zlog.MaxBackups(uint(bootstrap.Log.MaxBackups)),
-			zlog.OutputType(zlog.ParseOutputType(bootstrap.Log.OutputType)),
-			zlog.ZapOpts(
-				zap.AddCaller(),
-				zap.AddStacktrace(zapcore.ErrorLevel),
-				zap.AddCallerSkip(2),
-			),
-		)
+		// init trace provider
+		tp := initTrace(ctx, bootstrap)
+		defer func() {
+			ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+			defer cancel()
+			tp.Shutdown(ctx)
+		}()
 
-		if err != nil {
-			panic(err)
-		}
-
+		// init app
 		app, cleanup, err := wireApp(bootstrap, logger)
 		if err != nil {
 			panic(err)
@@ -73,6 +71,48 @@ var runCmd = &cobra.Command{
 			panic(err)
 		}
 	},
+}
+
+func initTrace(ctx context.Context, _ *conf.Bootstrap) *trace.TracerProvider {
+	// TODO read from conf
+	tp, err := tracing.Initialize(ctx,
+		tracing.ServiceName("dauth"),
+		tracing.ServiceVersion("dev"),
+		tracing.Endpoint("192.168.124.10:4317"),
+		tracing.EndpointType(tracing.EndpointType_GRPC),
+		tracing.Insecure(true),
+		tracing.Metadata(map[string]string{
+			"ip":  "127.0.0.1",
+			"env": "dev",
+		}),
+	)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return tp
+}
+
+func initLogger(bootstrap *conf.Bootstrap) log.LogWriter {
+	logger, err := log.NewStdLoggerWriter(bootstrap.Log.File,
+		zlog.Symlink(bootstrap.Log.Symlink),
+		zlog.Level(zlog.ParseLevel(bootstrap.Log.Level)),
+		zlog.MaxAge(time.Duration(bootstrap.Log.MaxAge)*time.Second),
+		zlog.MaxBackups(uint(bootstrap.Log.MaxBackups)),
+		zlog.OutputType(zlog.ParseOutputType(bootstrap.Log.OutputType)),
+		zlog.ZapOpts(
+			zap.AddCaller(),
+			zap.AddStacktrace(zapcore.ErrorLevel),
+			zap.AddCallerSkip(2),
+		),
+	)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return logger
 }
 
 func buildBootstrap(c config.Config) (*conf.Bootstrap, error) {
