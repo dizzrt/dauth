@@ -175,26 +175,38 @@
         
           
           <li>
-            <a href="#example%2fexample.proto">example/example.proto</a>
+            <a href="#user%2fuser.proto">user/user.proto</a>
             <ul>
               
                 <li>
-                  <a href="#example.HelloRequest"><span class="badge">M</span>HelloRequest</a>
+                  <a href="#user.CreateUserRequest"><span class="badge">M</span>CreateUserRequest</a>
                 </li>
               
                 <li>
-                  <a href="#example.HelloResponse"><span class="badge">M</span>HelloResponse</a>
+                  <a href="#user.CreateUserResponse"><span class="badge">M</span>CreateUserResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#user.GetUserByIDRequest"><span class="badge">M</span>GetUserByIDRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#user.GetUserByIDResponse"><span class="badge">M</span>GetUserByIDResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#user.User"><span class="badge">M</span>User</a>
                 </li>
               
               
                 <li>
-                  <a href="#example.Errors"><span class="badge">E</span>Errors</a>
+                  <a href="#user.Errors"><span class="badge">E</span>Errors</a>
                 </li>
               
               
               
                 <li>
-                  <a href="#example.Example"><span class="badge">S</span>Example</a>
+                  <a href="#user.UserService"><span class="badge">S</span>UserService</a>
                 </li>
               
             </ul>
@@ -207,12 +219,12 @@
     
       
       <div class="file-heading">
-        <h2 id="example/example.proto">example/example.proto</h2><a href="#title">Top</a>
+        <h2 id="user/user.proto">user/user.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
       
-        <h3 id="example.HelloRequest">HelloRequest</h3>
+        <h3 id="user.CreateUserRequest">CreateUserRequest</h3>
         <p></p>
 
         
@@ -223,7 +235,21 @@
             <tbody>
               
                 <tr>
-                  <td>name</td>
+                  <td>email</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>password</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>username</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -236,7 +262,7 @@
 
         
       
-        <h3 id="example.HelloResponse">HelloResponse</h3>
+        <h3 id="user.CreateUserResponse">CreateUserResponse</h3>
         <p></p>
 
         
@@ -247,8 +273,129 @@
             <tbody>
               
                 <tr>
-                  <td>message</td>
+                  <td>id</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="user.GetUserByIDRequest">GetUserByIDRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="user.GetUserByIDResponse">GetUserByIDResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user</td>
+                  <td><a href="#user.User">User</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="user.User">User</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>email</td>
                   <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>username</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_login_at</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deleted_at</td>
+                  <td><a href="#uint64">uint64</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -262,7 +409,7 @@
       
 
       
-        <h3 id="example.Errors">Errors</h3>
+        <h3 id="user.Errors">Errors</h3>
         <p></p>
         <table class="enum-table">
           <thead>
@@ -276,6 +423,30 @@
                 <td><p></p></td>
               </tr>
             
+              <tr>
+                <td>INVALID_PARAMS</td>
+                <td>1001</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>INVALID_PASSWORD</td>
+                <td>1002</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>USER_NOT_FOUND</td>
+                <td>1003</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>EMAIL_ALREADY_EXISTS</td>
+                <td>1004</td>
+                <td><p></p></td>
+              </tr>
+            
           </tbody>
         </table>
       
@@ -283,7 +454,7 @@
       
 
       
-        <h3 id="example.Example">Example</h3>
+        <h3 id="user.UserService">UserService</h3>
         <p></p>
         <table class="enum-table">
           <thead>
@@ -292,9 +463,16 @@
           <tbody>
             
               <tr>
-                <td>Hello</td>
-                <td><a href="#example.HelloRequest">HelloRequest</a></td>
-                <td><a href="#example.HelloResponse">HelloResponse</a></td>
+                <td>CreateUser</td>
+                <td><a href="#user.CreateUserRequest">CreateUserRequest</a></td>
+                <td><a href="#user.CreateUserResponse">CreateUserResponse</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GetUserByID</td>
+                <td><a href="#user.GetUserByIDRequest">GetUserByIDRequest</a></td>
+                <td><a href="#user.GetUserByIDResponse">GetUserByIDResponse</a></td>
                 <td><p></p></td>
               </tr>
             
@@ -319,9 +497,19 @@
               
               
               <tr>
-                <td>Hello</td>
+                <td>CreateUser</td>
+                <td>POST</td>
+                <td>/user</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetUserByID</td>
                 <td>GET</td>
-                <td>/example/hello/{name}</td>
+                <td>/user/{id}</td>
                 <td></td>
               </tr>
               

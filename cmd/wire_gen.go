@@ -9,8 +9,9 @@ package cmd
 import (
 	"github.com/dizzrt/dauth/internal/application"
 	"github.com/dizzrt/dauth/internal/conf"
-	"github.com/dizzrt/dauth/internal/domain/biz"
+	"github.com/dizzrt/dauth/internal/domain/user/biz"
 	"github.com/dizzrt/dauth/internal/handler"
+	"github.com/dizzrt/dauth/internal/infra/repo"
 	"github.com/dizzrt/dauth/internal/server"
 	"github.com/dizzrt/ellie"
 	"github.com/dizzrt/ellie/log"
@@ -19,11 +20,12 @@ import (
 // Injectors from wire.go:
 
 func wireApp(bootstrap *conf.Bootstrap, logger log.LogWriter) (*ellie.App, func(), error) {
-	exampleBiz := biz.NewExampleBiz()
-	exampleApplication := application.NewExampleApplication(exampleBiz)
-	exampleHandler := handler.NewExampleHandler(exampleApplication)
-	grpcServer := server.NewGRPCServer(bootstrap, logger, exampleHandler)
-	httpServer := server.NewHTTPServer(bootstrap, logger, exampleHandler)
+	userRepo := repo.NewUserRepoImpl()
+	userBiz := biz.NewUserBiz(userRepo)
+	userApplication := application.NewUserApplication(userBiz)
+	userHandler := handler.NewUserHandler(userApplication)
+	grpcServer := server.NewGRPCServer(bootstrap, logger, userHandler)
+	httpServer := server.NewHTTPServer(bootstrap, logger, userHandler)
 	app := newApp(logger, grpcServer, httpServer)
 	return app, func() {
 	}, nil

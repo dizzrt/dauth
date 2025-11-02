@@ -3,49 +3,106 @@
 
 ## Table of Contents
 
-- [example/example.proto](#example_example-proto)
-    - [HelloRequest](#example-HelloRequest)
-    - [HelloResponse](#example-HelloResponse)
+- [user/user.proto](#user_user-proto)
+    - [CreateUserRequest](#user-CreateUserRequest)
+    - [CreateUserResponse](#user-CreateUserResponse)
+    - [GetUserByIDRequest](#user-GetUserByIDRequest)
+    - [GetUserByIDResponse](#user-GetUserByIDResponse)
+    - [User](#user-User)
   
-    - [Errors](#example-Errors)
+    - [Errors](#user-Errors)
   
-    - [Example](#example-Example)
+    - [UserService](#user-UserService)
   
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="example_example-proto"></a>
+<a name="user_user-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## example/example.proto
+## user/user.proto
 
 
 
-<a name="example-HelloRequest"></a>
+<a name="user-CreateUserRequest"></a>
 
-### HelloRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| name | [string](#string) |  |  |
-
-
-
-
-
-
-<a name="example-HelloResponse"></a>
-
-### HelloResponse
+### CreateUserRequest
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| message | [string](#string) |  |  |
+| email | [string](#string) |  |  |
+| password | [string](#string) |  |  |
+| username | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="user-CreateUserResponse"></a>
+
+### CreateUserResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [uint32](#uint32) |  |  |
+
+
+
+
+
+
+<a name="user-GetUserByIDRequest"></a>
+
+### GetUserByIDRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [uint32](#uint32) |  |  |
+
+
+
+
+
+
+<a name="user-GetUserByIDResponse"></a>
+
+### GetUserByIDResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| user | [User](#user-User) |  |  |
+
+
+
+
+
+
+<a name="user-User"></a>
+
+### User
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [uint32](#uint32) |  |  |
+| email | [string](#string) |  |  |
+| username | [string](#string) |  |  |
+| status | [uint32](#uint32) |  |  |
+| last_login_at | [uint64](#uint64) |  |  |
+| created_at | [uint64](#uint64) |  |  |
+| updated_at | [uint64](#uint64) |  |  |
+| deleted_at | [uint64](#uint64) |  |  |
 
 
 
@@ -54,7 +111,7 @@
  
 
 
-<a name="example-Errors"></a>
+<a name="user-Errors"></a>
 
 ### Errors
 
@@ -62,6 +119,10 @@
 | Name | Number | Description |
 | ---- | ------ | ----------- |
 | UNKNOWN | 0 |  |
+| INVALID_PARAMS | 1001 |  |
+| INVALID_PASSWORD | 1002 |  |
+| USER_NOT_FOUND | 1003 |  |
+| EMAIL_ALREADY_EXISTS | 1004 |  |
 
 
  
@@ -69,14 +130,15 @@
  
 
 
-<a name="example-Example"></a>
+<a name="user-UserService"></a>
 
-### Example
+### UserService
 
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Hello | [HelloRequest](#example-HelloRequest) | [HelloResponse](#example-HelloResponse) |  |
+| CreateUser | [CreateUserRequest](#user-CreateUserRequest) | [CreateUserResponse](#user-CreateUserResponse) |  |
+| GetUserByID | [GetUserByIDRequest](#user-GetUserByIDRequest) | [GetUserByIDResponse](#user-GetUserByIDResponse) |  |
 
  
 

@@ -11,3 +11,9 @@ level = "debug"
 max_age = 7
 max_backups = 3
 output_type = "both"
+
+[db]
+user = "root"
+password = "123456"
+addr = "localhost:3306"
+database = "dauth"
