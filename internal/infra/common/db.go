@@ -7,13 +7,14 @@ import (
 	"gorm.io/gorm"
 )
 
-var db *gorm.DB
+func buildDSN() string {
+	// TODO build from conf
+	return "root:u6xYzLEu4xZQg2jPJHMk@tcp(192.168.124.10:3306)/dauth?charset=utf8mb4&parseTime=True&loc=Local"
+}
 
-func init() {
-	var err error
-
+func NewDB() *gorm.DB {
 	dsn := buildDSN()
-	db, err = gorm.Open(mysql.New(mysql.Config{
+	db, err := gorm.Open(mysql.New(mysql.Config{
 		DSN: dsn,
 	}), &gorm.Config{})
 
@@ -29,12 +30,6 @@ func init() {
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetMaxOpenConns(100)
 	sqlDB.SetConnMaxLifetime(time.Hour)
-}
 
-func buildDSN() string {
-	return "root:u6xYzLEu4xZQg2jPJHMk@tcp(192.168.124.10:3306)/dauth?charset=utf8mb4&parseTime=True&loc=Local"
-}
-
-func DB() *gorm.DB {
 	return db
 }

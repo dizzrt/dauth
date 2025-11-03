@@ -6,17 +6,18 @@ import (
 
 	"github.com/dizzrt/dauth/internal/domain/user/entity"
 	user_repo "github.com/dizzrt/dauth/internal/domain/user/repo"
-	"github.com/dizzrt/dauth/internal/infra/common"
 	"github.com/dizzrt/dauth/internal/infra/repo/model"
+	"gorm.io/gorm"
 )
 
 var _ user_repo.UserRepo = (*UserRepoImpl)(nil)
 
 type UserRepoImpl struct {
+	db *gorm.DB
 }
 
-func NewUserRepoImpl() user_repo.UserRepo {
-	return &UserRepoImpl{}
+func NewUserRepoImpl(db *gorm.DB) user_repo.UserRepo {
+	return &UserRepoImpl{db: db}
 }
 
 func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (uint, error) {
@@ -28,7 +29,7 @@ func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (ui
 		LastLoginTime: time.Now(),
 	}
 
-	db := common.DB().WithContext(ctx)
+	db := impl.db.WithContext(ctx)
 	if err := db.Create(model).Error; err != nil {
 		return 0, err
 	}
@@ -38,7 +39,7 @@ func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (ui
 
 func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.User, error) {
 	var model model.User
-	db := common.DB().WithContext(ctx)
+	db := impl.db.WithContext(ctx)
 	if err := db.Where("id = ?", uid).First(&model).Error; err != nil {
 		return nil, err
 	}
@@ -58,7 +59,7 @@ func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.
 
 func (impl *UserRepoImpl) GetUserByEmail(ctx context.Context, email string) (*entity.User, error) {
 	var model model.User
-	db := common.DB().WithContext(ctx)
+	db := impl.db.WithContext(ctx)
 	if err := db.Where("email = ?", email).First(&model).Error; err != nil {
 		return nil, err
 	}

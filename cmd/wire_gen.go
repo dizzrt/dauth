@@ -11,6 +11,7 @@ import (
 	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/dauth/internal/domain/user/biz"
 	"github.com/dizzrt/dauth/internal/handler"
+	"github.com/dizzrt/dauth/internal/infra/common"
 	"github.com/dizzrt/dauth/internal/infra/repo"
 	"github.com/dizzrt/dauth/internal/server"
 	"github.com/dizzrt/ellie"
@@ -20,7 +21,8 @@ import (
 // Injectors from wire.go:
 
 func wireApp(bootstrap *conf.Bootstrap, logger log.LogWriter) (*ellie.App, func(), error) {
-	userRepo := repo.NewUserRepoImpl()
+	db := common.NewDB()
+	userRepo := repo.NewUserRepoImpl(db)
 	userBiz := biz.NewUserBiz(userRepo)
 	userApplication := application.NewUserApplication(userBiz)
 	userHandler := handler.NewUserHandler(userApplication)
