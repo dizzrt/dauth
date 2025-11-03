@@ -95,10 +95,15 @@ func initTrace(ctx context.Context, _ *conf.Bootstrap) *trace.TracerProvider {
 }
 
 func initLogger(bootstrap *conf.Bootstrap) log.LogWriter {
+	logAge, err := time.ParseDuration(bootstrap.Log.MaxAge)
+	if err != nil {
+		panic(err)
+	}
+
 	logger, err := log.NewStdLoggerWriter(bootstrap.Log.File,
 		zlog.Symlink(bootstrap.Log.Symlink),
 		zlog.Level(zlog.ParseLevel(bootstrap.Log.Level)),
-		zlog.MaxAge(time.Duration(bootstrap.Log.MaxAge)*time.Second),
+		zlog.MaxAge(logAge),
 		zlog.MaxBackups(uint(bootstrap.Log.MaxBackups)),
 		zlog.OutputType(zlog.ParseOutputType(bootstrap.Log.OutputType)),
 		zlog.ZapOpts(

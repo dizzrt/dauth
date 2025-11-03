@@ -22,7 +22,7 @@ type Log struct {
 	File       string `mapstructure:"file"`
 	Symlink    string `mapstructure:"symlink"`
 	Level      string `mapstructure:"level"`
-	MaxAge     int    `mapstructure:"max_age"`
+	MaxAge     string `mapstructure:"max_age"`
 	MaxBackups int    `mapstructure:"max_backups"`
 	OutputType string `mapstructure:"output_type"`
 }

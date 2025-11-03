@@ -8,8 +8,8 @@ addr = ":8081"
 file = "logs/{{YYYY}}{{MM}}{{DD}}{{hh}}.log"
 symlink = "logs/dauth.log"
 level = "debug"
-max_age = 7
-max_backups = 3
+max_age = "168h"
+max_backups = 0
 output_type = "both"
 
 [db]
