@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"github.com/dizzrt/dauth/internal/domain/user/entity"
+	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/mitchellh/mapstructure"
 	"gorm.io/gorm"
 )

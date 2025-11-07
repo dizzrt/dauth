@@ -2,4 +2,8 @@ package repo
 
 import "github.com/google/wire"
 
-var ProviderSet = wire.NewSet(NewUserRepoImpl)
+var ProviderSet = wire.NewSet(
+	NewUserRepoImpl,
+	NewRoleRepoImpl,
+	NewUserRoleAssociationRepoImpl,
+)

@@ -1,0 +1,144 @@
+syntax = "proto3";
+
+package identity;
+option go_package = "github.com/dizzrt/dauth/api/gen/identity;identity";
+
+import "base/base.proto";
+import "identity/identity_common.proto";
+import "google/api/annotations.proto";
+
+message CreateRoleRequest {
+    string name = 1;
+    string description = 2;
+    base.Base base = 255;
+}
+
+message CreateRoleResponse {
+    Role role = 1;
+    base.BaseResp base_resp = 255;
+}
+
+message GetRolesRequest {
+    base.Base base = 255;
+}
+
+message GetRolesResponse {
+    repeated Role roles = 1;
+    base.BaseResp base_resp = 255;
+}
+
+message DeleteRolesRequest {
+    repeated uint32 ids = 1;
+    base.Base base = 255;
+}
+
+message DeleteRolesResponse {
+    base.BaseResp base_resp = 255;
+}
+
+message UpdateRoleRequest {
+    uint32 id = 1;
+    string name = 2;
+    string description = 3;
+    base.Base base = 255;
+}
+
+message UpdateRoleResponse {
+    Role role = 1;
+    base.BaseResp base_resp = 255;
+}
+
+message AssignRolesRequest {
+    uint32 id = 1;
+    repeated Role roles = 2;
+    base.Base base = 255;
+}
+
+message AssignRolesResponse {
+    User user = 1;
+    base.BaseResp base_resp = 255;
+}
+
+message UnassignRolesRequest {
+    uint32 id = 1;
+    repeated Role roles = 2;
+    base.Base base = 255;
+}
+
+message UnassignRolesResponse {
+    User user = 1;
+    base.BaseResp base_resp = 255;
+}
+
+service RoleService {
+    /*
+    * CreateRole creates a new role.
+    * @Param CreateRoleRequest
+    * @Return CreateRoleResponse
+    */
+    rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
+        option (google.api.http) = {
+            post: "/identity/role"
+            body: "*"
+        };
+    }
+
+    /*
+    * GetRoles gets all roles.
+    * @Param GetRolesRequest
+    * @Return GetRolesResponse
+    */
+    rpc GetRoles(GetRolesRequest) returns (GetRolesResponse) {
+        option (google.api.http) = {
+            get: "/identity/roles"
+        };
+    }
+
+    /*
+    * DeleteRoles deletes roles by IDs.
+    * @Param DeleteRolesRequest
+    * @Return DeleteRolesResponse
+    */
+    rpc DeleteRoles(DeleteRolesRequest) returns (DeleteRolesResponse) {
+        option (google.api.http) = {
+            post: "/identity/roles/delete"
+            body: "*"
+        };
+    }
+
+    /*
+    * UpdateRole updates a role by ID.
+    * @Param UpdateRoleRequest
+    * @Return UpdateRoleResponse
+    */
+    rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
+        option (google.api.http) = {
+            put: "/identity/role/{id}"
+            body: "*"
+        };
+    }
+
+    /*
+    * AssignRoles assigns roles to a user.
+    * @Param AssignRolesRequest
+    * @Return AssignRolesResponse
+    */
+    rpc AssignRoles(AssignRolesRequest) returns (AssignRolesResponse) {
+        option (google.api.http) = {
+            put: "/identity/role/{id}/roles"
+            body: "*"
+        };
+    }
+
+    /*
+    * UnassignRoles unassigns roles from a user.
+    * @Param UnassignRolesRequest
+    * @Return UnassignRolesResponse
+    */
+    rpc UnassignRoles(UnassignRolesRequest) returns (UnassignRolesResponse) {
+        option (google.api.http) = {
+            post: "/identity/role/{id}/roles"
+            body: "*"
+        };
+    }
+}

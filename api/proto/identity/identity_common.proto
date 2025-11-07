@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/identity;identity";
+
+import "ellie/errors/errors.proto";
+
+enum Errors {
+    UNKNOWN = 0 [(ellie.errors.code) = 1000];
+    INVALID_PARAMS = 1001 [(ellie.errors.code) = 1001];
+    INVALID_PASSWORD = 1002 [(ellie.errors.code) = 1002];
+    USER_NOT_FOUND = 1003 [(ellie.errors.code) = 1003];
+    EMAIL_ALREADY_EXISTS = 1004 [(ellie.errors.code) = 1004];
+}
+
+enum UserStatus {
+    USER_STATUS_UNSPECIFIED = 0;
+    USER_STATUS_ACTIVE = 1;
+    USER_STATUS_INACTIVE = 2;
+    USER_STATUS_DELETED = 3;
+}
+
+message Role {
+    uint32 id = 1;
+    string name = 2;
+    string description = 3;
+    uint64 created_at = 7;
+    uint64 updated_at = 8;
+    uint64 deleted_at = 9;
+}
+
+message User {
+    uint32 id = 1;
+    string email = 2;
+    string username = 3;
+    UserStatus status = 5;
+    repeated Role roles = 4;
+    uint64 last_login_at = 6;
+    uint64 created_at = 7;
+    uint64 updated_at = 8;
+    uint64 deleted_at = 9;
+}

@@ -6,7 +6,7 @@ package cmd
 import (
 	"github.com/dizzrt/dauth/internal/application"
 	"github.com/dizzrt/dauth/internal/conf"
-	user_biz "github.com/dizzrt/dauth/internal/domain/user/biz"
+	"github.com/dizzrt/dauth/internal/domain/identity"
 	"github.com/dizzrt/dauth/internal/handler"
 	"github.com/dizzrt/dauth/internal/infra/common"
 	"github.com/dizzrt/dauth/internal/infra/repo"
@@ -22,7 +22,7 @@ func wireApp(bootstrap *conf.Bootstrap, logger log.LogWriter) (*ellie.App, func(
 		server.ProviderSet,
 		handler.ProviderSet,
 		application.ProviderSet,
-		user_biz.ProviderSet,
+		identity.ProviderSet,
 		repo.ProviderSet,
 		common.ProviderSet,
 	))

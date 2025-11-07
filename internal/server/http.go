@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/dizzrt/dauth/api/gen/user"
+	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/dauth/internal/handler"
 	"github.com/dizzrt/ellie/log"
@@ -9,7 +9,7 @@ import (
 	"github.com/dizzrt/ellie/transport/http"
 )
 
-func NewHTTPServer(c *conf.Bootstrap, logger log.LogWriter, userHandler *handler.UserHandler) *http.Server {
+func NewHTTPServer(c *conf.Bootstrap, logger log.LogWriter, identityHandler *handler.IdentityHandler) *http.Server {
 	opts := []http.ServerOption{
 		http.Middleware(
 			tracing.TracingMiddleware(),
@@ -23,7 +23,8 @@ func NewHTTPServer(c *conf.Bootstrap, logger log.LogWriter, userHandler *handler
 	}
 
 	srv := http.NewServer(opts...)
-	user.RegisterUserServiceHTTPServer(srv, userHandler)
+	identity.RegisterUserServiceHTTPServer(srv, identityHandler)
+	identity.RegisterRoleServiceHTTPServer(srv, identityHandler)
 
 	return srv
 }

@@ -9,7 +9,7 @@ package cmd
 import (
 	"github.com/dizzrt/dauth/internal/application"
 	"github.com/dizzrt/dauth/internal/conf"
-	"github.com/dizzrt/dauth/internal/domain/user/biz"
+	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	"github.com/dizzrt/dauth/internal/handler"
 	"github.com/dizzrt/dauth/internal/infra/common"
 	"github.com/dizzrt/dauth/internal/infra/repo"
@@ -24,10 +24,13 @@ func wireApp(bootstrap *conf.Bootstrap, logger log.LogWriter) (*ellie.App, func(
 	db := common.NewDB()
 	userRepo := repo.NewUserRepoImpl(db)
 	userBiz := biz.NewUserBiz(userRepo)
-	userApplication := application.NewUserApplication(userBiz)
-	userHandler := handler.NewUserHandler(userApplication)
-	grpcServer := server.NewGRPCServer(bootstrap, logger, userHandler)
-	httpServer := server.NewHTTPServer(bootstrap, logger, userHandler)
+	roleRepo := repo.NewRoleRepoImpl(db)
+	userRoleAssociationRepo := repo.NewUserRoleAssociationRepoImpl(db)
+	roleBiz := biz.NewRoleBiz(roleRepo, userRoleAssociationRepo)
+	identityApplication := application.NewIdentityApplication(userBiz, roleBiz)
+	identityHandler := handler.NewIdentityHandler(identityApplication)
+	grpcServer := server.NewGRPCServer(bootstrap, logger, identityHandler)
+	httpServer := server.NewHTTPServer(bootstrap, logger, identityHandler)
 	app := newApp(logger, grpcServer, httpServer)
 	return app, func() {
 	}, nil
