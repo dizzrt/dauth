@@ -118,10 +118,10 @@
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| USER_STATUS_UNSPECIFIED | 0 |  |
-| USER_STATUS_ACTIVE | 1 |  |
-| USER_STATUS_INACTIVE | 2 |  |
-| USER_STATUS_DELETED | 3 |  |
+| UNSPECIFIED | 0 |  |
+| ACTIVE | 1 |  |
+| INACTIVE | 2 |  |
+| DELETED | 3 |  |
 
 
  

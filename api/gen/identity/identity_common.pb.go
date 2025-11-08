@@ -80,25 +80,25 @@ func (Errors) EnumDescriptor() ([]byte, []int) {
 type UserStatus int32
 
 const (
-	UserStatus_USER_STATUS_UNSPECIFIED UserStatus = 0
-	UserStatus_USER_STATUS_ACTIVE      UserStatus = 1
-	UserStatus_USER_STATUS_INACTIVE    UserStatus = 2
-	UserStatus_USER_STATUS_DELETED     UserStatus = 3
+	UserStatus_UNSPECIFIED UserStatus = 0
+	UserStatus_ACTIVE      UserStatus = 1
+	UserStatus_INACTIVE    UserStatus = 2
+	UserStatus_DELETED     UserStatus = 3
 )
 
 // Enum value maps for UserStatus.
 var (
 	UserStatus_name = map[int32]string{
-		0: "USER_STATUS_UNSPECIFIED",
-		1: "USER_STATUS_ACTIVE",
-		2: "USER_STATUS_INACTIVE",
-		3: "USER_STATUS_DELETED",
+		0: "UNSPECIFIED",
+		1: "ACTIVE",
+		2: "INACTIVE",
+		3: "DELETED",
 	}
 	UserStatus_value = map[string]int32{
-		"USER_STATUS_UNSPECIFIED": 0,
-		"USER_STATUS_ACTIVE":      1,
-		"USER_STATUS_INACTIVE":    2,
-		"USER_STATUS_DELETED":     3,
+		"UNSPECIFIED": 0,
+		"ACTIVE":      1,
+		"INACTIVE":    2,
+		"DELETED":     3,
 	}
 )
 
@@ -283,7 +283,7 @@ func (x *User) GetStatus() UserStatus {
 	if x != nil {
 		return x.Status
 	}
-	return UserStatus_USER_STATUS_UNSPECIFIED
+	return UserStatus_UNSPECIFIED
 }
 
 func (x *User) GetRoles() []*Role {
@@ -354,13 +354,14 @@ const file_identity_identity_common_proto_rawDesc = "" +
 	"\x0eINVALID_PARAMS\x10\xe9\a\x1a\x05\xd0\xf3\x18\xe9\a\x12\x1c\n" +
 	"\x10INVALID_PASSWORD\x10\xea\a\x1a\x05\xd0\xf3\x18\xea\a\x12\x1a\n" +
 	"\x0eUSER_NOT_FOUND\x10\xeb\a\x1a\x05\xd0\xf3\x18\xeb\a\x12 \n" +
-	"\x14EMAIL_ALREADY_EXISTS\x10\xec\a\x1a\x05\xd0\xf3\x18\xec\a*t\n" +
+	"\x14EMAIL_ALREADY_EXISTS\x10\xec\a\x1a\x05\xd0\xf3\x18\xec\a*D\n" +
 	"\n" +
-	"UserStatus\x12\x1b\n" +
-	"\x17USER_STATUS_UNSPECIFIED\x10\x00\x12\x16\n" +
-	"\x12USER_STATUS_ACTIVE\x10\x01\x12\x18\n" +
-	"\x14USER_STATUS_INACTIVE\x10\x02\x12\x17\n" +
-	"\x13USER_STATUS_DELETED\x10\x03B3Z1github.com/dizzrt/dauth/api/gen/identity;identityb\x06proto3"
+	"UserStatus\x12\x0f\n" +
+	"\vUNSPECIFIED\x10\x00\x12\n" +
+	"\n" +
+	"\x06ACTIVE\x10\x01\x12\f\n" +
+	"\bINACTIVE\x10\x02\x12\v\n" +
+	"\aDELETED\x10\x03B3Z1github.com/dizzrt/dauth/api/gen/identity;identityb\x06proto3"
 
 var (
 	file_identity_identity_common_proto_rawDescOnce sync.Once

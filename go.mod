@@ -7,7 +7,6 @@ require (
 	github.com/dizzrt/ellie v0.3.3
 	github.com/gin-gonic/gin v1.11.0
 	github.com/google/wire v0.7.0
-	github.com/mitchellh/mapstructure v1.5.0
 	github.com/spf13/cobra v1.10.1
 	go.opentelemetry.io/otel v1.38.0
 	go.opentelemetry.io/otel/sdk v1.38.0
@@ -18,7 +17,7 @@ require (
 	google.golang.org/grpc v1.75.1
 	google.golang.org/protobuf v1.36.9
 	gorm.io/driver/mysql v1.6.0
-	gorm.io/gorm v1.31.0
+	gorm.io/gorm v1.31.1
 )
 
 require (

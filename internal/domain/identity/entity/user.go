@@ -3,6 +3,7 @@ package entity
 import (
 	"time"
 
+	"github.com/dizzrt/dauth/api/gen/identity"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -12,7 +13,7 @@ type User struct {
 	Email         string
 	Username      string
 	Password      string
-	Status        uint
+	Status        identity.UserStatus
 	LastLoginTime time.Time
 	CreatedAt     time.Time
 	UpdatedAt     time.Time

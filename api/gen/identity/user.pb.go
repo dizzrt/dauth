@@ -409,7 +409,7 @@ func (x *UpdateUserStatusRequest) GetStatus() UserStatus {
 	if x != nil {
 		return x.Status
 	}
-	return UserStatus_USER_STATUS_UNSPECIFIED
+	return UserStatus_UNSPECIFIED
 }
 
 func (x *UpdateUserStatusRequest) GetBase() *base.Base {
@@ -627,12 +627,12 @@ const file_identity_user_proto_rawDesc = "" +
 	".base.BaseR\x04base\"e\n" +
 	"\x1aUpdateUserPasswordResponse\x12\x19\n" +
 	"\x04user\x18\x01 \x01(\v2\x05.UserR\x04user\x12,\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\xdd\x04\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\xda\x04\n" +
 	"\vUserService\x12u\n" +
 	"\fAuthenticate\x12\x1d.identity.AuthenticateRequest\x1a\x1e.identity.AuthenticateResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/identity/user/authenticate\x12i\n" +
 	"\n" +
-	"CreateUser\x12\x1b.identity.CreateUserRequest\x1a\x1c.identity.CreateUserResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/identity/user/create\x12^\n" +
-	"\aGetUser\x12\x18.identity.GetUserRequest\x1a\x19.identity.GetUserResponse\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\x12\x13/identity/user/{id}\x12\x80\x01\n" +
+	"CreateUser\x12\x1b.identity.CreateUserRequest\x1a\x1c.identity.CreateUserResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/identity/user/create\x12[\n" +
+	"\aGetUser\x12\x18.identity.GetUserRequest\x1a\x19.identity.GetUserResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/identity/user/{id}\x12\x80\x01\n" +
 	"\x10UpdateUserStatus\x12!.identity.UpdateUserStatusRequest\x1a\".identity.UpdateUserStatusResponse\"%\x82\xd3\xe4\x93\x02\x1f:\x01*\x1a\x1a/identity/user/{id}/status\x12\x88\x01\n" +
 	"\x12UpdateUserPassword\x12#.identity.UpdateUserPasswordRequest\x1a$.identity.UpdateUserPasswordResponse\"'\x82\xd3\xe4\x93\x02!:\x01*\x1a\x1c/identity/user/{id}/passwordB3Z1github.com/dizzrt/dauth/api/gen/identity;identityb\x06proto3"
 

@@ -21,11 +21,11 @@ import (
 // Injectors from wire.go:
 
 func wireApp(bootstrap *conf.Bootstrap, logger log.LogWriter) (*ellie.App, func(), error) {
-	db := common.NewDB()
-	userRepo := repo.NewUserRepoImpl(db)
+	baseDB := common.NewBaseDB()
+	userRepo := repo.NewUserRepoImpl(baseDB)
 	userBiz := biz.NewUserBiz(userRepo)
-	roleRepo := repo.NewRoleRepoImpl(db)
-	userRoleAssociationRepo := repo.NewUserRoleAssociationRepoImpl(db)
+	roleRepo := repo.NewRoleRepoImpl(baseDB)
+	userRoleAssociationRepo := repo.NewUserRoleAssociationRepoImpl(baseDB)
 	roleBiz := biz.NewRoleBiz(roleRepo, userRoleAssociationRepo)
 	identityApplication := application.NewIdentityApplication(userBiz, roleBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)

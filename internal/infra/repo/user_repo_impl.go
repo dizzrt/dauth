@@ -7,30 +7,32 @@ import (
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/dizzrt/dauth/internal/domain/identity/repo"
+	"github.com/dizzrt/dauth/internal/infra/common"
 	"github.com/dizzrt/dauth/internal/infra/repo/model"
-	"gorm.io/gorm"
 )
 
 var _ repo.UserRepo = (*UserRepoImpl)(nil)
 
 type UserRepoImpl struct {
-	db *gorm.DB
+	*common.BaseDB
 }
 
-func NewUserRepoImpl(db *gorm.DB) repo.UserRepo {
-	return &UserRepoImpl{db: db}
+func NewUserRepoImpl(base *common.BaseDB) repo.UserRepo {
+	return &UserRepoImpl{
+		BaseDB: base,
+	}
 }
 
 func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (uint32, error) {
 	model := &model.User{
 		Email:         user.Email,
-		Password:      user.Password,
 		Username:      user.Username,
-		Status:        0,
+		Password:      user.Password,
+		Status:        uint(identity.UserStatus_ACTIVE),
 		LastLoginTime: time.Now(),
 	}
 
-	db := impl.db.WithContext(ctx)
+	db := impl.WithContext(ctx)
 	if err := db.Create(model).Error; err != nil {
 		return 0, err
 	}
@@ -39,57 +41,41 @@ func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (ui
 }
 
 func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.User, error) {
-	var model model.User
-	db := impl.db.WithContext(ctx)
-	if err := db.Where("id = ?", uid).First(&model).Error; err != nil {
+	var model *model.User
+	db := impl.WithContext(ctx)
+	if err := db.Where("id = ?", uid).First(model).Error; err != nil {
 		return nil, err
 	}
 
-	return &entity.User{
-		ID:            model.ID,
-		Email:         model.Email,
-		Username:      model.Username,
-		Password:      model.Password,
-		Status:        model.Status,
-		LastLoginTime: model.LastLoginTime,
-		CreatedAt:     model.CreatedAt,
-		UpdatedAt:     model.UpdatedAt,
-		DeletedAt:     model.DeletedAt,
-	}, nil
+	return model.ToEntity()
 }
 
 func (impl *UserRepoImpl) GetUserByEmail(ctx context.Context, email string) (*entity.User, error) {
-	var model model.User
-	db := impl.db.WithContext(ctx)
-	if err := db.Where("email = ?", email).First(&model).Error; err != nil {
+	var model *model.User
+
+	db := impl.WithContext(ctx)
+	if err := db.Where("email = ?", email).
+		First(model).Error; err != nil {
 		return nil, err
 	}
 
-	return &entity.User{
-		ID:            model.ID,
-		Email:         model.Email,
-		Username:      model.Username,
-		Password:      model.Password,
-		Status:        model.Status,
-		LastLoginTime: model.LastLoginTime,
-		CreatedAt:     model.CreatedAt,
-		UpdatedAt:     model.UpdatedAt,
-		DeletedAt:     model.DeletedAt,
-	}, nil
+	return model.ToEntity()
 }
 
 func (impl *UserRepoImpl) UpdateUserPassword(ctx context.Context, uid uint32, password string) error {
-	db := impl.db.WithContext(ctx)
-	if err := db.Model(&model.User{}).Where("id = ?", uid).Update("password", password).Error; err != nil {
-		return err
-	}
-	return nil
+	db := impl.WithContext(ctx)
+	err := db.Model(&model.User{}).Where("id = ?", uid).
+		Update("password", password).Error
+
+	return err
 }
 
 func (impl *UserRepoImpl) UpdateUserStatus(ctx context.Context, uid uint32, status identity.UserStatus) error {
-	db := impl.db.WithContext(ctx)
-	if err := db.Model(&model.User{}).Where("id = ?", uid).Update("status", status).Error; err != nil {
-		return err
-	}
-	return nil
+	mStatus := uint(status)
+	db := impl.WithContext(ctx)
+	err := db.Model(&model.User{}).
+		Where("id = ?", uid).
+		Update("status", mStatus).Error
+
+	return err
 }
