@@ -7,7 +7,7 @@ import (
 )
 
 type Role struct {
-	ID          uint
+	ID          uint32
 	Name        string
 	Description string
 	CreatedAt   time.Time
@@ -16,9 +16,9 @@ type Role struct {
 }
 
 type UserRoleAssociation struct {
-	ID        uint
-	UserID    uint
-	RoleID    uint
+	ID        uint32
+	UserID    uint32
+	RoleID    uint32
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt

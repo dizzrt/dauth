@@ -25,7 +25,7 @@ const (
 
 type AuthenticateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	Account       string                 `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
 	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
 	Base          *base.Base             `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -62,9 +62,9 @@ func (*AuthenticateRequest) Descriptor() ([]byte, []int) {
 	return file_identity_user_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *AuthenticateRequest) GetEmail() string {
+func (x *AuthenticateRequest) GetAccount() string {
 	if x != nil {
-		return x.Email
+		return x.Account
 	}
 	return ""
 }
@@ -421,7 +421,6 @@ func (x *UpdateUserStatusRequest) GetBase() *base.Base {
 
 type UpdateUserStatusResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	BaseResp      *base.BaseResp         `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -455,13 +454,6 @@ func (x *UpdateUserStatusResponse) ProtoReflect() protoreflect.Message {
 // Deprecated: Use UpdateUserStatusResponse.ProtoReflect.Descriptor instead.
 func (*UpdateUserStatusResponse) Descriptor() ([]byte, []int) {
 	return file_identity_user_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *UpdateUserStatusResponse) GetUser() *User {
-	if x != nil {
-		return x.User
-	}
-	return nil
 }
 
 func (x *UpdateUserStatusResponse) GetBaseResp() *base.BaseResp {
@@ -533,7 +525,6 @@ func (x *UpdateUserPasswordRequest) GetBase() *base.Base {
 
 type UpdateUserPasswordResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	BaseResp      *base.BaseResp         `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -569,13 +560,6 @@ func (*UpdateUserPasswordResponse) Descriptor() ([]byte, []int) {
 	return file_identity_user_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *UpdateUserPasswordResponse) GetUser() *User {
-	if x != nil {
-		return x.User
-	}
-	return nil
-}
-
 func (x *UpdateUserPasswordResponse) GetBaseResp() *base.BaseResp {
 	if x != nil {
 		return x.BaseResp
@@ -587,9 +571,9 @@ var File_identity_user_proto protoreflect.FileDescriptor
 
 const file_identity_user_proto_rawDesc = "" +
 	"\n" +
-	"\x13identity/user.proto\x12\bidentity\x1a\x0fbase/base.proto\x1a\x1eidentity/identity_common.proto\x1a\x1cgoogle/api/annotations.proto\"h\n" +
-	"\x13AuthenticateRequest\x12\x14\n" +
-	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
+	"\x13identity/user.proto\x12\bidentity\x1a\x0fbase/base.proto\x1a\x1eidentity/identity_common.proto\x1a\x1cgoogle/api/annotations.proto\"l\n" +
+	"\x13AuthenticateRequest\x12\x18\n" +
+	"\aaccount\x18\x01 \x01(\tR\aaccount\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
 	".base.BaseR\x04base\"_\n" +
@@ -616,17 +600,15 @@ const file_identity_user_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12#\n" +
 	"\x06status\x18\x02 \x01(\x0e2\v.UserStatusR\x06status\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"c\n" +
-	"\x18UpdateUserStatusResponse\x12\x19\n" +
-	"\x04user\x18\x01 \x01(\v2\x05.UserR\x04user\x12,\n" +
+	".base.BaseR\x04base\"H\n" +
+	"\x18UpdateUserStatusResponse\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"h\n" +
 	"\x19UpdateUserPasswordRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"e\n" +
-	"\x1aUpdateUserPasswordResponse\x12\x19\n" +
-	"\x04user\x18\x01 \x01(\v2\x05.UserR\x04user\x12,\n" +
+	".base.BaseR\x04base\"J\n" +
+	"\x1aUpdateUserPasswordResponse\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\xda\x04\n" +
 	"\vUserService\x12u\n" +
 	"\fAuthenticate\x12\x1d.identity.AuthenticateRequest\x1a\x1e.identity.AuthenticateResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/identity/user/authenticate\x12i\n" +
@@ -676,26 +658,24 @@ var file_identity_user_proto_depIdxs = []int32{
 	12, // 7: identity.GetUserResponse.base_resp:type_name -> base.BaseResp
 	13, // 8: identity.UpdateUserStatusRequest.status:type_name -> UserStatus
 	10, // 9: identity.UpdateUserStatusRequest.base:type_name -> base.Base
-	11, // 10: identity.UpdateUserStatusResponse.user:type_name -> User
-	12, // 11: identity.UpdateUserStatusResponse.base_resp:type_name -> base.BaseResp
-	10, // 12: identity.UpdateUserPasswordRequest.base:type_name -> base.Base
-	11, // 13: identity.UpdateUserPasswordResponse.user:type_name -> User
-	12, // 14: identity.UpdateUserPasswordResponse.base_resp:type_name -> base.BaseResp
-	0,  // 15: identity.UserService.Authenticate:input_type -> identity.AuthenticateRequest
-	2,  // 16: identity.UserService.CreateUser:input_type -> identity.CreateUserRequest
-	4,  // 17: identity.UserService.GetUser:input_type -> identity.GetUserRequest
-	6,  // 18: identity.UserService.UpdateUserStatus:input_type -> identity.UpdateUserStatusRequest
-	8,  // 19: identity.UserService.UpdateUserPassword:input_type -> identity.UpdateUserPasswordRequest
-	1,  // 20: identity.UserService.Authenticate:output_type -> identity.AuthenticateResponse
-	3,  // 21: identity.UserService.CreateUser:output_type -> identity.CreateUserResponse
-	5,  // 22: identity.UserService.GetUser:output_type -> identity.GetUserResponse
-	7,  // 23: identity.UserService.UpdateUserStatus:output_type -> identity.UpdateUserStatusResponse
-	9,  // 24: identity.UserService.UpdateUserPassword:output_type -> identity.UpdateUserPasswordResponse
-	20, // [20:25] is the sub-list for method output_type
-	15, // [15:20] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	12, // 10: identity.UpdateUserStatusResponse.base_resp:type_name -> base.BaseResp
+	10, // 11: identity.UpdateUserPasswordRequest.base:type_name -> base.Base
+	12, // 12: identity.UpdateUserPasswordResponse.base_resp:type_name -> base.BaseResp
+	0,  // 13: identity.UserService.Authenticate:input_type -> identity.AuthenticateRequest
+	2,  // 14: identity.UserService.CreateUser:input_type -> identity.CreateUserRequest
+	4,  // 15: identity.UserService.GetUser:input_type -> identity.GetUserRequest
+	6,  // 16: identity.UserService.UpdateUserStatus:input_type -> identity.UpdateUserStatusRequest
+	8,  // 17: identity.UserService.UpdateUserPassword:input_type -> identity.UpdateUserPasswordRequest
+	1,  // 18: identity.UserService.Authenticate:output_type -> identity.AuthenticateResponse
+	3,  // 19: identity.UserService.CreateUser:output_type -> identity.CreateUserResponse
+	5,  // 20: identity.UserService.GetUser:output_type -> identity.GetUserResponse
+	7,  // 21: identity.UserService.UpdateUserStatus:output_type -> identity.UpdateUserStatusResponse
+	9,  // 22: identity.UserService.UpdateUserPassword:output_type -> identity.UpdateUserPasswordResponse
+	18, // [18:23] is the sub-list for method output_type
+	13, // [13:18] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_identity_user_proto_init() }

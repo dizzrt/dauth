@@ -34,28 +34,40 @@ func ErrorInvalidParams(format string, args ...interface{}) *errors.Error {
 	return errors.New(1001, Errors_INVALID_PARAMS.String(), fmt.Sprintf(format, args...))
 }
 
+func IsEmptyPassword(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == Errors_EMPTY_PASSWORD.String() && e.Code == 1002
+}
+
+func ErrorEmptyPassword(format string, args ...interface{}) *errors.Error {
+	return errors.New(1002, Errors_EMPTY_PASSWORD.String(), fmt.Sprintf(format, args...))
+}
+
 func IsInvalidPassword(err error) bool {
 	if err == nil {
 		return false
 	}
 	e := errors.FromError(err)
-	return e.Reason == Errors_INVALID_PASSWORD.String() && e.Code == 1002
+	return e.Reason == Errors_INVALID_PASSWORD.String() && e.Code == 1003
 }
 
 func ErrorInvalidPassword(format string, args ...interface{}) *errors.Error {
-	return errors.New(1002, Errors_INVALID_PASSWORD.String(), fmt.Sprintf(format, args...))
+	return errors.New(1003, Errors_INVALID_PASSWORD.String(), fmt.Sprintf(format, args...))
 }
 
-func IsUserNotFound(err error) bool {
+func IsInvalidEmail(err error) bool {
 	if err == nil {
 		return false
 	}
 	e := errors.FromError(err)
-	return e.Reason == Errors_USER_NOT_FOUND.String() && e.Code == 1003
+	return e.Reason == Errors_INVALID_EMAIL.String() && e.Code == 1004
 }
 
-func ErrorUserNotFound(format string, args ...interface{}) *errors.Error {
-	return errors.New(1003, Errors_USER_NOT_FOUND.String(), fmt.Sprintf(format, args...))
+func ErrorInvalidEmail(format string, args ...interface{}) *errors.Error {
+	return errors.New(1004, Errors_INVALID_EMAIL.String(), fmt.Sprintf(format, args...))
 }
 
 func IsEmailAlreadyExists(err error) bool {
@@ -63,9 +75,21 @@ func IsEmailAlreadyExists(err error) bool {
 		return false
 	}
 	e := errors.FromError(err)
-	return e.Reason == Errors_EMAIL_ALREADY_EXISTS.String() && e.Code == 1004
+	return e.Reason == Errors_EMAIL_ALREADY_EXISTS.String() && e.Code == 1005
 }
 
 func ErrorEmailAlreadyExists(format string, args ...interface{}) *errors.Error {
-	return errors.New(1004, Errors_EMAIL_ALREADY_EXISTS.String(), fmt.Sprintf(format, args...))
+	return errors.New(1005, Errors_EMAIL_ALREADY_EXISTS.String(), fmt.Sprintf(format, args...))
+}
+
+func IsUserNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == Errors_USER_NOT_FOUND.String() && e.Code == 1006
+}
+
+func ErrorUserNotFound(format string, args ...interface{}) *errors.Error {
+	return errors.New(1006, Errors_USER_NOT_FOUND.String(), fmt.Sprintf(format, args...))
 }

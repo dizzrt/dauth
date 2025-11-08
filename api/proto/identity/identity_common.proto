@@ -7,9 +7,11 @@ import "ellie/errors/errors.proto";
 enum Errors {
     UNKNOWN = 0 [(ellie.errors.code) = 1000];
     INVALID_PARAMS = 1001 [(ellie.errors.code) = 1001];
-    INVALID_PASSWORD = 1002 [(ellie.errors.code) = 1002];
-    USER_NOT_FOUND = 1003 [(ellie.errors.code) = 1003];
-    EMAIL_ALREADY_EXISTS = 1004 [(ellie.errors.code) = 1004];
+    EMPTY_PASSWORD = 1002 [(ellie.errors.code) = 1002];
+    INVALID_PASSWORD = 1003 [(ellie.errors.code) = 1003];
+    INVALID_EMAIL = 1004 [(ellie.errors.code) = 1004];
+    EMAIL_ALREADY_EXISTS = 1005 [(ellie.errors.code) = 1005];
+    USER_NOT_FOUND = 1006 [(ellie.errors.code) = 1006];
 }
 
 enum UserStatus {
@@ -23,19 +25,19 @@ message Role {
     uint32 id = 1;
     string name = 2;
     string description = 3;
-    uint64 created_at = 7;
-    uint64 updated_at = 8;
-    uint64 deleted_at = 9;
+    bool is_deleted = 4;
+    int64 created_at = 5;
+    int64 updated_at = 6;
 }
 
 message User {
     uint32 id = 1;
     string email = 2;
     string username = 3;
-    UserStatus status = 5;
-    repeated Role roles = 4;
-    uint64 last_login_at = 6;
-    uint64 created_at = 7;
-    uint64 updated_at = 8;
-    uint64 deleted_at = 9;
+    UserStatus status = 4;
+    repeated Role roles = 5;
+    bool is_deleted = 6;
+    int64 last_login_at = 7;
+    int64 created_at = 8;
+    int64 updated_at = 9;
 }

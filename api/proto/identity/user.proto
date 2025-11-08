@@ -8,7 +8,7 @@ import "identity/identity_common.proto";
 import "google/api/annotations.proto";
 
 message AuthenticateRequest {
-    string email = 1;
+    string account = 1;
     string password = 2;
     base.Base base = 255;
 }
@@ -47,7 +47,6 @@ message UpdateUserStatusRequest {
 }
 
 message UpdateUserStatusResponse {
-    User user = 1;
     base.BaseResp base_resp = 255;
 }
 
@@ -58,7 +57,6 @@ message UpdateUserPasswordRequest {
 }
 
 message UpdateUserPasswordResponse {
-    User user = 1;
     base.BaseResp base_resp = 255;
 }
 

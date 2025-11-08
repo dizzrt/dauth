@@ -367,7 +367,7 @@ components:
         AuthenticateRequest:
             type: object
             properties:
-                email:
+                account:
                     type: string
                 password:
                     type: string
@@ -475,11 +475,11 @@ components:
                     type: string
                 description:
                     type: string
+                isDeleted:
+                    type: boolean
                 createdAt:
                     type: string
                 updatedAt:
-                    type: string
-                deletedAt:
                     type: string
         Status:
             type: object
@@ -548,8 +548,6 @@ components:
         UpdateUserPasswordResponse:
             type: object
             properties:
-                user:
-                    $ref: '#/components/schemas/User'
                 baseResp:
                     $ref: '#/components/schemas/BaseResp'
         UpdateUserStatusRequest:
@@ -571,8 +569,6 @@ components:
         UpdateUserStatusResponse:
             type: object
             properties:
-                user:
-                    $ref: '#/components/schemas/User'
                 baseResp:
                     $ref: '#/components/schemas/BaseResp'
         User:
@@ -597,13 +593,13 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/Role'
+                isDeleted:
+                    type: boolean
                 lastLoginAt:
                     type: string
                 createdAt:
                     type: string
                 updatedAt:
-                    type: string
-                deletedAt:
                     type: string
 tags:
     - name: RoleService

@@ -20,9 +20,9 @@ func (u *UserRoleAssociation) TableName() string {
 
 func (u *UserRoleAssociation) ToEntity() (*entity.UserRoleAssociation, error) {
 	return &entity.UserRoleAssociation{
-		ID:        u.ID,
-		UserID:    u.UserID,
-		RoleID:    u.RoleID,
+		ID:        uint32(u.ID),
+		UserID:    uint32(u.UserID),
+		RoleID:    uint32(u.RoleID),
 		CreatedAt: u.CreatedAt,
 		UpdatedAt: u.UpdatedAt,
 		DeletedAt: u.DeletedAt,

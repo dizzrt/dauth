@@ -27,7 +27,7 @@ func (u *User) TableName() string {
 // ToEntity converts the User model to the User entity.
 func (u *User) ToEntity() (*entity.User, error) {
 	return &entity.User{
-		ID:            u.ID,
+		ID:            uint32(u.ID),
 		Email:         u.Email,
 		Username:      u.Username,
 		Password:      u.Password,

@@ -27,9 +27,11 @@ type Errors int32
 const (
 	Errors_UNKNOWN              Errors = 0
 	Errors_INVALID_PARAMS       Errors = 1001
-	Errors_INVALID_PASSWORD     Errors = 1002
-	Errors_USER_NOT_FOUND       Errors = 1003
-	Errors_EMAIL_ALREADY_EXISTS Errors = 1004
+	Errors_EMPTY_PASSWORD       Errors = 1002
+	Errors_INVALID_PASSWORD     Errors = 1003
+	Errors_INVALID_EMAIL        Errors = 1004
+	Errors_EMAIL_ALREADY_EXISTS Errors = 1005
+	Errors_USER_NOT_FOUND       Errors = 1006
 )
 
 // Enum value maps for Errors.
@@ -37,16 +39,20 @@ var (
 	Errors_name = map[int32]string{
 		0:    "UNKNOWN",
 		1001: "INVALID_PARAMS",
-		1002: "INVALID_PASSWORD",
-		1003: "USER_NOT_FOUND",
-		1004: "EMAIL_ALREADY_EXISTS",
+		1002: "EMPTY_PASSWORD",
+		1003: "INVALID_PASSWORD",
+		1004: "INVALID_EMAIL",
+		1005: "EMAIL_ALREADY_EXISTS",
+		1006: "USER_NOT_FOUND",
 	}
 	Errors_value = map[string]int32{
 		"UNKNOWN":              0,
 		"INVALID_PARAMS":       1001,
-		"INVALID_PASSWORD":     1002,
-		"USER_NOT_FOUND":       1003,
-		"EMAIL_ALREADY_EXISTS": 1004,
+		"EMPTY_PASSWORD":       1002,
+		"INVALID_PASSWORD":     1003,
+		"INVALID_EMAIL":        1004,
+		"EMAIL_ALREADY_EXISTS": 1005,
+		"USER_NOT_FOUND":       1006,
 	}
 )
 
@@ -134,9 +140,9 @@ type Role struct {
 	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	CreatedAt     uint64                 `protobuf:"varint,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     uint64                 `protobuf:"varint,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	DeletedAt     uint64                 `protobuf:"varint,9,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
+	IsDeleted     bool                   `protobuf:"varint,9,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
+	CreatedAt     int64                  `protobuf:"varint,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     int64                  `protobuf:"varint,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -192,23 +198,23 @@ func (x *Role) GetDescription() string {
 	return ""
 }
 
-func (x *Role) GetCreatedAt() uint64 {
+func (x *Role) GetIsDeleted() bool {
+	if x != nil {
+		return x.IsDeleted
+	}
+	return false
+}
+
+func (x *Role) GetCreatedAt() int64 {
 	if x != nil {
 		return x.CreatedAt
 	}
 	return 0
 }
 
-func (x *Role) GetUpdatedAt() uint64 {
+func (x *Role) GetUpdatedAt() int64 {
 	if x != nil {
 		return x.UpdatedAt
-	}
-	return 0
-}
-
-func (x *Role) GetDeletedAt() uint64 {
-	if x != nil {
-		return x.DeletedAt
 	}
 	return 0
 }
@@ -220,10 +226,10 @@ type User struct {
 	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username,omitempty"`
 	Status        UserStatus             `protobuf:"varint,5,opt,name=status,proto3,enum=UserStatus" json:"status,omitempty"`
 	Roles         []*Role                `protobuf:"bytes,4,rep,name=roles,proto3" json:"roles,omitempty"`
-	LastLoginAt   uint64                 `protobuf:"varint,6,opt,name=last_login_at,json=lastLoginAt,proto3" json:"last_login_at,omitempty"`
-	CreatedAt     uint64                 `protobuf:"varint,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     uint64                 `protobuf:"varint,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	DeletedAt     uint64                 `protobuf:"varint,9,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
+	IsDeleted     bool                   `protobuf:"varint,9,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
+	LastLoginAt   int64                  `protobuf:"varint,6,opt,name=last_login_at,json=lastLoginAt,proto3" json:"last_login_at,omitempty"`
+	CreatedAt     int64                  `protobuf:"varint,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     int64                  `protobuf:"varint,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -293,30 +299,30 @@ func (x *User) GetRoles() []*Role {
 	return nil
 }
 
-func (x *User) GetLastLoginAt() uint64 {
+func (x *User) GetIsDeleted() bool {
+	if x != nil {
+		return x.IsDeleted
+	}
+	return false
+}
+
+func (x *User) GetLastLoginAt() int64 {
 	if x != nil {
 		return x.LastLoginAt
 	}
 	return 0
 }
 
-func (x *User) GetCreatedAt() uint64 {
+func (x *User) GetCreatedAt() int64 {
 	if x != nil {
 		return x.CreatedAt
 	}
 	return 0
 }
 
-func (x *User) GetUpdatedAt() uint64 {
+func (x *User) GetUpdatedAt() int64 {
 	if x != nil {
 		return x.UpdatedAt
-	}
-	return 0
-}
-
-func (x *User) GetDeletedAt() uint64 {
-	if x != nil {
-		return x.DeletedAt
 	}
 	return 0
 }
@@ -331,30 +337,32 @@ const file_identity_identity_common_proto_rawDesc = "" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\a \x01(\x04R\tcreatedAt\x12\x1d\n" +
+	"is_deleted\x18\t \x01(\bR\tisDeleted\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\b \x01(\x04R\tupdatedAt\x12\x1d\n" +
+	"created_at\x18\a \x01(\x03R\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"deleted_at\x18\t \x01(\x04R\tdeletedAt\"\x8b\x02\n" +
+	"updated_at\x18\b \x01(\x03R\tupdatedAt\"\x8b\x02\n" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
 	"\busername\x18\x03 \x01(\tR\busername\x12#\n" +
 	"\x06status\x18\x05 \x01(\x0e2\v.UserStatusR\x06status\x12\x1b\n" +
-	"\x05roles\x18\x04 \x03(\v2\x05.RoleR\x05roles\x12\"\n" +
-	"\rlast_login_at\x18\x06 \x01(\x04R\vlastLoginAt\x12\x1d\n" +
+	"\x05roles\x18\x04 \x03(\v2\x05.RoleR\x05roles\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\a \x01(\x04R\tcreatedAt\x12\x1d\n" +
+	"is_deleted\x18\t \x01(\bR\tisDeleted\x12\"\n" +
+	"\rlast_login_at\x18\x06 \x01(\x03R\vlastLoginAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\b \x01(\x04R\tupdatedAt\x12\x1d\n" +
+	"created_at\x18\a \x01(\x03R\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"deleted_at\x18\t \x01(\x04R\tdeletedAt*\x94\x01\n" +
+	"updated_at\x18\b \x01(\x03R\tupdatedAt*\xcb\x01\n" +
 	"\x06Errors\x12\x12\n" +
 	"\aUNKNOWN\x10\x00\x1a\x05\xd0\xf3\x18\xe8\a\x12\x1a\n" +
-	"\x0eINVALID_PARAMS\x10\xe9\a\x1a\x05\xd0\xf3\x18\xe9\a\x12\x1c\n" +
-	"\x10INVALID_PASSWORD\x10\xea\a\x1a\x05\xd0\xf3\x18\xea\a\x12\x1a\n" +
-	"\x0eUSER_NOT_FOUND\x10\xeb\a\x1a\x05\xd0\xf3\x18\xeb\a\x12 \n" +
-	"\x14EMAIL_ALREADY_EXISTS\x10\xec\a\x1a\x05\xd0\xf3\x18\xec\a*D\n" +
+	"\x0eINVALID_PARAMS\x10\xe9\a\x1a\x05\xd0\xf3\x18\xe9\a\x12\x1a\n" +
+	"\x0eEMPTY_PASSWORD\x10\xea\a\x1a\x05\xd0\xf3\x18\xea\a\x12\x1c\n" +
+	"\x10INVALID_PASSWORD\x10\xeb\a\x1a\x05\xd0\xf3\x18\xeb\a\x12\x19\n" +
+	"\rINVALID_EMAIL\x10\xec\a\x1a\x05\xd0\xf3\x18\xec\a\x12 \n" +
+	"\x14EMAIL_ALREADY_EXISTS\x10\xed\a\x1a\x05\xd0\xf3\x18\xed\a\x12\x1a\n" +
+	"\x0eUSER_NOT_FOUND\x10\xee\a\x1a\x05\xd0\xf3\x18\xee\a*D\n" +
 	"\n" +
 	"UserStatus\x12\x0f\n" +
 	"\vUNSPECIFIED\x10\x00\x12\n" +

@@ -362,22 +362,22 @@
                 </tr>
               
                 <tr>
+                  <td>is_deleted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
                   <td>created_at</td>
-                  <td><a href="#uint64">uint64</a></td>
+                  <td><a href="#int64">int64</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
                   <td>updated_at</td>
-                  <td><a href="#uint64">uint64</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>deleted_at</td>
-                  <td><a href="#uint64">uint64</a></td>
+                  <td><a href="#int64">int64</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -435,29 +435,29 @@
                 </tr>
               
                 <tr>
+                  <td>is_deleted</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
                   <td>last_login_at</td>
-                  <td><a href="#uint64">uint64</a></td>
+                  <td><a href="#int64">int64</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
                   <td>created_at</td>
-                  <td><a href="#uint64">uint64</a></td>
+                  <td><a href="#int64">int64</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
                   <td>updated_at</td>
-                  <td><a href="#uint64">uint64</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>deleted_at</td>
-                  <td><a href="#uint64">uint64</a></td>
+                  <td><a href="#int64">int64</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -492,20 +492,32 @@
               </tr>
             
               <tr>
-                <td>INVALID_PASSWORD</td>
+                <td>EMPTY_PASSWORD</td>
                 <td>1002</td>
                 <td><p></p></td>
               </tr>
             
               <tr>
-                <td>USER_NOT_FOUND</td>
+                <td>INVALID_PASSWORD</td>
                 <td>1003</td>
                 <td><p></p></td>
               </tr>
             
               <tr>
-                <td>EMAIL_ALREADY_EXISTS</td>
+                <td>INVALID_EMAIL</td>
                 <td>1004</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>EMAIL_ALREADY_EXISTS</td>
+                <td>1005</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>USER_NOT_FOUND</td>
+                <td>1006</td>
                 <td><p></p></td>
               </tr>
             
@@ -1121,7 +1133,7 @@
             <tbody>
               
                 <tr>
-                  <td>email</td>
+                  <td>account</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -1366,13 +1378,6 @@
             <tbody>
               
                 <tr>
-                  <td>user</td>
-                  <td><a href="#User">User</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
                   <td>base_resp</td>
                   <td><a href="#base.BaseResp">base.BaseResp</a></td>
                   <td></td>
@@ -1433,13 +1438,6 @@
               <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
             </thead>
             <tbody>
-              
-                <tr>
-                  <td>user</td>
-                  <td><a href="#User">User</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
               
                 <tr>
                   <td>base_resp</td>

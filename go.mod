@@ -6,6 +6,7 @@ require (
 	connectrpc.com/connect v1.19.0
 	github.com/dizzrt/ellie v0.3.3
 	github.com/gin-gonic/gin v1.11.0
+	github.com/go-playground/validator/v10 v10.28.0
 	github.com/google/wire v0.7.0
 	github.com/spf13/cobra v1.10.1
 	go.opentelemetry.io/otel v1.38.0
@@ -36,7 +37,6 @@ require (
 	github.com/go-playground/form/v4 v4.2.1 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.27.0 // indirect
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
 	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect

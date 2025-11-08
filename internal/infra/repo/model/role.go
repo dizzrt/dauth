@@ -20,7 +20,7 @@ func (r *Role) TableName() string {
 
 func (r *Role) ToEntity() (*entity.Role, error) {
 	return &entity.Role{
-		ID:          r.ID,
+		ID:          uint32(r.ID),
 		Name:        r.Name,
 		Description: r.Description,
 		CreatedAt:   r.CreatedAt,

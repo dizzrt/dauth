@@ -62,9 +62,9 @@
 | id | [uint32](#uint32) |  |  |
 | name | [string](#string) |  |  |
 | description | [string](#string) |  |  |
-| created_at | [uint64](#uint64) |  |  |
-| updated_at | [uint64](#uint64) |  |  |
-| deleted_at | [uint64](#uint64) |  |  |
+| is_deleted | [bool](#bool) |  |  |
+| created_at | [int64](#int64) |  |  |
+| updated_at | [int64](#int64) |  |  |
 
 
 
@@ -84,10 +84,10 @@
 | username | [string](#string) |  |  |
 | status | [UserStatus](#UserStatus) |  |  |
 | roles | [Role](#Role) | repeated |  |
-| last_login_at | [uint64](#uint64) |  |  |
-| created_at | [uint64](#uint64) |  |  |
-| updated_at | [uint64](#uint64) |  |  |
-| deleted_at | [uint64](#uint64) |  |  |
+| is_deleted | [bool](#bool) |  |  |
+| last_login_at | [int64](#int64) |  |  |
+| created_at | [int64](#int64) |  |  |
+| updated_at | [int64](#int64) |  |  |
 
 
 
@@ -105,9 +105,11 @@
 | ---- | ------ | ----------- |
 | UNKNOWN | 0 |  |
 | INVALID_PARAMS | 1001 |  |
-| INVALID_PASSWORD | 1002 |  |
-| USER_NOT_FOUND | 1003 |  |
-| EMAIL_ALREADY_EXISTS | 1004 |  |
+| EMPTY_PASSWORD | 1002 |  |
+| INVALID_PASSWORD | 1003 |  |
+| INVALID_EMAIL | 1004 |  |
+| EMAIL_ALREADY_EXISTS | 1005 |  |
+| USER_NOT_FOUND | 1006 |  |
 
 
 
@@ -373,7 +375,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| email | [string](#string) |  |  |
+| account | [string](#string) |  |  |
 | password | [string](#string) |  |  |
 | base | [base.Base](#base-Base) |  |  |
 
@@ -489,7 +491,6 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| user | [User](#User) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
@@ -522,7 +523,6 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| user | [User](#User) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
