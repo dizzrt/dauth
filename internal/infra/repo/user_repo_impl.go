@@ -33,7 +33,7 @@ func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (ui
 	}
 
 	db := impl.WithContext(ctx)
-	if err := db.Create(model).Error; err != nil {
+	if err := db.Create(&model).Error; err != nil {
 		return 0, err
 	}
 
@@ -43,7 +43,7 @@ func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (ui
 func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.User, error) {
 	var model *model.User
 	db := impl.WithContext(ctx)
-	if err := db.Where("id = ?", uid).First(model).Error; err != nil {
+	if err := db.Where("id = ?", uid).First(&model).Error; err != nil {
 		return nil, err
 	}
 
@@ -55,7 +55,7 @@ func (impl *UserRepoImpl) GetUserByEmail(ctx context.Context, email string) (*en
 
 	db := impl.WithContext(ctx)
 	if err := db.Where("email = ?", email).
-		First(model).Error; err != nil {
+		First(&model).Error; err != nil {
 		return nil, err
 	}
 

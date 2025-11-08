@@ -28,7 +28,7 @@ func (impl *RoleRepoImpl) CreateRole(ctx context.Context, role *entity.Role) (ui
 	}
 
 	db := impl.WithContext(ctx)
-	if err := db.Create(m).Error; err != nil {
+	if err := db.Create(&m).Error; err != nil {
 		return 0, err
 	}
 
@@ -36,7 +36,7 @@ func (impl *RoleRepoImpl) CreateRole(ctx context.Context, role *entity.Role) (ui
 }
 
 func (impl *RoleRepoImpl) ListRolesWithPage(ctx context.Context, page, pageSize int) ([]*entity.Role, error) {
-	var ms []model.Role
+	var ms []*model.Role
 
 	db := impl.WithContext(ctx)
 	err := db.Offset((page - 1) * pageSize).
