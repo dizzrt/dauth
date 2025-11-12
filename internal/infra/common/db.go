@@ -2,8 +2,10 @@ package common
 
 import (
 	"context"
+	"fmt"
 	"time"
 
+	"github.com/dizzrt/dauth/internal/conf"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -12,9 +14,9 @@ type BaseDB struct {
 	db *gorm.DB
 }
 
-func NewBaseDB() *BaseDB {
+func NewBaseDB(bootstrap *conf.Bootstrap) *BaseDB {
 	return &BaseDB{
-		db: newDB(),
+		db: newDB(bootstrap),
 	}
 }
 
@@ -22,13 +24,17 @@ func (base *BaseDB) WithContext(ctx context.Context) *gorm.DB {
 	return base.db.WithContext(ctx)
 }
 
-func buildDSN() string {
-	// TODO build from conf
-	return "root:u6xYzLEu4xZQg2jPJHMk@tcp(192.168.124.10:3306)/dauth?charset=utf8mb4&parseTime=True&loc=Local"
+func buildDSN(bootstrap *conf.Bootstrap) string {
+	user := bootstrap.DB.User
+	password := bootstrap.DB.Password
+	database := bootstrap.DB.Database
+	addr := bootstrap.DB.Addr
+
+	return fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", user, password, addr, database)
 }
 
-func newDB() *gorm.DB {
-	dsn := buildDSN()
+func newDB(bootstrap *conf.Bootstrap) *gorm.DB {
+	dsn := buildDSN(bootstrap)
 	db, err := gorm.Open(mysql.New(mysql.Config{
 		DSN: dsn,
 	}), &gorm.Config{})

@@ -15,13 +15,15 @@ import (
 	"github.com/dizzrt/dauth/internal/infra/repo"
 	"github.com/dizzrt/dauth/internal/server"
 	"github.com/dizzrt/ellie"
-	"github.com/dizzrt/ellie/log"
+	"go.opentelemetry.io/otel/sdk/trace"
 )
 
 // Injectors from wire.go:
 
-func wireApp(bootstrap *conf.Bootstrap, logger log.LogWriter) (*ellie.App, func(), error) {
-	baseDB := common.NewBaseDB()
+func wireApp() (*WireApp, func(), error) {
+	bootstrap := conf.NewBootstrap()
+	logWriter := common.NewLogger(bootstrap)
+	baseDB := common.NewBaseDB(bootstrap)
 	userRepo := repo.NewUserRepoImpl(baseDB)
 	userBiz := biz.NewUserBiz(userRepo)
 	roleRepo := repo.NewRoleRepoImpl(baseDB)
@@ -29,9 +31,25 @@ func wireApp(bootstrap *conf.Bootstrap, logger log.LogWriter) (*ellie.App, func(
 	roleBiz := biz.NewRoleBiz(roleRepo, userRoleAssociationRepo)
 	identityApplication := application.NewIdentityApplication(userBiz, roleBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)
-	grpcServer := server.NewGRPCServer(bootstrap, logger, identityHandler)
-	httpServer := server.NewHTTPServer(bootstrap, logger, identityHandler)
-	app := newApp(logger, grpcServer, httpServer)
-	return app, func() {
+	grpcServer := server.NewGRPCServer(bootstrap, logWriter, identityHandler)
+	httpServer := server.NewHTTPServer(bootstrap, logWriter, identityHandler)
+	app := newApp(logWriter, grpcServer, httpServer)
+	tracerProvider := common.NewTracerProvider(bootstrap)
+	cmdWireApp := newWireApp(app, tracerProvider)
+	return cmdWireApp, func() {
 	}, nil
+}
+
+// wire.go:
+
+type WireApp struct {
+	App *ellie.App
+	TP  *trace.TracerProvider
+}
+
+func newWireApp(app *ellie.App, tp *trace.TracerProvider) *WireApp {
+	return &WireApp{
+		App: app,
+		TP:  tp,
+	}
 }
