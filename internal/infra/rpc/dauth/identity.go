@@ -1,15 +1,31 @@
 package dauth
 
-// func GetUser(ctx context.Context, req *identity.GetUserRequest) (*identity.GetUserResponse, error) {
-// 	client, err := api.NewClient(api.DefaultConfig())
-// 	if err != nil {
-// 		return nil, err
-// 	}
+import (
+	"context"
 
-// 	dis := consul.New(client)
+	"github.com/dizzrt/dauth/api/gen/identity"
+	"github.com/dizzrt/dauth/internal/infra/rpc"
+)
 
-// 	endpoint := "discovery:///provider"
-// 	// conn,err := grpc.Dial(grpc.WithEndpoint(endpoint), grpc.with)
+var (
+	// client *UserClient
+	client identity.UserServiceClient
+)
 
-// 	return &identity.GetUserResponse{}, nil
+// type UserClient struct {
+// 	rpc.GRPCBaseClient
+// 	stub identity.UserServiceClient
 // }
+
+func init() {
+	conn, err := rpc.NewGRPCBaseClient("discovery:///dauth")
+	if err != nil {
+		panic(err)
+	}
+
+	client = identity.NewUserServiceClient(conn)
+}
+
+func GetUser(ctx context.Context, req *identity.GetUserRequest) (*identity.GetUserResponse, error) {
+	return client.GetUser(ctx, req)
+}

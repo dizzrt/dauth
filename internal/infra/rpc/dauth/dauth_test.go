@@ -1,7 +1,21 @@
 package dauth
 
-import "testing"
+import (
+	"context"
+	"fmt"
+	"testing"
 
-func TestXxx(t *testing.T) {
+	"github.com/dizzrt/dauth/api/gen/identity"
+)
 
+func TestGetUser(t *testing.T) {
+	resp, err := GetUser(context.Background(), &identity.GetUserRequest{
+		Id: 10000,
+	})
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	fmt.Println(resp)
 }

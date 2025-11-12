@@ -5,7 +5,7 @@ go 1.25.3
 require (
 	connectrpc.com/connect v1.19.0
 	github.com/dizzrt/ellie v0.3.7
-	github.com/dizzrt/ellie/contrib/registry/consul v0.0.0-20251111182503-e174ce255678
+	github.com/dizzrt/ellie/contrib/registry/consul v0.0.0-20251112102906-397f1cbda170
 	github.com/gin-gonic/gin v1.11.0
 	github.com/go-playground/validator/v10 v10.28.0
 	github.com/google/wire v0.7.0
