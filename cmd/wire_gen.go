@@ -23,6 +23,7 @@ import (
 func wireApp() (*WireApp, func(), error) {
 	bootstrap := conf.NewBootstrap()
 	logWriter := common.NewLogger(bootstrap)
+	registrar := common.NewRegistrar(bootstrap)
 	baseDB := common.NewBaseDB(bootstrap)
 	userRepo := repo.NewUserRepoImpl(baseDB)
 	userBiz := biz.NewUserBiz(userRepo)
@@ -33,7 +34,7 @@ func wireApp() (*WireApp, func(), error) {
 	identityHandler := handler.NewIdentityHandler(identityApplication)
 	grpcServer := server.NewGRPCServer(bootstrap, logWriter, identityHandler)
 	httpServer := server.NewHTTPServer(bootstrap, logWriter, identityHandler)
-	app := newApp(logWriter, grpcServer, httpServer)
+	app := newApp(logWriter, registrar, grpcServer, httpServer)
 	tracerProvider := common.NewTracerProvider(bootstrap)
 	cmdWireApp := newWireApp(app, tracerProvider)
 	return cmdWireApp, func() {

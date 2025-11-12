@@ -19,4 +19,4 @@ database = "dauth"
 addr = "infra.dauth.com:3306"
 
 [registry]
-addr = "infra.dauth.com:50051"
+addr = "infra.dauth.com:8500"

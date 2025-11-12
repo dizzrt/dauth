@@ -9,4 +9,5 @@ var ProviderSet = wire.NewSet(
 	common.NewLogger,
 	common.NewBaseDB,
 	common.NewTracerProvider,
+	common.NewRegistrar,
 )

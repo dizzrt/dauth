@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/dizzrt/ellie/registry"
 	"github.com/dizzrt/ellie/transport/grpc"
 	"github.com/dizzrt/ellie/transport/http"
 
@@ -13,10 +14,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// go build -ldflags "-X main.Version=x.y.z"
+// go build -ldflags "-X main.version=x.y.z"
 var (
-	Name    string = "dauth"
-	Version string = "dev"
+	service string = "dauth"
+	version string = "dev"
 	id, _          = os.Hostname()
 )
 
@@ -48,25 +49,14 @@ var runCmd = &cobra.Command{
 	},
 }
 
-func newApp(logger log.LogWriter, gs *grpc.Server, hs *http.Server) *ellie.App {
-	// ctx := context.Background()
-	// cli, err := api.NewClient(&api.Config{
-	// 	Address: "dev-lan.dauth.com:8500",
-	// })
-
-	// if err != nil {
-	// 	panic(err)
-	// }
-
-	// dis := consul.New(cli)
-
+func newApp(logger log.LogWriter, registrar registry.Registrar, gs *grpc.Server, hs *http.Server) *ellie.App {
 	return ellie.New(
 		ellie.ID(id),
-		ellie.Name(Name),
-		ellie.Version(Version),
+		ellie.Name(service),
+		ellie.Version(version),
 		ellie.Metadata(map[string]string{}),
 		ellie.Logger(logger),
+		ellie.Registrar(registrar),
 		ellie.Server(gs, hs),
-		// ellie.Registrar(dis),
 	)
 }
