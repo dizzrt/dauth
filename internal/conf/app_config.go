@@ -1,8 +1,10 @@
 package conf
 
-import "github.com/dizzrt/ellie/config"
+import (
+	"github.com/dizzrt/ellie/config"
+)
 
-type Bootstrap struct {
+type AppConfig struct {
 	Server   Server   `mapstructure:"server"`
 	Log      Log      `mapstructure:"log"`
 	Registry Registry `mapstructure:"registry"`
@@ -42,37 +44,16 @@ type Registry struct {
 	Addr string `mapstructure:"addr"`
 }
 
-func NewBootstrap() *Bootstrap {
+func NewAppConfig() *AppConfig {
 	c := config.NewStdViperConfig()
 	if err := c.Load(); err != nil {
 		panic(err)
 	}
 
-	bootstrap, err := buildBootstrap(c)
-	if err != nil {
+	var ac AppConfig
+	if err := c.Unmarshal(&ac); err != nil {
 		panic(err)
 	}
 
-	return bootstrap
-}
-
-func buildBootstrap(c config.Config) (*Bootstrap, error) {
-	var bootstrap Bootstrap
-	if err := c.UnmarshalKey("server", &bootstrap.Server); err != nil {
-		return nil, err
-	}
-
-	if err := c.UnmarshalKey("log", &bootstrap.Log); err != nil {
-		return nil, err
-	}
-
-	if err := c.UnmarshalKey("db", &bootstrap.DB); err != nil {
-		return nil, err
-	}
-
-	if err := c.UnmarshalKey("registry", &bootstrap.Registry); err != nil {
-		return nil, err
-	}
-
-	return &bootstrap, nil
+	return &ac
 }

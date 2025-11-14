@@ -8,7 +8,7 @@ import (
 	"go.opentelemetry.io/otel/sdk/trace"
 )
 
-func NewTracerProvider(bootstrap *conf.Bootstrap) *trace.TracerProvider {
+func NewTracerProvider(ac *conf.AppConfig) *trace.TracerProvider {
 	// TODO read from conf
 	tp, err := tracing.Initialize(
 		context.Background(),

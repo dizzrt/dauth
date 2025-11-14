@@ -9,7 +9,7 @@ import (
 	"github.com/dizzrt/ellie/transport/http"
 )
 
-func NewHTTPServer(c *conf.Bootstrap, logger log.LogWriter, identityHandler *handler.IdentityHandler) *http.Server {
+func NewHTTPServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *handler.IdentityHandler) *http.Server {
 	opts := []http.ServerOption{
 		http.Middleware(
 			tracing.TracingMiddleware(),

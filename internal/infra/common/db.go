@@ -14,9 +14,9 @@ type BaseDB struct {
 	db *gorm.DB
 }
 
-func NewBaseDB(bootstrap *conf.Bootstrap) *BaseDB {
+func NewBaseDB(ac *conf.AppConfig) *BaseDB {
 	return &BaseDB{
-		db: newDB(bootstrap),
+		db: newDB(ac),
 	}
 }
 
@@ -24,17 +24,17 @@ func (base *BaseDB) WithContext(ctx context.Context) *gorm.DB {
 	return base.db.WithContext(ctx)
 }
 
-func buildDSN(bootstrap *conf.Bootstrap) string {
-	user := bootstrap.DB.User
-	password := bootstrap.DB.Password
-	database := bootstrap.DB.Database
-	addr := bootstrap.DB.Addr
+func buildDSN(ac *conf.AppConfig) string {
+	user := ac.DB.User
+	password := ac.DB.Password
+	database := ac.DB.Database
+	addr := ac.DB.Addr
 
 	return fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", user, password, addr, database)
 }
 
-func newDB(bootstrap *conf.Bootstrap) *gorm.DB {
-	dsn := buildDSN(bootstrap)
+func newDB(ac *conf.AppConfig) *gorm.DB {
+	dsn := buildDSN(ac)
 	db, err := gorm.Open(mysql.New(mysql.Config{
 		DSN: dsn,
 	}), &gorm.Config{})

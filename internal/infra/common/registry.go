@@ -7,13 +7,13 @@ import (
 	"github.com/hashicorp/consul/api"
 )
 
-func NewRegistrar(bootstrap *conf.Bootstrap) registry.Registrar {
-	if bootstrap.Registry.Addr == "" {
+func NewRegistrar(ac *conf.AppConfig) registry.Registrar {
+	if ac.Registry.Addr == "" {
 		return nil
 	}
 
 	cli, err := api.NewClient(&api.Config{
-		Address: bootstrap.Registry.Addr,
+		Address: ac.Registry.Addr,
 	})
 
 	if err != nil {

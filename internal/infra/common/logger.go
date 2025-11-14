@@ -10,18 +10,18 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-func NewLogger(bootstrap *conf.Bootstrap) log.LogWriter {
-	logAge, err := time.ParseDuration(bootstrap.Log.MaxAge)
+func NewLogger(ac *conf.AppConfig) log.LogWriter {
+	logAge, err := time.ParseDuration(ac.Log.MaxAge)
 	if err != nil {
 		panic(err)
 	}
 
-	logger, err := log.NewStdLoggerWriter(bootstrap.Log.File,
-		zlog.Symlink(bootstrap.Log.Symlink),
-		zlog.Level(zlog.ParseLevel(bootstrap.Log.Level)),
+	logger, err := log.NewStdLoggerWriter(ac.Log.File,
+		zlog.Symlink(ac.Log.Symlink),
+		zlog.Level(zlog.ParseLevel(ac.Log.Level)),
 		zlog.MaxAge(logAge),
-		zlog.MaxBackups(uint(bootstrap.Log.MaxBackups)),
-		zlog.OutputType(zlog.ParseOutputType(bootstrap.Log.OutputType)),
+		zlog.MaxBackups(uint(ac.Log.MaxBackups)),
+		zlog.OutputType(zlog.ParseOutputType(ac.Log.OutputType)),
 		zlog.ZapOpts(
 			zap.AddCaller(),
 			zap.AddStacktrace(zapcore.ErrorLevel),

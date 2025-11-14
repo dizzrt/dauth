@@ -9,7 +9,7 @@ import (
 	"github.com/dizzrt/ellie/transport/grpc"
 )
 
-func NewGRPCServer(c *conf.Bootstrap, logger log.LogWriter, identityHandler *handler.IdentityHandler) *grpc.Server {
+func NewGRPCServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *handler.IdentityHandler) *grpc.Server {
 	opts := []grpc.ServerOption{
 		grpc.UnaryInterceptor(
 			tracing.UnaryServerInterceptor(),

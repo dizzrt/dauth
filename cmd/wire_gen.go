@@ -21,10 +21,10 @@ import (
 // Injectors from wire.go:
 
 func wireApp() (*WireApp, func(), error) {
-	bootstrap := conf.NewBootstrap()
-	logWriter := common.NewLogger(bootstrap)
-	registrar := common.NewRegistrar(bootstrap)
-	baseDB := common.NewBaseDB(bootstrap)
+	appConfig := conf.NewAppConfig()
+	logWriter := common.NewLogger(appConfig)
+	registrar := common.NewRegistrar(appConfig)
+	baseDB := common.NewBaseDB(appConfig)
 	userRepo := repo.NewUserRepoImpl(baseDB)
 	userBiz := biz.NewUserBiz(userRepo)
 	roleRepo := repo.NewRoleRepoImpl(baseDB)
@@ -32,10 +32,10 @@ func wireApp() (*WireApp, func(), error) {
 	roleBiz := biz.NewRoleBiz(roleRepo, userRoleAssociationRepo)
 	identityApplication := application.NewIdentityApplication(userBiz, roleBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)
-	grpcServer := server.NewGRPCServer(bootstrap, logWriter, identityHandler)
-	httpServer := server.NewHTTPServer(bootstrap, logWriter, identityHandler)
+	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler)
+	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler)
 	app := newApp(logWriter, registrar, grpcServer, httpServer)
-	tracerProvider := common.NewTracerProvider(bootstrap)
+	tracerProvider := common.NewTracerProvider(appConfig)
 	cmdWireApp := newWireApp(app, tracerProvider)
 	return cmdWireApp, func() {
 	}, nil

@@ -8,14 +8,8 @@ import (
 )
 
 var (
-	// client *UserClient
 	client identity.UserServiceClient
 )
-
-// type UserClient struct {
-// 	rpc.GRPCBaseClient
-// 	stub identity.UserServiceClient
-// }
 
 func init() {
 	conn, err := rpc.NewGRPCBaseClient("discovery:///dauth")
