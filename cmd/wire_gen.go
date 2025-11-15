@@ -21,7 +21,7 @@ import (
 // Injectors from wire.go:
 
 func wireApp() (*WireApp, func(), error) {
-	appConfig := conf.NewAppConfig()
+	appConfig := conf.GetAppConfig()
 	logWriter := common.NewLogger(appConfig)
 	registrar := common.NewRegistrar(appConfig)
 	baseDB := common.NewBaseDB(appConfig)

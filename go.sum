@@ -38,10 +38,14 @@ github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dizzrt/ellie v0.3.7 h1:Ka1QkXSZYYV7RIVP/ZVOczrFXXH175N6MWMkQsnf17A=
 github.com/dizzrt/ellie v0.3.7/go.mod h1:f0z7f9ieT6gscx6WPxj5y2V8lDCPSw05k7rCc/VttjM=
+github.com/dizzrt/ellie v0.3.8 h1:+DJ8J4X5wcHjVvRiPaqaPh7GORkM0S7SlxdavGIM1mA=
+github.com/dizzrt/ellie v0.3.8/go.mod h1:f0z7f9ieT6gscx6WPxj5y2V8lDCPSw05k7rCc/VttjM=
 github.com/dizzrt/ellie/contrib/registry/consul v0.0.0-20251111182503-e174ce255678 h1:H2OitxaW67oeDhAaJ3LYBVvOQ8myCCrvtsKATMwMN2o=
 github.com/dizzrt/ellie/contrib/registry/consul v0.0.0-20251111182503-e174ce255678/go.mod h1:tkZ6Xcb8RocdZiRNnbpG3M+qVBJb2vdBoUvIO9s+ZV8=
 github.com/dizzrt/ellie/contrib/registry/consul v0.0.0-20251112102906-397f1cbda170 h1:4g/r5CLyLd9DTL+DtniIo5+B0BJxtP8tBve1Y+Lb94U=
 github.com/dizzrt/ellie/contrib/registry/consul v0.0.0-20251112102906-397f1cbda170/go.mod h1:tkZ6Xcb8RocdZiRNnbpG3M+qVBJb2vdBoUvIO9s+ZV8=
+github.com/dizzrt/ellie/contrib/registry/consul v1.0.0 h1:tefEiFOKhPqDzJBSufxNmtnuLC+AJ0+mAUf/g6oRC7c=
+github.com/dizzrt/ellie/contrib/registry/consul v1.0.0/go.mod h1:tkZ6Xcb8RocdZiRNnbpG3M+qVBJb2vdBoUvIO9s+ZV8=
 github.com/dizzrt/filerotator v0.2.1 h1:z+iZNd/b7RuN34ISjCOJVTCVyFMswYAr0oMurzK2xv8=
 github.com/dizzrt/filerotator v0.2.1/go.mod h1:ZJbjn0WXXvDYuZxZd63qzqlDuy3D7jNeHsaxpgkiTuU=
 github.com/envoyproxy/go-control-plane v0.13.4 h1:zEqyPVyku6IvWCFwux4x9RxkLOMUL+1vC9xUFv5l2/M=

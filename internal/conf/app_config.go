@@ -1,7 +1,14 @@
 package conf
 
 import (
+	"sync"
+
 	"github.com/dizzrt/ellie/config"
+)
+
+var (
+	ac   *AppConfig
+	once sync.Once
 )
 
 type AppConfig struct {
@@ -44,16 +51,20 @@ type Registry struct {
 	Addr string `mapstructure:"addr"`
 }
 
-func NewAppConfig() *AppConfig {
-	c := config.NewStdViperConfig()
-	if err := c.Load(); err != nil {
-		panic(err)
-	}
+func GetAppConfig() *AppConfig {
+	once.Do(func() {
+		c := config.NewStdViperConfig()
+		if err := c.Load(); err != nil {
+			panic(err)
+		}
 
-	var ac AppConfig
-	if err := c.Unmarshal(&ac); err != nil {
-		panic(err)
-	}
+		var tmp AppConfig
+		if err := c.Unmarshal(&tmp); err != nil {
+			panic(err)
+		}
 
-	return &ac
+		ac = &tmp
+	})
+
+	return ac
 }

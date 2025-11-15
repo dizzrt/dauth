@@ -7,19 +7,10 @@ import (
 	"github.com/dizzrt/dauth/internal/infra/rpc"
 )
 
-var (
-	client identity.UserServiceClient
-)
-
-func init() {
-	conn, err := rpc.NewGRPCBaseClient("discovery:///dauth")
-	if err != nil {
-		panic(err)
+func GetUser(ctx context.Context, uid uint32) (*identity.GetUserResponse, error) {
+	req := &identity.GetUserRequest{
+		Id: uid,
 	}
 
-	client = identity.NewUserServiceClient(conn)
-}
-
-func GetUser(ctx context.Context, req *identity.GetUserRequest) (*identity.GetUserResponse, error) {
-	return client.GetUser(ctx, req)
+	return rpc.UserServiceClient().GetUser(ctx, req)
 }
