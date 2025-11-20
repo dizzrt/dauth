@@ -15,14 +15,17 @@ import (
 	"github.com/dizzrt/dauth/internal/infra/repo"
 	"github.com/dizzrt/dauth/internal/server"
 	"github.com/dizzrt/ellie"
-	"go.opentelemetry.io/otel/sdk/trace"
 )
 
 // Injectors from wire.go:
 
-func wireApp() (*WireApp, func(), error) {
+func wireApp() (*ellie.App, func(), error) {
 	appConfig := conf.GetAppConfig()
 	logWriter := common.NewLogger(appConfig)
+	tracerProvider, cleanup, err := common.NewTracerProvider(appConfig)
+	if err != nil {
+		return nil, nil, err
+	}
 	registrar := common.NewRegistrar(appConfig)
 	baseDB := common.NewBaseDB(appConfig)
 	userRepo := repo.NewUserRepoImpl(baseDB)
@@ -34,23 +37,13 @@ func wireApp() (*WireApp, func(), error) {
 	identityHandler := handler.NewIdentityHandler(identityApplication)
 	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler)
 	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler)
-	app := newApp(logWriter, registrar, grpcServer, httpServer)
-	tracerProvider := common.NewTracerProvider(appConfig)
-	cmdWireApp := newWireApp(app, tracerProvider)
-	return cmdWireApp, func() {
-	}, nil
-}
-
-// wire.go:
-
-type WireApp struct {
-	App *ellie.App
-	TP  *trace.TracerProvider
-}
-
-func newWireApp(app *ellie.App, tp *trace.TracerProvider) *WireApp {
-	return &WireApp{
-		App: app,
-		TP:  tp,
+	app, cleanup2, err := newApp(logWriter, tracerProvider, registrar, grpcServer, httpServer)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
 	}
+	return app, func() {
+		cleanup2()
+		cleanup()
+	}, nil
 }

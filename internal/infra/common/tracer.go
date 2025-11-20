@@ -2,13 +2,15 @@ package common
 
 import (
 	"context"
+	"time"
 
 	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/ellie/middleware/tracing"
-	"go.opentelemetry.io/otel/sdk/trace"
+	trace_sdk "go.opentelemetry.io/otel/sdk/trace"
+	"go.opentelemetry.io/otel/trace"
 )
 
-func NewTracerProvider(ac *conf.AppConfig) *trace.TracerProvider {
+func NewTracerProvider(ac *conf.AppConfig) (trace.TracerProvider, func(), error) {
 	// TODO read from conf
 	tp, err := tracing.Initialize(
 		context.Background(),
@@ -27,5 +29,14 @@ func NewTracerProvider(ac *conf.AppConfig) *trace.TracerProvider {
 		panic(err)
 	}
 
-	return tp
+	cleanup := func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+
+		if sdkTp, ok := tp.(*trace_sdk.TracerProvider); ok {
+			sdkTp.Shutdown(ctx)
+		}
+	}
+
+	return tp, cleanup, nil
 }
