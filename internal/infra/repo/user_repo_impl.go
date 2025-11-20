@@ -7,17 +7,17 @@ import (
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/dizzrt/dauth/internal/domain/identity/repo"
-	"github.com/dizzrt/dauth/internal/infra/common"
+	"github.com/dizzrt/dauth/internal/infra/foundation"
 	"github.com/dizzrt/dauth/internal/infra/repo/model"
 )
 
 var _ repo.UserRepo = (*UserRepoImpl)(nil)
 
 type UserRepoImpl struct {
-	*common.BaseDB
+	*foundation.BaseDB
 }
 
-func NewUserRepoImpl(base *common.BaseDB) repo.UserRepo {
+func NewUserRepoImpl(base *foundation.BaseDB) repo.UserRepo {
 	return &UserRepoImpl{
 		BaseDB: base,
 	}

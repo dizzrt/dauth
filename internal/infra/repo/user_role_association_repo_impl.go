@@ -5,16 +5,16 @@ import (
 
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/dizzrt/dauth/internal/domain/identity/repo"
-	"github.com/dizzrt/dauth/internal/infra/common"
+	"github.com/dizzrt/dauth/internal/infra/foundation"
 )
 
 var _ repo.UserRoleAssociationRepo = (*UserRoleAssociationRepoImpl)(nil)
 
 type UserRoleAssociationRepoImpl struct {
-	*common.BaseDB
+	*foundation.BaseDB
 }
 
-func NewUserRoleAssociationRepoImpl(base *common.BaseDB) repo.UserRoleAssociationRepo {
+func NewUserRoleAssociationRepoImpl(base *foundation.BaseDB) repo.UserRoleAssociationRepo {
 	return &UserRoleAssociationRepoImpl{
 		BaseDB: base,
 	}

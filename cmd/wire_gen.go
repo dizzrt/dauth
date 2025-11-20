@@ -11,7 +11,7 @@ import (
 	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	"github.com/dizzrt/dauth/internal/handler"
-	"github.com/dizzrt/dauth/internal/infra/common"
+	"github.com/dizzrt/dauth/internal/infra/foundation"
 	"github.com/dizzrt/dauth/internal/infra/repo"
 	"github.com/dizzrt/dauth/internal/server"
 	"github.com/dizzrt/ellie"
@@ -21,13 +21,13 @@ import (
 
 func wireApp() (*ellie.App, func(), error) {
 	appConfig := conf.GetAppConfig()
-	logWriter := common.NewLogger(appConfig)
-	tracerProvider, cleanup, err := common.NewTracerProvider(appConfig)
+	logWriter := foundation.NewLogger(appConfig)
+	tracerProvider, cleanup, err := foundation.NewTracerProvider(appConfig)
 	if err != nil {
 		return nil, nil, err
 	}
-	registrar := common.NewRegistrar(appConfig)
-	baseDB := common.NewBaseDB(appConfig)
+	registrar := foundation.NewRegistrar(appConfig)
+	baseDB := foundation.NewBaseDB(appConfig)
 	userRepo := repo.NewUserRepoImpl(baseDB)
 	userBiz := biz.NewUserBiz(userRepo)
 	roleRepo := repo.NewRoleRepoImpl(baseDB)

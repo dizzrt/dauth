@@ -5,17 +5,17 @@ import (
 
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/dizzrt/dauth/internal/domain/identity/repo"
-	"github.com/dizzrt/dauth/internal/infra/common"
+	"github.com/dizzrt/dauth/internal/infra/foundation"
 	"github.com/dizzrt/dauth/internal/infra/repo/model"
 )
 
 var _ repo.RoleRepo = (*RoleRepoImpl)(nil)
 
 type RoleRepoImpl struct {
-	*common.BaseDB
+	*foundation.BaseDB
 }
 
-func NewRoleRepoImpl(db *common.BaseDB) repo.RoleRepo {
+func NewRoleRepoImpl(db *foundation.BaseDB) repo.RoleRepo {
 	return &RoleRepoImpl{
 		BaseDB: db,
 	}
