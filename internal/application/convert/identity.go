@@ -31,7 +31,6 @@ func UserToIdentityUser(user *entity.User, roles []*entity.Role) *identity.User 
 		Username:    user.Username,
 		Status:      user.Status,
 		Roles:       identityRoles,
-		IsDeleted:   user.DeletedAt.Valid,
 		LastLoginAt: user.LastLoginTime.Unix(),
 		CreatedAt:   user.CreatedAt.Unix(),
 		UpdatedAt:   user.UpdatedAt.Unix(),

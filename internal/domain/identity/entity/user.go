@@ -10,10 +10,10 @@ import (
 
 type User struct {
 	ID            uint32
-	Email         string              `validate:"required,email"`
-	Username      string              `validate:"required,max=20"`
-	Password      string              `validate:"required"`
-	Status        identity.UserStatus `validate:"required"`
+	Email         string               `validate:"required,email"`
+	Username      string               `validate:"required,max=20"`
+	Password      string               `validate:"required"`
+	Status        identity.User_Status `validate:"required"`
 	LastLoginTime time.Time
 	CreatedAt     time.Time
 	UpdatedAt     time.Time

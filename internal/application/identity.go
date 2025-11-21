@@ -65,7 +65,7 @@ func (app *identityApplication) CreateUser(ctx context.Context, req *identity.Cr
 		Email:    req.GetEmail(),
 		Username: req.GetUsername(),
 		Password: req.GetPassword(),
-		Status:   identity.UserStatus_ACTIVE,
+		Status:   identity.User_ACTIVE,
 	}
 
 	// validate user

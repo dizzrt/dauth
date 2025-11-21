@@ -475,8 +475,14 @@ components:
                     type: string
                 description:
                     type: string
-                isDeleted:
-                    type: boolean
+                status:
+                    enum:
+                        - UNSPECIFIED
+                        - ACTIVE
+                        - INACTIVE
+                        - DELETED
+                    type: string
+                    format: enum
                 createdAt:
                     type: string
                 updatedAt:
@@ -593,8 +599,6 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/Role'
-                isDeleted:
-                    type: boolean
                 lastLoginAt:
                     type: string
                 createdAt:

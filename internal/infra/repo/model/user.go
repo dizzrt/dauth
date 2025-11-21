@@ -31,7 +31,7 @@ func (u *User) ToEntity() (*entity.User, error) {
 		Email:         u.Email,
 		Username:      u.Username,
 		Password:      u.Password,
-		Status:        identity.UserStatus(u.Status),
+		Status:        identity.User_Status(u.Status),
 		LastLoginTime: u.LastLoginTime,
 		CreatedAt:     u.CreatedAt,
 		UpdatedAt:     u.UpdatedAt,

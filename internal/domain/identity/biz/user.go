@@ -15,7 +15,7 @@ type UserBiz interface {
 	UpdateLastLoginTime(ctx context.Context, uid uint32) error
 	CreateUser(ctx context.Context, user *entity.User) (uint32, error)
 	GetUserByID(ctx context.Context, uid uint32) (*entity.User, error)
-	UpdateUserStatus(ctx context.Context, uid uint32, status identity.UserStatus) error
+	UpdateUserStatus(ctx context.Context, uid uint32, status identity.User_Status) error
 	UpdateUserPassword(ctx context.Context, uid uint32, newPassword string) error
 }
 
@@ -63,7 +63,7 @@ func (biz *userBiz) GetUserByID(ctx context.Context, uid uint32) (*entity.User, 
 	return biz.userRepo.GetUserByID(ctx, uid)
 }
 
-func (biz *userBiz) UpdateUserStatus(ctx context.Context, uid uint32, status identity.UserStatus) error {
+func (biz *userBiz) UpdateUserStatus(ctx context.Context, uid uint32, status identity.User_Status) error {
 	return biz.userRepo.UpdateUserStatus(ctx, uid, status)
 }
 

@@ -28,7 +28,7 @@ func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (ui
 		Email:         user.Email,
 		Username:      user.Username,
 		Password:      user.Password,
-		Status:        uint(identity.UserStatus_ACTIVE),
+		Status:        uint(identity.User_ACTIVE),
 		LastLoginTime: time.Now(),
 	}
 
@@ -70,7 +70,7 @@ func (impl *UserRepoImpl) UpdateUserPassword(ctx context.Context, uid uint32, pa
 	return err
 }
 
-func (impl *UserRepoImpl) UpdateUserStatus(ctx context.Context, uid uint32, status identity.UserStatus) error {
+func (impl *UserRepoImpl) UpdateUserStatus(ctx context.Context, uid uint32, status identity.User_Status) error {
 	mStatus := uint(status)
 	db := impl.WithContext(ctx)
 	err := db.Model(&model.User{}).

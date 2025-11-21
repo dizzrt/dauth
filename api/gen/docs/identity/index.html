@@ -192,7 +192,11 @@
                 </li>
               
                 <li>
-                  <a href="#.UserStatus"><span class="badge">E</span>UserStatus</a>
+                  <a href="#.Role.Status"><span class="badge">E</span>Role.Status</a>
+                </li>
+              
+                <li>
+                  <a href="#.User.Status"><span class="badge">E</span>User.Status</a>
                 </li>
               
               
@@ -362,8 +366,8 @@
                 </tr>
               
                 <tr>
-                  <td>is_deleted</td>
-                  <td><a href="#bool">bool</a></td>
+                  <td>status</td>
+                  <td><a href="#Role.Status">Role.Status</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -422,7 +426,7 @@
               
                 <tr>
                   <td>status</td>
-                  <td><a href="#UserStatus">UserStatus</a></td>
+                  <td><a href="#User.Status">User.Status</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -431,13 +435,6 @@
                   <td>roles</td>
                   <td><a href="#Role">Role</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>is_deleted</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
                   <td><p> </p></td>
                 </tr>
               
@@ -524,7 +521,42 @@
           </tbody>
         </table>
       
-        <h3 id=".UserStatus">UserStatus</h3>
+        <h3 id=".Role.Status">Role.Status</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>UNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ACTIVE</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>INACTIVE</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DELETED</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id=".User.Status">User.Status</h3>
         <p></p>
         <table class="enum-table">
           <thead>
@@ -1410,7 +1442,7 @@
               
                 <tr>
                   <td>status</td>
-                  <td><a href="#UserStatus">UserStatus</a></td>
+                  <td><a href="#User.Status">User.Status</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>

@@ -42,7 +42,7 @@ message GetUserResponse {
 
 message UpdateUserStatusRequest {
     uint32 id = 1;
-    UserStatus status = 2;
+    User.Status status = 2;
     base.Base base = 255;
 }
 

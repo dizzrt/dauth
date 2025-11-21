@@ -8,7 +8,8 @@
     - [User](#-User)
   
     - [Errors](#-Errors)
-    - [UserStatus](#-UserStatus)
+    - [Role.Status](#-Role-Status)
+    - [User.Status](#-User-Status)
   
 - [identity/role.proto](#identity_role-proto)
     - [AssignRolesRequest](#identity-AssignRolesRequest)
@@ -62,7 +63,7 @@
 | id | [uint32](#uint32) |  |  |
 | name | [string](#string) |  |  |
 | description | [string](#string) |  |  |
-| is_deleted | [bool](#bool) |  |  |
+| status | [Role.Status](#Role-Status) |  |  |
 | created_at | [int64](#int64) |  |  |
 | updated_at | [int64](#int64) |  |  |
 
@@ -82,9 +83,8 @@
 | id | [uint32](#uint32) |  |  |
 | email | [string](#string) |  |  |
 | username | [string](#string) |  |  |
-| status | [UserStatus](#UserStatus) |  |  |
+| status | [User.Status](#User-Status) |  |  |
 | roles | [Role](#Role) | repeated |  |
-| is_deleted | [bool](#bool) |  |  |
 | last_login_at | [int64](#int64) |  |  |
 | created_at | [int64](#int64) |  |  |
 | updated_at | [int64](#int64) |  |  |
@@ -113,9 +113,23 @@
 
 
 
-<a name="-UserStatus"></a>
+<a name="-Role-Status"></a>
 
-### UserStatus
+### Role.Status
+
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| UNSPECIFIED | 0 |  |
+| ACTIVE | 1 |  |
+| INACTIVE | 2 |  |
+| DELETED | 3 |  |
+
+
+
+<a name="-User-Status"></a>
+
+### User.Status
 
 
 | Name | Number | Description |
@@ -507,7 +521,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | id | [uint32](#uint32) |  |  |
-| status | [UserStatus](#UserStatus) |  |  |
+| status | [User.Status](#User-Status) |  |  |
 | base | [base.Base](#base-Base) |  |  |
 
 
