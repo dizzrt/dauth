@@ -33,6 +33,8 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// UserServiceLoginProcedure is the fully-qualified name of the UserService's Login RPC.
+	UserServiceLoginProcedure = "/identity.UserService/Login"
 	// UserServiceAuthenticateProcedure is the fully-qualified name of the UserService's Authenticate
 	// RPC.
 	UserServiceAuthenticateProcedure = "/identity.UserService/Authenticate"
@@ -50,6 +52,10 @@ const (
 
 // UserServiceClient is a client for the identity.UserService service.
 type UserServiceClient interface {
+	// Login logs in a user.
+	// @Param LoginRequest
+	// @Return LoginResponse
+	Login(context.Context, *connect.Request[identity.LoginRequest]) (*connect.Response[identity.LoginResponse], error)
 	// Authenticate authenticates a user.
 	// @Param AuthenticateRequest
 	// @Return AuthenticateResponse
@@ -83,6 +89,12 @@ func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 	baseURL = strings.TrimRight(baseURL, "/")
 	userServiceMethods := identity.File_identity_user_proto.Services().ByName("UserService").Methods()
 	return &userServiceClient{
+		login: connect.NewClient[identity.LoginRequest, identity.LoginResponse](
+			httpClient,
+			baseURL+UserServiceLoginProcedure,
+			connect.WithSchema(userServiceMethods.ByName("Login")),
+			connect.WithClientOptions(opts...),
+		),
 		authenticate: connect.NewClient[identity.AuthenticateRequest, identity.AuthenticateResponse](
 			httpClient,
 			baseURL+UserServiceAuthenticateProcedure,
@@ -118,11 +130,17 @@ func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 
 // userServiceClient implements UserServiceClient.
 type userServiceClient struct {
+	login              *connect.Client[identity.LoginRequest, identity.LoginResponse]
 	authenticate       *connect.Client[identity.AuthenticateRequest, identity.AuthenticateResponse]
 	createUser         *connect.Client[identity.CreateUserRequest, identity.CreateUserResponse]
 	getUser            *connect.Client[identity.GetUserRequest, identity.GetUserResponse]
 	updateUserStatus   *connect.Client[identity.UpdateUserStatusRequest, identity.UpdateUserStatusResponse]
 	updateUserPassword *connect.Client[identity.UpdateUserPasswordRequest, identity.UpdateUserPasswordResponse]
+}
+
+// Login calls identity.UserService.Login.
+func (c *userServiceClient) Login(ctx context.Context, req *connect.Request[identity.LoginRequest]) (*connect.Response[identity.LoginResponse], error) {
+	return c.login.CallUnary(ctx, req)
 }
 
 // Authenticate calls identity.UserService.Authenticate.
@@ -152,6 +170,10 @@ func (c *userServiceClient) UpdateUserPassword(ctx context.Context, req *connect
 
 // UserServiceHandler is an implementation of the identity.UserService service.
 type UserServiceHandler interface {
+	// Login logs in a user.
+	// @Param LoginRequest
+	// @Return LoginResponse
+	Login(context.Context, *connect.Request[identity.LoginRequest]) (*connect.Response[identity.LoginResponse], error)
 	// Authenticate authenticates a user.
 	// @Param AuthenticateRequest
 	// @Return AuthenticateResponse
@@ -181,6 +203,12 @@ type UserServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewUserServiceHandler(svc UserServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	userServiceMethods := identity.File_identity_user_proto.Services().ByName("UserService").Methods()
+	userServiceLoginHandler := connect.NewUnaryHandler(
+		UserServiceLoginProcedure,
+		svc.Login,
+		connect.WithSchema(userServiceMethods.ByName("Login")),
+		connect.WithHandlerOptions(opts...),
+	)
 	userServiceAuthenticateHandler := connect.NewUnaryHandler(
 		UserServiceAuthenticateProcedure,
 		svc.Authenticate,
@@ -213,6 +241,8 @@ func NewUserServiceHandler(svc UserServiceHandler, opts ...connect.HandlerOption
 	)
 	return "/identity.UserService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case UserServiceLoginProcedure:
+			userServiceLoginHandler.ServeHTTP(w, r)
 		case UserServiceAuthenticateProcedure:
 			userServiceAuthenticateHandler.ServeHTTP(w, r)
 		case UserServiceCreateUserProcedure:
@@ -231,6 +261,10 @@ func NewUserServiceHandler(svc UserServiceHandler, opts ...connect.HandlerOption
 
 // UnimplementedUserServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedUserServiceHandler struct{}
+
+func (UnimplementedUserServiceHandler) Login(context.Context, *connect.Request[identity.LoginRequest]) (*connect.Response[identity.LoginResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("identity.UserService.Login is not implemented"))
+}
 
 func (UnimplementedUserServiceHandler) Authenticate(context.Context, *connect.Request[identity.AuthenticateRequest]) (*connect.Response[identity.AuthenticateResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("identity.UserService.Authenticate is not implemented"))

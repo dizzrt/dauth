@@ -34,6 +34,8 @@
     - [CreateUserResponse](#identity-CreateUserResponse)
     - [GetUserRequest](#identity-GetUserRequest)
     - [GetUserResponse](#identity-GetUserResponse)
+    - [LoginRequest](#identity-LoginRequest)
+    - [LoginResponse](#identity-LoginResponse)
     - [UpdateUserPasswordRequest](#identity-UpdateUserPasswordRequest)
     - [UpdateUserPasswordResponse](#identity-UpdateUserPasswordResponse)
     - [UpdateUserStatusRequest](#identity-UpdateUserStatusRequest)
@@ -480,6 +482,39 @@
 
 
 
+<a name="identity-LoginRequest"></a>
+
+### LoginRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| account | [string](#string) |  |  |
+| password | [string](#string) |  |  |
+| base | [base.Base](#base-Base) |  |  |
+
+
+
+
+
+
+<a name="identity-LoginResponse"></a>
+
+### LoginResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| user | [User](#User) |  |  |
+| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
+
+
+
+
+
+
 <a name="identity-UpdateUserPasswordRequest"></a>
 
 ### UpdateUserPasswordRequest
@@ -557,6 +592,7 @@
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| Login | [LoginRequest](#identity-LoginRequest) | [LoginResponse](#identity-LoginResponse) | Login logs in a user. @Param LoginRequest @Return LoginResponse |
 | Authenticate | [AuthenticateRequest](#identity-AuthenticateRequest) | [AuthenticateResponse](#identity-AuthenticateResponse) | Authenticate authenticates a user. @Param AuthenticateRequest @Return AuthenticateResponse |
 | CreateUser | [CreateUserRequest](#identity-CreateUserRequest) | [CreateUserResponse](#identity-CreateUserResponse) | CreateUser creates a new user. @Param CreateUserRequest @Return CreateUserResponse |
 | GetUser | [GetUserRequest](#identity-GetUserRequest) | [GetUserResponse](#identity-GetUserResponse) | GetUser gets a user by ID. @Param GetUserRequest @Return GetUserResponse |

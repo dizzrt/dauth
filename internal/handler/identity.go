@@ -22,6 +22,10 @@ func NewIdentityHandler(identityApp application.IdentityApplication) *IdentityHa
 
 // region user service
 
+func (handler *IdentityHandler) Login(ctx context.Context, req *identity.LoginRequest) (*identity.LoginResponse, error) {
+	return handler.identityApp.Login(ctx, req)
+}
+
 func (handler *IdentityHandler) Authenticate(ctx context.Context, req *identity.AuthenticateRequest) (*identity.AuthenticateResponse, error) {
 	return handler.identityApp.Authenticate(ctx, req)
 }

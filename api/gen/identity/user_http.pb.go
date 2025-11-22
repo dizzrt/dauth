@@ -31,18 +31,13 @@ var _ = new(propagation.TextMapPropagator)
 var _ = v1_21_0.HTTPRequestMethodKey
 
 const TRACER_NAME_USER = "github.com/dizzrt/dauth/api/gen/identity"
-const OperationUserServiceAuthenticate = "/UserService/Authenticate"
 const OperationUserServiceCreateUser = "/UserService/CreateUser"
 const OperationUserServiceGetUser = "/UserService/GetUser"
+const OperationUserServiceLogin = "/UserService/Login"
 const OperationUserServiceUpdateUserPassword = "/UserService/UpdateUserPassword"
 const OperationUserServiceUpdateUserStatus = "/UserService/UpdateUserStatus"
 
 type UserServiceHTTPServer interface {
-	// Authenticate
-	// Authenticate authenticates a user.
-	// @Param AuthenticateRequest
-	// @Return AuthenticateResponse
-	Authenticate(context.Context, *AuthenticateRequest) (*AuthenticateResponse, error)
 	// CreateUser
 	// CreateUser creates a new user.
 	// @Param CreateUserRequest
@@ -53,6 +48,11 @@ type UserServiceHTTPServer interface {
 	// @Param GetUserRequest
 	// @Return GetUserResponse
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
+	// Login
+	// Login logs in a user.
+	// @Param LoginRequest
+	// @Return LoginResponse
+	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	// UpdateUserPassword
 	// UpdateUserPassword updates the password of a user.
 	// @Param UpdateUserPasswordRequest
@@ -67,15 +67,15 @@ type UserServiceHTTPServer interface {
 
 func RegisterUserServiceHTTPServer(hs *http.Server, srv UserServiceHTTPServer) {
 	r := hs.Engine()
-	r.POST("/identity/user/authenticate", _user_UserService_POST_Authenticate_HTTP_Handler(hs, srv))
+	r.POST("/identity/user/login", _user_UserService_POST_Login_HTTP_Handler(hs, srv))
 	r.POST("/identity/user/create", _user_UserService_POST_CreateUser_HTTP_Handler(hs, srv))
 	r.GET("/identity/user/:id", _user_UserService_GET_GetUser_HTTP_Handler(hs, srv))
 	r.PUT("/identity/user/:id/status", _user_UserService_PUT_UpdateUserStatus_HTTP_Handler(hs, srv))
 	r.PUT("/identity/user/:id/password", _user_UserService_PUT_UpdateUserPassword_HTTP_Handler(hs, srv))
 }
-func _user_UserService_POST_Authenticate_HTTP_Handler(hs *http.Server, srv UserServiceHTTPServer) gin.HandlerFunc {
+func _user_UserService_POST_Login_HTTP_Handler(hs *http.Server, srv UserServiceHTTPServer) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var req AuthenticateRequest
+		var req LoginRequest
 		if err := ginx.DecodeRequest(ctx, &req); err != nil {
 			ctx.JSON(http.StatusBadRequest, hs.WrapHTTPResponse(nil, err))
 			ctx.Abort()
@@ -92,7 +92,7 @@ func _user_UserService_POST_Authenticate_HTTP_Handler(hs *http.Server, srv UserS
 		}
 
 		tracer := otel.Tracer(TRACER_NAME_USER)
-		rctx, span := tracer.Start(rctx, "_UserService_Authenticate_0_HTTP_Handler",
+		rctx, span := tracer.Start(rctx, "_UserService_Login_0_HTTP_Handler",
 			trace.WithSpanKind(trace.SpanKindServer),
 			trace.WithAttributes(attributes...),
 		)
@@ -102,7 +102,7 @@ func _user_UserService_POST_Authenticate_HTTP_Handler(hs *http.Server, srv UserS
 		rctx = log.WithTraceID(rctx, sctx.TraceID().String())
 		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
 
-		res, err := srv.Authenticate(rctx, &req)
+		res, err := srv.Login(rctx, &req)
 		ctx.Request = ctx.Request.WithContext(rctx)
 		if err != nil {
 			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))

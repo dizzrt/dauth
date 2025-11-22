@@ -297,6 +297,14 @@
                 </li>
               
                 <li>
+                  <a href="#identity.LoginRequest"><span class="badge">M</span>LoginRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#identity.LoginResponse"><span class="badge">M</span>LoginResponse</a>
+                </li>
+              
+                <li>
                   <a href="#identity.UpdateUserPasswordRequest"><span class="badge">M</span>UpdateUserPasswordRequest</a>
                 </li>
               
@@ -1361,6 +1369,75 @@
 
         
       
+        <h3 id="identity.LoginRequest">LoginRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>account</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>password</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#base.Base">base.Base</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="identity.LoginResponse">LoginResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user</td>
+                  <td><a href="#User">User</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_resp</td>
+                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="identity.UpdateUserPasswordRequest">UpdateUserPasswordRequest</h3>
         <p></p>
 
@@ -1500,6 +1577,15 @@
           <tbody>
             
               <tr>
+                <td>Login</td>
+                <td><a href="#identity.LoginRequest">LoginRequest</a></td>
+                <td><a href="#identity.LoginResponse">LoginResponse</a></td>
+                <td><p>Login logs in a user.
+@Param LoginRequest
+@Return LoginResponse</p></td>
+              </tr>
+            
+              <tr>
                 <td>Authenticate</td>
                 <td><a href="#identity.AuthenticateRequest">AuthenticateRequest</a></td>
                 <td><a href="#identity.AuthenticateResponse">AuthenticateResponse</a></td>
@@ -1565,9 +1651,9 @@
               
               
               <tr>
-                <td>Authenticate</td>
+                <td>Login</td>
                 <td>POST</td>
-                <td>/identity/user/authenticate</td>
+                <td>/identity/user/login</td>
                 <td>*</td>
               </tr>
               

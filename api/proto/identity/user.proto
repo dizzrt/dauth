@@ -7,6 +7,18 @@ import "base/base.proto";
 import "identity/identity_common.proto";
 import "google/api/annotations.proto";
 
+message LoginRequest {
+    string account = 1;
+    string password = 2;
+
+    base.Base base = 255;
+}
+
+message LoginResponse {
+    User user = 1;
+    base.BaseResp base_resp = 255;
+}
+
 message AuthenticateRequest {
     string account = 1;
     string password = 2;
@@ -62,16 +74,23 @@ message UpdateUserPasswordResponse {
 
 service UserService {
     /*
+    * Login logs in a user.
+    * @Param LoginRequest
+    * @Return LoginResponse
+    */
+    rpc Login(LoginRequest) returns (LoginResponse) {
+        option (google.api.http) = {
+            post: "/identity/user/login"
+            body: "*"
+        };
+    }
+
+    /*
     * Authenticate authenticates a user.
     * @Param AuthenticateRequest
     * @Return AuthenticateResponse
     */
-    rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {
-        option (google.api.http) = {
-            post: "/identity/user/authenticate"
-            body: "*"
-        };
-    }
+    rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {}
 
     /*
     * CreateUser creates a new user.

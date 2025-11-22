@@ -22,15 +22,12 @@ func RolesToIdentityRoles(roles []*entity.Role) []*identity.Role {
 	return identityRoles
 }
 
-func UserToIdentityUser(user *entity.User, roles []*entity.Role) *identity.User {
-	identityRoles := RolesToIdentityRoles(roles)
-
+func UserToIdentityUser(user *entity.User) *identity.User {
 	return &identity.User{
 		Id:          user.ID,
 		Email:       user.Email,
 		Username:    user.Username,
 		Status:      user.Status,
-		Roles:       identityRoles,
 		LastLoginAt: user.LastLoginTime.Unix(),
 		CreatedAt:   user.CreatedAt.Unix(),
 		UpdatedAt:   user.UpdatedAt.Unix(),
