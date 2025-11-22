@@ -6,4 +6,5 @@ var ProviderSet = wire.NewSet(
 	NewUserRepoImpl,
 	NewRoleRepoImpl,
 	NewUserRoleAssociationRepoImpl,
+	NewClientRepoImpl,
 )

@@ -9,6 +9,7 @@ package cmd
 import (
 	"github.com/dizzrt/dauth/internal/application"
 	"github.com/dizzrt/dauth/internal/conf"
+	biz3 "github.com/dizzrt/dauth/internal/domain/client/biz"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	biz2 "github.com/dizzrt/dauth/internal/domain/token/biz"
 	"github.com/dizzrt/dauth/internal/handler"
@@ -41,8 +42,12 @@ func wireApp() (*ellie.App, func(), error) {
 	tokenBiz := biz2.NewTokenBiz(jwtManager)
 	tokenApplication := application.NewTokenApplication(tokenBiz)
 	tokenHandler := handler.NewTokenHandler(tokenApplication)
-	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, tokenHandler)
-	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler, tokenHandler)
+	clientRepo := repo.NewClientRepoImpl(baseDB)
+	clientBiz := biz3.NewClientBiz(clientRepo)
+	clientApplication := application.NewClientApplication(clientBiz)
+	clientHandler := handler.NewClientHandler(clientApplication)
+	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler)
+	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler)
 	app, cleanup2, err := newApp(logWriter, tracerProvider, registrar, grpcServer, httpServer)
 	if err != nil {
 		cleanup()

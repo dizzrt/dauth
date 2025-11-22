@@ -28,6 +28,13 @@ type identityApplication struct {
 	roleBiz biz.RoleBiz
 }
 
+func NewIdentityApplication(userBiz biz.UserBiz, roleBiz biz.RoleBiz) IdentityApplication {
+	return &identityApplication{
+		userBiz: userBiz,
+		roleBiz: roleBiz,
+	}
+}
+
 func (app *identityApplication) Login(ctx context.Context, req *identity.LoginRequest) (*identity.LoginResponse, error) {
 	var account string // only support email yet
 	if account = req.GetAccount(); account == "" {
@@ -58,13 +65,6 @@ func (app *identityApplication) Login(ctx context.Context, req *identity.LoginRe
 		User:     convert.UserToIdentityUser(user),
 		BaseResp: rpc.Success(),
 	}, nil
-}
-
-func NewIdentityApplication(userBiz biz.UserBiz, roleBiz biz.RoleBiz) IdentityApplication {
-	return &identityApplication{
-		userBiz: userBiz,
-		roleBiz: roleBiz,
-	}
 }
 
 func (app *identityApplication) Authenticate(ctx context.Context, req *identity.AuthenticateRequest) (*identity.AuthenticateResponse, error) {
