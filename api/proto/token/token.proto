@@ -10,14 +10,16 @@ import "google/api/annotations.proto";
 message IssueRequest {
     uint32 uid = 1;
     string client_id = 2;
-    // scope = 3 (reserved for future use)
-    int64 expiration = 4;
+    string scope = 3;
 
     base.Base base = 255;
 }
 
 message IssueResponse {
-    string token = 1;
+    string access_token = 1;
+    string refresh_token = 2;
+    int64 access_expire_at = 3;
+    int64 refresh_expire_at = 4;
 
     base.BaseResp base_resp = 255;
 }

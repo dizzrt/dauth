@@ -2,9 +2,11 @@ package application
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/dizzrt/dauth/api/gen/token"
 	"github.com/dizzrt/dauth/internal/domain/token/biz"
+	"github.com/dizzrt/dauth/internal/infra/rpc"
 )
 
 var _ TokenApplication = (*tokenApplication)(nil)
@@ -26,7 +28,22 @@ func NewTokenApplication(tokenBiz biz.TokenBiz) TokenApplication {
 }
 
 func (app *tokenApplication) Issue(ctx context.Context, req *token.IssueRequest) (*token.IssueResponse, error) {
-	return nil, nil
+	if req.Uid == 0 || req.ClientId == "" {
+		return nil, fmt.Errorf("invalid params")
+	}
+
+	accessToken, refreshToken, accessExpireAt, refreshExpireAt, err := app.tokenBiz.Issue(ctx, req.Uid, req.ClientId, req.Scope)
+	if err != nil {
+		return nil, err
+	}
+
+	return &token.IssueResponse{
+		AccessToken:     accessToken,
+		RefreshToken:    refreshToken,
+		AccessExpireAt:  accessExpireAt.Unix(),
+		RefreshExpireAt: refreshExpireAt.Unix(),
+		BaseResp:        rpc.Success(),
+	}, nil
 }
 
 func (app *tokenApplication) Validate(ctx context.Context, req *token.ValidateRequest) (*token.ValidateResponse, error) {

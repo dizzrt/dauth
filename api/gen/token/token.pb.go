@@ -24,12 +24,11 @@ const (
 )
 
 type IssueRequest struct {
-	state    protoimpl.MessageState `protogen:"open.v1"`
-	Uid      uint32                 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
-	ClientId string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
-	// scope = 3 (reserved for future use)
-	Expiration    int64      `protobuf:"varint,4,opt,name=expiration,proto3" json:"expiration,omitempty"`
-	Base          *base.Base `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Uid           uint32                 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	Scope         string                 `protobuf:"bytes,3,opt,name=scope,proto3" json:"scope,omitempty"`
+	Base          *base.Base             `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -78,11 +77,11 @@ func (x *IssueRequest) GetClientId() string {
 	return ""
 }
 
-func (x *IssueRequest) GetExpiration() int64 {
+func (x *IssueRequest) GetScope() string {
 	if x != nil {
-		return x.Expiration
+		return x.Scope
 	}
-	return 0
+	return ""
 }
 
 func (x *IssueRequest) GetBase() *base.Base {
@@ -93,11 +92,14 @@ func (x *IssueRequest) GetBase() *base.Base {
 }
 
 type IssueResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	BaseResp      *base.BaseResp         `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	AccessToken     string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
+	RefreshToken    string                 `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
+	AccessExpireAt  int64                  `protobuf:"varint,3,opt,name=access_expire_at,json=accessExpireAt,proto3" json:"access_expire_at,omitempty"`
+	RefreshExpireAt int64                  `protobuf:"varint,4,opt,name=refresh_expire_at,json=refreshExpireAt,proto3" json:"refresh_expire_at,omitempty"`
+	BaseResp        *base.BaseResp         `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *IssueResponse) Reset() {
@@ -130,11 +132,32 @@ func (*IssueResponse) Descriptor() ([]byte, []int) {
 	return file_token_token_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *IssueResponse) GetToken() string {
+func (x *IssueResponse) GetAccessToken() string {
 	if x != nil {
-		return x.Token
+		return x.AccessToken
 	}
 	return ""
+}
+
+func (x *IssueResponse) GetRefreshToken() string {
+	if x != nil {
+		return x.RefreshToken
+	}
+	return ""
+}
+
+func (x *IssueResponse) GetAccessExpireAt() int64 {
+	if x != nil {
+		return x.AccessExpireAt
+	}
+	return 0
+}
+
+func (x *IssueResponse) GetRefreshExpireAt() int64 {
+	if x != nil {
+		return x.RefreshExpireAt
+	}
+	return 0
 }
 
 func (x *IssueResponse) GetBaseResp() *base.BaseResp {
@@ -380,17 +403,18 @@ var File_token_token_proto protoreflect.FileDescriptor
 
 const file_token_token_proto_rawDesc = "" +
 	"\n" +
-	"\x11token/token.proto\x12\x05token\x1a\x0fbase/base.proto\x1a\x18token/token_common.proto\x1a\x1cgoogle/api/annotations.proto\"~\n" +
+	"\x11token/token.proto\x12\x05token\x1a\x0fbase/base.proto\x1a\x18token/token_common.proto\x1a\x1cgoogle/api/annotations.proto\"t\n" +
 	"\fIssueRequest\x12\x10\n" +
 	"\x03uid\x18\x01 \x01(\rR\x03uid\x12\x1b\n" +
-	"\tclient_id\x18\x02 \x01(\tR\bclientId\x12\x1e\n" +
-	"\n" +
-	"expiration\x18\x04 \x01(\x03R\n" +
-	"expiration\x12\x1f\n" +
+	"\tclient_id\x18\x02 \x01(\tR\bclientId\x12\x14\n" +
+	"\x05scope\x18\x03 \x01(\tR\x05scope\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"S\n" +
-	"\rIssueResponse\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\x12,\n" +
+	".base.BaseR\x04base\"\xdb\x01\n" +
+	"\rIssueResponse\x12!\n" +
+	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12#\n" +
+	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\x12(\n" +
+	"\x10access_expire_at\x18\x03 \x01(\x03R\x0eaccessExpireAt\x12*\n" +
+	"\x11refresh_expire_at\x18\x04 \x01(\x03R\x0frefreshExpireAt\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"e\n" +
 	"\x0fValidateRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1b\n" +

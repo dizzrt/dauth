@@ -63,7 +63,7 @@
 | ----- | ---- | ----- | ----------- |
 | uid | [uint32](#uint32) |  |  |
 | client_id | [string](#string) |  |  |
-| expiration | [int64](#int64) |  | scope = 3 (reserved for future use) |
+| scope | [string](#string) |  |  |
 | base | [base.Base](#base-Base) |  |  |
 
 
@@ -79,7 +79,10 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| token | [string](#string) |  |  |
+| access_token | [string](#string) |  |  |
+| refresh_token | [string](#string) |  |  |
+| access_expire_at | [int64](#int64) |  |  |
+| refresh_expire_at | [int64](#int64) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
