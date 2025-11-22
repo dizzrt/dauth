@@ -7,8 +7,6 @@
 package client
 
 import (
-	_ "github.com/dizzrt/dauth/api/gen/base"
-	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -80,7 +78,7 @@ type Client struct {
 	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
 	RedirectUri   string                 `protobuf:"bytes,3,opt,name=redirect_uri,json=redirectUri,proto3" json:"redirect_uri,omitempty"`
-	Status        ClientStatus           `protobuf:"varint,4,opt,name=status,proto3,enum=client.ClientStatus" json:"status,omitempty"`
+	Status        ClientStatus           `protobuf:"varint,4,opt,name=status,proto3,enum=ClientStatus" json:"status,omitempty"`
 	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt     int64                  `protobuf:"varint,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -163,12 +161,12 @@ var File_client_client_common_proto protoreflect.FileDescriptor
 
 const file_client_client_common_proto_rawDesc = "" +
 	"\n" +
-	"\x1aclient/client_common.proto\x12\x06client\x1a\x0fbase/base.proto\x1a\x1cgoogle/api/annotations.proto\"\xc4\x01\n" +
+	"\x1aclient/client_common.proto\"\xbd\x01\n" +
 	"\x06Client\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1b\n" +
 	"\tclient_id\x18\x02 \x01(\tR\bclientId\x12!\n" +
-	"\fredirect_uri\x18\x03 \x01(\tR\vredirectUri\x12,\n" +
-	"\x06status\x18\x04 \x01(\x0e2\x14.client.ClientStatusR\x06status\x12\x1d\n" +
+	"\fredirect_uri\x18\x03 \x01(\tR\vredirectUri\x12%\n" +
+	"\x06status\x18\x04 \x01(\x0e2\r.ClientStatusR\x06status\x12\x1d\n" +
 	"\n" +
 	"created_at\x18\x05 \x01(\x03R\tcreatedAt\x12\x1d\n" +
 	"\n" +
@@ -195,11 +193,11 @@ func file_client_client_common_proto_rawDescGZIP() []byte {
 var file_client_client_common_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_client_client_common_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_client_client_common_proto_goTypes = []any{
-	(ClientStatus)(0), // 0: client.ClientStatus
-	(*Client)(nil),    // 1: client.Client
+	(ClientStatus)(0), // 0: ClientStatus
+	(*Client)(nil),    // 1: Client
 }
 var file_client_client_common_proto_depIdxs = []int32{
-	0, // 0: client.Client.status:type_name -> client.ClientStatus
+	0, // 0: Client.status:type_name -> ClientStatus
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

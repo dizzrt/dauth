@@ -10,6 +10,7 @@ import (
 	"github.com/dizzrt/dauth/internal/application"
 	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
+	biz2 "github.com/dizzrt/dauth/internal/domain/token/biz"
 	"github.com/dizzrt/dauth/internal/handler"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
 	"github.com/dizzrt/dauth/internal/infra/repo"
@@ -35,8 +36,11 @@ func wireApp() (*ellie.App, func(), error) {
 	roleBiz := biz.NewRoleBiz(roleRepo, userRoleAssociationRepo)
 	identityApplication := application.NewIdentityApplication(userBiz, roleBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)
-	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler)
-	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler)
+	tokenBiz := biz2.NewTokenBiz()
+	tokenApplication := application.NewTokenApplication(tokenBiz)
+	tokenHandler := handler.NewTokenHandler(tokenApplication)
+	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, tokenHandler)
+	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler, tokenHandler)
 	app, cleanup2, err := newApp(logWriter, tracerProvider, registrar, grpcServer, httpServer)
 	if err != nil {
 		cleanup()

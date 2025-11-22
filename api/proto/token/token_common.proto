@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/token;token";
+
+message Token {
+}

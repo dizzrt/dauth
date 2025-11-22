@@ -175,34 +175,54 @@
         
           
           <li>
-            <a href="#client%2fclient.proto">client/client.proto</a>
+            <a href="#token%2ftoken_common.proto">token/token_common.proto</a>
             <ul>
               
-              
-              
-              
                 <li>
-                  <a href="#client.ClientService"><span class="badge">S</span>ClientService</a>
+                  <a href="#.Token"><span class="badge">M</span>Token</a>
                 </li>
+              
+              
+              
               
             </ul>
           </li>
         
           
           <li>
-            <a href="#client%2fclient_common.proto">client/client_common.proto</a>
+            <a href="#token%2ftoken.proto">token/token.proto</a>
             <ul>
               
                 <li>
-                  <a href="#.Client"><span class="badge">M</span>Client</a>
+                  <a href="#token.IssueRequest"><span class="badge">M</span>IssueRequest</a>
                 </li>
+              
+                <li>
+                  <a href="#token.IssueResponse"><span class="badge">M</span>IssueResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#token.RevokeRequest"><span class="badge">M</span>RevokeRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#token.RevokeResponse"><span class="badge">M</span>RevokeResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#token.ValidateRequest"><span class="badge">M</span>ValidateRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#token.ValidateResponse"><span class="badge">M</span>ValidateResponse</a>
+                </li>
+              
+              
               
               
                 <li>
-                  <a href="#.ClientStatus"><span class="badge">E</span>ClientStatus</a>
+                  <a href="#token.TokenService"><span class="badge">S</span>TokenService</a>
                 </li>
-              
-              
               
             </ul>
           </li>
@@ -214,38 +234,33 @@
     
       
       <div class="file-heading">
-        <h2 id="client/client.proto">client/client.proto</h2><a href="#title">Top</a>
+        <h2 id="token/token_common.proto">token/token_common.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
       
-
-      
-
-      
-
-      
-        <h3 id="client.ClientService">ClientService</h3>
+        <h3 id=".Token">Token</h3>
         <p></p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-          </tbody>
-        </table>
 
         
+
+        
+      
+
+      
+
+      
+
+      
     
       
       <div class="file-heading">
-        <h2 id="client/client_common.proto">client/client_common.proto</h2><a href="#title">Top</a>
+        <h2 id="token/token.proto">token/token.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
       
-        <h3 id=".Client">Client</h3>
+        <h3 id="token.IssueRequest">IssueRequest</h3>
         <p></p>
 
         
@@ -256,7 +271,7 @@
             <tbody>
               
                 <tr>
-                  <td>id</td>
+                  <td>uid</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -270,29 +285,191 @@
                 </tr>
               
                 <tr>
-                  <td>redirect_uri</td>
+                  <td>expiration</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>scope = 3 (reserved for future use) </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#base.Base">base.Base</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="token.IssueResponse">IssueResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>token</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>status</td>
-                  <td><a href="#ClientStatus">ClientStatus</a></td>
+                  <td>base_resp</td>
+                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="token.RevokeRequest">RevokeRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>token</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>created_at</td>
-                  <td><a href="#int64">int64</a></td>
+                  <td>reason</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>updated_at</td>
-                  <td><a href="#int64">int64</a></td>
+                  <td>base</td>
+                  <td><a href="#base.Base">base.Base</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="token.RevokeResponse">RevokeResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>is_success</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_resp</td>
+                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="token.ValidateRequest">ValidateRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>client_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#base.Base">base.Base</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="token.ValidateResponse">ValidateResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>is_valid</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>reason</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_resp</td>
+                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -306,45 +483,43 @@
       
 
       
-        <h3 id=".ClientStatus">ClientStatus</h3>
+
+      
+
+      
+        <h3 id="token.TokenService">TokenService</h3>
         <p></p>
         <table class="enum-table">
           <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
           </thead>
           <tbody>
             
               <tr>
-                <td>UNSPECIFIED</td>
-                <td>0</td>
-                <td><p></p></td>
+                <td>Issue</td>
+                <td><a href="#token.IssueRequest">IssueRequest</a></td>
+                <td><a href="#token.IssueResponse">IssueResponse</a></td>
+                <td><p>Issue issues a token for the given uid and client_id.</p></td>
               </tr>
             
               <tr>
-                <td>ACTIVE</td>
-                <td>1</td>
-                <td><p></p></td>
+                <td>Validate</td>
+                <td><a href="#token.ValidateRequest">ValidateRequest</a></td>
+                <td><a href="#token.ValidateResponse">ValidateResponse</a></td>
+                <td><p>Validate validates a token.</p></td>
               </tr>
             
               <tr>
-                <td>INACTIVE</td>
-                <td>2</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>DELETED</td>
-                <td>3</td>
-                <td><p></p></td>
+                <td>Revoke</td>
+                <td><a href="#token.RevokeRequest">RevokeRequest</a></td>
+                <td><a href="#token.RevokeResponse">RevokeResponse</a></td>
+                <td><p>Revoke revokes a token.</p></td>
               </tr>
             
           </tbody>
         </table>
-      
 
-      
-
-      
+        
     
 
     <h2 id="scalar-value-types">Scalar Value Types</h2>

@@ -3,22 +3,37 @@
 
 ## Table of Contents
 
-- [client/client.proto](#client_client-proto)
-    - [ClientService](#client-ClientService)
+- [token/token_common.proto](#token_token_common-proto)
+    - [Token](#-Token)
   
-- [client/client_common.proto](#client_client_common-proto)
-    - [Client](#-Client)
+- [token/token.proto](#token_token-proto)
+    - [IssueRequest](#token-IssueRequest)
+    - [IssueResponse](#token-IssueResponse)
+    - [RevokeRequest](#token-RevokeRequest)
+    - [RevokeResponse](#token-RevokeResponse)
+    - [ValidateRequest](#token-ValidateRequest)
+    - [ValidateResponse](#token-ValidateResponse)
   
-    - [ClientStatus](#-ClientStatus)
+    - [TokenService](#token-TokenService)
   
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="client_client-proto"></a>
+<a name="token_token_common-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## client/client.proto
+## token/token_common.proto
+
+
+
+<a name="-Token"></a>
+
+### Token
+
+
+
+
 
 
  
@@ -27,40 +42,112 @@
 
  
 
-
-<a name="client-ClientService"></a>
-
-### ClientService
-
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-
  
 
 
 
-<a name="client_client_common-proto"></a>
+<a name="token_token-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## client/client_common.proto
+## token/token.proto
 
 
 
-<a name="-Client"></a>
+<a name="token-IssueRequest"></a>
 
-### Client
+### IssueRequest
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| id | [uint32](#uint32) |  |  |
+| uid | [uint32](#uint32) |  |  |
 | client_id | [string](#string) |  |  |
-| redirect_uri | [string](#string) |  |  |
-| status | [ClientStatus](#ClientStatus) |  |  |
-| created_at | [int64](#int64) |  |  |
-| updated_at | [int64](#int64) |  |  |
+| expiration | [int64](#int64) |  | scope = 3 (reserved for future use) |
+| base | [base.Base](#base-Base) |  |  |
+
+
+
+
+
+
+<a name="token-IssueResponse"></a>
+
+### IssueResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| token | [string](#string) |  |  |
+| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
+
+
+
+
+
+
+<a name="token-RevokeRequest"></a>
+
+### RevokeRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| token | [string](#string) |  |  |
+| reason | [string](#string) |  |  |
+| base | [base.Base](#base-Base) |  |  |
+
+
+
+
+
+
+<a name="token-RevokeResponse"></a>
+
+### RevokeResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| is_success | [bool](#bool) |  |  |
+| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
+
+
+
+
+
+
+<a name="token-ValidateRequest"></a>
+
+### ValidateRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| token | [string](#string) |  |  |
+| client_id | [string](#string) |  |  |
+| base | [base.Base](#base-Base) |  |  |
+
+
+
+
+
+
+<a name="token-ValidateResponse"></a>
+
+### ValidateResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| is_valid | [bool](#bool) |  |  |
+| reason | [string](#string) |  |  |
+| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
 
@@ -68,23 +155,21 @@
 
  
 
-
-<a name="-ClientStatus"></a>
-
-### ClientStatus
-
-
-| Name | Number | Description |
-| ---- | ------ | ----------- |
-| UNSPECIFIED | 0 |  |
-| ACTIVE | 1 |  |
-| INACTIVE | 2 |  |
-| DELETED | 3 |  |
-
-
  
 
  
+
+
+<a name="token-TokenService"></a>
+
+### TokenService
+
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| Issue | [IssueRequest](#token-IssueRequest) | [IssueResponse](#token-IssueResponse) | Issue issues a token for the given uid and client_id. |
+| Validate | [ValidateRequest](#token-ValidateRequest) | [ValidateResponse](#token-ValidateResponse) | Validate validates a token. |
+| Revoke | [RevokeRequest](#token-RevokeRequest) | [RevokeResponse](#token-RevokeResponse) | Revoke revokes a token. |
 
  
 
