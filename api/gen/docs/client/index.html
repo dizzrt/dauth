@@ -179,6 +179,14 @@
             <ul>
               
                 <li>
+                  <a href="#client.CreateRequest"><span class="badge">M</span>CreateRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#client.CreateResponse"><span class="badge">M</span>CreateResponse</a>
+                </li>
+              
+                <li>
                   <a href="#client.ValidateRequest"><span class="badge">M</span>ValidateRequest</a>
                 </li>
               
@@ -226,6 +234,96 @@
       </div>
       <p></p>
 
+      
+        <h3 id="client.CreateRequest">CreateRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>secret</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>redirect_uri</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>scopes</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#base.Base">base.Base</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="client.CreateResponse">CreateResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>client_id</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_resp</td>
+                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
       
         <h3 id="client.ValidateRequest">ValidateRequest</h3>
         <p></p>
@@ -318,6 +416,13 @@
           <tbody>
             
               <tr>
+                <td>Create</td>
+                <td><a href="#client.CreateRequest">CreateRequest</a></td>
+                <td><a href="#client.CreateResponse">CreateResponse</a></td>
+                <td><p>Create creates a new client.</p></td>
+              </tr>
+            
+              <tr>
                 <td>Validate</td>
                 <td><a href="#client.ValidateRequest">ValidateRequest</a></td>
                 <td><a href="#client.ValidateResponse">ValidateResponse</a></td>
@@ -327,6 +432,34 @@
           </tbody>
         </table>
 
+        
+          
+          
+          <h4>Methods with HTTP bindings</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Method Name</td>
+                <td>Method</td>
+                <td>Pattern</td>
+                <td>Body</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+              
+              
+              <tr>
+                <td>Create</td>
+                <td>POST</td>
+                <td>/client/client/create</td>
+                <td>*</td>
+              </tr>
+              
+            
+            </tbody>
+          </table>
+          
         
     
       

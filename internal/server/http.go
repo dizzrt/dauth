@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/dizzrt/dauth/api/gen/client"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/dauth/internal/handler"
@@ -26,6 +27,7 @@ func NewHTTPServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *han
 	identity.RegisterUserServiceHTTPServer(srv, identityHandler)
 	identity.RegisterRoleServiceHTTPServer(srv, identityHandler)
 	// token.RegisterTokenServiceHTTPServer(srv, tokenHandler)
+	client.RegisterClientServiceHTTPServer(srv, clientHandler)
 
 	return srv
 }

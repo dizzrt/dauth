@@ -7,6 +7,9 @@ import (
 	"github.com/dizzrt/dauth/internal/application"
 )
 
+var _ identity.UserServiceServer = (*IdentityHandler)(nil)
+var _ identity.RoleServiceServer = (*IdentityHandler)(nil)
+
 type IdentityHandler struct {
 	identity.UnimplementedUserServiceServer
 	identity.UnimplementedRoleServiceServer

@@ -1,4 +1,4 @@
-package model
+package identity
 
 import (
 	"time"
@@ -25,7 +25,7 @@ func (u *User) TableName() string {
 }
 
 // ToEntity converts the User model to the User entity.
-func (u *User) ToEntity() (*entity.User, error) {
+func (u *User) ToEntity() *entity.User {
 	return &entity.User{
 		ID:            uint32(u.ID),
 		Email:         u.Email,
@@ -36,5 +36,5 @@ func (u *User) ToEntity() (*entity.User, error) {
 		CreatedAt:     u.CreatedAt,
 		UpdatedAt:     u.UpdatedAt,
 		DeletedAt:     u.DeletedAt,
-	}, nil
+	}
 }

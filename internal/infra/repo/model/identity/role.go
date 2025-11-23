@@ -1,4 +1,4 @@
-package model
+package identity
 
 import (
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"

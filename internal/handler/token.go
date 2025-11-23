@@ -7,6 +7,8 @@ import (
 	"github.com/dizzrt/dauth/internal/application"
 )
 
+var _ token.TokenServiceServer = (*TokenHandler)(nil)
+
 type TokenHandler struct {
 	token.UnimplementedTokenServiceServer
 

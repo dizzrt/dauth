@@ -6,7 +6,7 @@ import (
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/dizzrt/dauth/internal/domain/identity/repo"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
-	"github.com/dizzrt/dauth/internal/infra/repo/model"
+	"github.com/dizzrt/dauth/internal/infra/repo/model/identity"
 )
 
 var _ repo.RoleRepo = (*RoleRepoImpl)(nil)
@@ -22,7 +22,7 @@ func NewRoleRepoImpl(db *foundation.BaseDB) repo.RoleRepo {
 }
 
 func (impl *RoleRepoImpl) CreateRole(ctx context.Context, role *entity.Role) (uint, error) {
-	m := &model.Role{
+	m := &identity.Role{
 		Name:        role.Name,
 		Description: role.Description,
 	}
@@ -36,7 +36,7 @@ func (impl *RoleRepoImpl) CreateRole(ctx context.Context, role *entity.Role) (ui
 }
 
 func (impl *RoleRepoImpl) ListRolesWithPage(ctx context.Context, page, pageSize int) ([]*entity.Role, error) {
-	var ms []*model.Role
+	var ms []*identity.Role
 
 	db := impl.WithContext(ctx)
 	err := db.Offset((page - 1) * pageSize).
@@ -62,14 +62,14 @@ func (impl *RoleRepoImpl) ListRolesWithPage(ctx context.Context, page, pageSize 
 
 func (impl *RoleRepoImpl) DeleteRoles(ctx context.Context, ids []uint) error {
 	db := impl.WithContext(ctx)
-	err := db.Delete(&model.Role{}, "id IN ?", ids).Error
+	err := db.Delete(&identity.Role{}, "id IN ?", ids).Error
 
 	return err
 }
 
 func (impl *RoleRepoImpl) UpdateRole(ctx context.Context, role *entity.Role) error {
 	db := impl.WithContext(ctx)
-	err := db.Model(&model.Role{}).
+	err := db.Model(&identity.Role{}).
 		Where("id = ?", role.ID).
 		Updates(map[string]any{
 			"name":        role.Name,

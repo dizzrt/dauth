@@ -8,7 +8,7 @@ import (
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/dizzrt/dauth/internal/domain/identity/repo"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
-	"github.com/dizzrt/dauth/internal/infra/repo/model"
+	identity_model "github.com/dizzrt/dauth/internal/infra/repo/model/identity"
 )
 
 var _ repo.UserRepo = (*UserRepoImpl)(nil)
@@ -24,7 +24,7 @@ func NewUserRepoImpl(base *foundation.BaseDB) repo.UserRepo {
 }
 
 func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (uint32, error) {
-	model := &model.User{
+	model := &identity_model.User{
 		Email:         user.Email,
 		Username:      user.Username,
 		Password:      user.Password,
@@ -41,17 +41,17 @@ func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (ui
 }
 
 func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.User, error) {
-	var model *model.User
+	var model *identity_model.User
 	db := impl.WithContext(ctx)
 	if err := db.Where("id = ?", uid).First(&model).Error; err != nil {
 		return nil, err
 	}
 
-	return model.ToEntity()
+	return model.ToEntity(), nil
 }
 
 func (impl *UserRepoImpl) GetUserByEmail(ctx context.Context, email string) (*entity.User, error) {
-	var model *model.User
+	var model *identity_model.User
 
 	db := impl.WithContext(ctx)
 	if err := db.Where("email = ?", email).
@@ -59,12 +59,12 @@ func (impl *UserRepoImpl) GetUserByEmail(ctx context.Context, email string) (*en
 		return nil, err
 	}
 
-	return model.ToEntity()
+	return model.ToEntity(), nil
 }
 
 func (impl *UserRepoImpl) UpdateUserPassword(ctx context.Context, uid uint32, password string) error {
 	db := impl.WithContext(ctx)
-	err := db.Model(&model.User{}).Where("id = ?", uid).
+	err := db.Model(&identity_model.User{}).Where("id = ?", uid).
 		Update("password", password).Error
 
 	return err
@@ -73,7 +73,7 @@ func (impl *UserRepoImpl) UpdateUserPassword(ctx context.Context, uid uint32, pa
 func (impl *UserRepoImpl) UpdateUserStatus(ctx context.Context, uid uint32, status identity.User_Status) error {
 	mStatus := uint(status)
 	db := impl.WithContext(ctx)
-	err := db.Model(&model.User{}).
+	err := db.Model(&identity_model.User{}).
 		Where("id = ?", uid).
 		Update("status", mStatus).Error
 

@@ -3,17 +3,13 @@ package entity
 import (
 	"time"
 
-	"github.com/dizzrt/dauth/api/gen/client"
 	"gorm.io/gorm"
 )
 
-type Client struct {
+type Scope struct {
 	ID          uint32
 	Name        string
 	Description string
-	Secret      string `validate:"required"`
-	RedirectURI string
-	Status      client.Client_Status
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	DeletedAt   gorm.DeletedAt

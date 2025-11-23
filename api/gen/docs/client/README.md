@@ -4,6 +4,8 @@
 ## Table of Contents
 
 - [client/client.proto](#client_client-proto)
+    - [CreateRequest](#client-CreateRequest)
+    - [CreateResponse](#client-CreateResponse)
     - [ValidateRequest](#client-ValidateRequest)
     - [ValidateResponse](#client-ValidateResponse)
   
@@ -22,6 +24,42 @@
 <p align="right"><a href="#top">Top</a></p>
 
 ## client/client.proto
+
+
+
+<a name="client-CreateRequest"></a>
+
+### CreateRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| name | [string](#string) |  |  |
+| description | [string](#string) |  |  |
+| secret | [string](#string) |  |  |
+| redirect_uri | [string](#string) |  |  |
+| scopes | [uint32](#uint32) | repeated |  |
+| base | [base.Base](#base-Base) |  |  |
+
+
+
+
+
+
+<a name="client-CreateResponse"></a>
+
+### CreateResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| client_id | [uint32](#uint32) |  |  |
+| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
+
+
+
 
 
 
@@ -72,6 +110,7 @@
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| Create | [CreateRequest](#client-CreateRequest) | [CreateResponse](#client-CreateResponse) | Create creates a new client. |
 | Validate | [ValidateRequest](#client-ValidateRequest) | [ValidateResponse](#client-ValidateResponse) | Validate validates the client and scope. |
 
  
