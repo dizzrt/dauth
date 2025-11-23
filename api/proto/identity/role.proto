@@ -71,11 +71,7 @@ message UnassignRolesResponse {
 }
 
 service RoleService {
-    /*
-    * CreateRole creates a new role.
-    * @Param CreateRoleRequest
-    * @Return CreateRoleResponse
-    */
+    // CreateRole creates a new role.
     rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
         option (google.api.http) = {
             post: "/identity/role"
@@ -83,22 +79,14 @@ service RoleService {
         };
     }
 
-    /*
-    * GetRoles gets all roles.
-    * @Param GetRolesRequest
-    * @Return GetRolesResponse
-    */
+    // GetRoles gets all roles.
     rpc GetRoles(GetRolesRequest) returns (GetRolesResponse) {
         option (google.api.http) = {
             get: "/identity/roles"
         };
     }
 
-    /*
-    * DeleteRoles deletes roles by IDs.
-    * @Param DeleteRolesRequest
-    * @Return DeleteRolesResponse
-    */
+    // DeleteRoles deletes roles by IDs.
     rpc DeleteRoles(DeleteRolesRequest) returns (DeleteRolesResponse) {
         option (google.api.http) = {
             post: "/identity/roles/delete"
@@ -106,11 +94,7 @@ service RoleService {
         };
     }
 
-    /*
-    * UpdateRole updates a role by ID.
-    * @Param UpdateRoleRequest
-    * @Return UpdateRoleResponse
-    */
+    // UpdateRole updates a role by ID.
     rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
         option (google.api.http) = {
             put: "/identity/role/{id}"
@@ -118,11 +102,7 @@ service RoleService {
         };
     }
 
-    /*
-    * AssignRoles assigns roles to a user.
-    * @Param AssignRolesRequest
-    * @Return AssignRolesResponse
-    */
+    // AssignRoles assigns roles to a user.
     rpc AssignRoles(AssignRolesRequest) returns (AssignRolesResponse) {
         option (google.api.http) = {
             put: "/identity/role/{id}/roles"
@@ -130,11 +110,7 @@ service RoleService {
         };
     }
 
-    /*
-    * UnassignRoles unassigns roles from a user.
-    * @Param UnassignRolesRequest
-    * @Return UnassignRolesResponse
-    */
+    // UnassignRoles unassigns roles from a user.
     rpc UnassignRoles(UnassignRolesRequest) returns (UnassignRolesResponse) {
         option (google.api.http) = {
             post: "/identity/role/{id}/roles"

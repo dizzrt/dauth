@@ -39,35 +39,17 @@ const OperationRoleServiceUnassignRoles = "/RoleService/UnassignRoles"
 const OperationRoleServiceUpdateRole = "/RoleService/UpdateRole"
 
 type RoleServiceHTTPServer interface {
-	// AssignRoles
-	// AssignRoles assigns roles to a user.
-	// @Param AssignRolesRequest
-	// @Return AssignRolesResponse
+	// AssignRoles AssignRoles assigns roles to a user.
 	AssignRoles(context.Context, *AssignRolesRequest) (*AssignRolesResponse, error)
-	// CreateRole
-	// CreateRole creates a new role.
-	// @Param CreateRoleRequest
-	// @Return CreateRoleResponse
+	// CreateRole CreateRole creates a new role.
 	CreateRole(context.Context, *CreateRoleRequest) (*CreateRoleResponse, error)
-	// DeleteRoles
-	// DeleteRoles deletes roles by IDs.
-	// @Param DeleteRolesRequest
-	// @Return DeleteRolesResponse
+	// DeleteRoles DeleteRoles deletes roles by IDs.
 	DeleteRoles(context.Context, *DeleteRolesRequest) (*DeleteRolesResponse, error)
-	// GetRoles
-	// GetRoles gets all roles.
-	// @Param GetRolesRequest
-	// @Return GetRolesResponse
+	// GetRoles GetRoles gets all roles.
 	GetRoles(context.Context, *GetRolesRequest) (*GetRolesResponse, error)
-	// UnassignRoles
-	// UnassignRoles unassigns roles from a user.
-	// @Param UnassignRolesRequest
-	// @Return UnassignRolesResponse
+	// UnassignRoles UnassignRoles unassigns roles from a user.
 	UnassignRoles(context.Context, *UnassignRolesRequest) (*UnassignRolesResponse, error)
-	// UpdateRole
-	// UpdateRole updates a role by ID.
-	// @Param UpdateRoleRequest
-	// @Return UpdateRoleResponse
+	// UpdateRole UpdateRole updates a role by ID.
 	UpdateRole(context.Context, *UpdateRoleRequest) (*UpdateRoleResponse, error)
 }
 

@@ -32,28 +32,16 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RoleServiceClient interface {
 	// CreateRole creates a new role.
-	// @Param CreateRoleRequest
-	// @Return CreateRoleResponse
 	CreateRole(ctx context.Context, in *CreateRoleRequest, opts ...grpc.CallOption) (*CreateRoleResponse, error)
 	// GetRoles gets all roles.
-	// @Param GetRolesRequest
-	// @Return GetRolesResponse
 	GetRoles(ctx context.Context, in *GetRolesRequest, opts ...grpc.CallOption) (*GetRolesResponse, error)
 	// DeleteRoles deletes roles by IDs.
-	// @Param DeleteRolesRequest
-	// @Return DeleteRolesResponse
 	DeleteRoles(ctx context.Context, in *DeleteRolesRequest, opts ...grpc.CallOption) (*DeleteRolesResponse, error)
 	// UpdateRole updates a role by ID.
-	// @Param UpdateRoleRequest
-	// @Return UpdateRoleResponse
 	UpdateRole(ctx context.Context, in *UpdateRoleRequest, opts ...grpc.CallOption) (*UpdateRoleResponse, error)
 	// AssignRoles assigns roles to a user.
-	// @Param AssignRolesRequest
-	// @Return AssignRolesResponse
 	AssignRoles(ctx context.Context, in *AssignRolesRequest, opts ...grpc.CallOption) (*AssignRolesResponse, error)
 	// UnassignRoles unassigns roles from a user.
-	// @Param UnassignRolesRequest
-	// @Return UnassignRolesResponse
 	UnassignRoles(ctx context.Context, in *UnassignRolesRequest, opts ...grpc.CallOption) (*UnassignRolesResponse, error)
 }
 
@@ -130,28 +118,16 @@ func (c *roleServiceClient) UnassignRoles(ctx context.Context, in *UnassignRoles
 // for forward compatibility.
 type RoleServiceServer interface {
 	// CreateRole creates a new role.
-	// @Param CreateRoleRequest
-	// @Return CreateRoleResponse
 	CreateRole(context.Context, *CreateRoleRequest) (*CreateRoleResponse, error)
 	// GetRoles gets all roles.
-	// @Param GetRolesRequest
-	// @Return GetRolesResponse
 	GetRoles(context.Context, *GetRolesRequest) (*GetRolesResponse, error)
 	// DeleteRoles deletes roles by IDs.
-	// @Param DeleteRolesRequest
-	// @Return DeleteRolesResponse
 	DeleteRoles(context.Context, *DeleteRolesRequest) (*DeleteRolesResponse, error)
 	// UpdateRole updates a role by ID.
-	// @Param UpdateRoleRequest
-	// @Return UpdateRoleResponse
 	UpdateRole(context.Context, *UpdateRoleRequest) (*UpdateRoleResponse, error)
 	// AssignRoles assigns roles to a user.
-	// @Param AssignRolesRequest
-	// @Return AssignRolesResponse
 	AssignRoles(context.Context, *AssignRolesRequest) (*AssignRolesResponse, error)
 	// UnassignRoles unassigns roles from a user.
-	// @Param UnassignRolesRequest
-	// @Return UnassignRolesResponse
 	UnassignRoles(context.Context, *UnassignRolesRequest) (*UnassignRolesResponse, error)
 	mustEmbedUnimplementedRoleServiceServer()
 }

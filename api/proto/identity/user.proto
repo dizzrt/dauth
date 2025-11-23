@@ -73,11 +73,7 @@ message UpdateUserPasswordResponse {
 }
 
 service UserService {
-    /*
-    * Login logs in a user.
-    * @Param LoginRequest
-    * @Return LoginResponse
-    */
+    // Login logs in a user.
     rpc Login(LoginRequest) returns (LoginResponse) {
         option (google.api.http) = {
             post: "/identity/user/login"
@@ -85,18 +81,10 @@ service UserService {
         };
     }
 
-    /*
-    * Authenticate authenticates a user.
-    * @Param AuthenticateRequest
-    * @Return AuthenticateResponse
-    */
+    // Authenticate authenticates a user.
     rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {}
 
-    /*
-    * CreateUser creates a new user.
-    * @Param CreateUserRequest
-    * @Return CreateUserResponse
-    */
+    // CreateUser creates a new user.
     rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
         option (google.api.http) = {
             post: "/identity/user/create"
@@ -104,22 +92,14 @@ service UserService {
         };
     }
 
-    /*
-    * GetUser gets a user by ID.
-    * @Param GetUserRequest
-    * @Return GetUserResponse
-    */
+    // GetUser gets a user by ID.
     rpc GetUser(GetUserRequest) returns (GetUserResponse) {
         option (google.api.http) = {
             get: "/identity/user/{id}"
         };
     }
 
-    /*
-    * UpdateUserStatus updates the status of a user.
-    * @Param UpdateUserStatusRequest
-    * @Return UpdateUserStatusResponse
-    */
+    // UpdateUserStatus updates the status of a user.
     rpc UpdateUserStatus(UpdateUserStatusRequest) returns (UpdateUserStatusResponse) {
         option (google.api.http) = {
             put: "/identity/user/{id}/status"
@@ -127,11 +107,7 @@ service UserService {
         };
     }
 
-    /*
-    * UpdateUserPassword updates the password of a user.
-    * @Param UpdateUserPasswordRequest
-    * @Return UpdateUserPasswordResponse
-    */
+    // UpdateUserPassword updates the password of a user.   
     rpc UpdateUserPassword(UpdateUserPasswordRequest) returns (UpdateUserPasswordResponse) {
         option (google.api.http) = {
             put: "/identity/user/{id}/password"

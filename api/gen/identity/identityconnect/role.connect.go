@@ -51,28 +51,16 @@ const (
 // RoleServiceClient is a client for the identity.RoleService service.
 type RoleServiceClient interface {
 	// CreateRole creates a new role.
-	// @Param CreateRoleRequest
-	// @Return CreateRoleResponse
 	CreateRole(context.Context, *connect.Request[identity.CreateRoleRequest]) (*connect.Response[identity.CreateRoleResponse], error)
 	// GetRoles gets all roles.
-	// @Param GetRolesRequest
-	// @Return GetRolesResponse
 	GetRoles(context.Context, *connect.Request[identity.GetRolesRequest]) (*connect.Response[identity.GetRolesResponse], error)
 	// DeleteRoles deletes roles by IDs.
-	// @Param DeleteRolesRequest
-	// @Return DeleteRolesResponse
 	DeleteRoles(context.Context, *connect.Request[identity.DeleteRolesRequest]) (*connect.Response[identity.DeleteRolesResponse], error)
 	// UpdateRole updates a role by ID.
-	// @Param UpdateRoleRequest
-	// @Return UpdateRoleResponse
 	UpdateRole(context.Context, *connect.Request[identity.UpdateRoleRequest]) (*connect.Response[identity.UpdateRoleResponse], error)
 	// AssignRoles assigns roles to a user.
-	// @Param AssignRolesRequest
-	// @Return AssignRolesResponse
 	AssignRoles(context.Context, *connect.Request[identity.AssignRolesRequest]) (*connect.Response[identity.AssignRolesResponse], error)
 	// UnassignRoles unassigns roles from a user.
-	// @Param UnassignRolesRequest
-	// @Return UnassignRolesResponse
 	UnassignRoles(context.Context, *connect.Request[identity.UnassignRolesRequest]) (*connect.Response[identity.UnassignRolesResponse], error)
 }
 
@@ -169,28 +157,16 @@ func (c *roleServiceClient) UnassignRoles(ctx context.Context, req *connect.Requ
 // RoleServiceHandler is an implementation of the identity.RoleService service.
 type RoleServiceHandler interface {
 	// CreateRole creates a new role.
-	// @Param CreateRoleRequest
-	// @Return CreateRoleResponse
 	CreateRole(context.Context, *connect.Request[identity.CreateRoleRequest]) (*connect.Response[identity.CreateRoleResponse], error)
 	// GetRoles gets all roles.
-	// @Param GetRolesRequest
-	// @Return GetRolesResponse
 	GetRoles(context.Context, *connect.Request[identity.GetRolesRequest]) (*connect.Response[identity.GetRolesResponse], error)
 	// DeleteRoles deletes roles by IDs.
-	// @Param DeleteRolesRequest
-	// @Return DeleteRolesResponse
 	DeleteRoles(context.Context, *connect.Request[identity.DeleteRolesRequest]) (*connect.Response[identity.DeleteRolesResponse], error)
 	// UpdateRole updates a role by ID.
-	// @Param UpdateRoleRequest
-	// @Return UpdateRoleResponse
 	UpdateRole(context.Context, *connect.Request[identity.UpdateRoleRequest]) (*connect.Response[identity.UpdateRoleResponse], error)
 	// AssignRoles assigns roles to a user.
-	// @Param AssignRolesRequest
-	// @Return AssignRolesResponse
 	AssignRoles(context.Context, *connect.Request[identity.AssignRolesRequest]) (*connect.Response[identity.AssignRolesResponse], error)
 	// UnassignRoles unassigns roles from a user.
-	// @Param UnassignRolesRequest
-	// @Return UnassignRolesResponse
 	UnassignRoles(context.Context, *connect.Request[identity.UnassignRolesRequest]) (*connect.Response[identity.UnassignRolesResponse], error)
 }
 

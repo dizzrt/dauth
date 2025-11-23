@@ -32,28 +32,16 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
 	// Login logs in a user.
-	// @Param LoginRequest
-	// @Return LoginResponse
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	// Authenticate authenticates a user.
-	// @Param AuthenticateRequest
-	// @Return AuthenticateResponse
 	Authenticate(ctx context.Context, in *AuthenticateRequest, opts ...grpc.CallOption) (*AuthenticateResponse, error)
 	// CreateUser creates a new user.
-	// @Param CreateUserRequest
-	// @Return CreateUserResponse
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	// GetUser gets a user by ID.
-	// @Param GetUserRequest
-	// @Return GetUserResponse
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 	// UpdateUserStatus updates the status of a user.
-	// @Param UpdateUserStatusRequest
-	// @Return UpdateUserStatusResponse
 	UpdateUserStatus(ctx context.Context, in *UpdateUserStatusRequest, opts ...grpc.CallOption) (*UpdateUserStatusResponse, error)
 	// UpdateUserPassword updates the password of a user.
-	// @Param UpdateUserPasswordRequest
-	// @Return UpdateUserPasswordResponse
 	UpdateUserPassword(ctx context.Context, in *UpdateUserPasswordRequest, opts ...grpc.CallOption) (*UpdateUserPasswordResponse, error)
 }
 
@@ -130,28 +118,16 @@ func (c *userServiceClient) UpdateUserPassword(ctx context.Context, in *UpdateUs
 // for forward compatibility.
 type UserServiceServer interface {
 	// Login logs in a user.
-	// @Param LoginRequest
-	// @Return LoginResponse
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	// Authenticate authenticates a user.
-	// @Param AuthenticateRequest
-	// @Return AuthenticateResponse
 	Authenticate(context.Context, *AuthenticateRequest) (*AuthenticateResponse, error)
 	// CreateUser creates a new user.
-	// @Param CreateUserRequest
-	// @Return CreateUserResponse
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	// GetUser gets a user by ID.
-	// @Param GetUserRequest
-	// @Return GetUserResponse
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
 	// UpdateUserStatus updates the status of a user.
-	// @Param UpdateUserStatusRequest
-	// @Return UpdateUserStatusResponse
 	UpdateUserStatus(context.Context, *UpdateUserStatusRequest) (*UpdateUserStatusResponse, error)
 	// UpdateUserPassword updates the password of a user.
-	// @Param UpdateUserPasswordRequest
-	// @Return UpdateUserPasswordResponse
 	UpdateUserPassword(context.Context, *UpdateUserPasswordRequest) (*UpdateUserPasswordResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }

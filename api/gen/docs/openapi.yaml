@@ -35,10 +35,7 @@ paths:
         post:
             tags:
                 - RoleService
-            description: |-
-                CreateRole creates a new role.
-                 @Param CreateRoleRequest
-                 @Return CreateRoleResponse
+            description: CreateRole creates a new role.
             operationId: RoleService_CreateRole
             requestBody:
                 content:
@@ -63,10 +60,7 @@ paths:
         put:
             tags:
                 - RoleService
-            description: |-
-                UpdateRole updates a role by ID.
-                 @Param UpdateRoleRequest
-                 @Return UpdateRoleResponse
+            description: UpdateRole updates a role by ID.
             operationId: RoleService_UpdateRole
             parameters:
                 - name: id
@@ -98,10 +92,7 @@ paths:
         put:
             tags:
                 - RoleService
-            description: |-
-                AssignRoles assigns roles to a user.
-                 @Param AssignRolesRequest
-                 @Return AssignRolesResponse
+            description: AssignRoles assigns roles to a user.
             operationId: RoleService_AssignRoles
             parameters:
                 - name: id
@@ -132,10 +123,7 @@ paths:
         post:
             tags:
                 - RoleService
-            description: |-
-                UnassignRoles unassigns roles from a user.
-                 @Param UnassignRolesRequest
-                 @Return UnassignRolesResponse
+            description: UnassignRoles unassigns roles from a user.
             operationId: RoleService_UnassignRoles
             parameters:
                 - name: id
@@ -167,10 +155,7 @@ paths:
         get:
             tags:
                 - RoleService
-            description: |-
-                GetRoles gets all roles.
-                 @Param GetRolesRequest
-                 @Return GetRolesResponse
+            description: GetRoles gets all roles.
             operationId: RoleService_GetRoles
             responses:
                 "200":
@@ -189,10 +174,7 @@ paths:
         post:
             tags:
                 - RoleService
-            description: |-
-                DeleteRoles deletes roles by IDs.
-                 @Param DeleteRolesRequest
-                 @Return DeleteRolesResponse
+            description: DeleteRoles deletes roles by IDs.
             operationId: RoleService_DeleteRoles
             requestBody:
                 content:
@@ -217,10 +199,7 @@ paths:
         post:
             tags:
                 - UserService
-            description: |-
-                CreateUser creates a new user.
-                 @Param CreateUserRequest
-                 @Return CreateUserResponse
+            description: CreateUser creates a new user.
             operationId: UserService_CreateUser
             requestBody:
                 content:
@@ -245,10 +224,7 @@ paths:
         post:
             tags:
                 - UserService
-            description: |-
-                Login logs in a user.
-                 @Param LoginRequest
-                 @Return LoginResponse
+            description: Login logs in a user.
             operationId: UserService_Login
             requestBody:
                 content:
@@ -273,10 +249,7 @@ paths:
         get:
             tags:
                 - UserService
-            description: |-
-                GetUser gets a user by ID.
-                 @Param GetUserRequest
-                 @Return GetUserResponse
+            description: GetUser gets a user by ID.
             operationId: UserService_GetUser
             parameters:
                 - name: id
@@ -302,10 +275,7 @@ paths:
         put:
             tags:
                 - UserService
-            description: |-
-                UpdateUserPassword updates the password of a user.
-                 @Param UpdateUserPasswordRequest
-                 @Return UpdateUserPasswordResponse
+            description: UpdateUserPassword updates the password of a user.
             operationId: UserService_UpdateUserPassword
             parameters:
                 - name: id
@@ -337,10 +307,7 @@ paths:
         put:
             tags:
                 - UserService
-            description: |-
-                UpdateUserStatus updates the status of a user.
-                 @Param UpdateUserStatusRequest
-                 @Return UpdateUserStatusResponse
+            description: UpdateUserStatus updates the status of a user.
             operationId: UserService_UpdateUserStatus
             parameters:
                 - name: id

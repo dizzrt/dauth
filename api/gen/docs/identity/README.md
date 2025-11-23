@@ -365,12 +365,12 @@
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| CreateRole | [CreateRoleRequest](#identity-CreateRoleRequest) | [CreateRoleResponse](#identity-CreateRoleResponse) | CreateRole creates a new role. @Param CreateRoleRequest @Return CreateRoleResponse |
-| GetRoles | [GetRolesRequest](#identity-GetRolesRequest) | [GetRolesResponse](#identity-GetRolesResponse) | GetRoles gets all roles. @Param GetRolesRequest @Return GetRolesResponse |
-| DeleteRoles | [DeleteRolesRequest](#identity-DeleteRolesRequest) | [DeleteRolesResponse](#identity-DeleteRolesResponse) | DeleteRoles deletes roles by IDs. @Param DeleteRolesRequest @Return DeleteRolesResponse |
-| UpdateRole | [UpdateRoleRequest](#identity-UpdateRoleRequest) | [UpdateRoleResponse](#identity-UpdateRoleResponse) | UpdateRole updates a role by ID. @Param UpdateRoleRequest @Return UpdateRoleResponse |
-| AssignRoles | [AssignRolesRequest](#identity-AssignRolesRequest) | [AssignRolesResponse](#identity-AssignRolesResponse) | AssignRoles assigns roles to a user. @Param AssignRolesRequest @Return AssignRolesResponse |
-| UnassignRoles | [UnassignRolesRequest](#identity-UnassignRolesRequest) | [UnassignRolesResponse](#identity-UnassignRolesResponse) | UnassignRoles unassigns roles from a user. @Param UnassignRolesRequest @Return UnassignRolesResponse |
+| CreateRole | [CreateRoleRequest](#identity-CreateRoleRequest) | [CreateRoleResponse](#identity-CreateRoleResponse) | CreateRole creates a new role. |
+| GetRoles | [GetRolesRequest](#identity-GetRolesRequest) | [GetRolesResponse](#identity-GetRolesResponse) | GetRoles gets all roles. |
+| DeleteRoles | [DeleteRolesRequest](#identity-DeleteRolesRequest) | [DeleteRolesResponse](#identity-DeleteRolesResponse) | DeleteRoles deletes roles by IDs. |
+| UpdateRole | [UpdateRoleRequest](#identity-UpdateRoleRequest) | [UpdateRoleResponse](#identity-UpdateRoleResponse) | UpdateRole updates a role by ID. |
+| AssignRoles | [AssignRolesRequest](#identity-AssignRolesRequest) | [AssignRolesResponse](#identity-AssignRolesResponse) | AssignRoles assigns roles to a user. |
+| UnassignRoles | [UnassignRolesRequest](#identity-UnassignRolesRequest) | [UnassignRolesResponse](#identity-UnassignRolesResponse) | UnassignRoles unassigns roles from a user. |
 
  
 
@@ -592,12 +592,12 @@
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Login | [LoginRequest](#identity-LoginRequest) | [LoginResponse](#identity-LoginResponse) | Login logs in a user. @Param LoginRequest @Return LoginResponse |
-| Authenticate | [AuthenticateRequest](#identity-AuthenticateRequest) | [AuthenticateResponse](#identity-AuthenticateResponse) | Authenticate authenticates a user. @Param AuthenticateRequest @Return AuthenticateResponse |
-| CreateUser | [CreateUserRequest](#identity-CreateUserRequest) | [CreateUserResponse](#identity-CreateUserResponse) | CreateUser creates a new user. @Param CreateUserRequest @Return CreateUserResponse |
-| GetUser | [GetUserRequest](#identity-GetUserRequest) | [GetUserResponse](#identity-GetUserResponse) | GetUser gets a user by ID. @Param GetUserRequest @Return GetUserResponse |
-| UpdateUserStatus | [UpdateUserStatusRequest](#identity-UpdateUserStatusRequest) | [UpdateUserStatusResponse](#identity-UpdateUserStatusResponse) | UpdateUserStatus updates the status of a user. @Param UpdateUserStatusRequest @Return UpdateUserStatusResponse |
-| UpdateUserPassword | [UpdateUserPasswordRequest](#identity-UpdateUserPasswordRequest) | [UpdateUserPasswordResponse](#identity-UpdateUserPasswordResponse) | UpdateUserPassword updates the password of a user. @Param UpdateUserPasswordRequest @Return UpdateUserPasswordResponse |
+| Login | [LoginRequest](#identity-LoginRequest) | [LoginResponse](#identity-LoginResponse) | Login logs in a user. |
+| Authenticate | [AuthenticateRequest](#identity-AuthenticateRequest) | [AuthenticateResponse](#identity-AuthenticateResponse) | Authenticate authenticates a user. |
+| CreateUser | [CreateUserRequest](#identity-CreateUserRequest) | [CreateUserResponse](#identity-CreateUserResponse) | CreateUser creates a new user. |
+| GetUser | [GetUserRequest](#identity-GetUserRequest) | [GetUserResponse](#identity-GetUserResponse) | GetUser gets a user by ID. |
+| UpdateUserStatus | [UpdateUserStatusRequest](#identity-UpdateUserStatusRequest) | [UpdateUserStatusResponse](#identity-UpdateUserStatusResponse) | UpdateUserStatus updates the status of a user. |
+| UpdateUserPassword | [UpdateUserPasswordRequest](#identity-UpdateUserPasswordRequest) | [UpdateUserPasswordResponse](#identity-UpdateUserPasswordResponse) | UpdateUserPassword updates the password of a user. |
 
  
 

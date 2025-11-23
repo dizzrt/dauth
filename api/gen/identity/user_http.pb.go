@@ -38,30 +38,15 @@ const OperationUserServiceUpdateUserPassword = "/UserService/UpdateUserPassword"
 const OperationUserServiceUpdateUserStatus = "/UserService/UpdateUserStatus"
 
 type UserServiceHTTPServer interface {
-	// CreateUser
-	// CreateUser creates a new user.
-	// @Param CreateUserRequest
-	// @Return CreateUserResponse
+	// CreateUser CreateUser creates a new user.
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
-	// GetUser
-	// GetUser gets a user by ID.
-	// @Param GetUserRequest
-	// @Return GetUserResponse
+	// GetUser GetUser gets a user by ID.
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
-	// Login
-	// Login logs in a user.
-	// @Param LoginRequest
-	// @Return LoginResponse
+	// Login Login logs in a user.
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	// UpdateUserPassword
-	// UpdateUserPassword updates the password of a user.
-	// @Param UpdateUserPasswordRequest
-	// @Return UpdateUserPasswordResponse
+	// UpdateUserPassword UpdateUserPassword updates the password of a user.
 	UpdateUserPassword(context.Context, *UpdateUserPasswordRequest) (*UpdateUserPasswordResponse, error)
-	// UpdateUserStatus
-	// UpdateUserStatus updates the status of a user.
-	// @Param UpdateUserStatusRequest
-	// @Return UpdateUserStatusResponse
+	// UpdateUserStatus UpdateUserStatus updates the status of a user.
 	UpdateUserStatus(context.Context, *UpdateUserStatusRequest) (*UpdateUserStatusResponse, error)
 }
 

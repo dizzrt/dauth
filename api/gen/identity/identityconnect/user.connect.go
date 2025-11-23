@@ -53,28 +53,16 @@ const (
 // UserServiceClient is a client for the identity.UserService service.
 type UserServiceClient interface {
 	// Login logs in a user.
-	// @Param LoginRequest
-	// @Return LoginResponse
 	Login(context.Context, *connect.Request[identity.LoginRequest]) (*connect.Response[identity.LoginResponse], error)
 	// Authenticate authenticates a user.
-	// @Param AuthenticateRequest
-	// @Return AuthenticateResponse
 	Authenticate(context.Context, *connect.Request[identity.AuthenticateRequest]) (*connect.Response[identity.AuthenticateResponse], error)
 	// CreateUser creates a new user.
-	// @Param CreateUserRequest
-	// @Return CreateUserResponse
 	CreateUser(context.Context, *connect.Request[identity.CreateUserRequest]) (*connect.Response[identity.CreateUserResponse], error)
 	// GetUser gets a user by ID.
-	// @Param GetUserRequest
-	// @Return GetUserResponse
 	GetUser(context.Context, *connect.Request[identity.GetUserRequest]) (*connect.Response[identity.GetUserResponse], error)
 	// UpdateUserStatus updates the status of a user.
-	// @Param UpdateUserStatusRequest
-	// @Return UpdateUserStatusResponse
 	UpdateUserStatus(context.Context, *connect.Request[identity.UpdateUserStatusRequest]) (*connect.Response[identity.UpdateUserStatusResponse], error)
 	// UpdateUserPassword updates the password of a user.
-	// @Param UpdateUserPasswordRequest
-	// @Return UpdateUserPasswordResponse
 	UpdateUserPassword(context.Context, *connect.Request[identity.UpdateUserPasswordRequest]) (*connect.Response[identity.UpdateUserPasswordResponse], error)
 }
 
@@ -171,28 +159,16 @@ func (c *userServiceClient) UpdateUserPassword(ctx context.Context, req *connect
 // UserServiceHandler is an implementation of the identity.UserService service.
 type UserServiceHandler interface {
 	// Login logs in a user.
-	// @Param LoginRequest
-	// @Return LoginResponse
 	Login(context.Context, *connect.Request[identity.LoginRequest]) (*connect.Response[identity.LoginResponse], error)
 	// Authenticate authenticates a user.
-	// @Param AuthenticateRequest
-	// @Return AuthenticateResponse
 	Authenticate(context.Context, *connect.Request[identity.AuthenticateRequest]) (*connect.Response[identity.AuthenticateResponse], error)
 	// CreateUser creates a new user.
-	// @Param CreateUserRequest
-	// @Return CreateUserResponse
 	CreateUser(context.Context, *connect.Request[identity.CreateUserRequest]) (*connect.Response[identity.CreateUserResponse], error)
 	// GetUser gets a user by ID.
-	// @Param GetUserRequest
-	// @Return GetUserResponse
 	GetUser(context.Context, *connect.Request[identity.GetUserRequest]) (*connect.Response[identity.GetUserResponse], error)
 	// UpdateUserStatus updates the status of a user.
-	// @Param UpdateUserStatusRequest
-	// @Return UpdateUserStatusResponse
 	UpdateUserStatus(context.Context, *connect.Request[identity.UpdateUserStatusRequest]) (*connect.Response[identity.UpdateUserStatusResponse], error)
 	// UpdateUserPassword updates the password of a user.
-	// @Param UpdateUserPasswordRequest
-	// @Return UpdateUserPasswordResponse
 	UpdateUserPassword(context.Context, *connect.Request[identity.UpdateUserPasswordRequest]) (*connect.Response[identity.UpdateUserPasswordResponse], error)
 }
 
