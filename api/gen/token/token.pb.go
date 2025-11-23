@@ -26,7 +26,7 @@ const (
 type IssueRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Uid           uint32                 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
-	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	ClientId      uint32                 `protobuf:"varint,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
 	Scope         string                 `protobuf:"bytes,3,opt,name=scope,proto3" json:"scope,omitempty"`
 	Base          *base.Base             `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -70,11 +70,11 @@ func (x *IssueRequest) GetUid() uint32 {
 	return 0
 }
 
-func (x *IssueRequest) GetClientId() string {
+func (x *IssueRequest) GetClientId() uint32 {
 	if x != nil {
 		return x.ClientId
 	}
-	return ""
+	return 0
 }
 
 func (x *IssueRequest) GetScope() string {
@@ -170,7 +170,7 @@ func (x *IssueResponse) GetBaseResp() *base.BaseResp {
 type ValidateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	ClientId      uint32                 `protobuf:"varint,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
 	Base          *base.Base             `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -213,11 +213,11 @@ func (x *ValidateRequest) GetToken() string {
 	return ""
 }
 
-func (x *ValidateRequest) GetClientId() string {
+func (x *ValidateRequest) GetClientId() uint32 {
 	if x != nil {
 		return x.ClientId
 	}
-	return ""
+	return 0
 }
 
 func (x *ValidateRequest) GetBase() *base.Base {
@@ -406,7 +406,7 @@ const file_token_token_proto_rawDesc = "" +
 	"\x11token/token.proto\x12\x05token\x1a\x0fbase/base.proto\x1a\x18token/token_common.proto\x1a\x1cgoogle/api/annotations.proto\"t\n" +
 	"\fIssueRequest\x12\x10\n" +
 	"\x03uid\x18\x01 \x01(\rR\x03uid\x12\x1b\n" +
-	"\tclient_id\x18\x02 \x01(\tR\bclientId\x12\x14\n" +
+	"\tclient_id\x18\x02 \x01(\rR\bclientId\x12\x14\n" +
 	"\x05scope\x18\x03 \x01(\tR\x05scope\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
 	".base.BaseR\x04base\"\xdb\x01\n" +
@@ -418,7 +418,7 @@ const file_token_token_proto_rawDesc = "" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"e\n" +
 	"\x0fValidateRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1b\n" +
-	"\tclient_id\x18\x02 \x01(\tR\bclientId\x12\x1f\n" +
+	"\tclient_id\x18\x02 \x01(\rR\bclientId\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
 	".base.BaseR\x04base\"s\n" +
 	"\x10ValidateResponse\x12\x19\n" +

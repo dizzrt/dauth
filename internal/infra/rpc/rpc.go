@@ -2,6 +2,7 @@ package rpc
 
 import (
 	api_base "github.com/dizzrt/dauth/api/gen/base"
+	"github.com/dizzrt/dauth/api/gen/client"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/infra/rpc/base"
 )
@@ -22,4 +23,8 @@ func Success() *api_base.BaseResp {
 
 func UserServiceClient() identity.UserServiceClient {
 	return base.GetClient(base.CK_DAUTH_IDENTITY_USER).(identity.UserServiceClient)
+}
+
+func ClientServiceClient() client.ClientServiceClient {
+	return base.GetClient(base.CK_DAUTH_CLIENT).(client.ClientServiceClient)
 }

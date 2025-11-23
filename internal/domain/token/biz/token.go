@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/dizzrt/dauth/internal/domain/token/entity"
+	"github.com/dizzrt/dauth/internal/infra/rpc/dauth"
 	"github.com/dizzrt/dauth/internal/infra/utils/security/jwt"
 	"github.com/dizzrt/ellie/log"
 	"github.com/google/uuid"
@@ -13,7 +14,7 @@ import (
 var _ TokenBiz = (*tokenBiz)(nil)
 
 type TokenBiz interface {
-	Issue(ctx context.Context, uid uint32, clientID string, scope string) (accessToken string, refreshToken string, accessExpireAt, refreshExpireAt time.Time, err error)
+	Issue(ctx context.Context, uid uint32, clientID uint32, scope string) (accessToken string, refreshToken string, accessExpireAt, refreshExpireAt time.Time, err error)
 	Validate(ctx context.Context, token string, clientID string) (bool, string, error)
 	Revoke(ctx context.Context, token string, reason string) (bool, error)
 }
@@ -28,14 +29,17 @@ func NewTokenBiz(jwtManager jwt.JWTManager) TokenBiz {
 	}
 }
 
-func (biz *tokenBiz) Issue(ctx context.Context, uid uint32, clientID string, scope string) (accessToken string, refreshToken string, accessExpireAt, refreshExpireAt time.Time, err error) {
+func (biz *tokenBiz) Issue(ctx context.Context, uid uint32, clientID uint32, scope string) (accessToken string, refreshToken string, accessExpireAt, refreshExpireAt time.Time, err error) {
 	// TODO read from config
 	accessExpire := 24 * time.Hour
 	refreshExpire := 7 * 24 * time.Hour
 
-	// TODO verify client
-
-	// TODO verify scope
+	// validate client
+	resp, err := dauth.ValidateClient(ctx, uint32(clientID), scope)
+	if err != nil || !resp.GetIsOk() {
+		// invalid client or scope
+		return
+	}
 
 	now := time.Now()
 	accessExpireAt = now.Add(accessExpire)

@@ -62,7 +62,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | uid | [uint32](#uint32) |  |  |
-| client_id | [string](#string) |  |  |
+| client_id | [uint32](#uint32) |  |  |
 | scope | [string](#string) |  |  |
 | base | [base.Base](#base-Base) |  |  |
 
@@ -132,7 +132,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | token | [string](#string) |  |  |
-| client_id | [string](#string) |  |  |
+| client_id | [uint32](#uint32) |  |  |
 | base | [base.Base](#base-Base) |  |  |
 
 

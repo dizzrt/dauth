@@ -9,7 +9,7 @@ import (
 type Token struct {
 	TokenID     string // unique token id for field jti(jwt)
 	UID         uint32
-	ClientID    string
+	ClientID    uint32
 	Issuer      string
 	IssuedAt    time.Time
 	NotBefore   time.Time // invalid before this time

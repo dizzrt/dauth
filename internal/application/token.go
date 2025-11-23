@@ -28,11 +28,11 @@ func NewTokenApplication(tokenBiz biz.TokenBiz) TokenApplication {
 }
 
 func (app *tokenApplication) Issue(ctx context.Context, req *token.IssueRequest) (*token.IssueResponse, error) {
-	if req.Uid == 0 || req.ClientId == "" {
+	if req.GetUid() == 0 || req.GetClientId() == 0 {
 		return nil, fmt.Errorf("invalid params")
 	}
 
-	accessToken, refreshToken, accessExpireAt, refreshExpireAt, err := app.tokenBiz.Issue(ctx, req.Uid, req.ClientId, req.Scope)
+	accessToken, refreshToken, accessExpireAt, refreshExpireAt, err := app.tokenBiz.Issue(ctx, req.GetUid(), req.GetClientId(), req.GetScope())
 	if err != nil {
 		return nil, err
 	}
