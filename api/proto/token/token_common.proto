@@ -3,4 +3,14 @@ syntax = "proto3";
 option go_package = "github.com/dizzrt/dauth/api/gen/token;token";
 
 message Token {
+    string token_id = 1;
+    uint32 uid = 2;
+    uint32 client_id = 3;
+    string issuer = 4;
+    int64 issued_at = 5;
+    int64 not_before = 6;
+    int64 expires_at = 7;
+    string scope = 8;
+    string token_type = 9;
+    bool refreshable = 10;
 }

@@ -16,6 +16,7 @@ import (
 	"github.com/dizzrt/dauth/internal/infra/foundation"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/client"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/identity"
+	"github.com/dizzrt/dauth/internal/infra/repo/impl/token"
 	"github.com/dizzrt/dauth/internal/infra/utils/security/jwt"
 	"github.com/dizzrt/dauth/internal/server"
 	"github.com/dizzrt/ellie"
@@ -39,8 +40,9 @@ func wireApp() (*ellie.App, func(), error) {
 	roleBiz := biz.NewRoleBiz(roleRepo, userRoleAssociationRepo)
 	identityApplication := application.NewIdentityApplication(userBiz, roleBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)
+	tokenBlacklistRepo := token.NewTokenBlacklistRepoImpl(baseDB)
 	jwtManager := jwt.NewJWTManager()
-	tokenBiz := biz2.NewTokenBiz(jwtManager)
+	tokenBiz := biz2.NewTokenBiz(tokenBlacklistRepo, jwtManager)
 	tokenApplication := application.NewTokenApplication(tokenBiz)
 	tokenHandler := handler.NewTokenHandler(tokenApplication)
 	clientRepo := client.NewClientRepoImpl(baseDB)

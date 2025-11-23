@@ -47,9 +47,49 @@ func (app *tokenApplication) Issue(ctx context.Context, req *token.IssueRequest)
 }
 
 func (app *tokenApplication) Validate(ctx context.Context, req *token.ValidateRequest) (*token.ValidateResponse, error) {
-	return nil, nil
+	ts := req.GetToken()
+	clientID := req.GetClientId()
+
+	if ts == "" || clientID == 0 {
+		return nil, fmt.Errorf("invalid params")
+	}
+
+	tokenEntity, isValid, reason, err := app.tokenBiz.Validate(ctx, ts, req.GetClientId())
+	if err != nil {
+		return nil, err
+	}
+
+	return &token.ValidateResponse{
+		Token: &token.Token{
+			TokenId:     tokenEntity.TokenID,
+			Uid:         tokenEntity.UID,
+			ClientId:    tokenEntity.ClientID,
+			Issuer:      tokenEntity.Issuer,
+			IssuedAt:    tokenEntity.IssuedAt.Unix(),
+			NotBefore:   tokenEntity.NotBefore.Unix(),
+			ExpiresAt:   tokenEntity.ExpiresAt.Unix(),
+			Scope:       tokenEntity.Scope,
+			TokenType:   tokenEntity.TokenType,
+			Refreshable: tokenEntity.Refreshable,
+		},
+		IsValid:  isValid,
+		Reason:   reason,
+		BaseResp: rpc.Success(),
+	}, nil
 }
 
 func (app *tokenApplication) Revoke(ctx context.Context, req *token.RevokeRequest) (*token.RevokeResponse, error) {
-	return nil, nil
+	ts := req.GetToken()
+	if ts == "" {
+		return nil, fmt.Errorf("invalid params")
+	}
+
+	if err := app.tokenBiz.Revoke(ctx, ts, req.GetReason()); err != nil {
+		return nil, err
+	}
+
+	return &token.RevokeResponse{
+		IsSuccess: true,
+		BaseResp:  rpc.Success(),
+	}, nil
 }

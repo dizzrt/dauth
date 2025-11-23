@@ -23,6 +23,16 @@ const (
 
 type Token struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	TokenId       string                 `protobuf:"bytes,1,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`
+	Uid           uint32                 `protobuf:"varint,2,opt,name=uid,proto3" json:"uid,omitempty"`
+	ClientId      uint32                 `protobuf:"varint,3,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	Issuer        string                 `protobuf:"bytes,4,opt,name=issuer,proto3" json:"issuer,omitempty"`
+	IssuedAt      int64                  `protobuf:"varint,5,opt,name=issued_at,json=issuedAt,proto3" json:"issued_at,omitempty"`
+	NotBefore     int64                  `protobuf:"varint,6,opt,name=not_before,json=notBefore,proto3" json:"not_before,omitempty"`
+	ExpiresAt     int64                  `protobuf:"varint,7,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	Scope         string                 `protobuf:"bytes,8,opt,name=scope,proto3" json:"scope,omitempty"`
+	TokenType     string                 `protobuf:"bytes,9,opt,name=token_type,json=tokenType,proto3" json:"token_type,omitempty"`
+	Refreshable   bool                   `protobuf:"varint,10,opt,name=refreshable,proto3" json:"refreshable,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -57,12 +67,96 @@ func (*Token) Descriptor() ([]byte, []int) {
 	return file_token_token_common_proto_rawDescGZIP(), []int{0}
 }
 
+func (x *Token) GetTokenId() string {
+	if x != nil {
+		return x.TokenId
+	}
+	return ""
+}
+
+func (x *Token) GetUid() uint32 {
+	if x != nil {
+		return x.Uid
+	}
+	return 0
+}
+
+func (x *Token) GetClientId() uint32 {
+	if x != nil {
+		return x.ClientId
+	}
+	return 0
+}
+
+func (x *Token) GetIssuer() string {
+	if x != nil {
+		return x.Issuer
+	}
+	return ""
+}
+
+func (x *Token) GetIssuedAt() int64 {
+	if x != nil {
+		return x.IssuedAt
+	}
+	return 0
+}
+
+func (x *Token) GetNotBefore() int64 {
+	if x != nil {
+		return x.NotBefore
+	}
+	return 0
+}
+
+func (x *Token) GetExpiresAt() int64 {
+	if x != nil {
+		return x.ExpiresAt
+	}
+	return 0
+}
+
+func (x *Token) GetScope() string {
+	if x != nil {
+		return x.Scope
+	}
+	return ""
+}
+
+func (x *Token) GetTokenType() string {
+	if x != nil {
+		return x.TokenType
+	}
+	return ""
+}
+
+func (x *Token) GetRefreshable() bool {
+	if x != nil {
+		return x.Refreshable
+	}
+	return false
+}
+
 var File_token_token_common_proto protoreflect.FileDescriptor
 
 const file_token_token_common_proto_rawDesc = "" +
 	"\n" +
-	"\x18token/token_common.proto\"\a\n" +
-	"\x05TokenB-Z+github.com/dizzrt/dauth/api/gen/token;tokenb\x06proto3"
+	"\x18token/token_common.proto\"\x9b\x02\n" +
+	"\x05Token\x12\x19\n" +
+	"\btoken_id\x18\x01 \x01(\tR\atokenId\x12\x10\n" +
+	"\x03uid\x18\x02 \x01(\rR\x03uid\x12\x1b\n" +
+	"\tclient_id\x18\x03 \x01(\rR\bclientId\x12\x16\n" +
+	"\x06issuer\x18\x04 \x01(\tR\x06issuer\x12\x1b\n" +
+	"\tissued_at\x18\x05 \x01(\x03R\bissuedAt\x12\x1d\n" +
+	"\n" +
+	"not_before\x18\x06 \x01(\x03R\tnotBefore\x12\x1d\n" +
+	"\n" +
+	"expires_at\x18\a \x01(\x03R\texpiresAt\x12\x14\n" +
+	"\x05scope\x18\b \x01(\tR\x05scope\x12\x1d\n" +
+	"\n" +
+	"token_type\x18\t \x01(\tR\ttokenType\x12 \n" +
+	"\vrefreshable\x18\n" +
+	" \x01(\bR\vrefreshableB-Z+github.com/dizzrt/dauth/api/gen/token;tokenb\x06proto3"
 
 var (
 	file_token_token_common_proto_rawDescOnce sync.Once

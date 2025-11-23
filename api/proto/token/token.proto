@@ -32,8 +32,9 @@ message ValidateRequest {
 }
 
 message ValidateResponse {
-    bool is_valid = 1;
-    string reason = 2;
+    Token token = 1;
+    bool is_valid = 2;
+    string reason = 3;
 
     base.BaseResp base_resp = 255;
 }

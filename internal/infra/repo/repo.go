@@ -3,6 +3,7 @@ package repo
 import (
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/client"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/identity"
+	"github.com/dizzrt/dauth/internal/infra/repo/impl/token"
 	"github.com/google/wire"
 )
 
@@ -16,4 +17,7 @@ var ProviderSet = wire.NewSet(
 	client.NewClientRepoImpl,
 	client.NewScopeRepoImpl,
 	client.NewClientScopeAssociationRepoImpl,
+
+	// token_impls
+	token.NewTokenBlacklistRepoImpl,
 )

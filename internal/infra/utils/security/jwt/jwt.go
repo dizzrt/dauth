@@ -85,7 +85,5 @@ func (m *jwtManager) Verify(ctx context.Context, token string) (jwt.MapClaims, e
 		return nil, fmt.Errorf("invalid token claims")
 	}
 
-	// TODO check blacklist
-
 	return claims, nil
 }

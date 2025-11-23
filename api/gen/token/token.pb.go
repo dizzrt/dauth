@@ -229,8 +229,9 @@ func (x *ValidateRequest) GetBase() *base.Base {
 
 type ValidateResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	IsValid       bool                   `protobuf:"varint,1,opt,name=is_valid,json=isValid,proto3" json:"is_valid,omitempty"`
-	Reason        string                 `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
+	Token         *Token                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	IsValid       bool                   `protobuf:"varint,2,opt,name=is_valid,json=isValid,proto3" json:"is_valid,omitempty"`
+	Reason        string                 `protobuf:"bytes,3,opt,name=reason,proto3" json:"reason,omitempty"`
 	BaseResp      *base.BaseResp         `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -264,6 +265,13 @@ func (x *ValidateResponse) ProtoReflect() protoreflect.Message {
 // Deprecated: Use ValidateResponse.ProtoReflect.Descriptor instead.
 func (*ValidateResponse) Descriptor() ([]byte, []int) {
 	return file_token_token_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ValidateResponse) GetToken() *Token {
+	if x != nil {
+		return x.Token
+	}
+	return nil
 }
 
 func (x *ValidateResponse) GetIsValid() bool {
@@ -420,10 +428,11 @@ const file_token_token_proto_rawDesc = "" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1b\n" +
 	"\tclient_id\x18\x02 \x01(\rR\bclientId\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"s\n" +
-	"\x10ValidateResponse\x12\x19\n" +
-	"\bis_valid\x18\x01 \x01(\bR\aisValid\x12\x16\n" +
-	"\x06reason\x18\x02 \x01(\tR\x06reason\x12,\n" +
+	".base.BaseR\x04base\"\x91\x01\n" +
+	"\x10ValidateResponse\x12\x1c\n" +
+	"\x05token\x18\x01 \x01(\v2\x06.TokenR\x05token\x12\x19\n" +
+	"\bis_valid\x18\x02 \x01(\bR\aisValid\x12\x16\n" +
+	"\x06reason\x18\x03 \x01(\tR\x06reason\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"^\n" +
 	"\rRevokeRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x16\n" +
@@ -461,25 +470,27 @@ var file_token_token_proto_goTypes = []any{
 	(*RevokeResponse)(nil),   // 5: token.RevokeResponse
 	(*base.Base)(nil),        // 6: base.Base
 	(*base.BaseResp)(nil),    // 7: base.BaseResp
+	(*Token)(nil),            // 8: Token
 }
 var file_token_token_proto_depIdxs = []int32{
-	6, // 0: token.IssueRequest.base:type_name -> base.Base
-	7, // 1: token.IssueResponse.base_resp:type_name -> base.BaseResp
-	6, // 2: token.ValidateRequest.base:type_name -> base.Base
-	7, // 3: token.ValidateResponse.base_resp:type_name -> base.BaseResp
-	6, // 4: token.RevokeRequest.base:type_name -> base.Base
-	7, // 5: token.RevokeResponse.base_resp:type_name -> base.BaseResp
-	0, // 6: token.TokenService.Issue:input_type -> token.IssueRequest
-	2, // 7: token.TokenService.Validate:input_type -> token.ValidateRequest
-	4, // 8: token.TokenService.Revoke:input_type -> token.RevokeRequest
-	1, // 9: token.TokenService.Issue:output_type -> token.IssueResponse
-	3, // 10: token.TokenService.Validate:output_type -> token.ValidateResponse
-	5, // 11: token.TokenService.Revoke:output_type -> token.RevokeResponse
-	9, // [9:12] is the sub-list for method output_type
-	6, // [6:9] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	6,  // 0: token.IssueRequest.base:type_name -> base.Base
+	7,  // 1: token.IssueResponse.base_resp:type_name -> base.BaseResp
+	6,  // 2: token.ValidateRequest.base:type_name -> base.Base
+	8,  // 3: token.ValidateResponse.token:type_name -> Token
+	7,  // 4: token.ValidateResponse.base_resp:type_name -> base.BaseResp
+	6,  // 5: token.RevokeRequest.base:type_name -> base.Base
+	7,  // 6: token.RevokeResponse.base_resp:type_name -> base.BaseResp
+	0,  // 7: token.TokenService.Issue:input_type -> token.IssueRequest
+	2,  // 8: token.TokenService.Validate:input_type -> token.ValidateRequest
+	4,  // 9: token.TokenService.Revoke:input_type -> token.RevokeRequest
+	1,  // 10: token.TokenService.Issue:output_type -> token.IssueResponse
+	3,  // 11: token.TokenService.Validate:output_type -> token.ValidateResponse
+	5,  // 12: token.TokenService.Revoke:output_type -> token.RevokeResponse
+	10, // [10:13] is the sub-list for method output_type
+	7,  // [7:10] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_token_token_proto_init() }

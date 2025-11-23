@@ -33,6 +33,20 @@
 
 
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| token_id | [string](#string) |  |  |
+| uid | [uint32](#uint32) |  |  |
+| client_id | [uint32](#uint32) |  |  |
+| issuer | [string](#string) |  |  |
+| issued_at | [int64](#int64) |  |  |
+| not_before | [int64](#int64) |  |  |
+| expires_at | [int64](#int64) |  |  |
+| scope | [string](#string) |  |  |
+| token_type | [string](#string) |  |  |
+| refreshable | [bool](#bool) |  |  |
+
+
 
 
 
@@ -148,6 +162,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
+| token | [Token](#Token) |  |  |
 | is_valid | [bool](#bool) |  |  |
 | reason | [string](#string) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
