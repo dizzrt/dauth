@@ -178,6 +178,14 @@
             <a href="#client%2fclient.proto">client/client.proto</a>
             <ul>
               
+                <li>
+                  <a href="#client.ValidateRequest"><span class="badge">M</span>ValidateRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#client.ValidateResponse"><span class="badge">M</span>ValidateResponse</a>
+                </li>
+              
               
               
               
@@ -199,7 +207,7 @@
               
               
                 <li>
-                  <a href="#.ClientStatus"><span class="badge">E</span>ClientStatus</a>
+                  <a href="#.Client.Status"><span class="badge">E</span>Client.Status</a>
                 </li>
               
               
@@ -219,6 +227,82 @@
       <p></p>
 
       
+        <h3 id="client.ValidateRequest">ValidateRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>client_id</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>scope</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#base.Base">base.Base</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="client.ValidateResponse">ValidateResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>is_ok</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>reason</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_resp</td>
+                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -232,6 +316,13 @@
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
           </thead>
           <tbody>
+            
+              <tr>
+                <td>Validate</td>
+                <td><a href="#client.ValidateRequest">ValidateRequest</a></td>
+                <td><a href="#client.ValidateResponse">ValidateResponse</a></td>
+                <td><p>Validate validates the client and scope.</p></td>
+              </tr>
             
           </tbody>
         </table>
@@ -263,7 +354,14 @@
                 </tr>
               
                 <tr>
-                  <td>client_id</td>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -278,7 +376,7 @@
               
                 <tr>
                   <td>status</td>
-                  <td><a href="#ClientStatus">ClientStatus</a></td>
+                  <td><a href="#Client.Status">Client.Status</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -306,7 +404,7 @@
       
 
       
-        <h3 id=".ClientStatus">ClientStatus</h3>
+        <h3 id=".Client.Status">Client.Status</h3>
         <p></p>
         <table class="enum-table">
           <thead>

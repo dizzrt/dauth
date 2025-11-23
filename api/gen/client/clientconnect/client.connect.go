@@ -6,8 +6,11 @@ package clientconnect
 
 import (
 	connect "connectrpc.com/connect"
-	_ "github.com/dizzrt/dauth/api/gen/client"
+	context "context"
+	errors "errors"
+	client "github.com/dizzrt/dauth/api/gen/client"
 	http "net/http"
+	strings "strings"
 )
 
 // This is a compile-time assertion to ensure that this generated file and the connect package are
@@ -22,8 +25,22 @@ const (
 	ClientServiceName = "client.ClientService"
 )
 
+// These constants are the fully-qualified names of the RPCs defined in this package. They're
+// exposed at runtime as Spec.Procedure and as the final two segments of the HTTP route.
+//
+// Note that these are different from the fully-qualified method names used by
+// google.golang.org/protobuf/reflect/protoreflect. To convert from these constants to
+// reflection-formatted method names, remove the leading slash and convert the remaining slash to a
+// period.
+const (
+	// ClientServiceValidateProcedure is the fully-qualified name of the ClientService's Validate RPC.
+	ClientServiceValidateProcedure = "/client.ClientService/Validate"
+)
+
 // ClientServiceClient is a client for the client.ClientService service.
 type ClientServiceClient interface {
+	// Validate validates the client and scope.
+	Validate(context.Context, *connect.Request[client.ValidateRequest]) (*connect.Response[client.ValidateResponse], error)
 }
 
 // NewClientServiceClient constructs a client for the client.ClientService service. By default, it
@@ -34,15 +51,32 @@ type ClientServiceClient interface {
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
 func NewClientServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) ClientServiceClient {
-	return &clientServiceClient{}
+	baseURL = strings.TrimRight(baseURL, "/")
+	clientServiceMethods := client.File_client_client_proto.Services().ByName("ClientService").Methods()
+	return &clientServiceClient{
+		validate: connect.NewClient[client.ValidateRequest, client.ValidateResponse](
+			httpClient,
+			baseURL+ClientServiceValidateProcedure,
+			connect.WithSchema(clientServiceMethods.ByName("Validate")),
+			connect.WithClientOptions(opts...),
+		),
+	}
 }
 
 // clientServiceClient implements ClientServiceClient.
 type clientServiceClient struct {
+	validate *connect.Client[client.ValidateRequest, client.ValidateResponse]
+}
+
+// Validate calls client.ClientService.Validate.
+func (c *clientServiceClient) Validate(ctx context.Context, req *connect.Request[client.ValidateRequest]) (*connect.Response[client.ValidateResponse], error) {
+	return c.validate.CallUnary(ctx, req)
 }
 
 // ClientServiceHandler is an implementation of the client.ClientService service.
 type ClientServiceHandler interface {
+	// Validate validates the client and scope.
+	Validate(context.Context, *connect.Request[client.ValidateRequest]) (*connect.Response[client.ValidateResponse], error)
 }
 
 // NewClientServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -51,8 +85,17 @@ type ClientServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewClientServiceHandler(svc ClientServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	clientServiceMethods := client.File_client_client_proto.Services().ByName("ClientService").Methods()
+	clientServiceValidateHandler := connect.NewUnaryHandler(
+		ClientServiceValidateProcedure,
+		svc.Validate,
+		connect.WithSchema(clientServiceMethods.ByName("Validate")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/client.ClientService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case ClientServiceValidateProcedure:
+			clientServiceValidateHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -61,3 +104,7 @@ func NewClientServiceHandler(svc ClientServiceHandler, opts ...connect.HandlerOp
 
 // UnimplementedClientServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedClientServiceHandler struct{}
+
+func (UnimplementedClientServiceHandler) Validate(context.Context, *connect.Request[client.ValidateRequest]) (*connect.Response[client.ValidateResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("client.ClientService.Validate is not implemented"))
+}

@@ -1,4 +1,4 @@
-package repo
+package client
 
 import (
 	"github.com/dizzrt/dauth/internal/domain/client/repo"

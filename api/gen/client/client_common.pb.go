@@ -21,24 +21,24 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type ClientStatus int32
+type Client_Status int32
 
 const (
-	ClientStatus_UNSPECIFIED ClientStatus = 0
-	ClientStatus_ACTIVE      ClientStatus = 1
-	ClientStatus_INACTIVE    ClientStatus = 2
-	ClientStatus_DELETED     ClientStatus = 3
+	Client_UNSPECIFIED Client_Status = 0
+	Client_ACTIVE      Client_Status = 1
+	Client_INACTIVE    Client_Status = 2
+	Client_DELETED     Client_Status = 3
 )
 
-// Enum value maps for ClientStatus.
+// Enum value maps for Client_Status.
 var (
-	ClientStatus_name = map[int32]string{
+	Client_Status_name = map[int32]string{
 		0: "UNSPECIFIED",
 		1: "ACTIVE",
 		2: "INACTIVE",
 		3: "DELETED",
 	}
-	ClientStatus_value = map[string]int32{
+	Client_Status_value = map[string]int32{
 		"UNSPECIFIED": 0,
 		"ACTIVE":      1,
 		"INACTIVE":    2,
@@ -46,41 +46,42 @@ var (
 	}
 )
 
-func (x ClientStatus) Enum() *ClientStatus {
-	p := new(ClientStatus)
+func (x Client_Status) Enum() *Client_Status {
+	p := new(Client_Status)
 	*p = x
 	return p
 }
 
-func (x ClientStatus) String() string {
+func (x Client_Status) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (ClientStatus) Descriptor() protoreflect.EnumDescriptor {
+func (Client_Status) Descriptor() protoreflect.EnumDescriptor {
 	return file_client_client_common_proto_enumTypes[0].Descriptor()
 }
 
-func (ClientStatus) Type() protoreflect.EnumType {
+func (Client_Status) Type() protoreflect.EnumType {
 	return &file_client_client_common_proto_enumTypes[0]
 }
 
-func (x ClientStatus) Number() protoreflect.EnumNumber {
+func (x Client_Status) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use ClientStatus.Descriptor instead.
-func (ClientStatus) EnumDescriptor() ([]byte, []int) {
-	return file_client_client_common_proto_rawDescGZIP(), []int{0}
+// Deprecated: Use Client_Status.Descriptor instead.
+func (Client_Status) EnumDescriptor() ([]byte, []int) {
+	return file_client_client_common_proto_rawDescGZIP(), []int{0, 0}
 }
 
 type Client struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
-	RedirectUri   string                 `protobuf:"bytes,3,opt,name=redirect_uri,json=redirectUri,proto3" json:"redirect_uri,omitempty"`
-	Status        ClientStatus           `protobuf:"varint,4,opt,name=status,proto3,enum=ClientStatus" json:"status,omitempty"`
-	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     int64                  `protobuf:"varint,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	RedirectUri   string                 `protobuf:"bytes,4,opt,name=redirect_uri,json=redirectUri,proto3" json:"redirect_uri,omitempty"`
+	Status        Client_Status          `protobuf:"varint,5,opt,name=status,proto3,enum=Client_Status" json:"status,omitempty"`
+	CreatedAt     int64                  `protobuf:"varint,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     int64                  `protobuf:"varint,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -122,9 +123,16 @@ func (x *Client) GetId() uint32 {
 	return 0
 }
 
-func (x *Client) GetClientId() string {
+func (x *Client) GetName() string {
 	if x != nil {
-		return x.ClientId
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Client) GetDescription() string {
+	if x != nil {
+		return x.Description
 	}
 	return ""
 }
@@ -136,11 +144,11 @@ func (x *Client) GetRedirectUri() string {
 	return ""
 }
 
-func (x *Client) GetStatus() ClientStatus {
+func (x *Client) GetStatus() Client_Status {
 	if x != nil {
 		return x.Status
 	}
-	return ClientStatus_UNSPECIFIED
+	return Client_UNSPECIFIED
 }
 
 func (x *Client) GetCreatedAt() int64 {
@@ -161,17 +169,18 @@ var File_client_client_common_proto protoreflect.FileDescriptor
 
 const file_client_client_common_proto_rawDesc = "" +
 	"\n" +
-	"\x1aclient/client_common.proto\"\xbd\x01\n" +
+	"\x1aclient/client_common.proto\"\x99\x02\n" +
 	"\x06Client\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1b\n" +
-	"\tclient_id\x18\x02 \x01(\tR\bclientId\x12!\n" +
-	"\fredirect_uri\x18\x03 \x01(\tR\vredirectUri\x12%\n" +
-	"\x06status\x18\x04 \x01(\x0e2\r.ClientStatusR\x06status\x12\x1d\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12!\n" +
+	"\fredirect_uri\x18\x04 \x01(\tR\vredirectUri\x12&\n" +
+	"\x06status\x18\x05 \x01(\x0e2\x0e.Client.StatusR\x06status\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x05 \x01(\x03R\tcreatedAt\x12\x1d\n" +
+	"created_at\x18\x06 \x01(\x03R\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x06 \x01(\x03R\tupdatedAt*F\n" +
-	"\fClientStatus\x12\x0f\n" +
+	"updated_at\x18\a \x01(\x03R\tupdatedAt\"@\n" +
+	"\x06Status\x12\x0f\n" +
 	"\vUNSPECIFIED\x10\x00\x12\n" +
 	"\n" +
 	"\x06ACTIVE\x10\x01\x12\f\n" +
@@ -193,11 +202,11 @@ func file_client_client_common_proto_rawDescGZIP() []byte {
 var file_client_client_common_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_client_client_common_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_client_client_common_proto_goTypes = []any{
-	(ClientStatus)(0), // 0: ClientStatus
-	(*Client)(nil),    // 1: Client
+	(Client_Status)(0), // 0: Client.Status
+	(*Client)(nil),     // 1: Client
 }
 var file_client_client_common_proto_depIdxs = []int32{
-	0, // 0: Client.status:type_name -> ClientStatus
+	0, // 0: Client.status:type_name -> Client.Status
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

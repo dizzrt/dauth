@@ -7,11 +7,15 @@ var _ ClientBiz = (*clientBiz)(nil)
 type ClientBiz interface{}
 
 type clientBiz struct {
-	clientRepo repo.ClientRepo
+	clientRepo                 repo.ClientRepo
+	scopeRepo                  repo.ScopeRepo
+	clientScopeAssociationRepo repo.ClientScopeAssociationRepo
 }
 
-func NewClientBiz(clientRepo repo.ClientRepo) ClientBiz {
+func NewClientBiz(clientRepo repo.ClientRepo, scopeRepo repo.ScopeRepo, clientScopeAssociationRepo repo.ClientScopeAssociationRepo) ClientBiz {
 	return &clientBiz{
-		clientRepo: clientRepo,
+		clientRepo:                 clientRepo,
+		scopeRepo:                  scopeRepo,
+		clientScopeAssociationRepo: clientScopeAssociationRepo,
 	}
 }

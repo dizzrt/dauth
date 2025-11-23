@@ -6,5 +6,22 @@ option go_package = "github.com/dizzrt/dauth/api/gen/client;client";
 import "base/base.proto";
 import "google/api/annotations.proto";
 
+message ValidateRequest {
+    uint32 client_id = 1;
+    string scope = 2;
+
+    base.Base base = 255;
+}
+
+message ValidateResponse {
+    bool is_ok = 1;
+    string reason = 2;
+
+    base.BaseResp base_resp = 255;
+}
+
+
 service ClientService {
+    // Validate validates the client and scope.
+    rpc Validate(ValidateRequest) returns (ValidateResponse) {}
 }

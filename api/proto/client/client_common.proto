@@ -2,18 +2,19 @@ syntax = "proto3";
 
 option go_package = "github.com/dizzrt/dauth/api/gen/client;client";
 
-enum ClientStatus {
-    UNSPECIFIED = 0;
-    ACTIVE = 1;
-    INACTIVE = 2;
-    DELETED = 3;
-}
-
 message Client {
+    enum Status {
+        UNSPECIFIED = 0;
+        ACTIVE = 1;
+        INACTIVE = 2;
+        DELETED = 3;
+    }
+
     uint32 id = 1;
-    string client_id = 2;
-    string redirect_uri = 3;
-    ClientStatus status = 4;
-    int64 created_at = 5;
-    int64 updated_at = 6;
+    string name = 2;
+    string description = 3;
+    string redirect_uri = 4;
+    Status status = 5;
+    int64 created_at = 6;
+    int64 updated_at = 7;
 }

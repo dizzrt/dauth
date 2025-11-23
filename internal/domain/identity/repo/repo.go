@@ -14,3 +14,9 @@ type UserRepo interface {
 	UpdateUserPassword(ctx context.Context, uid uint32, password string) error
 	UpdateUserStatus(ctx context.Context, uid uint32, status identity.User_Status) error
 }
+
+type RoleRepo interface {
+}
+
+type UserRoleAssociationRepo interface {
+}

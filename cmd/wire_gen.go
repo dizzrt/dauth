@@ -14,7 +14,8 @@ import (
 	biz2 "github.com/dizzrt/dauth/internal/domain/token/biz"
 	"github.com/dizzrt/dauth/internal/handler"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
-	"github.com/dizzrt/dauth/internal/infra/repo"
+	"github.com/dizzrt/dauth/internal/infra/repo/impl/client"
+	"github.com/dizzrt/dauth/internal/infra/repo/impl/identity"
 	"github.com/dizzrt/dauth/internal/infra/utils/security/jwt"
 	"github.com/dizzrt/dauth/internal/server"
 	"github.com/dizzrt/ellie"
@@ -31,10 +32,10 @@ func wireApp() (*ellie.App, func(), error) {
 	}
 	registrar := foundation.NewRegistrar(appConfig)
 	baseDB := foundation.NewBaseDB(appConfig)
-	userRepo := repo.NewUserRepoImpl(baseDB)
+	userRepo := identity.NewUserRepoImpl(baseDB)
 	userBiz := biz.NewUserBiz(userRepo)
-	roleRepo := repo.NewRoleRepoImpl(baseDB)
-	userRoleAssociationRepo := repo.NewUserRoleAssociationRepoImpl(baseDB)
+	roleRepo := identity.NewRoleRepoImpl(baseDB)
+	userRoleAssociationRepo := identity.NewUserRoleAssociationRepoImpl(baseDB)
 	roleBiz := biz.NewRoleBiz(roleRepo, userRoleAssociationRepo)
 	identityApplication := application.NewIdentityApplication(userBiz, roleBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)
@@ -42,8 +43,10 @@ func wireApp() (*ellie.App, func(), error) {
 	tokenBiz := biz2.NewTokenBiz(jwtManager)
 	tokenApplication := application.NewTokenApplication(tokenBiz)
 	tokenHandler := handler.NewTokenHandler(tokenApplication)
-	clientRepo := repo.NewClientRepoImpl(baseDB)
-	clientBiz := biz3.NewClientBiz(clientRepo)
+	clientRepo := client.NewClientRepoImpl(baseDB)
+	scopeRepo := client.NewScopeRepoImpl(baseDB)
+	clientScopeAssociationRepo := client.NewClientScopeAssociationRepoImpl(baseDB)
+	clientBiz := biz3.NewClientBiz(clientRepo, scopeRepo, clientScopeAssociationRepo)
 	clientApplication := application.NewClientApplication(clientBiz)
 	clientHandler := handler.NewClientHandler(clientApplication)
 	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler)

@@ -4,12 +4,15 @@
 ## Table of Contents
 
 - [client/client.proto](#client_client-proto)
+    - [ValidateRequest](#client-ValidateRequest)
+    - [ValidateResponse](#client-ValidateResponse)
+  
     - [ClientService](#client-ClientService)
   
 - [client/client_common.proto](#client_client_common-proto)
     - [Client](#-Client)
   
-    - [ClientStatus](#-ClientStatus)
+    - [Client.Status](#-Client-Status)
   
 - [Scalar Value Types](#scalar-value-types)
 
@@ -19,6 +22,40 @@
 <p align="right"><a href="#top">Top</a></p>
 
 ## client/client.proto
+
+
+
+<a name="client-ValidateRequest"></a>
+
+### ValidateRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| client_id | [uint32](#uint32) |  |  |
+| scope | [string](#string) |  |  |
+| base | [base.Base](#base-Base) |  |  |
+
+
+
+
+
+
+<a name="client-ValidateResponse"></a>
+
+### ValidateResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| is_ok | [bool](#bool) |  |  |
+| reason | [string](#string) |  |  |
+| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
+
+
+
 
 
  
@@ -35,6 +72,7 @@
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| Validate | [ValidateRequest](#client-ValidateRequest) | [ValidateResponse](#client-ValidateResponse) | Validate validates the client and scope. |
 
  
 
@@ -56,9 +94,10 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | id | [uint32](#uint32) |  |  |
-| client_id | [string](#string) |  |  |
+| name | [string](#string) |  |  |
+| description | [string](#string) |  |  |
 | redirect_uri | [string](#string) |  |  |
-| status | [ClientStatus](#ClientStatus) |  |  |
+| status | [Client.Status](#Client-Status) |  |  |
 | created_at | [int64](#int64) |  |  |
 | updated_at | [int64](#int64) |  |  |
 
@@ -69,9 +108,9 @@
  
 
 
-<a name="-ClientStatus"></a>
+<a name="-Client-Status"></a>
 
-### ClientStatus
+### Client.Status
 
 
 | Name | Number | Description |

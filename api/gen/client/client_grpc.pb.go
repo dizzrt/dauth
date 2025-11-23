@@ -7,7 +7,10 @@
 package client
 
 import (
+	context "context"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -15,10 +18,16 @@ import (
 // Requires gRPC-Go v1.64.0 or later.
 const _ = grpc.SupportPackageIsVersion9
 
+const (
+	ClientService_Validate_FullMethodName = "/client.ClientService/Validate"
+)
+
 // ClientServiceClient is the client API for ClientService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ClientServiceClient interface {
+	// Validate validates the client and scope.
+	Validate(ctx context.Context, in *ValidateRequest, opts ...grpc.CallOption) (*ValidateResponse, error)
 }
 
 type clientServiceClient struct {
@@ -29,10 +38,22 @@ func NewClientServiceClient(cc grpc.ClientConnInterface) ClientServiceClient {
 	return &clientServiceClient{cc}
 }
 
+func (c *clientServiceClient) Validate(ctx context.Context, in *ValidateRequest, opts ...grpc.CallOption) (*ValidateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ValidateResponse)
+	err := c.cc.Invoke(ctx, ClientService_Validate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility.
 type ClientServiceServer interface {
+	// Validate validates the client and scope.
+	Validate(context.Context, *ValidateRequest) (*ValidateResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -43,6 +64,9 @@ type ClientServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedClientServiceServer struct{}
 
+func (UnimplementedClientServiceServer) Validate(context.Context, *ValidateRequest) (*ValidateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Validate not implemented")
+}
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 func (UnimplementedClientServiceServer) testEmbeddedByValue()                       {}
 
@@ -64,13 +88,36 @@ func RegisterClientServiceServer(s grpc.ServiceRegistrar, srv ClientServiceServe
 	s.RegisterService(&ClientService_ServiceDesc, srv)
 }
 
+func _ClientService_Validate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).Validate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClientService_Validate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).Validate(ctx, req.(*ValidateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ClientService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "client.ClientService",
 	HandlerType: (*ClientServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
-	Streams:     []grpc.StreamDesc{},
-	Metadata:    "client/client.proto",
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Validate",
+			Handler:    _ClientService_Validate_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "client/client.proto",
 }
