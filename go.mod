@@ -1,6 +1,6 @@
 module github.com/dizzrt/dauth
 
-go 1.25.3
+go 1.25.4
 
 require (
 	connectrpc.com/connect v1.19.0
