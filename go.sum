@@ -38,6 +38,10 @@ github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dizzrt/ellie v0.3.10 h1:9HPhw/GxQ0V0CllqtB9iq2pe2f4tNUJSH3nhzW0WEmk=
 github.com/dizzrt/ellie v0.3.10/go.mod h1:f0z7f9ieT6gscx6WPxj5y2V8lDCPSw05k7rCc/VttjM=
+github.com/dizzrt/ellie v0.3.11 h1:ImT8iM1YWig4Hknw9pckMqKOt8Qa+C0X7zPVCdaKTzI=
+github.com/dizzrt/ellie v0.3.11/go.mod h1:TaqUPUS3ysXBjLOybVM7ZFFVhnhVz777VxvTiYWBG30=
+github.com/dizzrt/ellie v0.3.12 h1:0BCb0IauRsHNGQDKgTWKWEguwyyHE+zmwE4XkmPd47Q=
+github.com/dizzrt/ellie v0.3.12/go.mod h1:TaqUPUS3ysXBjLOybVM7ZFFVhnhVz777VxvTiYWBG30=
 github.com/dizzrt/ellie/contrib/registry/consul v1.0.0 h1:tefEiFOKhPqDzJBSufxNmtnuLC+AJ0+mAUf/g6oRC7c=
 github.com/dizzrt/ellie/contrib/registry/consul v1.0.0/go.mod h1:tkZ6Xcb8RocdZiRNnbpG3M+qVBJb2vdBoUvIO9s+ZV8=
 github.com/dizzrt/filerotator v0.2.1 h1:z+iZNd/b7RuN34ISjCOJVTCVyFMswYAr0oMurzK2xv8=
