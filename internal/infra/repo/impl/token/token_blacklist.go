@@ -43,7 +43,7 @@ func (impl *TokenBlacklistImpl) IsRevoked(ctx context.Context, tokenID string) (
 	var m *model.TokenBlacklist
 
 	db := impl.WithContext(ctx)
-	if err := db.Where("token_id = ? AND deleted_at IS NULL", tokenID).First(&m).Error; err != nil {
+	if err := db.Where("token_id = ?", tokenID).First(&m).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return false, nil
 		}

@@ -25,7 +25,7 @@ func (impl *ScopeRepoImpl) GetScopesByIDs(ctx context.Context, ids []uint32) ([]
 	var scopes []*model.Scope
 
 	db := impl.WithContext(ctx)
-	if err := db.Where("id IN ? AND deleted_at IS NULL", ids).Find(&scopes).Error; err != nil {
+	if err := db.Where("id IN ?", ids).Find(&scopes).Error; err != nil {
 		return nil, err
 	}
 

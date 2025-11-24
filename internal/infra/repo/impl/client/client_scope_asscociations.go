@@ -46,7 +46,7 @@ func (impl *ClientScopeAssociationRepoImpl) GetClientScopes(ctx context.Context,
 	var associations []*model.ClientScopeAssociation
 
 	db := impl.WithContext(ctx)
-	if err := db.Where("client_id = ? AND deleted_at IS NULL", clientID).Find(&associations).Error; err != nil {
+	if err := db.Where("client_id = ?", clientID).Find(&associations).Error; err != nil {
 		return nil, err
 	}
 
