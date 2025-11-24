@@ -1,8 +1,7 @@
 package cmd
 
 import (
-	"os"
-
+	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/ellie/registry"
 	"github.com/dizzrt/ellie/transport/grpc"
 	"github.com/dizzrt/ellie/transport/http"
@@ -11,13 +10,6 @@ import (
 	"github.com/dizzrt/ellie"
 	"github.com/dizzrt/ellie/log"
 	"github.com/spf13/cobra"
-)
-
-// go build -ldflags "-X main.version=x.y.z"
-var (
-	service string = "dauth"
-	version string = "dev"
-	id, _          = os.Hostname()
 )
 
 func init() {
@@ -42,10 +34,12 @@ var runCmd = &cobra.Command{
 
 func newApp(logger log.LogWriter, tracer trace.TracerProvider, registrar registry.Registrar, gs *grpc.Server, hs *http.Server) (*ellie.App, func(), error) {
 	app := ellie.New(
-		ellie.ID(id),
-		ellie.Name(service),
-		ellie.Version(version),
-		ellie.Metadata(map[string]string{}),
+		ellie.ID(conf.ServiceID),
+		ellie.Name(conf.Service),
+		ellie.Version(conf.Version),
+		ellie.Metadata(map[string]string{
+			"hostname": conf.Hostname,
+		}),
 		ellie.Logger(logger),
 		ellie.Tracer(tracer),
 		ellie.Registrar(registrar),

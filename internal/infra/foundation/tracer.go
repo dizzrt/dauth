@@ -11,17 +11,22 @@ import (
 )
 
 func NewTracerProvider(ac *conf.AppConfig) (trace.TracerProvider, func(), error) {
-	// TODO read from conf
+	if ac.Tracing.Endpoint == "" {
+		return nil, func() {}, nil
+	}
+
 	tp, err := tracing.Initialize(
 		context.Background(),
-		tracing.ServiceName("dauth"),
-		tracing.ServiceVersion("dev"),
-		tracing.Endpoint("infra.dauth.com:4317"),
-		tracing.EndpointType(tracing.EndpointType_GRPC),
-		tracing.Insecure(true),
+		tracing.ServiceName(conf.Service),
+		tracing.ServiceVersion(conf.Version),
+		tracing.Endpoint(ac.Tracing.Endpoint),
+		tracing.EndpointType(tracing.ParseEndpointType(ac.Tracing.EndpointType)),
+		tracing.Insecure(ac.Tracing.Insecure),
 		tracing.Metadata(map[string]string{
-			"ip":  "127.0.0.1",
-			"env": "dev",
+			"ip":          ac.Address,
+			"env":         ac.ENV,
+			"hostname":    conf.Hostname,
+			"instance_id": conf.ServiceID,
 		}),
 	)
 

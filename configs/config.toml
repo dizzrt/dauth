@@ -20,3 +20,8 @@ addr = "infra.dauth.com:3306"
 
 [registry]
 addr = "infra.dauth.com:8500"
+
+[tracing]
+endpoint = "infra.dauth.com:4317"
+endpoint_type = "grpc"
+insecure = true
