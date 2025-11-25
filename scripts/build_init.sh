@@ -9,9 +9,8 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-GOOS=${GOOS:-"linux"}
-GOARCH=${GOARCH:-"amd64"}
-PLATFORM="linux/amd64"
+# for docker buildx
+PLATFORM="linux/arm64"
 
 ENV="prod"
 _VERSION=""
@@ -20,14 +19,6 @@ GIT_COMMIT=$(git rev-parse HEAD)
 # Try to get version from command line arguments
 for arg in "$@"; do
     case $arg in
-        --goos=*)
-            GOOS="${arg#*=}"
-            shift
-            ;;
-        --goarch=*)
-            GOARCH="${arg#*=}"
-            shift
-            ;;
         --platform=*)
             PLATFORM="${arg#*=}"
             shift

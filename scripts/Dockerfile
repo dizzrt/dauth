@@ -1,7 +1,5 @@
-FROM golang:1.25 AS builder
+FROM --platform=$BUILDPLATFORM golang:1.25 AS builder
 ARG GOPROXY=https://goproxy.cn,direct
-ARG GOOS
-ARG GOARCH
 
 ARG ENV
 ARG VERSION
@@ -13,7 +11,7 @@ RUN go mod download
 WORKDIR /src
 COPY . .
 
-RUN GOOS="${GOOS}" GOARCH="${GOARCH}" go build \
+RUN GOOS="$TARGETOS" GOARCH="$TARGETARCH" go build \
     --tags "${ENV},docker" \
     -ldflags="-w -s \
     -X github.com/dizzrt/dauth/internal/conf.Version=${VERSION}" \
@@ -31,7 +29,7 @@ RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debi
     && apt-get autoremove -y && apt-get autoclean -y
 
 WORKDIR /app
-COPY --from=builder /src/bin ./
+COPY --from=builder /src/bin/* ./
 COPY --from=builder /src/configs ./configs
 
 EXPOSE 8081 50051
@@ -40,4 +38,4 @@ ENV ENV=${ENV}
 
 # HEALTHCHECK --interval=5m --timeout=60s CMD curl -f http://localhost:8080/healthz || exit 1
 
-ENTRYPOINT [ "dauth" ]
+ENTRYPOINT [ "/app/dauth", "run" ]
