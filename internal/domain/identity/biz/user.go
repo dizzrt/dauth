@@ -6,6 +6,7 @@ import (
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/dizzrt/dauth/internal/domain/identity/repo"
+	"github.com/dizzrt/dauth/internal/infra/utils/security"
 )
 
 var _ UserBiz = (*userBiz)(nil)
@@ -50,7 +51,7 @@ func (biz *userBiz) UpdateLastLoginTime(ctx context.Context, uid uint32) error {
 
 func (biz *userBiz) CreateUser(ctx context.Context, user *entity.User) (uint32, error) {
 	rpwd := user.Password
-	pwd, err := GeneratePasswordHash(rpwd)
+	pwd, err := security.GeneratePasswordHash(rpwd)
 	if err != nil {
 		return 0, err
 	}
@@ -68,7 +69,7 @@ func (biz *userBiz) UpdateUserStatus(ctx context.Context, uid uint32, status ide
 }
 
 func (biz *userBiz) UpdateUserPassword(ctx context.Context, uid uint32, password string) error {
-	pwd, err := GeneratePasswordHash(password)
+	pwd, err := security.GeneratePasswordHash(password)
 	if err != nil {
 		return err
 	}

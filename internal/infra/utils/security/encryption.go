@@ -1,7 +1,8 @@
-package biz
+package security
 
 import (
-	"github.com/dizzrt/dauth/api/gen/identity"
+	"fmt"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -9,7 +10,7 @@ const _BCRYPT_COST = 12
 
 func GeneratePasswordHash(password string) (string, error) {
 	if password == "" {
-		return "", identity.ErrorEmptyPassword("password can not be empty")
+		return "", fmt.Errorf("password can not be empty")
 	}
 
 	pwd, err := bcrypt.GenerateFromPassword([]byte(password), _BCRYPT_COST)
