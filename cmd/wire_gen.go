@@ -9,11 +9,13 @@ package cmd
 import (
 	"github.com/dizzrt/dauth/internal/application"
 	"github.com/dizzrt/dauth/internal/conf"
+	biz4 "github.com/dizzrt/dauth/internal/domain/auth/biz"
 	biz3 "github.com/dizzrt/dauth/internal/domain/client/biz"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	biz2 "github.com/dizzrt/dauth/internal/domain/token/biz"
 	"github.com/dizzrt/dauth/internal/handler"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
+	"github.com/dizzrt/dauth/internal/infra/repo/impl/auth"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/client"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/identity"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/token"
@@ -51,8 +53,12 @@ func wireApp() (*ellie.App, func(), error) {
 	clientBiz := biz3.NewClientBiz(clientRepo, scopeRepo, clientScopeAssociationRepo)
 	clientApplication := application.NewClientApplication(clientBiz)
 	clientHandler := handler.NewClientHandler(clientApplication)
-	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler)
-	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler)
+	authorizationCodeRepo := auth.NewAuthorizationCodeRepoImpl(baseDB)
+	authBiz := biz4.NewAuthBiz(authorizationCodeRepo)
+	authApplication := application.NewAuthApplication(authBiz)
+	authHandler := handler.NewAuthHandler(authApplication)
+	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler, authHandler)
+	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler, authHandler)
 	app, cleanup2, err := newApp(logWriter, tracerProvider, registrar, grpcServer, httpServer)
 	if err != nil {
 		cleanup()

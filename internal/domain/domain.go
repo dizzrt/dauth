@@ -1,6 +1,7 @@
 package domain
 
 import (
+	auth_biz "github.com/dizzrt/dauth/internal/domain/auth/biz"
 	client_biz "github.com/dizzrt/dauth/internal/domain/client/biz"
 	identity_biz "github.com/dizzrt/dauth/internal/domain/identity/biz"
 	token_biz "github.com/dizzrt/dauth/internal/domain/token/biz"
@@ -12,4 +13,5 @@ var ProviderSet = wire.NewSet(
 	identity_biz.NewRoleBiz,
 	token_biz.NewTokenBiz,
 	client_biz.NewClientBiz,
+	auth_biz.NewAuthBiz,
 )

@@ -1,6 +1,7 @@
 package repo
 
 import (
+	"github.com/dizzrt/dauth/internal/infra/repo/impl/auth"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/client"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/identity"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/token"
@@ -20,4 +21,7 @@ var ProviderSet = wire.NewSet(
 
 	// token_impls
 	token.NewTokenBlacklistRepoImpl,
+
+	// auth_impls
+	auth.NewAuthorizationCodeRepoImpl,
 )

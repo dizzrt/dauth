@@ -8,4 +8,5 @@ var ProviderSet = wire.NewSet(
 	NewIdentityHandler,
 	NewTokenHandler,
 	NewClientHandler,
+	NewAuthHandler,
 )

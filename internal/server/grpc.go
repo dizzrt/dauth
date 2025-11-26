@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/dizzrt/dauth/api/gen/auth"
 	"github.com/dizzrt/dauth/api/gen/client"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/api/gen/token"
@@ -11,7 +12,7 @@ import (
 	"github.com/dizzrt/ellie/transport/grpc"
 )
 
-func NewGRPCServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *handler.IdentityHandler, tokenHandler *handler.TokenHandler, clientHandler *handler.ClientHandler) *grpc.Server {
+func NewGRPCServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *handler.IdentityHandler, tokenHandler *handler.TokenHandler, clientHandler *handler.ClientHandler, authHandler *handler.AuthHandler) *grpc.Server {
 	opts := []grpc.ServerOption{
 		grpc.UnaryInterceptor(
 			tracing.UnaryServerInterceptor(),
@@ -28,6 +29,7 @@ func NewGRPCServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *han
 	identity.RegisterRoleServiceServer(srv, identityHandler)
 	token.RegisterTokenServiceServer(srv, tokenHandler)
 	client.RegisterClientServiceServer(srv, clientHandler)
+	auth.RegisterAuthServiceServer(srv, authHandler)
 
 	return srv
 }
