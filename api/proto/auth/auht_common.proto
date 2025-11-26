@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/auth;auth";
+
+message AuthorizationCode {
+    uint32 id = 1;
+    string code = 2;
+    uint32 user_id = 3;
+    uint32 client_id = 4;
+    string redirect_uri = 5;
+    string scope = 6;
+    int64 issue_at = 7;
+    int64 expires_at = 8;
+    bool used = 9;
+}

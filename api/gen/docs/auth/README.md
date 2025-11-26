@@ -3,65 +3,51 @@
 
 ## Table of Contents
 
-- [client/client_common.proto](#client_client_common-proto)
-    - [Client](#-Client)
+- [auth/auht_common.proto](#auth_auht_common-proto)
+    - [AuthorizationCode](#-AuthorizationCode)
   
-    - [Client.Status](#-Client-Status)
+- [auth/auth.proto](#auth_auth-proto)
+    - [ExchangeTokenRequest](#auth-ExchangeTokenRequest)
+    - [ExchangeTokenResponse](#auth-ExchangeTokenResponse)
+    - [GenerateAuthorizationCodeRequest](#auth-GenerateAuthorizationCodeRequest)
+    - [GenerateAuthorizationCodeResponse](#auth-GenerateAuthorizationCodeResponse)
   
-- [client/client.proto](#client_client-proto)
-    - [CreateRequest](#client-CreateRequest)
-    - [CreateResponse](#client-CreateResponse)
-    - [ValidateRequest](#client-ValidateRequest)
-    - [ValidateResponse](#client-ValidateResponse)
-  
-    - [ClientService](#client-ClientService)
+    - [AuthService](#auth-AuthService)
   
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="client_client_common-proto"></a>
+<a name="auth_auht_common-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## client/client_common.proto
+## auth/auht_common.proto
 
 
 
-<a name="-Client"></a>
+<a name="-AuthorizationCode"></a>
 
-### Client
+### AuthorizationCode
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | id | [uint32](#uint32) |  |  |
-| name | [string](#string) |  |  |
-| description | [string](#string) |  |  |
+| code | [string](#string) |  |  |
+| user_id | [uint32](#uint32) |  |  |
+| client_id | [uint32](#uint32) |  |  |
 | redirect_uri | [string](#string) |  |  |
-| status | [Client.Status](#Client-Status) |  |  |
-| created_at | [int64](#int64) |  |  |
-| updated_at | [int64](#int64) |  |  |
+| scope | [string](#string) |  |  |
+| issue_at | [int64](#int64) |  |  |
+| expires_at | [int64](#int64) |  |  |
+| used | [bool](#bool) |  |  |
 
 
 
 
 
  
-
-
-<a name="-Client-Status"></a>
-
-### Client.Status
-
-
-| Name | Number | Description |
-| ---- | ------ | ----------- |
-| UNSPECIFIED | 0 |  |
-| ACTIVE | 1 |  |
-| INACTIVE | 2 |  |
-| DELETED | 3 |  |
-
 
  
 
@@ -71,26 +57,25 @@
 
 
 
-<a name="client_client-proto"></a>
+<a name="auth_auth-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## client/client.proto
+## auth/auth.proto
 
 
 
-<a name="client-CreateRequest"></a>
+<a name="auth-ExchangeTokenRequest"></a>
 
-### CreateRequest
+### ExchangeTokenRequest
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| name | [string](#string) |  |  |
-| description | [string](#string) |  |  |
-| secret | [string](#string) |  |  |
+| code | [string](#string) |  |  |
+| client_id | [uint32](#uint32) |  |  |
+| client_secret | [string](#string) |  |  |
 | redirect_uri | [string](#string) |  |  |
-| scopes | [uint32](#uint32) | repeated |  |
 | base | [base.Base](#base-Base) |  |  |
 
 
@@ -98,15 +83,18 @@
 
 
 
-<a name="client-CreateResponse"></a>
+<a name="auth-ExchangeTokenResponse"></a>
 
-### CreateResponse
+### ExchangeTokenResponse
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| client_id | [uint32](#uint32) |  |  |
+| access_token | [string](#string) |  |  |
+| refresh_token | [string](#string) |  |  |
+| access_expire_at | [int64](#int64) |  |  |
+| refresh_expire_at | [int64](#int64) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
@@ -114,15 +102,17 @@
 
 
 
-<a name="client-ValidateRequest"></a>
+<a name="auth-GenerateAuthorizationCodeRequest"></a>
 
-### ValidateRequest
+### GenerateAuthorizationCodeRequest
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
+| user_id | [uint32](#uint32) |  |  |
 | client_id | [uint32](#uint32) |  |  |
+| redirect_uri | [string](#string) |  |  |
 | scope | [string](#string) |  |  |
 | base | [base.Base](#base-Base) |  |  |
 
@@ -131,16 +121,15 @@
 
 
 
-<a name="client-ValidateResponse"></a>
+<a name="auth-GenerateAuthorizationCodeResponse"></a>
 
-### ValidateResponse
+### GenerateAuthorizationCodeResponse
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| is_ok | [bool](#bool) |  |  |
-| reason | [string](#string) |  |  |
+| code | [string](#string) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
@@ -154,15 +143,15 @@
  
 
 
-<a name="client-ClientService"></a>
+<a name="auth-AuthService"></a>
 
-### ClientService
+### AuthService
 
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Create | [CreateRequest](#client-CreateRequest) | [CreateResponse](#client-CreateResponse) | Create creates a new client. |
-| Validate | [ValidateRequest](#client-ValidateRequest) | [ValidateResponse](#client-ValidateResponse) | Validate validates the client and scope. |
+| GenerateAuthorizationCode | [GenerateAuthorizationCodeRequest](#auth-GenerateAuthorizationCodeRequest) | [GenerateAuthorizationCodeResponse](#auth-GenerateAuthorizationCodeResponse) | GenerateAuthorizationCode generates an authorization code. |
+| ExchangeToken | [ExchangeTokenRequest](#auth-ExchangeTokenRequest) | [ExchangeTokenResponse](#auth-ExchangeTokenResponse) | ExchangeToken exchanges an authorization code for an access token. |
 
  
 

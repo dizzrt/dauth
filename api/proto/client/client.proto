@@ -4,6 +4,7 @@ package client;
 option go_package = "github.com/dizzrt/dauth/api/gen/client;client";
 
 import "base/base.proto";
+import "client/client_common.proto";
 import "google/api/annotations.proto";
 
 message CreateRequest {

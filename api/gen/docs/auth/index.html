@@ -175,17 +175,13 @@
         
           
           <li>
-            <a href="#client%2fclient_common.proto">client/client_common.proto</a>
+            <a href="#auth%2fauht_common.proto">auth/auht_common.proto</a>
             <ul>
               
                 <li>
-                  <a href="#.Client"><span class="badge">M</span>Client</a>
+                  <a href="#.AuthorizationCode"><span class="badge">M</span>AuthorizationCode</a>
                 </li>
               
-              
-                <li>
-                  <a href="#.Client.Status"><span class="badge">E</span>Client.Status</a>
-                </li>
               
               
               
@@ -194,30 +190,30 @@
         
           
           <li>
-            <a href="#client%2fclient.proto">client/client.proto</a>
+            <a href="#auth%2fauth.proto">auth/auth.proto</a>
             <ul>
               
                 <li>
-                  <a href="#client.CreateRequest"><span class="badge">M</span>CreateRequest</a>
+                  <a href="#auth.ExchangeTokenRequest"><span class="badge">M</span>ExchangeTokenRequest</a>
                 </li>
               
                 <li>
-                  <a href="#client.CreateResponse"><span class="badge">M</span>CreateResponse</a>
+                  <a href="#auth.ExchangeTokenResponse"><span class="badge">M</span>ExchangeTokenResponse</a>
                 </li>
               
                 <li>
-                  <a href="#client.ValidateRequest"><span class="badge">M</span>ValidateRequest</a>
+                  <a href="#auth.GenerateAuthorizationCodeRequest"><span class="badge">M</span>GenerateAuthorizationCodeRequest</a>
                 </li>
               
                 <li>
-                  <a href="#client.ValidateResponse"><span class="badge">M</span>ValidateResponse</a>
+                  <a href="#auth.GenerateAuthorizationCodeResponse"><span class="badge">M</span>GenerateAuthorizationCodeResponse</a>
                 </li>
               
               
               
               
                 <li>
-                  <a href="#client.ClientService"><span class="badge">S</span>ClientService</a>
+                  <a href="#auth.AuthService"><span class="badge">S</span>AuthService</a>
                 </li>
               
             </ul>
@@ -230,12 +226,12 @@
     
       
       <div class="file-heading">
-        <h2 id="client/client_common.proto">client/client_common.proto</h2><a href="#title">Top</a>
+        <h2 id="auth/auht_common.proto">auth/auht_common.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
       
-        <h3 id=".Client">Client</h3>
+        <h3 id=".AuthorizationCode">AuthorizationCode</h3>
         <p></p>
 
         
@@ -253,15 +249,22 @@
                 </tr>
               
                 <tr>
-                  <td>name</td>
+                  <td>code</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>description</td>
-                  <td><a href="#string">string</a></td>
+                  <td>user_id</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>client_id</td>
+                  <td><a href="#uint32">uint32</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -274,22 +277,29 @@
                 </tr>
               
                 <tr>
-                  <td>status</td>
-                  <td><a href="#Client.Status">Client.Status</a></td>
+                  <td>scope</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>created_at</td>
+                  <td>issue_at</td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>updated_at</td>
+                  <td>expires_at</td>
                   <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>used</td>
+                  <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -303,41 +313,6 @@
       
 
       
-        <h3 id=".Client.Status">Client.Status</h3>
-        <p></p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>UNSPECIFIED</td>
-                <td>0</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>ACTIVE</td>
-                <td>1</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>INACTIVE</td>
-                <td>2</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>DELETED</td>
-                <td>3</td>
-                <td><p></p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
 
       
 
@@ -345,12 +320,12 @@
     
       
       <div class="file-heading">
-        <h2 id="client/client.proto">client/client.proto</h2><a href="#title">Top</a>
+        <h2 id="auth/auth.proto">auth/auth.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
       
-        <h3 id="client.CreateRequest">CreateRequest</h3>
+        <h3 id="auth.ExchangeTokenRequest">ExchangeTokenRequest</h3>
         <p></p>
 
         
@@ -361,21 +336,21 @@
             <tbody>
               
                 <tr>
-                  <td>name</td>
+                  <td>code</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>description</td>
-                  <td><a href="#string">string</a></td>
+                  <td>client_id</td>
+                  <td><a href="#uint32">uint32</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>secret</td>
+                  <td>client_secret</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -385,13 +360,6 @@
                   <td>redirect_uri</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>scopes</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td>repeated</td>
                   <td><p> </p></td>
                 </tr>
               
@@ -409,7 +377,7 @@
 
         
       
-        <h3 id="client.CreateResponse">CreateResponse</h3>
+        <h3 id="auth.ExchangeTokenResponse">ExchangeTokenResponse</h3>
         <p></p>
 
         
@@ -420,8 +388,29 @@
             <tbody>
               
                 <tr>
-                  <td>client_id</td>
-                  <td><a href="#uint32">uint32</a></td>
+                  <td>access_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>refresh_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>access_expire_at</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>refresh_expire_at</td>
+                  <td><a href="#int64">int64</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -440,7 +429,7 @@
 
         
       
-        <h3 id="client.ValidateRequest">ValidateRequest</h3>
+        <h3 id="auth.GenerateAuthorizationCodeRequest">GenerateAuthorizationCodeRequest</h3>
         <p></p>
 
         
@@ -451,8 +440,22 @@
             <tbody>
               
                 <tr>
+                  <td>user_id</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
                   <td>client_id</td>
                   <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>redirect_uri</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -478,7 +481,7 @@
 
         
       
-        <h3 id="client.ValidateResponse">ValidateResponse</h3>
+        <h3 id="auth.GenerateAuthorizationCodeResponse">GenerateAuthorizationCodeResponse</h3>
         <p></p>
 
         
@@ -489,14 +492,7 @@
             <tbody>
               
                 <tr>
-                  <td>is_ok</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>reason</td>
+                  <td>code</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -522,7 +518,7 @@
       
 
       
-        <h3 id="client.ClientService">ClientService</h3>
+        <h3 id="auth.AuthService">AuthService</h3>
         <p></p>
         <table class="enum-table">
           <thead>
@@ -531,50 +527,22 @@
           <tbody>
             
               <tr>
-                <td>Create</td>
-                <td><a href="#client.CreateRequest">CreateRequest</a></td>
-                <td><a href="#client.CreateResponse">CreateResponse</a></td>
-                <td><p>Create creates a new client.</p></td>
+                <td>GenerateAuthorizationCode</td>
+                <td><a href="#auth.GenerateAuthorizationCodeRequest">GenerateAuthorizationCodeRequest</a></td>
+                <td><a href="#auth.GenerateAuthorizationCodeResponse">GenerateAuthorizationCodeResponse</a></td>
+                <td><p>GenerateAuthorizationCode generates an authorization code.</p></td>
               </tr>
             
               <tr>
-                <td>Validate</td>
-                <td><a href="#client.ValidateRequest">ValidateRequest</a></td>
-                <td><a href="#client.ValidateResponse">ValidateResponse</a></td>
-                <td><p>Validate validates the client and scope.</p></td>
+                <td>ExchangeToken</td>
+                <td><a href="#auth.ExchangeTokenRequest">ExchangeTokenRequest</a></td>
+                <td><a href="#auth.ExchangeTokenResponse">ExchangeTokenResponse</a></td>
+                <td><p>ExchangeToken exchanges an authorization code for an access token.</p></td>
               </tr>
             
           </tbody>
         </table>
 
-        
-          
-          
-          <h4>Methods with HTTP bindings</h4>
-          <table>
-            <thead>
-              <tr>
-                <td>Method Name</td>
-                <td>Method</td>
-                <td>Pattern</td>
-                <td>Body</td>
-              </tr>
-            </thead>
-            <tbody>
-            
-              
-              
-              <tr>
-                <td>Create</td>
-                <td>POST</td>
-                <td>/client/client/create</td>
-                <td>*</td>
-              </tr>
-              
-            
-            </tbody>
-          </table>
-          
         
     
 

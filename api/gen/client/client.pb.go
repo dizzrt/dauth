@@ -283,7 +283,7 @@ var File_client_client_proto protoreflect.FileDescriptor
 
 const file_client_client_proto_rawDesc = "" +
 	"\n" +
-	"\x13client/client.proto\x12\x06client\x1a\x0fbase/base.proto\x1a\x1cgoogle/api/annotations.proto\"\xb9\x01\n" +
+	"\x13client/client.proto\x12\x06client\x1a\x0fbase/base.proto\x1a\x1aclient/client_common.proto\x1a\x1cgoogle/api/annotations.proto\"\xb9\x01\n" +
 	"\rCreateRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x16\n" +
@@ -350,6 +350,7 @@ func file_client_client_proto_init() {
 	if File_client_client_proto != nil {
 		return
 	}
+	file_client_client_common_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
