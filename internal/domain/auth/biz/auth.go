@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/dizzrt/dauth/internal/domain/auth/cache"
 	"github.com/dizzrt/dauth/internal/domain/auth/repo"
 )
 
@@ -15,12 +16,14 @@ type AuthBiz interface {
 }
 
 type authBiz struct {
-	authorizationCodeRepo repo.AuthorizationCodeRepo
+	authorizationCodeRepo  repo.AuthorizationCodeRepo
+	authorizationCodeCache cache.AuthorizationCodeCache
 }
 
-func NewAuthBiz(authRepo repo.AuthorizationCodeRepo) AuthBiz {
+func NewAuthBiz(authCodeRepo repo.AuthorizationCodeRepo, authCodeCache cache.AuthorizationCodeCache) AuthBiz {
 	return &authBiz{
-		authorizationCodeRepo: authRepo,
+		authorizationCodeRepo:  authCodeRepo,
+		authorizationCodeCache: authCodeCache,
 	}
 }
 

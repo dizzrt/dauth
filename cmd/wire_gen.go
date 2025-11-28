@@ -14,6 +14,7 @@ import (
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	biz2 "github.com/dizzrt/dauth/internal/domain/token/biz"
 	"github.com/dizzrt/dauth/internal/handler"
+	auth2 "github.com/dizzrt/dauth/internal/infra/cache/impl/auth"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/auth"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/client"
@@ -54,17 +55,25 @@ func wireApp() (*ellie.App, func(), error) {
 	clientApplication := application.NewClientApplication(clientBiz)
 	clientHandler := handler.NewClientHandler(clientApplication)
 	authorizationCodeRepo := auth.NewAuthorizationCodeRepoImpl(baseDB)
-	authBiz := biz4.NewAuthBiz(authorizationCodeRepo)
-	authApplication := application.NewAuthApplication(authBiz)
-	authHandler := handler.NewAuthHandler(authApplication)
-	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler, authHandler)
-	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler, authHandler)
-	app, cleanup2, err := newApp(logWriter, tracerProvider, registrar, grpcServer, httpServer)
+	redisClient, cleanup2, err := foundation.NewRedisClient(appConfig)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
 	}
+	authorizationCodeCache := auth2.NewAuthorizationCodeCacheImpl(redisClient)
+	authBiz := biz4.NewAuthBiz(authorizationCodeRepo, authorizationCodeCache)
+	authApplication := application.NewAuthApplication(authBiz)
+	authHandler := handler.NewAuthHandler(authApplication)
+	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler, authHandler)
+	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler, authHandler)
+	app, cleanup3, err := newApp(logWriter, tracerProvider, registrar, grpcServer, httpServer)
+	if err != nil {
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
 	return app, func() {
+		cleanup3()
 		cleanup2()
 		cleanup()
 	}, nil
