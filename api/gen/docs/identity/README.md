@@ -7,7 +7,6 @@
     - [Role](#-Role)
     - [User](#-User)
   
-    - [Errors](#-Errors)
     - [Role.Status](#-Role-Status)
     - [User.Status](#-User-Status)
   
@@ -96,23 +95,6 @@
 
 
  
-
-
-<a name="-Errors"></a>
-
-### Errors
-
-
-| Name | Number | Description |
-| ---- | ------ | ----------- |
-| UNKNOWN | 0 |  |
-| INVALID_PARAMS | 1001 |  |
-| EMPTY_PASSWORD | 1002 |  |
-| INVALID_PASSWORD | 1003 |  |
-| INVALID_EMAIL | 1004 |  |
-| EMAIL_ALREADY_EXISTS | 1005 |  |
-| USER_NOT_FOUND | 1006 |  |
-
 
 
 <a name="-Role-Status"></a>

@@ -3,6 +3,7 @@ package application
 import (
 	"context"
 
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/application/convert"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
@@ -38,16 +39,16 @@ func NewIdentityApplication(userBiz biz.UserBiz, roleBiz biz.RoleBiz) IdentityAp
 func (app *identityApplication) Login(ctx context.Context, req *identity.LoginRequest) (*identity.LoginResponse, error) {
 	var account string // only support email yet
 	if account = req.GetAccount(); account == "" {
-		return nil, identity.ErrorInvalidEmail("email can not be empty")
+		return nil, errdef.IdentityInvalidAccountWithMsg("account can not be empty")
 	}
 
 	if err := utils.Validate().Var(account, "email"); err != nil {
-		return nil, identity.ErrorInvalidEmail("malformed email").WithCause(err)
+		return nil, errdef.IdentityInvalidAccountWithMsg("malformed email").WithCause(err)
 	}
 
 	var pwd string
 	if pwd = req.GetPassword(); pwd == "" {
-		return nil, identity.ErrorInvalidPassword("password can not be empty")
+		return nil, errdef.IdentityWrongPassword()
 	}
 
 	// authenticate user
@@ -70,16 +71,16 @@ func (app *identityApplication) Login(ctx context.Context, req *identity.LoginRe
 func (app *identityApplication) Authenticate(ctx context.Context, req *identity.AuthenticateRequest) (*identity.AuthenticateResponse, error) {
 	var account string // only support email yet
 	if account = req.GetAccount(); account == "" {
-		return nil, identity.ErrorInvalidEmail("email can not be empty")
+		return nil, errdef.IdentityInvalidAccountWithMsg("account can not be empty")
 	}
 
 	if err := utils.Validate().Var(account, "email"); err != nil {
-		return nil, identity.ErrorInvalidEmail("malformed email").WithCause(err)
+		return nil, errdef.IdentityInvalidAccountWithMsg("malformed email").WithCause(err)
 	}
 
 	var pwd string
 	if pwd = req.GetPassword(); pwd == "" {
-		return nil, identity.ErrorInvalidPassword("password can not be empty")
+		return nil, errdef.IdentityWrongPassword()
 	}
 
 	user, err := app.userBiz.Authenticate(ctx, account, pwd)
@@ -103,7 +104,7 @@ func (app *identityApplication) CreateUser(ctx context.Context, req *identity.Cr
 
 	// validate user
 	if err := utils.Validate().Struct(user); err != nil {
-		return nil, identity.ErrorInvalidParams("").WithCause(err)
+		return nil, errdef.InvalidParams().WithCause(err)
 	}
 
 	uid, err := app.userBiz.CreateUser(ctx, user)
@@ -148,7 +149,7 @@ func (app *identityApplication) UpdateUserPassword(ctx context.Context, req *ide
 	uid := req.GetId()
 	pwd := req.GetPassword()
 	if pwd == "" {
-		return nil, identity.ErrorInvalidPassword("password can not be empty")
+		return nil, errdef.IdentityWrongPassword()
 	}
 
 	err := app.userBiz.UpdateUserPassword(ctx, uid, pwd)

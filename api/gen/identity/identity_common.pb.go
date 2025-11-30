@@ -22,67 +22,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Errors int32
-
-const (
-	Errors_UNKNOWN              Errors = 0
-	Errors_INVALID_PARAMS       Errors = 1001
-	Errors_EMPTY_PASSWORD       Errors = 1002
-	Errors_INVALID_PASSWORD     Errors = 1003
-	Errors_INVALID_EMAIL        Errors = 1004
-	Errors_EMAIL_ALREADY_EXISTS Errors = 1005
-	Errors_USER_NOT_FOUND       Errors = 1006
-)
-
-// Enum value maps for Errors.
-var (
-	Errors_name = map[int32]string{
-		0:    "UNKNOWN",
-		1001: "INVALID_PARAMS",
-		1002: "EMPTY_PASSWORD",
-		1003: "INVALID_PASSWORD",
-		1004: "INVALID_EMAIL",
-		1005: "EMAIL_ALREADY_EXISTS",
-		1006: "USER_NOT_FOUND",
-	}
-	Errors_value = map[string]int32{
-		"UNKNOWN":              0,
-		"INVALID_PARAMS":       1001,
-		"EMPTY_PASSWORD":       1002,
-		"INVALID_PASSWORD":     1003,
-		"INVALID_EMAIL":        1004,
-		"EMAIL_ALREADY_EXISTS": 1005,
-		"USER_NOT_FOUND":       1006,
-	}
-)
-
-func (x Errors) Enum() *Errors {
-	p := new(Errors)
-	*p = x
-	return p
-}
-
-func (x Errors) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Errors) Descriptor() protoreflect.EnumDescriptor {
-	return file_identity_identity_common_proto_enumTypes[0].Descriptor()
-}
-
-func (Errors) Type() protoreflect.EnumType {
-	return &file_identity_identity_common_proto_enumTypes[0]
-}
-
-func (x Errors) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Errors.Descriptor instead.
-func (Errors) EnumDescriptor() ([]byte, []int) {
-	return file_identity_identity_common_proto_rawDescGZIP(), []int{0}
-}
-
 type Role_Status int32
 
 const (
@@ -119,11 +58,11 @@ func (x Role_Status) String() string {
 }
 
 func (Role_Status) Descriptor() protoreflect.EnumDescriptor {
-	return file_identity_identity_common_proto_enumTypes[1].Descriptor()
+	return file_identity_identity_common_proto_enumTypes[0].Descriptor()
 }
 
 func (Role_Status) Type() protoreflect.EnumType {
-	return &file_identity_identity_common_proto_enumTypes[1]
+	return &file_identity_identity_common_proto_enumTypes[0]
 }
 
 func (x Role_Status) Number() protoreflect.EnumNumber {
@@ -171,11 +110,11 @@ func (x User_Status) String() string {
 }
 
 func (User_Status) Descriptor() protoreflect.EnumDescriptor {
-	return file_identity_identity_common_proto_enumTypes[2].Descriptor()
+	return file_identity_identity_common_proto_enumTypes[1].Descriptor()
 }
 
 func (User_Status) Type() protoreflect.EnumType {
-	return &file_identity_identity_common_proto_enumTypes[2]
+	return &file_identity_identity_common_proto_enumTypes[1]
 }
 
 func (x User_Status) Number() protoreflect.EnumNumber {
@@ -407,15 +346,7 @@ const file_identity_identity_common_proto_rawDesc = "" +
 	"\n" +
 	"\x06ACTIVE\x10\x01\x12\f\n" +
 	"\bINACTIVE\x10\x02\x12\v\n" +
-	"\aDELETED\x10\x03*\xcb\x01\n" +
-	"\x06Errors\x12\x12\n" +
-	"\aUNKNOWN\x10\x00\x1a\x05\xd0\xf3\x18\xe8\a\x12\x1a\n" +
-	"\x0eINVALID_PARAMS\x10\xe9\a\x1a\x05\xd0\xf3\x18\xe9\a\x12\x1a\n" +
-	"\x0eEMPTY_PASSWORD\x10\xea\a\x1a\x05\xd0\xf3\x18\xea\a\x12\x1c\n" +
-	"\x10INVALID_PASSWORD\x10\xeb\a\x1a\x05\xd0\xf3\x18\xeb\a\x12\x19\n" +
-	"\rINVALID_EMAIL\x10\xec\a\x1a\x05\xd0\xf3\x18\xec\a\x12 \n" +
-	"\x14EMAIL_ALREADY_EXISTS\x10\xed\a\x1a\x05\xd0\xf3\x18\xed\a\x12\x1a\n" +
-	"\x0eUSER_NOT_FOUND\x10\xee\a\x1a\x05\xd0\xf3\x18\xee\aB3Z1github.com/dizzrt/dauth/api/gen/identity;identityb\x06proto3"
+	"\aDELETED\x10\x03B3Z1github.com/dizzrt/dauth/api/gen/identity;identityb\x06proto3"
 
 var (
 	file_identity_identity_common_proto_rawDescOnce sync.Once
@@ -429,19 +360,18 @@ func file_identity_identity_common_proto_rawDescGZIP() []byte {
 	return file_identity_identity_common_proto_rawDescData
 }
 
-var file_identity_identity_common_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
+var file_identity_identity_common_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_identity_identity_common_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_identity_identity_common_proto_goTypes = []any{
-	(Errors)(0),      // 0: Errors
-	(Role_Status)(0), // 1: Role.Status
-	(User_Status)(0), // 2: User.Status
-	(*Role)(nil),     // 3: Role
-	(*User)(nil),     // 4: User
+	(Role_Status)(0), // 0: Role.Status
+	(User_Status)(0), // 1: User.Status
+	(*Role)(nil),     // 2: Role
+	(*User)(nil),     // 3: User
 }
 var file_identity_identity_common_proto_depIdxs = []int32{
-	1, // 0: Role.status:type_name -> Role.Status
-	2, // 1: User.status:type_name -> User.Status
-	3, // 2: User.roles:type_name -> Role
+	0, // 0: Role.status:type_name -> Role.Status
+	1, // 1: User.status:type_name -> User.Status
+	2, // 2: User.roles:type_name -> Role
 	3, // [3:3] is the sub-list for method output_type
 	3, // [3:3] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
@@ -459,7 +389,7 @@ func file_identity_identity_common_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_identity_identity_common_proto_rawDesc), len(file_identity_identity_common_proto_rawDesc)),
-			NumEnums:      3,
+			NumEnums:      2,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,

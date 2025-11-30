@@ -159,6 +159,110 @@ func (x *CreateClientResponse) GetBaseResp() *base.BaseResp {
 	return nil
 }
 
+type GetClientRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ClientId      uint32                 `protobuf:"varint,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	Base          *base.Base             `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetClientRequest) Reset() {
+	*x = GetClientRequest{}
+	mi := &file_client_client_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetClientRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetClientRequest) ProtoMessage() {}
+
+func (x *GetClientRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetClientRequest.ProtoReflect.Descriptor instead.
+func (*GetClientRequest) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetClientRequest) GetClientId() uint32 {
+	if x != nil {
+		return x.ClientId
+	}
+	return 0
+}
+
+func (x *GetClientRequest) GetBase() *base.Base {
+	if x != nil {
+		return x.Base
+	}
+	return nil
+}
+
+type GetClientResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Client        *Client                `protobuf:"bytes,1,opt,name=client,proto3" json:"client,omitempty"`
+	BaseResp      *base.BaseResp         `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetClientResponse) Reset() {
+	*x = GetClientResponse{}
+	mi := &file_client_client_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetClientResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetClientResponse) ProtoMessage() {}
+
+func (x *GetClientResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetClientResponse.ProtoReflect.Descriptor instead.
+func (*GetClientResponse) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetClientResponse) GetClient() *Client {
+	if x != nil {
+		return x.Client
+	}
+	return nil
+}
+
+func (x *GetClientResponse) GetBaseResp() *base.BaseResp {
+	if x != nil {
+		return x.BaseResp
+	}
+	return nil
+}
+
 type ValidateClientRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ClientId      uint32                 `protobuf:"varint,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
@@ -170,7 +274,7 @@ type ValidateClientRequest struct {
 
 func (x *ValidateClientRequest) Reset() {
 	*x = ValidateClientRequest{}
-	mi := &file_client_client_proto_msgTypes[2]
+	mi := &file_client_client_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -182,7 +286,7 @@ func (x *ValidateClientRequest) String() string {
 func (*ValidateClientRequest) ProtoMessage() {}
 
 func (x *ValidateClientRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_client_client_proto_msgTypes[2]
+	mi := &file_client_client_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -195,7 +299,7 @@ func (x *ValidateClientRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateClientRequest.ProtoReflect.Descriptor instead.
 func (*ValidateClientRequest) Descriptor() ([]byte, []int) {
-	return file_client_client_proto_rawDescGZIP(), []int{2}
+	return file_client_client_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ValidateClientRequest) GetClientId() uint32 {
@@ -230,7 +334,7 @@ type ValidateClientResponse struct {
 
 func (x *ValidateClientResponse) Reset() {
 	*x = ValidateClientResponse{}
-	mi := &file_client_client_proto_msgTypes[3]
+	mi := &file_client_client_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -242,7 +346,7 @@ func (x *ValidateClientResponse) String() string {
 func (*ValidateClientResponse) ProtoMessage() {}
 
 func (x *ValidateClientResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_client_client_proto_msgTypes[3]
+	mi := &file_client_client_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -255,7 +359,7 @@ func (x *ValidateClientResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateClientResponse.ProtoReflect.Descriptor instead.
 func (*ValidateClientResponse) Descriptor() ([]byte, []int) {
-	return file_client_client_proto_rawDescGZIP(), []int{3}
+	return file_client_client_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ValidateClientResponse) GetIsOk() bool {
@@ -294,6 +398,13 @@ const file_client_client_proto_rawDesc = "" +
 	".base.BaseR\x04base\"a\n" +
 	"\x14CreateClientResponse\x12\x1b\n" +
 	"\tclient_id\x18\x01 \x01(\rR\bclientId\x12,\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"P\n" +
+	"\x10GetClientRequest\x12\x1b\n" +
+	"\tclient_id\x18\x01 \x01(\rR\bclientId\x12\x1f\n" +
+	"\x04base\x18\xff\x01 \x01(\v2\n" +
+	".base.BaseR\x04base\"b\n" +
+	"\x11GetClientResponse\x12\x1f\n" +
+	"\x06client\x18\x01 \x01(\v2\a.ClientR\x06client\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"k\n" +
 	"\x15ValidateClientRequest\x12\x1b\n" +
 	"\tclient_id\x18\x01 \x01(\rR\bclientId\x12\x14\n" +
@@ -303,9 +414,10 @@ const file_client_client_proto_rawDesc = "" +
 	"\x16ValidateClientResponse\x12\x13\n" +
 	"\x05is_ok\x18\x01 \x01(\bR\x04isOk\x12\x16\n" +
 	"\x06reason\x18\x02 \x01(\tR\x06reason\x12,\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\xcf\x01\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\x93\x02\n" +
 	"\rClientService\x12k\n" +
-	"\fCreateClient\x12\x1b.client.CreateClientRequest\x1a\x1c.client.CreateClientResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/client/client/create\x12Q\n" +
+	"\fCreateClient\x12\x1b.client.CreateClientRequest\x1a\x1c.client.CreateClientResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/client/client/create\x12B\n" +
+	"\tGetClient\x12\x18.client.GetClientRequest\x1a\x19.client.GetClientResponse\"\x00\x12Q\n" +
 	"\x0eValidateClient\x12\x1d.client.ValidateClientRequest\x1a\x1e.client.ValidateClientResponse\"\x00B/Z-github.com/dizzrt/dauth/api/gen/client;clientb\x06proto3"
 
 var (
@@ -320,29 +432,37 @@ func file_client_client_proto_rawDescGZIP() []byte {
 	return file_client_client_proto_rawDescData
 }
 
-var file_client_client_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_client_client_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_client_client_proto_goTypes = []any{
 	(*CreateClientRequest)(nil),    // 0: client.CreateClientRequest
 	(*CreateClientResponse)(nil),   // 1: client.CreateClientResponse
-	(*ValidateClientRequest)(nil),  // 2: client.ValidateClientRequest
-	(*ValidateClientResponse)(nil), // 3: client.ValidateClientResponse
-	(*base.Base)(nil),              // 4: base.Base
-	(*base.BaseResp)(nil),          // 5: base.BaseResp
+	(*GetClientRequest)(nil),       // 2: client.GetClientRequest
+	(*GetClientResponse)(nil),      // 3: client.GetClientResponse
+	(*ValidateClientRequest)(nil),  // 4: client.ValidateClientRequest
+	(*ValidateClientResponse)(nil), // 5: client.ValidateClientResponse
+	(*base.Base)(nil),              // 6: base.Base
+	(*base.BaseResp)(nil),          // 7: base.BaseResp
+	(*Client)(nil),                 // 8: Client
 }
 var file_client_client_proto_depIdxs = []int32{
-	4, // 0: client.CreateClientRequest.base:type_name -> base.Base
-	5, // 1: client.CreateClientResponse.base_resp:type_name -> base.BaseResp
-	4, // 2: client.ValidateClientRequest.base:type_name -> base.Base
-	5, // 3: client.ValidateClientResponse.base_resp:type_name -> base.BaseResp
-	0, // 4: client.ClientService.CreateClient:input_type -> client.CreateClientRequest
-	2, // 5: client.ClientService.ValidateClient:input_type -> client.ValidateClientRequest
-	1, // 6: client.ClientService.CreateClient:output_type -> client.CreateClientResponse
-	3, // 7: client.ClientService.ValidateClient:output_type -> client.ValidateClientResponse
-	6, // [6:8] is the sub-list for method output_type
-	4, // [4:6] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	6,  // 0: client.CreateClientRequest.base:type_name -> base.Base
+	7,  // 1: client.CreateClientResponse.base_resp:type_name -> base.BaseResp
+	6,  // 2: client.GetClientRequest.base:type_name -> base.Base
+	8,  // 3: client.GetClientResponse.client:type_name -> Client
+	7,  // 4: client.GetClientResponse.base_resp:type_name -> base.BaseResp
+	6,  // 5: client.ValidateClientRequest.base:type_name -> base.Base
+	7,  // 6: client.ValidateClientResponse.base_resp:type_name -> base.BaseResp
+	0,  // 7: client.ClientService.CreateClient:input_type -> client.CreateClientRequest
+	2,  // 8: client.ClientService.GetClient:input_type -> client.GetClientRequest
+	4,  // 9: client.ClientService.ValidateClient:input_type -> client.ValidateClientRequest
+	1,  // 10: client.ClientService.CreateClient:output_type -> client.CreateClientResponse
+	3,  // 11: client.ClientService.GetClient:output_type -> client.GetClientResponse
+	5,  // 12: client.ClientService.ValidateClient:output_type -> client.ValidateClientResponse
+	10, // [10:13] is the sub-list for method output_type
+	7,  // [7:10] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_client_client_proto_init() }
@@ -357,7 +477,7 @@ func file_client_client_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_client_client_proto_rawDesc), len(file_client_client_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

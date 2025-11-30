@@ -11,6 +11,8 @@
 - [client/client.proto](#client_client-proto)
     - [CreateClientRequest](#client-CreateClientRequest)
     - [CreateClientResponse](#client-CreateClientResponse)
+    - [GetClientRequest](#client-GetClientRequest)
+    - [GetClientResponse](#client-GetClientResponse)
     - [ValidateClientRequest](#client-ValidateClientRequest)
     - [ValidateClientResponse](#client-ValidateClientResponse)
   
@@ -114,6 +116,38 @@
 
 
 
+<a name="client-GetClientRequest"></a>
+
+### GetClientRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| client_id | [uint32](#uint32) |  |  |
+| base | [base.Base](#base-Base) |  |  |
+
+
+
+
+
+
+<a name="client-GetClientResponse"></a>
+
+### GetClientResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| client | [Client](#Client) |  |  |
+| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
+
+
+
+
+
+
 <a name="client-ValidateClientRequest"></a>
 
 ### ValidateClientRequest
@@ -162,6 +196,7 @@
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | CreateClient | [CreateClientRequest](#client-CreateClientRequest) | [CreateClientResponse](#client-CreateClientResponse) | CreateClient creates a new client. |
+| GetClient | [GetClientRequest](#client-GetClientRequest) | [GetClientResponse](#client-GetClientResponse) |  |
 | ValidateClient | [ValidateClientRequest](#client-ValidateClientRequest) | [ValidateClientResponse](#client-ValidateClientResponse) | ValidateClient validates the client and scope. |
 
  

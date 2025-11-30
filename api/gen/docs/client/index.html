@@ -206,6 +206,14 @@
                 </li>
               
                 <li>
+                  <a href="#client.GetClientRequest"><span class="badge">M</span>GetClientRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#client.GetClientResponse"><span class="badge">M</span>GetClientResponse</a>
+                </li>
+              
+                <li>
                   <a href="#client.ValidateClientRequest"><span class="badge">M</span>ValidateClientRequest</a>
                 </li>
               
@@ -440,6 +448,68 @@
 
         
       
+        <h3 id="client.GetClientRequest">GetClientRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>client_id</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#base.Base">base.Base</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="client.GetClientResponse">GetClientResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>client</td>
+                  <td><a href="#Client">Client</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_resp</td>
+                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="client.ValidateClientRequest">ValidateClientRequest</h3>
         <p></p>
 
@@ -535,6 +605,13 @@
                 <td><a href="#client.CreateClientRequest">CreateClientRequest</a></td>
                 <td><a href="#client.CreateClientResponse">CreateClientResponse</a></td>
                 <td><p>CreateClient creates a new client.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetClient</td>
+                <td><a href="#client.GetClientRequest">GetClientRequest</a></td>
+                <td><a href="#client.GetClientResponse">GetClientResponse</a></td>
+                <td><p></p></td>
               </tr>
             
               <tr>

@@ -23,6 +23,18 @@ message CreateClientResponse {
     base.BaseResp base_resp = 255;
 }
 
+message GetClientRequest {
+    uint32 client_id = 1;
+
+    base.Base base = 255;
+}
+
+message GetClientResponse {
+    Client client = 1;
+
+    base.BaseResp base_resp = 255;
+}
+
 message ValidateClientRequest {
     uint32 client_id = 1;
     string scope = 2;
@@ -46,6 +58,8 @@ service ClientService {
             body: "*"
         };
     }
+
+    rpc GetClient(GetClientRequest) returns (GetClientResponse) {}
 
     // ValidateClient validates the client and scope.
     rpc ValidateClient(ValidateClientRequest) returns (ValidateClientResponse) {}

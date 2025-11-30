@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	ClientService_CreateClient_FullMethodName   = "/client.ClientService/CreateClient"
+	ClientService_GetClient_FullMethodName      = "/client.ClientService/GetClient"
 	ClientService_ValidateClient_FullMethodName = "/client.ClientService/ValidateClient"
 )
 
@@ -29,6 +30,7 @@ const (
 type ClientServiceClient interface {
 	// CreateClient creates a new client.
 	CreateClient(ctx context.Context, in *CreateClientRequest, opts ...grpc.CallOption) (*CreateClientResponse, error)
+	GetClient(ctx context.Context, in *GetClientRequest, opts ...grpc.CallOption) (*GetClientResponse, error)
 	// ValidateClient validates the client and scope.
 	ValidateClient(ctx context.Context, in *ValidateClientRequest, opts ...grpc.CallOption) (*ValidateClientResponse, error)
 }
@@ -51,6 +53,16 @@ func (c *clientServiceClient) CreateClient(ctx context.Context, in *CreateClient
 	return out, nil
 }
 
+func (c *clientServiceClient) GetClient(ctx context.Context, in *GetClientRequest, opts ...grpc.CallOption) (*GetClientResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetClientResponse)
+	err := c.cc.Invoke(ctx, ClientService_GetClient_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *clientServiceClient) ValidateClient(ctx context.Context, in *ValidateClientRequest, opts ...grpc.CallOption) (*ValidateClientResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ValidateClientResponse)
@@ -67,6 +79,7 @@ func (c *clientServiceClient) ValidateClient(ctx context.Context, in *ValidateCl
 type ClientServiceServer interface {
 	// CreateClient creates a new client.
 	CreateClient(context.Context, *CreateClientRequest) (*CreateClientResponse, error)
+	GetClient(context.Context, *GetClientRequest) (*GetClientResponse, error)
 	// ValidateClient validates the client and scope.
 	ValidateClient(context.Context, *ValidateClientRequest) (*ValidateClientResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
@@ -81,6 +94,9 @@ type UnimplementedClientServiceServer struct{}
 
 func (UnimplementedClientServiceServer) CreateClient(context.Context, *CreateClientRequest) (*CreateClientResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateClient not implemented")
+}
+func (UnimplementedClientServiceServer) GetClient(context.Context, *GetClientRequest) (*GetClientResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClient not implemented")
 }
 func (UnimplementedClientServiceServer) ValidateClient(context.Context, *ValidateClientRequest) (*ValidateClientResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateClient not implemented")
@@ -124,6 +140,24 @@ func _ClientService_CreateClient_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_GetClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClientRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).GetClient(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClientService_GetClient_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).GetClient(ctx, req.(*GetClientRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ClientService_ValidateClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ValidateClientRequest)
 	if err := dec(in); err != nil {
@@ -152,6 +186,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateClient",
 			Handler:    _ClientService_CreateClient_Handler,
+		},
+		{
+			MethodName: "GetClient",
+			Handler:    _ClientService_GetClient_Handler,
 		},
 		{
 			MethodName: "ValidateClient",

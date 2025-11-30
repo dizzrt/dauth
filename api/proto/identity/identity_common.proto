@@ -4,16 +4,6 @@ option go_package = "github.com/dizzrt/dauth/api/gen/identity;identity";
 
 import "ellie/errors/errors.proto";
 
-enum Errors {
-    UNKNOWN = 0 [(ellie.errors.code) = 1000];
-    INVALID_PARAMS = 1001 [(ellie.errors.code) = 1001];
-    EMPTY_PASSWORD = 1002 [(ellie.errors.code) = 1002];
-    INVALID_PASSWORD = 1003 [(ellie.errors.code) = 1003];
-    INVALID_EMAIL = 1004 [(ellie.errors.code) = 1004];
-    EMAIL_ALREADY_EXISTS = 1005 [(ellie.errors.code) = 1005];
-    USER_NOT_FOUND = 1006 [(ellie.errors.code) = 1006];
-}
-
 message Role {
     enum Status {
         UNSPECIFIED = 0;
