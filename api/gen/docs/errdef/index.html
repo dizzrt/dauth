@@ -175,7 +175,7 @@
         
           
           <li>
-            <a href="#errdef%2fcommon.proto">errdef/common.proto</a>
+            <a href="#errdef%2ferrdef.proto">errdef/errdef.proto</a>
             <ul>
               
               
@@ -195,7 +195,7 @@
     
       
       <div class="file-heading">
-        <h2 id="errdef/common.proto">errdef/common.proto</h2><a href="#title">Top</a>
+        <h2 id="errdef/errdef.proto">errdef/errdef.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
@@ -213,30 +213,50 @@
               <tr>
                 <td>UNKNOWN</td>
                 <td>0</td>
-                <td><p>common errors</p></td>
-              </tr>
-            
-              <tr>
-                <td>InvalidParams</td>
-                <td>1</td>
                 <td><p></p></td>
               </tr>
             
               <tr>
-                <td>RecordNotFound</td>
-                <td>2</td>
+                <td>Success</td>
+                <td>100000</td>
+                <td><p>biz - type 1
+common errors</p></td>
+              </tr>
+            
+              <tr>
+                <td>InvalidParams</td>
+                <td>100001</td>
                 <td><p></p></td>
               </tr>
             
               <tr>
                 <td>IdentityInvalidAccount</td>
-                <td>3</td>
+                <td>101000</td>
                 <td><p>identity errors (domain: 01)</p></td>
               </tr>
             
               <tr>
                 <td>IdentityWrongPassword</td>
-                <td>4</td>
+                <td>101001</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>UnknownInternalError</td>
+                <td>200000</td>
+                <td><p>sys - type 2
+common</p></td>
+              </tr>
+            
+              <tr>
+                <td>RecordNotFound</td>
+                <td>201000</td>
+                <td><p>db errors (module: 01)</p></td>
+              </tr>
+            
+              <tr>
+                <td>DuplicatedKey</td>
+                <td>201001</td>
                 <td><p></p></td>
               </tr>
             

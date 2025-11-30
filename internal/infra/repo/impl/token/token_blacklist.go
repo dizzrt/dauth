@@ -33,7 +33,7 @@ func (impl *TokenBlacklistImpl) Revoke(ctx context.Context, tokenID string, reas
 
 	db := impl.WithContext(ctx)
 	if err := db.Create(&m).Error; err != nil {
-		return err
+		return impl.WrapError(err)
 	}
 
 	return nil
@@ -48,7 +48,7 @@ func (impl *TokenBlacklistImpl) IsRevoked(ctx context.Context, tokenID string) (
 			return false, nil
 		}
 
-		return false, err
+		return false, impl.WrapError(err)
 	}
 
 	return true, nil

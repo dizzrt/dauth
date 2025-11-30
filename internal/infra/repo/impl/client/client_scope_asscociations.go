@@ -36,7 +36,7 @@ func (impl *ClientScopeAssociationRepoImpl) CreateAssociations(ctx context.Conte
 
 	db := impl.WithContext(ctx)
 	if err := db.Create(&scopes).Error; err != nil {
-		return err
+		return impl.WrapError(err)
 	}
 
 	return nil
@@ -47,7 +47,7 @@ func (impl *ClientScopeAssociationRepoImpl) GetClientScopes(ctx context.Context,
 
 	db := impl.WithContext(ctx)
 	if err := db.Where("client_id = ?", clientID).Find(&associations).Error; err != nil {
-		return nil, err
+		return nil, impl.WrapError(err)
 	}
 
 	associationsEntity := make([]*entity.ClientScopeAssociation, 0, len(associations))

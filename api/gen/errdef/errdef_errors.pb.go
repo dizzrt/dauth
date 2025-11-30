@@ -10,22 +10,24 @@ import (
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the kratos package it is being compiled against.
 
+// biz - type 1
 // common errors
-func IsUnknown(err error) bool {
+func IsSuccess(err error) bool {
 	if err == nil {
 		return false
 	}
 	e := errors.FromError(err)
-	return e.Reason == Errors_UNKNOWN.String() && e.Code == 100000
+	return e.Reason == Errors_Success.String() && e.Code == 100000
 }
 
+// biz - type 1
 // common errors
-func Unknown() *errors.Error {
-	return errors.New(100000, Errors_UNKNOWN.String(), "")
+func Success() *errors.Error {
+	return errors.New(100000, Errors_Success.String(), "")
 }
 
-func UnknownWithMsg(format string, args ...interface{}) *errors.Error {
-	return errors.New(100000, Errors_UNKNOWN.String(), fmt.Sprintf(format, args...))
+func SuccessWithMsg(format string, args ...interface{}) *errors.Error {
+	return errors.New(100000, Errors_Success.String(), fmt.Sprintf(format, args...))
 }
 
 func IsInvalidParams(err error) bool {
@@ -42,22 +44,6 @@ func InvalidParams() *errors.Error {
 
 func InvalidParamsWithMsg(format string, args ...interface{}) *errors.Error {
 	return errors.New(100001, Errors_InvalidParams.String(), fmt.Sprintf(format, args...))
-}
-
-func IsRecordNotFound(err error) bool {
-	if err == nil {
-		return false
-	}
-	e := errors.FromError(err)
-	return e.Reason == Errors_RecordNotFound.String() && e.Code == 100002
-}
-
-func RecordNotFound() *errors.Error {
-	return errors.New(100002, Errors_RecordNotFound.String(), "")
-}
-
-func RecordNotFoundWithMsg(format string, args ...interface{}) *errors.Error {
-	return errors.New(100002, Errors_RecordNotFound.String(), fmt.Sprintf(format, args...))
 }
 
 // identity errors (domain: 01)
@@ -92,4 +78,58 @@ func IdentityWrongPassword() *errors.Error {
 
 func IdentityWrongPasswordWithMsg(format string, args ...interface{}) *errors.Error {
 	return errors.New(101001, Errors_IdentityWrongPassword.String(), fmt.Sprintf(format, args...))
+}
+
+// sys - type 2
+// common
+func IsUnknownInternalError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == Errors_UnknownInternalError.String() && e.Code == 200000
+}
+
+// sys - type 2
+// common
+func UnknownInternalError() *errors.Error {
+	return errors.New(200000, Errors_UnknownInternalError.String(), "")
+}
+
+func UnknownInternalErrorWithMsg(format string, args ...interface{}) *errors.Error {
+	return errors.New(200000, Errors_UnknownInternalError.String(), fmt.Sprintf(format, args...))
+}
+
+// db errors (module: 01)
+func IsRecordNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == Errors_RecordNotFound.String() && e.Code == 201000
+}
+
+// db errors (module: 01)
+func RecordNotFound() *errors.Error {
+	return errors.New(201000, Errors_RecordNotFound.String(), "")
+}
+
+func RecordNotFoundWithMsg(format string, args ...interface{}) *errors.Error {
+	return errors.New(201000, Errors_RecordNotFound.String(), fmt.Sprintf(format, args...))
+}
+
+func IsDuplicatedKey(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == Errors_DuplicatedKey.String() && e.Code == 201001
+}
+
+func DuplicatedKey() *errors.Error {
+	return errors.New(201001, Errors_DuplicatedKey.String(), "")
+}
+
+func DuplicatedKeyWithMsg(format string, args ...interface{}) *errors.Error {
+	return errors.New(201001, Errors_DuplicatedKey.String(), fmt.Sprintf(format, args...))
 }

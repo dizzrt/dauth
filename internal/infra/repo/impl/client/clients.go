@@ -33,7 +33,7 @@ func (impl *ClientRepoImpl) Create(ctx context.Context, client *entity.Client) (
 
 	db := impl.WithContext(ctx)
 	if err := db.Create(&m).Error; err != nil {
-		return nil, err
+		return nil, impl.WrapError(err)
 	}
 
 	return m.ToEntity(), nil
@@ -43,7 +43,7 @@ func (impl *ClientRepoImpl) Get(ctx context.Context, id uint32) (*entity.Client,
 	var m *model.Client
 	db := impl.WithContext(ctx)
 	if err := db.Where("id = ?", id).First(&m).Error; err != nil {
-		return nil, err
+		return nil, impl.WrapError(err)
 	}
 
 	return m.ToEntity(), nil

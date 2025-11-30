@@ -2,9 +2,11 @@ package foundation
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/internal/conf"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -18,6 +20,22 @@ func NewBaseDB(ac *conf.AppConfig) *BaseDB {
 	return &BaseDB{
 		db: newDB(ac),
 	}
+}
+
+func (base *BaseDB) WrapError(err error) error {
+	if err == nil {
+		return err
+	}
+
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return errdef.RecordNotFound().WithCause(err)
+	}
+
+	if errors.Is(err, gorm.ErrDuplicatedKey) {
+		return errdef.DuplicatedKey().WithCause(err)
+	}
+
+	return err
 }
 
 func (base *BaseDB) WithContext(ctx context.Context) *gorm.DB {

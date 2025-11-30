@@ -29,7 +29,7 @@ func (impl *RoleRepoImpl) CreateRole(ctx context.Context, role *entity.Role) (ui
 
 	db := impl.WithContext(ctx)
 	if err := db.Create(&m).Error; err != nil {
-		return 0, err
+		return 0, impl.WrapError(err)
 	}
 
 	return m.ID, nil
@@ -44,14 +44,14 @@ func (impl *RoleRepoImpl) ListRolesWithPage(ctx context.Context, page, pageSize 
 		Find(&ms).Error
 
 	if err != nil {
-		return nil, err
+		return nil, impl.WrapError(err)
 	}
 
 	roles := make([]*entity.Role, 0, len(ms))
 	for _, m := range ms {
 		role, err := m.ToEntity()
 		if err != nil {
-			return nil, err
+			return nil, impl.WrapError(err)
 		}
 
 		roles = append(roles, role)
@@ -64,7 +64,7 @@ func (impl *RoleRepoImpl) DeleteRoles(ctx context.Context, ids []uint) error {
 	db := impl.WithContext(ctx)
 	err := db.Delete(&identity.Role{}, "id IN ?", ids).Error
 
-	return err
+	return impl.WrapError(err)
 }
 
 func (impl *RoleRepoImpl) UpdateRole(ctx context.Context, role *entity.Role) error {
@@ -76,5 +76,5 @@ func (impl *RoleRepoImpl) UpdateRole(ctx context.Context, role *entity.Role) err
 			"description": role.Description,
 		}).Error
 
-	return err
+	return impl.WrapError(err)
 }

@@ -26,7 +26,7 @@ func (impl *ScopeRepoImpl) GetScopesByIDs(ctx context.Context, ids []uint32) ([]
 
 	db := impl.WithContext(ctx)
 	if err := db.Where("id IN ?", ids).Find(&scopes).Error; err != nil {
-		return nil, err
+		return nil, impl.WrapError(err)
 	}
 
 	scopesEntity := make([]*entity.Scope, 0, len(scopes))

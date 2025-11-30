@@ -34,7 +34,7 @@ func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (ui
 
 	db := impl.WithContext(ctx)
 	if err := db.Create(&model).Error; err != nil {
-		return 0, err
+		return 0, impl.WrapError(err)
 	}
 
 	return uint32(model.ID), nil
@@ -44,7 +44,7 @@ func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.
 	var model *identity_model.User
 	db := impl.WithContext(ctx)
 	if err := db.Where("id = ?", uid).First(&model).Error; err != nil {
-		return nil, err
+		return nil, impl.WrapError(err)
 	}
 
 	return model.ToEntity(), nil
@@ -56,7 +56,7 @@ func (impl *UserRepoImpl) GetUserByEmail(ctx context.Context, email string) (*en
 	db := impl.WithContext(ctx)
 	if err := db.Where("email = ?", email).
 		First(&model).Error; err != nil {
-		return nil, err
+		return nil, impl.WrapError(err)
 	}
 
 	return model.ToEntity(), nil
@@ -67,7 +67,7 @@ func (impl *UserRepoImpl) UpdateUserPassword(ctx context.Context, uid uint32, pa
 	err := db.Model(&identity_model.User{}).Where("id = ?", uid).
 		Update("password", password).Error
 
-	return err
+	return impl.WrapError(err)
 }
 
 func (impl *UserRepoImpl) UpdateUserStatus(ctx context.Context, uid uint32, status identity.User_Status) error {
@@ -77,5 +77,5 @@ func (impl *UserRepoImpl) UpdateUserStatus(ctx context.Context, uid uint32, stat
 		Where("id = ?", uid).
 		Update("status", mStatus).Error
 
-	return err
+	return impl.WrapError(err)
 }

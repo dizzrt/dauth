@@ -3,17 +3,17 @@
 
 ## Table of Contents
 
-- [errdef/common.proto](#errdef_common-proto)
+- [errdef/errdef.proto](#errdef_errdef-proto)
     - [Errors](#-Errors)
   
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="errdef_common-proto"></a>
+<a name="errdef_errdef-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## errdef/common.proto
+## errdef/errdef.proto
 
 
  
@@ -26,11 +26,14 @@
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| UNKNOWN | 0 | common errors |
-| InvalidParams | 1 |  |
-| RecordNotFound | 2 |  |
-| IdentityInvalidAccount | 3 | identity errors (domain: 01) |
-| IdentityWrongPassword | 4 |  |
+| UNKNOWN | 0 |  |
+| Success | 100000 | biz - type 1 common errors |
+| InvalidParams | 100001 |  |
+| IdentityInvalidAccount | 101000 | identity errors (domain: 01) |
+| IdentityWrongPassword | 101001 |  |
+| UnknownInternalError | 200000 | sys - type 2 common |
+| RecordNotFound | 201000 | db errors (module: 01) |
+| DuplicatedKey | 201001 |  |
 
 
  

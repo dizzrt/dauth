@@ -5,22 +5,22 @@ option go_package = "github.com/dizzrt/dauth/api/gen/errdef;errdef";
 import "ellie/errors/errors.proto";
 
 // Error code definition.
-//          type   domain   code  
-//  ------ ------ -------- ------ 
-//   len    1      2        3     
-//   e.g.   1      00       000   
-
-
+//          type   domain/module   code  
+//  ------ ------ --------------- ------ 
+//   len    1      2               3     
+//   e.g.   1      00              000   
 
 enum Errors {
-    // common errors
-    UNKNOWN = 0 [(ellie.errors.code) = 100000];
-    InvalidParams = 1 [(ellie.errors.code) = 100001];
-    RecordNotFound = 2 [(ellie.errors.code) = 100002];
+    UNKNOWN = 0 [(ellie.errors.code) = 0];
 
+    // biz - type 1
+    // common errors
+    Success = 100000 [(ellie.errors.code) = 100000];
+    InvalidParams = 100001 [(ellie.errors.code) = 100001];
+    
     // identity errors (domain: 01)
-    IdentityInvalidAccount = 3 [(ellie.errors.code) = 101000];
-    IdentityWrongPassword = 4 [(ellie.errors.code) = 101001];
+    IdentityInvalidAccount = 101000 [(ellie.errors.code) = 101000];
+    IdentityWrongPassword = 101001 [(ellie.errors.code) = 101001];
 
     // client errors (domain: 02)
     
@@ -31,10 +31,11 @@ enum Errors {
     // auth errors (domain: 04)
 
 
-    // INVALID_PARAMS = 1001 [(ellie.errors.code) = 1001];
-    // EMPTY_PASSWORD = 1002 [(ellie.errors.code) = 1002];
-    // INVALID_PASSWORD = 1003 [(ellie.errors.code) = 1003];
-    // INVALID_EMAIL = 1004 [(ellie.errors.code) = 1004];
-    // EMAIL_ALREADY_EXISTS = 1005 [(ellie.errors.code) = 1005];
-    // USER_NOT_FOUND = 1006 [(ellie.errors.code) = 1006];
+    // sys - type 2
+    // common
+    UnknownInternalError = 200000 [(ellie.errors.code) = 200000];
+
+    // db errors (module: 01)
+    RecordNotFound = 201000 [(ellie.errors.code) = 201000];
+    DuplicatedKey = 201001 [(ellie.errors.code) = 201001];
 }
