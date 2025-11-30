@@ -7,16 +7,17 @@ import (
 	"strings"
 
 	"github.com/dizzrt/dauth/api/gen/client"
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/internal/domain/client/entity"
 	"github.com/dizzrt/dauth/internal/domain/client/repo"
 	"github.com/dizzrt/ellie/log"
-	"gorm.io/gorm"
 )
 
 var _ ClientBiz = (*clientBiz)(nil)
 
 type ClientBiz interface {
 	CreateClient(ctx context.Context, clientEntity *entity.Client, scopeIDs []uint32) (uint32, error)
+	GetClient(ctx context.Context, clientID uint32) (*entity.Client, error)
 	ValidateClient(ctx context.Context, clientID uint32, scope string) (bool, string, error)
 }
 
@@ -53,13 +54,17 @@ func (biz *clientBiz) CreateClient(ctx context.Context, clientEntity *entity.Cli
 	return cli.ID, nil
 }
 
+func (biz *clientBiz) GetClient(ctx context.Context, clientID uint32) (*entity.Client, error) {
+	return biz.clientRepo.Get(ctx, clientID)
+}
+
 func (biz *clientBiz) ValidateClient(ctx context.Context, clientID uint32, scope string) (bool, string, error) {
 	var msg string
 
 	// check if client exists
 	cli, err := biz.clientRepo.Get(ctx, clientID)
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
+		if errors.Is(err, errdef.RecordNotFound()) {
 			msg = "client not found"
 			return false, msg, errors.New(msg)
 		}
@@ -76,7 +81,7 @@ func (biz *clientBiz) ValidateClient(ctx context.Context, clientID uint32, scope
 	}
 
 	scopeAssociations, err := biz.clientScopeAssociationRepo.GetClientScopes(ctx, clientID)
-	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+	if err != nil && !errors.Is(err, errdef.RecordNotFound()) {
 		msg = fmt.Sprintf("failed to get client scopes, err: %v", err)
 		log.CtxErrorf(ctx, msg, err)
 		return false, msg, err

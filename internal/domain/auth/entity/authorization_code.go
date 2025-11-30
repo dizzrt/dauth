@@ -1,9 +1,11 @@
 package entity
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 type AuthorizationCode struct {
-	ID          uint32
 	Code        string
 	UserID      uint32
 	ClientID    uint32
@@ -12,4 +14,12 @@ type AuthorizationCode struct {
 	IssuedAt    time.Time
 	ExpiresAt   time.Time
 	Used        bool
+}
+
+func (ac *AuthorizationCode) MarshalBinary() ([]byte, error) {
+	return json.Marshal(ac)
+}
+
+func (ac *AuthorizationCode) UnmarshalBinary(data []byte) error {
+	return json.Unmarshal(data, ac)
 }

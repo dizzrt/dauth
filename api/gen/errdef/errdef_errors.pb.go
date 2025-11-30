@@ -80,6 +80,56 @@ func IdentityWrongPasswordWithMsg(format string, args ...interface{}) *errors.Er
 	return errors.New(101001, Errors_IdentityWrongPassword.String(), fmt.Sprintf(format, args...))
 }
 
+// auth errors (domain: 04)
+func IsAuthInvalidClient(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == Errors_AuthInvalidClient.String() && e.Code == 104000
+}
+
+// auth errors (domain: 04)
+func AuthInvalidClient() *errors.Error {
+	return errors.New(104000, Errors_AuthInvalidClient.String(), "")
+}
+
+func AuthInvalidClientWithMsg(format string, args ...interface{}) *errors.Error {
+	return errors.New(104000, Errors_AuthInvalidClient.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAuthInvalidRedirectURI(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == Errors_AuthInvalidRedirectURI.String() && e.Code == 104001
+}
+
+func AuthInvalidRedirectURI() *errors.Error {
+	return errors.New(104001, Errors_AuthInvalidRedirectURI.String(), "")
+}
+
+func AuthInvalidRedirectURIWithMsg(format string, args ...interface{}) *errors.Error {
+	return errors.New(104001, Errors_AuthInvalidRedirectURI.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAuthInvalidScope(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == Errors_AuthInvalidScope.String() && e.Code == 104002
+}
+
+func AuthInvalidScope() *errors.Error {
+	return errors.New(104002, Errors_AuthInvalidScope.String(), "")
+}
+
+func AuthInvalidScopeWithMsg(format string, args ...interface{}) *errors.Error {
+	return errors.New(104002, Errors_AuthInvalidScope.String(), fmt.Sprintf(format, args...))
+}
+
 // sys - type 2
 // common
 func IsUnknownInternalError(err error) bool {

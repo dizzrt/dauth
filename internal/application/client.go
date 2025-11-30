@@ -14,6 +14,7 @@ var _ ClientApplication = (*clientApplication)(nil)
 
 type ClientApplication interface {
 	CreateClient(ctx context.Context, req *client.CreateClientRequest) (*client.CreateClientResponse, error)
+	GetClient(ctx context.Context, req *client.GetClientRequest) (*client.GetClientResponse, error)
 	ValidateClient(ctx context.Context, req *client.ValidateClientRequest) (*client.ValidateClientResponse, error)
 }
 
@@ -41,6 +42,35 @@ func (app *clientApplication) CreateClient(ctx context.Context, req *client.Crea
 
 	return &client.CreateClientResponse{
 		ClientId: clientID,
+		BaseResp: rpc.Success(),
+	}, nil
+}
+
+func (app *clientApplication) GetClient(ctx context.Context, req *client.GetClientRequest) (*client.GetClientResponse, error) {
+	clientID := req.GetClientId()
+	if clientID == 0 {
+		return nil, nil
+	}
+
+	clientEntity, err := app.clientBiz.GetClient(ctx, clientID)
+	if err != nil {
+		return nil, err
+	}
+
+	if clientEntity.DeletedAt.Valid {
+		clientEntity.Status = client.Client_DELETED
+	}
+
+	return &client.GetClientResponse{
+		Client: &client.Client{
+			Id:          clientEntity.ID,
+			Name:        clientEntity.Name,
+			Description: clientEntity.Description,
+			RedirectUri: clientEntity.RedirectURI,
+			Status:      clientEntity.Status,
+			CreatedAt:   clientEntity.CreatedAt.Unix(),
+			UpdatedAt:   clientEntity.UpdatedAt.Unix(),
+		},
 		BaseResp: rpc.Success(),
 	}, nil
 }

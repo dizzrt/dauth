@@ -28,7 +28,6 @@ func (code *AuthorizationCode) TableName() string {
 
 func (code *AuthorizationCode) ToEntity() *entity.AuthorizationCode {
 	return &entity.AuthorizationCode{
-		ID:          uint32(code.ID),
 		Code:        code.Code,
 		UserID:      code.UserID,
 		ClientID:    code.ClientID,

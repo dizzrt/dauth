@@ -29,7 +29,9 @@ enum Errors {
 
 
     // auth errors (domain: 04)
-
+    AuthInvalidClient = 104000 [(ellie.errors.code) = 104000];
+    AuthInvalidRedirectURI = 104001 [(ellie.errors.code) = 104001];
+    AuthInvalidScope = 104002 [(ellie.errors.code) = 104002];
 
     // sys - type 2
     // common

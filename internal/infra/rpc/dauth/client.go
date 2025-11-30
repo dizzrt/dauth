@@ -7,6 +7,14 @@ import (
 	"github.com/dizzrt/dauth/internal/infra/rpc"
 )
 
+func GetClient(ctx context.Context, clientID uint32) (*client.GetClientResponse, error) {
+	req := &client.GetClientRequest{
+		ClientId: clientID,
+	}
+
+	return rpc.ClientServiceClient().GetClient(ctx, req)
+}
+
 func ValidateClient(ctx context.Context, clientID uint32, scope string) (*client.ValidateClientResponse, error) {
 	req := &client.ValidateClientRequest{
 		ClientId: clientID,

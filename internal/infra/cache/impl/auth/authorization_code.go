@@ -11,23 +11,29 @@ import (
 
 var _ cache.AuthorizationCodeCache = (*AuthorizationCodeCacheImpl)(nil)
 
+const _PREFIX = "auth:code:"
+
 type AuthorizationCodeCacheImpl struct {
-	cli *foundation.RedisClient
+	*foundation.RedisClient
 }
 
 func NewAuthorizationCodeCacheImpl(cli *foundation.RedisClient) cache.AuthorizationCodeCache {
 	return &AuthorizationCodeCacheImpl{
-		cli: cli,
+		RedisClient: cli,
 	}
 }
 
+func (impl *AuthorizationCodeCacheImpl) Key(code string) string {
+	return _PREFIX + code
+}
+
 func (impl *AuthorizationCodeCacheImpl) Set(ctx context.Context, code string, value *entity.AuthorizationCode, ttl time.Duration) error {
-	return impl.cli.Cmdable().Set(ctx, code, value, ttl).Err()
+	return impl.Cmdable().Set(ctx, impl.Key(code), value, ttl).Err()
 }
 
 func (impl *AuthorizationCodeCacheImpl) Get(ctx context.Context, code string) (*entity.AuthorizationCode, error) {
 	var value entity.AuthorizationCode
-	if err := impl.cli.Cmdable().Get(ctx, code).Scan(&value); err != nil {
+	if err := impl.Cmdable().Get(ctx, impl.Key(code)).Scan(&value); err != nil {
 		return nil, err
 	}
 
@@ -35,5 +41,5 @@ func (impl *AuthorizationCodeCacheImpl) Get(ctx context.Context, code string) (*
 }
 
 func (impl *AuthorizationCodeCacheImpl) Delete(ctx context.Context, code string) error {
-	return impl.cli.Cmdable().Del(ctx, code).Err()
+	return impl.Cmdable().Del(ctx, impl.Key(code)).Err()
 }
