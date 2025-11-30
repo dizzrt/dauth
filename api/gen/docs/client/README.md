@@ -9,10 +9,10 @@
     - [Client.Status](#-Client-Status)
   
 - [client/client.proto](#client_client-proto)
-    - [CreateRequest](#client-CreateRequest)
-    - [CreateResponse](#client-CreateResponse)
-    - [ValidateRequest](#client-ValidateRequest)
-    - [ValidateResponse](#client-ValidateResponse)
+    - [CreateClientRequest](#client-CreateClientRequest)
+    - [CreateClientResponse](#client-CreateClientResponse)
+    - [ValidateClientRequest](#client-ValidateClientRequest)
+    - [ValidateClientResponse](#client-ValidateClientResponse)
   
     - [ClientService](#client-ClientService)
   
@@ -78,9 +78,9 @@
 
 
 
-<a name="client-CreateRequest"></a>
+<a name="client-CreateClientRequest"></a>
 
-### CreateRequest
+### CreateClientRequest
 
 
 
@@ -98,9 +98,9 @@
 
 
 
-<a name="client-CreateResponse"></a>
+<a name="client-CreateClientResponse"></a>
 
-### CreateResponse
+### CreateClientResponse
 
 
 
@@ -114,9 +114,9 @@
 
 
 
-<a name="client-ValidateRequest"></a>
+<a name="client-ValidateClientRequest"></a>
 
-### ValidateRequest
+### ValidateClientRequest
 
 
 
@@ -131,9 +131,9 @@
 
 
 
-<a name="client-ValidateResponse"></a>
+<a name="client-ValidateClientResponse"></a>
 
-### ValidateResponse
+### ValidateClientResponse
 
 
 
@@ -161,8 +161,8 @@
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Create | [CreateRequest](#client-CreateRequest) | [CreateResponse](#client-CreateResponse) | Create creates a new client. |
-| Validate | [ValidateRequest](#client-ValidateRequest) | [ValidateResponse](#client-ValidateResponse) | Validate validates the client and scope. |
+| CreateClient | [CreateClientRequest](#client-CreateClientRequest) | [CreateClientResponse](#client-CreateClientResponse) | CreateClient creates a new client. |
+| ValidateClient | [ValidateClientRequest](#client-ValidateClientRequest) | [ValidateClientResponse](#client-ValidateClientResponse) | ValidateClient validates the client and scope. |
 
  
 

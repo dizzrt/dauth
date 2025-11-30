@@ -10,13 +10,13 @@ paths:
         post:
             tags:
                 - ClientService
-            description: Create creates a new client.
-            operationId: ClientService_Create
+            description: CreateClient creates a new client.
+            operationId: ClientService_CreateClient
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/CreateRequest'
+                            $ref: '#/components/schemas/CreateClientRequest'
                 required: true
             responses:
                 "200":
@@ -24,7 +24,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/CreateResponse'
+                                $ref: '#/components/schemas/CreateClientResponse'
                 default:
                     description: Default error response
                     content:
@@ -367,7 +367,7 @@ components:
                     format: uint32
                 message:
                     type: string
-        CreateRequest:
+        CreateClientRequest:
             type: object
             properties:
                 name:
@@ -385,7 +385,7 @@ components:
                         format: uint32
                 base:
                     $ref: '#/components/schemas/Base'
-        CreateResponse:
+        CreateClientResponse:
             type: object
             properties:
                 clientId:

@@ -7,11 +7,11 @@ import (
 	"github.com/dizzrt/dauth/internal/infra/rpc"
 )
 
-func ValidateClient(ctx context.Context, clientID uint32, scope string) (*client.ValidateResponse, error) {
-	req := &client.ValidateRequest{
+func ValidateClient(ctx context.Context, clientID uint32, scope string) (*client.ValidateClientResponse, error) {
+	req := &client.ValidateClientRequest{
 		ClientId: clientID,
 		Scope:    scope,
 	}
 
-	return rpc.ClientServiceClient().Validate(ctx, req)
+	return rpc.ClientServiceClient().ValidateClient(ctx, req)
 }

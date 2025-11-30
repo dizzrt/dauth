@@ -13,8 +13,8 @@ import (
 var _ ClientApplication = (*clientApplication)(nil)
 
 type ClientApplication interface {
-	Create(ctx context.Context, req *client.CreateRequest) (*client.CreateResponse, error)
-	Validate(ctx context.Context, req *client.ValidateRequest) (*client.ValidateResponse, error)
+	CreateClient(ctx context.Context, req *client.CreateClientRequest) (*client.CreateClientResponse, error)
+	ValidateClient(ctx context.Context, req *client.ValidateClientRequest) (*client.ValidateClientResponse, error)
 }
 
 type clientApplication struct {
@@ -27,36 +27,36 @@ func NewClientApplication(clientBiz biz.ClientBiz) ClientApplication {
 	}
 }
 
-func (app *clientApplication) Create(ctx context.Context, req *client.CreateRequest) (*client.CreateResponse, error) {
-	clientEntity := convert.ClientEntityFromCreateRequest(req)
+func (app *clientApplication) CreateClient(ctx context.Context, req *client.CreateClientRequest) (*client.CreateClientResponse, error) {
+	clientEntity := convert.ClientEntityFromCreateClientRequest(req)
 	if clientEntity.Secret == "" {
 		return nil, errors.New("secret is required")
 	}
 
 	scopeIDs := req.GetScopes()
-	clientID, err := app.clientBiz.Create(ctx, clientEntity, scopeIDs)
+	clientID, err := app.clientBiz.CreateClient(ctx, clientEntity, scopeIDs)
 	if err != nil {
 		return nil, err
 	}
 
-	return &client.CreateResponse{
+	return &client.CreateClientResponse{
 		ClientId: clientID,
 		BaseResp: rpc.Success(),
 	}, nil
 }
 
-func (app *clientApplication) Validate(ctx context.Context, req *client.ValidateRequest) (*client.ValidateResponse, error) {
+func (app *clientApplication) ValidateClient(ctx context.Context, req *client.ValidateClientRequest) (*client.ValidateClientResponse, error) {
 	clientID := req.GetClientId()
 	if clientID == 0 {
 		return nil, errors.New("client_id is required")
 	}
 
-	isOK, reason, err := app.clientBiz.Validate(ctx, clientID, req.GetScope())
+	isOK, reason, err := app.clientBiz.ValidateClient(ctx, clientID, req.GetScope())
 	if err != nil {
 		return nil, err
 	}
 
-	return &client.ValidateResponse{
+	return &client.ValidateClientResponse{
 		IsOk:     isOK,
 		Reason:   reason,
 		BaseResp: rpc.Success(),

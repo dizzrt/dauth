@@ -7,7 +7,7 @@ import "base/base.proto";
 import "client/client_common.proto";
 import "google/api/annotations.proto";
 
-message CreateRequest {
+message CreateClientRequest {
     string name = 1;
     string description = 2;
     string secret = 3;
@@ -17,20 +17,20 @@ message CreateRequest {
     base.Base base = 255;
 }
 
-message CreateResponse {
+message CreateClientResponse {
     uint32 client_id = 1;
 
     base.BaseResp base_resp = 255;
 }
 
-message ValidateRequest {
+message ValidateClientRequest {
     uint32 client_id = 1;
     string scope = 2;
 
     base.Base base = 255;
 }
 
-message ValidateResponse {
+message ValidateClientResponse {
     bool is_ok = 1;
     string reason = 2;
 
@@ -39,14 +39,14 @@ message ValidateResponse {
 
 
 service ClientService {
-    // Create creates a new client.
-    rpc Create(CreateRequest) returns (CreateResponse) {
+    // CreateClient creates a new client.
+    rpc CreateClient(CreateClientRequest) returns (CreateClientResponse) {
         option (google.api.http) = {
             post: "/client/client/create"
             body: "*"
         };
     }
 
-    // Validate validates the client and scope.
-    rpc Validate(ValidateRequest) returns (ValidateResponse) {}
+    // ValidateClient validates the client and scope.
+    rpc ValidateClient(ValidateClientRequest) returns (ValidateClientResponse) {}
 }

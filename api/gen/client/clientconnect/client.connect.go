@@ -33,18 +33,20 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
-	// ClientServiceCreateProcedure is the fully-qualified name of the ClientService's Create RPC.
-	ClientServiceCreateProcedure = "/client.ClientService/Create"
-	// ClientServiceValidateProcedure is the fully-qualified name of the ClientService's Validate RPC.
-	ClientServiceValidateProcedure = "/client.ClientService/Validate"
+	// ClientServiceCreateClientProcedure is the fully-qualified name of the ClientService's
+	// CreateClient RPC.
+	ClientServiceCreateClientProcedure = "/client.ClientService/CreateClient"
+	// ClientServiceValidateClientProcedure is the fully-qualified name of the ClientService's
+	// ValidateClient RPC.
+	ClientServiceValidateClientProcedure = "/client.ClientService/ValidateClient"
 )
 
 // ClientServiceClient is a client for the client.ClientService service.
 type ClientServiceClient interface {
-	// Create creates a new client.
-	Create(context.Context, *connect.Request[client.CreateRequest]) (*connect.Response[client.CreateResponse], error)
-	// Validate validates the client and scope.
-	Validate(context.Context, *connect.Request[client.ValidateRequest]) (*connect.Response[client.ValidateResponse], error)
+	// CreateClient creates a new client.
+	CreateClient(context.Context, *connect.Request[client.CreateClientRequest]) (*connect.Response[client.CreateClientResponse], error)
+	// ValidateClient validates the client and scope.
+	ValidateClient(context.Context, *connect.Request[client.ValidateClientRequest]) (*connect.Response[client.ValidateClientResponse], error)
 }
 
 // NewClientServiceClient constructs a client for the client.ClientService service. By default, it
@@ -58,16 +60,16 @@ func NewClientServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 	baseURL = strings.TrimRight(baseURL, "/")
 	clientServiceMethods := client.File_client_client_proto.Services().ByName("ClientService").Methods()
 	return &clientServiceClient{
-		create: connect.NewClient[client.CreateRequest, client.CreateResponse](
+		createClient: connect.NewClient[client.CreateClientRequest, client.CreateClientResponse](
 			httpClient,
-			baseURL+ClientServiceCreateProcedure,
-			connect.WithSchema(clientServiceMethods.ByName("Create")),
+			baseURL+ClientServiceCreateClientProcedure,
+			connect.WithSchema(clientServiceMethods.ByName("CreateClient")),
 			connect.WithClientOptions(opts...),
 		),
-		validate: connect.NewClient[client.ValidateRequest, client.ValidateResponse](
+		validateClient: connect.NewClient[client.ValidateClientRequest, client.ValidateClientResponse](
 			httpClient,
-			baseURL+ClientServiceValidateProcedure,
-			connect.WithSchema(clientServiceMethods.ByName("Validate")),
+			baseURL+ClientServiceValidateClientProcedure,
+			connect.WithSchema(clientServiceMethods.ByName("ValidateClient")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -75,26 +77,26 @@ func NewClientServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 
 // clientServiceClient implements ClientServiceClient.
 type clientServiceClient struct {
-	create   *connect.Client[client.CreateRequest, client.CreateResponse]
-	validate *connect.Client[client.ValidateRequest, client.ValidateResponse]
+	createClient   *connect.Client[client.CreateClientRequest, client.CreateClientResponse]
+	validateClient *connect.Client[client.ValidateClientRequest, client.ValidateClientResponse]
 }
 
-// Create calls client.ClientService.Create.
-func (c *clientServiceClient) Create(ctx context.Context, req *connect.Request[client.CreateRequest]) (*connect.Response[client.CreateResponse], error) {
-	return c.create.CallUnary(ctx, req)
+// CreateClient calls client.ClientService.CreateClient.
+func (c *clientServiceClient) CreateClient(ctx context.Context, req *connect.Request[client.CreateClientRequest]) (*connect.Response[client.CreateClientResponse], error) {
+	return c.createClient.CallUnary(ctx, req)
 }
 
-// Validate calls client.ClientService.Validate.
-func (c *clientServiceClient) Validate(ctx context.Context, req *connect.Request[client.ValidateRequest]) (*connect.Response[client.ValidateResponse], error) {
-	return c.validate.CallUnary(ctx, req)
+// ValidateClient calls client.ClientService.ValidateClient.
+func (c *clientServiceClient) ValidateClient(ctx context.Context, req *connect.Request[client.ValidateClientRequest]) (*connect.Response[client.ValidateClientResponse], error) {
+	return c.validateClient.CallUnary(ctx, req)
 }
 
 // ClientServiceHandler is an implementation of the client.ClientService service.
 type ClientServiceHandler interface {
-	// Create creates a new client.
-	Create(context.Context, *connect.Request[client.CreateRequest]) (*connect.Response[client.CreateResponse], error)
-	// Validate validates the client and scope.
-	Validate(context.Context, *connect.Request[client.ValidateRequest]) (*connect.Response[client.ValidateResponse], error)
+	// CreateClient creates a new client.
+	CreateClient(context.Context, *connect.Request[client.CreateClientRequest]) (*connect.Response[client.CreateClientResponse], error)
+	// ValidateClient validates the client and scope.
+	ValidateClient(context.Context, *connect.Request[client.ValidateClientRequest]) (*connect.Response[client.ValidateClientResponse], error)
 }
 
 // NewClientServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -104,24 +106,24 @@ type ClientServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewClientServiceHandler(svc ClientServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	clientServiceMethods := client.File_client_client_proto.Services().ByName("ClientService").Methods()
-	clientServiceCreateHandler := connect.NewUnaryHandler(
-		ClientServiceCreateProcedure,
-		svc.Create,
-		connect.WithSchema(clientServiceMethods.ByName("Create")),
+	clientServiceCreateClientHandler := connect.NewUnaryHandler(
+		ClientServiceCreateClientProcedure,
+		svc.CreateClient,
+		connect.WithSchema(clientServiceMethods.ByName("CreateClient")),
 		connect.WithHandlerOptions(opts...),
 	)
-	clientServiceValidateHandler := connect.NewUnaryHandler(
-		ClientServiceValidateProcedure,
-		svc.Validate,
-		connect.WithSchema(clientServiceMethods.ByName("Validate")),
+	clientServiceValidateClientHandler := connect.NewUnaryHandler(
+		ClientServiceValidateClientProcedure,
+		svc.ValidateClient,
+		connect.WithSchema(clientServiceMethods.ByName("ValidateClient")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/client.ClientService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case ClientServiceCreateProcedure:
-			clientServiceCreateHandler.ServeHTTP(w, r)
-		case ClientServiceValidateProcedure:
-			clientServiceValidateHandler.ServeHTTP(w, r)
+		case ClientServiceCreateClientProcedure:
+			clientServiceCreateClientHandler.ServeHTTP(w, r)
+		case ClientServiceValidateClientProcedure:
+			clientServiceValidateClientHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -131,10 +133,10 @@ func NewClientServiceHandler(svc ClientServiceHandler, opts ...connect.HandlerOp
 // UnimplementedClientServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedClientServiceHandler struct{}
 
-func (UnimplementedClientServiceHandler) Create(context.Context, *connect.Request[client.CreateRequest]) (*connect.Response[client.CreateResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("client.ClientService.Create is not implemented"))
+func (UnimplementedClientServiceHandler) CreateClient(context.Context, *connect.Request[client.CreateClientRequest]) (*connect.Response[client.CreateClientResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("client.ClientService.CreateClient is not implemented"))
 }
 
-func (UnimplementedClientServiceHandler) Validate(context.Context, *connect.Request[client.ValidateRequest]) (*connect.Response[client.ValidateResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("client.ClientService.Validate is not implemented"))
+func (UnimplementedClientServiceHandler) ValidateClient(context.Context, *connect.Request[client.ValidateClientRequest]) (*connect.Response[client.ValidateClientResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("client.ClientService.ValidateClient is not implemented"))
 }

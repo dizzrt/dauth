@@ -16,8 +16,8 @@ import (
 var _ ClientBiz = (*clientBiz)(nil)
 
 type ClientBiz interface {
-	Create(ctx context.Context, clientEntity *entity.Client, scopeIDs []uint32) (uint32, error)
-	Validate(ctx context.Context, clientID uint32, scope string) (bool, string, error)
+	CreateClient(ctx context.Context, clientEntity *entity.Client, scopeIDs []uint32) (uint32, error)
+	ValidateClient(ctx context.Context, clientID uint32, scope string) (bool, string, error)
 }
 
 type clientBiz struct {
@@ -34,7 +34,7 @@ func NewClientBiz(clientRepo repo.ClientRepo, scopeRepo repo.ScopeRepo, clientSc
 	}
 }
 
-func (biz *clientBiz) Create(ctx context.Context, clientEntity *entity.Client, scopeIDs []uint32) (uint32, error) {
+func (biz *clientBiz) CreateClient(ctx context.Context, clientEntity *entity.Client, scopeIDs []uint32) (uint32, error) {
 	// create client
 	cli, err := biz.clientRepo.Create(ctx, clientEntity)
 	if err != nil {
@@ -53,7 +53,7 @@ func (biz *clientBiz) Create(ctx context.Context, clientEntity *entity.Client, s
 	return cli.ID, nil
 }
 
-func (biz *clientBiz) Validate(ctx context.Context, clientID uint32, scope string) (bool, string, error) {
+func (biz *clientBiz) ValidateClient(ctx context.Context, clientID uint32, scope string) (bool, string, error) {
 	var msg string
 
 	// check if client exists

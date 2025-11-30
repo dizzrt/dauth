@@ -5,7 +5,7 @@ import (
 	"github.com/dizzrt/dauth/internal/domain/client/entity"
 )
 
-func ClientEntityFromCreateRequest(req *client.CreateRequest) *entity.Client {
+func ClientEntityFromCreateClientRequest(req *client.CreateClientRequest) *entity.Client {
 	return &entity.Client{
 		Name:        req.GetName(),
 		Description: req.GetDescription(),

@@ -21,10 +21,10 @@ func NewClientHandler(clientApp application.ClientApplication) *ClientHandler {
 	}
 }
 
-func (handler *ClientHandler) Create(ctx context.Context, req *client.CreateRequest) (*client.CreateResponse, error) {
-	return handler.clientApp.Create(ctx, req)
+func (handler *ClientHandler) CreateClient(ctx context.Context, req *client.CreateClientRequest) (*client.CreateClientResponse, error) {
+	return handler.clientApp.CreateClient(ctx, req)
 }
 
-func (handler *ClientHandler) Validate(ctx context.Context, req *client.ValidateRequest) (*client.ValidateResponse, error) {
-	return handler.clientApp.Validate(ctx, req)
+func (handler *ClientHandler) ValidateClient(ctx context.Context, req *client.ValidateClientRequest) (*client.ValidateClientResponse, error) {
+	return handler.clientApp.ValidateClient(ctx, req)
 }

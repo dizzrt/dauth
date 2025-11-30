@@ -31,20 +31,20 @@ var _ = new(propagation.TextMapPropagator)
 var _ = v1_21_0.HTTPRequestMethodKey
 
 const TRACER_NAME_CLIENT = "github.com/dizzrt/dauth/api/gen/client"
-const OperationClientServiceCreate = "/ClientService/Create"
+const OperationClientServiceCreateClient = "/ClientService/CreateClient"
 
 type ClientServiceHTTPServer interface {
-	// Create Create creates a new client.
-	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	// CreateClient CreateClient creates a new client.
+	CreateClient(context.Context, *CreateClientRequest) (*CreateClientResponse, error)
 }
 
 func RegisterClientServiceHTTPServer(hs *http.Server, srv ClientServiceHTTPServer) {
 	r := hs.Engine()
-	r.POST("/client/client/create", _client_ClientService_POST_Create_HTTP_Handler(hs, srv))
+	r.POST("/client/client/create", _client_ClientService_POST_CreateClient_HTTP_Handler(hs, srv))
 }
-func _client_ClientService_POST_Create_HTTP_Handler(hs *http.Server, srv ClientServiceHTTPServer) gin.HandlerFunc {
+func _client_ClientService_POST_CreateClient_HTTP_Handler(hs *http.Server, srv ClientServiceHTTPServer) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var req CreateRequest
+		var req CreateClientRequest
 		if err := ginx.DecodeRequest(ctx, &req); err != nil {
 			ctx.JSON(http.StatusBadRequest, hs.WrapHTTPResponse(nil, err))
 			ctx.Abort()
@@ -61,7 +61,7 @@ func _client_ClientService_POST_Create_HTTP_Handler(hs *http.Server, srv ClientS
 		}
 
 		tracer := otel.Tracer(TRACER_NAME_CLIENT)
-		rctx, span := tracer.Start(rctx, "_ClientService_Create_0_HTTP_Handler",
+		rctx, span := tracer.Start(rctx, "_ClientService_CreateClient_0_HTTP_Handler",
 			trace.WithSpanKind(trace.SpanKindServer),
 			trace.WithAttributes(attributes...),
 		)
@@ -71,7 +71,7 @@ func _client_ClientService_POST_Create_HTTP_Handler(hs *http.Server, srv ClientS
 		rctx = log.WithTraceID(rctx, sctx.TraceID().String())
 		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
 
-		res, err := srv.Create(rctx, &req)
+		res, err := srv.CreateClient(rctx, &req)
 		ctx.Request = ctx.Request.WithContext(rctx)
 		if err != nil {
 			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))
