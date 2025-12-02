@@ -9,8 +9,6 @@ cd "$(dirname "$0")/../"
 echo "Start building docker image dauth:${_VERSION}..."
 
 docker buildx build -f ./scripts/Dockerfile \
-    --memory=8g \
-    --memory-swap=8g \
     --platform="${PLATFORM}" \
     --build-arg GOOS="${GOOS}" \
     --build-arg GOARCH="${GOARCH}" \
