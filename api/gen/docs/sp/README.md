@@ -13,6 +13,8 @@
     - [CreateServiceProviderResponse](#sp-CreateServiceProviderResponse)
     - [GetServiceProviderRequest](#sp-GetServiceProviderRequest)
     - [GetServiceProviderResponse](#sp-GetServiceProviderResponse)
+    - [ListServiceProviderRequest](#sp-ListServiceProviderRequest)
+    - [ListServiceProviderResponse](#sp-ListServiceProviderResponse)
     - [ValidateServiceProviderRequest](#sp-ValidateServiceProviderRequest)
     - [ValidateServiceProviderResponse](#sp-ValidateServiceProviderResponse)
   
@@ -148,6 +150,40 @@
 
 
 
+<a name="sp-ListServiceProviderRequest"></a>
+
+### ListServiceProviderRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| page | [uint32](#uint32) |  |  |
+| page_size | [uint32](#uint32) |  |  |
+| base | [base.Base](#base-Base) |  |  |
+
+
+
+
+
+
+<a name="sp-ListServiceProviderResponse"></a>
+
+### ListServiceProviderResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| sp_list | [ServiceProvider](#ServiceProvider) | repeated |  |
+| total | [uint32](#uint32) |  |  |
+| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
+
+
+
+
+
+
 <a name="sp-ValidateServiceProviderRequest"></a>
 
 ### ValidateServiceProviderRequest
@@ -197,6 +233,7 @@
 | ----------- | ------------ | ------------- | ------------|
 | CreateServiceProvider | [CreateServiceProviderRequest](#sp-CreateServiceProviderRequest) | [CreateServiceProviderResponse](#sp-CreateServiceProviderResponse) | CreateServiceProvider creates a new service provider. |
 | GetServiceProvider | [GetServiceProviderRequest](#sp-GetServiceProviderRequest) | [GetServiceProviderResponse](#sp-GetServiceProviderResponse) | GetServiceProvider gets the service provider by id. |
+| ListServiceProvider | [ListServiceProviderRequest](#sp-ListServiceProviderRequest) | [ListServiceProviderResponse](#sp-ListServiceProviderResponse) | ListServiceProvider lists the service providers. |
 | ValidateServiceProvider | [ValidateServiceProviderRequest](#sp-ValidateServiceProviderRequest) | [ValidateServiceProviderResponse](#sp-ValidateServiceProviderResponse) | ValidateServiceProvider validates the service provider and scope. |
 
  

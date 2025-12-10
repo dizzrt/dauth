@@ -214,6 +214,14 @@
                 </li>
               
                 <li>
+                  <a href="#sp.ListServiceProviderRequest"><span class="badge">M</span>ListServiceProviderRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#sp.ListServiceProviderResponse"><span class="badge">M</span>ListServiceProviderResponse</a>
+                </li>
+              
+                <li>
                   <a href="#sp.ValidateServiceProviderRequest"><span class="badge">M</span>ValidateServiceProviderRequest</a>
                 </li>
               
@@ -510,6 +518,82 @@
 
         
       
+        <h3 id="sp.ListServiceProviderRequest">ListServiceProviderRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>page</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>page_size</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#base.Base">base.Base</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="sp.ListServiceProviderResponse">ListServiceProviderResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>sp_list</td>
+                  <td><a href="#ServiceProvider">ServiceProvider</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_resp</td>
+                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="sp.ValidateServiceProviderRequest">ValidateServiceProviderRequest</h3>
         <p></p>
 
@@ -615,6 +699,13 @@
               </tr>
             
               <tr>
+                <td>ListServiceProvider</td>
+                <td><a href="#sp.ListServiceProviderRequest">ListServiceProviderRequest</a></td>
+                <td><a href="#sp.ListServiceProviderResponse">ListServiceProviderResponse</a></td>
+                <td><p>ListServiceProvider lists the service providers.</p></td>
+              </tr>
+            
+              <tr>
                 <td>ValidateServiceProvider</td>
                 <td><a href="#sp.ValidateServiceProviderRequest">ValidateServiceProviderRequest</a></td>
                 <td><a href="#sp.ValidateServiceProviderResponse">ValidateServiceProviderResponse</a></td>
@@ -645,6 +736,16 @@
                 <td>CreateServiceProvider</td>
                 <td>POST</td>
                 <td>/sp/create</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>ListServiceProvider</td>
+                <td>POST</td>
+                <td>/sp/list</td>
                 <td>*</td>
               </tr>
               

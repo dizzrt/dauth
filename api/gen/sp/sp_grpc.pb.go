@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	ServiceProviderService_CreateServiceProvider_FullMethodName   = "/sp.ServiceProviderService/CreateServiceProvider"
 	ServiceProviderService_GetServiceProvider_FullMethodName      = "/sp.ServiceProviderService/GetServiceProvider"
+	ServiceProviderService_ListServiceProvider_FullMethodName     = "/sp.ServiceProviderService/ListServiceProvider"
 	ServiceProviderService_ValidateServiceProvider_FullMethodName = "/sp.ServiceProviderService/ValidateServiceProvider"
 )
 
@@ -32,6 +33,8 @@ type ServiceProviderServiceClient interface {
 	CreateServiceProvider(ctx context.Context, in *CreateServiceProviderRequest, opts ...grpc.CallOption) (*CreateServiceProviderResponse, error)
 	// GetServiceProvider gets the service provider by id.
 	GetServiceProvider(ctx context.Context, in *GetServiceProviderRequest, opts ...grpc.CallOption) (*GetServiceProviderResponse, error)
+	// ListServiceProvider lists the service providers.
+	ListServiceProvider(ctx context.Context, in *ListServiceProviderRequest, opts ...grpc.CallOption) (*ListServiceProviderResponse, error)
 	// ValidateServiceProvider validates the service provider and scope.
 	ValidateServiceProvider(ctx context.Context, in *ValidateServiceProviderRequest, opts ...grpc.CallOption) (*ValidateServiceProviderResponse, error)
 }
@@ -64,6 +67,16 @@ func (c *serviceProviderServiceClient) GetServiceProvider(ctx context.Context, i
 	return out, nil
 }
 
+func (c *serviceProviderServiceClient) ListServiceProvider(ctx context.Context, in *ListServiceProviderRequest, opts ...grpc.CallOption) (*ListServiceProviderResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListServiceProviderResponse)
+	err := c.cc.Invoke(ctx, ServiceProviderService_ListServiceProvider_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *serviceProviderServiceClient) ValidateServiceProvider(ctx context.Context, in *ValidateServiceProviderRequest, opts ...grpc.CallOption) (*ValidateServiceProviderResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ValidateServiceProviderResponse)
@@ -82,6 +95,8 @@ type ServiceProviderServiceServer interface {
 	CreateServiceProvider(context.Context, *CreateServiceProviderRequest) (*CreateServiceProviderResponse, error)
 	// GetServiceProvider gets the service provider by id.
 	GetServiceProvider(context.Context, *GetServiceProviderRequest) (*GetServiceProviderResponse, error)
+	// ListServiceProvider lists the service providers.
+	ListServiceProvider(context.Context, *ListServiceProviderRequest) (*ListServiceProviderResponse, error)
 	// ValidateServiceProvider validates the service provider and scope.
 	ValidateServiceProvider(context.Context, *ValidateServiceProviderRequest) (*ValidateServiceProviderResponse, error)
 	mustEmbedUnimplementedServiceProviderServiceServer()
@@ -99,6 +114,9 @@ func (UnimplementedServiceProviderServiceServer) CreateServiceProvider(context.C
 }
 func (UnimplementedServiceProviderServiceServer) GetServiceProvider(context.Context, *GetServiceProviderRequest) (*GetServiceProviderResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetServiceProvider not implemented")
+}
+func (UnimplementedServiceProviderServiceServer) ListServiceProvider(context.Context, *ListServiceProviderRequest) (*ListServiceProviderResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListServiceProvider not implemented")
 }
 func (UnimplementedServiceProviderServiceServer) ValidateServiceProvider(context.Context, *ValidateServiceProviderRequest) (*ValidateServiceProviderResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ValidateServiceProvider not implemented")
@@ -161,6 +179,24 @@ func _ServiceProviderService_GetServiceProvider_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServiceProviderService_ListServiceProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListServiceProviderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceProviderServiceServer).ListServiceProvider(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ServiceProviderService_ListServiceProvider_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceProviderServiceServer).ListServiceProvider(ctx, req.(*ListServiceProviderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ServiceProviderService_ValidateServiceProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ValidateServiceProviderRequest)
 	if err := dec(in); err != nil {
@@ -193,6 +229,10 @@ var ServiceProviderService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetServiceProvider",
 			Handler:    _ServiceProviderService_GetServiceProvider_Handler,
+		},
+		{
+			MethodName: "ListServiceProvider",
+			Handler:    _ServiceProviderService_ListServiceProvider_Handler,
 		},
 		{
 			MethodName: "ValidateServiceProvider",

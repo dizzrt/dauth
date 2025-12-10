@@ -263,6 +263,126 @@ func (x *GetServiceProviderResponse) GetBaseResp() *base.BaseResp {
 	return nil
 }
 
+type ListServiceProviderRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          uint32                 `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      uint32                 `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	Base          *base.Base             `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListServiceProviderRequest) Reset() {
+	*x = ListServiceProviderRequest{}
+	mi := &file_sp_sp_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListServiceProviderRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListServiceProviderRequest) ProtoMessage() {}
+
+func (x *ListServiceProviderRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_sp_sp_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListServiceProviderRequest.ProtoReflect.Descriptor instead.
+func (*ListServiceProviderRequest) Descriptor() ([]byte, []int) {
+	return file_sp_sp_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ListServiceProviderRequest) GetPage() uint32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ListServiceProviderRequest) GetPageSize() uint32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ListServiceProviderRequest) GetBase() *base.Base {
+	if x != nil {
+		return x.Base
+	}
+	return nil
+}
+
+type ListServiceProviderResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SpList        []*ServiceProvider     `protobuf:"bytes,1,rep,name=sp_list,json=spList,proto3" json:"sp_list,omitempty"`
+	Total         uint32                 `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	BaseResp      *base.BaseResp         `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListServiceProviderResponse) Reset() {
+	*x = ListServiceProviderResponse{}
+	mi := &file_sp_sp_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListServiceProviderResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListServiceProviderResponse) ProtoMessage() {}
+
+func (x *ListServiceProviderResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_sp_sp_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListServiceProviderResponse.ProtoReflect.Descriptor instead.
+func (*ListServiceProviderResponse) Descriptor() ([]byte, []int) {
+	return file_sp_sp_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ListServiceProviderResponse) GetSpList() []*ServiceProvider {
+	if x != nil {
+		return x.SpList
+	}
+	return nil
+}
+
+func (x *ListServiceProviderResponse) GetTotal() uint32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *ListServiceProviderResponse) GetBaseResp() *base.BaseResp {
+	if x != nil {
+		return x.BaseResp
+	}
+	return nil
+}
+
 type ValidateServiceProviderRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SpId          uint32                 `protobuf:"varint,1,opt,name=sp_id,json=spId,proto3" json:"sp_id,omitempty"`
@@ -274,7 +394,7 @@ type ValidateServiceProviderRequest struct {
 
 func (x *ValidateServiceProviderRequest) Reset() {
 	*x = ValidateServiceProviderRequest{}
-	mi := &file_sp_sp_proto_msgTypes[4]
+	mi := &file_sp_sp_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -286,7 +406,7 @@ func (x *ValidateServiceProviderRequest) String() string {
 func (*ValidateServiceProviderRequest) ProtoMessage() {}
 
 func (x *ValidateServiceProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_sp_sp_proto_msgTypes[4]
+	mi := &file_sp_sp_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -299,7 +419,7 @@ func (x *ValidateServiceProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateServiceProviderRequest.ProtoReflect.Descriptor instead.
 func (*ValidateServiceProviderRequest) Descriptor() ([]byte, []int) {
-	return file_sp_sp_proto_rawDescGZIP(), []int{4}
+	return file_sp_sp_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ValidateServiceProviderRequest) GetSpId() uint32 {
@@ -334,7 +454,7 @@ type ValidateServiceProviderResponse struct {
 
 func (x *ValidateServiceProviderResponse) Reset() {
 	*x = ValidateServiceProviderResponse{}
-	mi := &file_sp_sp_proto_msgTypes[5]
+	mi := &file_sp_sp_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -346,7 +466,7 @@ func (x *ValidateServiceProviderResponse) String() string {
 func (*ValidateServiceProviderResponse) ProtoMessage() {}
 
 func (x *ValidateServiceProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_sp_sp_proto_msgTypes[5]
+	mi := &file_sp_sp_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -359,7 +479,7 @@ func (x *ValidateServiceProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateServiceProviderResponse.ProtoReflect.Descriptor instead.
 func (*ValidateServiceProviderResponse) Descriptor() ([]byte, []int) {
-	return file_sp_sp_proto_rawDescGZIP(), []int{5}
+	return file_sp_sp_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ValidateServiceProviderResponse) GetIsOk() bool {
@@ -405,6 +525,15 @@ const file_sp_sp_proto_rawDesc = "" +
 	".base.BaseR\x04base\"l\n" +
 	"\x1aGetServiceProviderResponse\x12 \n" +
 	"\x02sp\x18\x01 \x01(\v2\x10.ServiceProviderR\x02sp\x12,\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"n\n" +
+	"\x1aListServiceProviderRequest\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\rR\x04page\x12\x1b\n" +
+	"\tpage_size\x18\x02 \x01(\rR\bpageSize\x12\x1f\n" +
+	"\x04base\x18\xff\x01 \x01(\v2\n" +
+	".base.BaseR\x04base\"\x8c\x01\n" +
+	"\x1bListServiceProviderResponse\x12)\n" +
+	"\asp_list\x18\x01 \x03(\v2\x10.ServiceProviderR\x06spList\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\rR\x05total\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"l\n" +
 	"\x1eValidateServiceProviderRequest\x12\x13\n" +
 	"\x05sp_id\x18\x01 \x01(\rR\x04spId\x12\x14\n" +
@@ -414,11 +543,12 @@ const file_sp_sp_proto_rawDesc = "" +
 	"\x1fValidateServiceProviderResponse\x12\x13\n" +
 	"\x05is_ok\x18\x01 \x01(\bR\x04isOk\x12\x16\n" +
 	"\x06reason\x18\x02 \x01(\tR\x06reason\x12,\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\xca\x02\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\xb7\x03\n" +
 	"\x16ServiceProviderService\x12s\n" +
 	"\x15CreateServiceProvider\x12 .sp.CreateServiceProviderRequest\x1a!.sp.CreateServiceProviderResponse\"\x15\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
 	"/sp/create\x12U\n" +
-	"\x12GetServiceProvider\x12\x1d.sp.GetServiceProviderRequest\x1a\x1e.sp.GetServiceProviderResponse\"\x00\x12d\n" +
+	"\x12GetServiceProvider\x12\x1d.sp.GetServiceProviderRequest\x1a\x1e.sp.GetServiceProviderResponse\"\x00\x12k\n" +
+	"\x13ListServiceProvider\x12\x1e.sp.ListServiceProviderRequest\x1a\x1f.sp.ListServiceProviderResponse\"\x13\x82\xd3\xe4\x93\x02\r:\x01*\"\b/sp/list\x12d\n" +
 	"\x17ValidateServiceProvider\x12\".sp.ValidateServiceProviderRequest\x1a#.sp.ValidateServiceProviderResponse\"\x00B'Z%github.com/dizzrt/dauth/api/gen/sp;spb\x06proto3"
 
 var (
@@ -433,37 +563,44 @@ func file_sp_sp_proto_rawDescGZIP() []byte {
 	return file_sp_sp_proto_rawDescData
 }
 
-var file_sp_sp_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_sp_sp_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_sp_sp_proto_goTypes = []any{
 	(*CreateServiceProviderRequest)(nil),    // 0: sp.CreateServiceProviderRequest
 	(*CreateServiceProviderResponse)(nil),   // 1: sp.CreateServiceProviderResponse
 	(*GetServiceProviderRequest)(nil),       // 2: sp.GetServiceProviderRequest
 	(*GetServiceProviderResponse)(nil),      // 3: sp.GetServiceProviderResponse
-	(*ValidateServiceProviderRequest)(nil),  // 4: sp.ValidateServiceProviderRequest
-	(*ValidateServiceProviderResponse)(nil), // 5: sp.ValidateServiceProviderResponse
-	(*base.Base)(nil),                       // 6: base.Base
-	(*base.BaseResp)(nil),                   // 7: base.BaseResp
-	(*ServiceProvider)(nil),                 // 8: ServiceProvider
+	(*ListServiceProviderRequest)(nil),      // 4: sp.ListServiceProviderRequest
+	(*ListServiceProviderResponse)(nil),     // 5: sp.ListServiceProviderResponse
+	(*ValidateServiceProviderRequest)(nil),  // 6: sp.ValidateServiceProviderRequest
+	(*ValidateServiceProviderResponse)(nil), // 7: sp.ValidateServiceProviderResponse
+	(*base.Base)(nil),                       // 8: base.Base
+	(*base.BaseResp)(nil),                   // 9: base.BaseResp
+	(*ServiceProvider)(nil),                 // 10: ServiceProvider
 }
 var file_sp_sp_proto_depIdxs = []int32{
-	6,  // 0: sp.CreateServiceProviderRequest.base:type_name -> base.Base
-	7,  // 1: sp.CreateServiceProviderResponse.base_resp:type_name -> base.BaseResp
-	6,  // 2: sp.GetServiceProviderRequest.base:type_name -> base.Base
-	8,  // 3: sp.GetServiceProviderResponse.sp:type_name -> ServiceProvider
-	7,  // 4: sp.GetServiceProviderResponse.base_resp:type_name -> base.BaseResp
-	6,  // 5: sp.ValidateServiceProviderRequest.base:type_name -> base.Base
-	7,  // 6: sp.ValidateServiceProviderResponse.base_resp:type_name -> base.BaseResp
-	0,  // 7: sp.ServiceProviderService.CreateServiceProvider:input_type -> sp.CreateServiceProviderRequest
-	2,  // 8: sp.ServiceProviderService.GetServiceProvider:input_type -> sp.GetServiceProviderRequest
-	4,  // 9: sp.ServiceProviderService.ValidateServiceProvider:input_type -> sp.ValidateServiceProviderRequest
-	1,  // 10: sp.ServiceProviderService.CreateServiceProvider:output_type -> sp.CreateServiceProviderResponse
-	3,  // 11: sp.ServiceProviderService.GetServiceProvider:output_type -> sp.GetServiceProviderResponse
-	5,  // 12: sp.ServiceProviderService.ValidateServiceProvider:output_type -> sp.ValidateServiceProviderResponse
-	10, // [10:13] is the sub-list for method output_type
-	7,  // [7:10] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	8,  // 0: sp.CreateServiceProviderRequest.base:type_name -> base.Base
+	9,  // 1: sp.CreateServiceProviderResponse.base_resp:type_name -> base.BaseResp
+	8,  // 2: sp.GetServiceProviderRequest.base:type_name -> base.Base
+	10, // 3: sp.GetServiceProviderResponse.sp:type_name -> ServiceProvider
+	9,  // 4: sp.GetServiceProviderResponse.base_resp:type_name -> base.BaseResp
+	8,  // 5: sp.ListServiceProviderRequest.base:type_name -> base.Base
+	10, // 6: sp.ListServiceProviderResponse.sp_list:type_name -> ServiceProvider
+	9,  // 7: sp.ListServiceProviderResponse.base_resp:type_name -> base.BaseResp
+	8,  // 8: sp.ValidateServiceProviderRequest.base:type_name -> base.Base
+	9,  // 9: sp.ValidateServiceProviderResponse.base_resp:type_name -> base.BaseResp
+	0,  // 10: sp.ServiceProviderService.CreateServiceProvider:input_type -> sp.CreateServiceProviderRequest
+	2,  // 11: sp.ServiceProviderService.GetServiceProvider:input_type -> sp.GetServiceProviderRequest
+	4,  // 12: sp.ServiceProviderService.ListServiceProvider:input_type -> sp.ListServiceProviderRequest
+	6,  // 13: sp.ServiceProviderService.ValidateServiceProvider:input_type -> sp.ValidateServiceProviderRequest
+	1,  // 14: sp.ServiceProviderService.CreateServiceProvider:output_type -> sp.CreateServiceProviderResponse
+	3,  // 15: sp.ServiceProviderService.GetServiceProvider:output_type -> sp.GetServiceProviderResponse
+	5,  // 16: sp.ServiceProviderService.ListServiceProvider:output_type -> sp.ListServiceProviderResponse
+	7,  // 17: sp.ServiceProviderService.ValidateServiceProvider:output_type -> sp.ValidateServiceProviderResponse
+	14, // [14:18] is the sub-list for method output_type
+	10, // [10:14] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_sp_sp_proto_init() }
@@ -478,7 +615,7 @@ func file_sp_sp_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_sp_sp_proto_rawDesc), len(file_sp_sp_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

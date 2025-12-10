@@ -48,3 +48,23 @@ func (impl *ServiceProviderRepoImpl) Get(ctx context.Context, id uint32) (*entit
 
 	return m.ToEntity(), nil
 }
+
+func (impl *ServiceProviderRepoImpl) List(ctx context.Context, size, offset uint32) ([]*entity.ServiceProvider, uint32, error) {
+	var ms []*model.ServiceProvider
+	db := impl.WithContext(ctx)
+	if err := db.Order("id desc").Limit(int(size)).Offset(int(offset)).Find(&ms).Error; err != nil {
+		return nil, 0, impl.WrapError(err)
+	}
+
+	var total int64
+	if err := db.Model(&model.ServiceProvider{}).Count(&total).Error; err != nil {
+		return nil, 0, impl.WrapError(err)
+	}
+
+	respList := make([]*entity.ServiceProvider, 0, len(ms))
+	for _, m := range ms {
+		respList = append(respList, m.ToEntity())
+	}
+
+	return respList, uint32(total), nil
+}

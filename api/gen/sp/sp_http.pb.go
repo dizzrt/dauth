@@ -32,15 +32,19 @@ var _ = v1_21_0.HTTPRequestMethodKey
 
 const TRACER_NAME_SP = "github.com/dizzrt/dauth/api/gen/sp"
 const OperationServiceProviderServiceCreateServiceProvider = "/ServiceProviderService/CreateServiceProvider"
+const OperationServiceProviderServiceListServiceProvider = "/ServiceProviderService/ListServiceProvider"
 
 type ServiceProviderServiceHTTPServer interface {
 	// CreateServiceProvider CreateServiceProvider creates a new service provider.
 	CreateServiceProvider(context.Context, *CreateServiceProviderRequest) (*CreateServiceProviderResponse, error)
+	// ListServiceProvider ListServiceProvider lists the service providers.
+	ListServiceProvider(context.Context, *ListServiceProviderRequest) (*ListServiceProviderResponse, error)
 }
 
 func RegisterServiceProviderServiceHTTPServer(hs *http.Server, srv ServiceProviderServiceHTTPServer) {
 	r := hs.Engine()
 	r.POST("/sp/create", _sp_ServiceProviderService_POST_CreateServiceProvider_HTTP_Handler(hs, srv))
+	r.POST("/sp/list", _sp_ServiceProviderService_POST_ListServiceProvider_HTTP_Handler(hs, srv))
 }
 func _sp_ServiceProviderService_POST_CreateServiceProvider_HTTP_Handler(hs *http.Server, srv ServiceProviderServiceHTTPServer) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -72,6 +76,46 @@ func _sp_ServiceProviderService_POST_CreateServiceProvider_HTTP_Handler(hs *http
 		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
 
 		res, err := srv.CreateServiceProvider(rctx, &req)
+		ctx.Request = ctx.Request.WithContext(rctx)
+		if err != nil {
+			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))
+			ctx.Abort()
+			return
+		}
+
+		hs.EncodeResponse(ctx, res, err)
+	}
+}
+func _sp_ServiceProviderService_POST_ListServiceProvider_HTTP_Handler(hs *http.Server, srv ServiceProviderServiceHTTPServer) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req ListServiceProviderRequest
+		if err := ginx.DecodeRequest(ctx, &req); err != nil {
+			ctx.JSON(http.StatusBadRequest, hs.WrapHTTPResponse(nil, err))
+			ctx.Abort()
+			return
+		}
+
+		greq := ctx.Request
+		rctx := greq.Context()
+		rctx = log.ExtractFromTextMapCarrier(rctx, propagation.HeaderCarrier(greq.Header))
+		attributes := []attribute.KeyValue{
+			v1_21_0.HTTPRequestMethodKey.String(greq.Method),
+			v1_21_0.HTTPRouteKey.String(greq.URL.String()),
+			attribute.String("log.id", log.LogIDFromContext(rctx)),
+		}
+
+		tracer := otel.Tracer(TRACER_NAME_SP)
+		rctx, span := tracer.Start(rctx, "_ServiceProviderService_ListServiceProvider_0_HTTP_Handler",
+			trace.WithSpanKind(trace.SpanKindServer),
+			trace.WithAttributes(attributes...),
+		)
+		defer span.End()
+
+		sctx := span.SpanContext()
+		rctx = log.WithTraceID(rctx, sctx.TraceID().String())
+		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
+
+		res, err := srv.ListServiceProvider(rctx, &req)
 		ctx.Request = ctx.Request.WithContext(rctx)
 		if err != nil {
 			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))

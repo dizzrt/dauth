@@ -8,6 +8,7 @@ import (
 
 	"github.com/dizzrt/dauth/api/gen/errdef"
 	sp_api "github.com/dizzrt/dauth/api/gen/sp"
+	"github.com/dizzrt/dauth/internal/domain/sp/dto"
 	"github.com/dizzrt/dauth/internal/domain/sp/entity"
 	"github.com/dizzrt/dauth/internal/domain/sp/repo"
 	"github.com/dizzrt/ellie/log"
@@ -18,6 +19,7 @@ var _ ServiceProviderBiz = (*serviceProviderBiz)(nil)
 type ServiceProviderBiz interface {
 	CreateServiceProvider(ctx context.Context, spEntity *entity.ServiceProvider, scopeIDs []uint32) (uint32, error)
 	GetServiceProvider(ctx context.Context, spID uint32) (*entity.ServiceProvider, error)
+	ListServiceProvider(ctx context.Context, req *dto.ListServiceProviderRequest) ([]*entity.ServiceProvider, uint32, error)
 	ValidateServiceProvider(ctx context.Context, spID uint32, scope string) (bool, string, error)
 }
 
@@ -56,6 +58,17 @@ func (biz *serviceProviderBiz) CreateServiceProvider(ctx context.Context, spEnti
 
 func (biz *serviceProviderBiz) GetServiceProvider(ctx context.Context, spID uint32) (*entity.ServiceProvider, error) {
 	return biz.spRepo.Get(ctx, spID)
+}
+
+func (biz *serviceProviderBiz) ListServiceProvider(ctx context.Context, req *dto.ListServiceProviderRequest) ([]*entity.ServiceProvider, uint32, error) {
+	offset := (req.Page - 1) * req.PageSize
+	spList, total, err := biz.spRepo.List(ctx, req.PageSize, offset)
+	if err != nil {
+		log.CtxErrorf(ctx, "failed to list sp, err: %v", err)
+		return nil, 0, err
+	}
+
+	return spList, total, nil
 }
 
 func (biz *serviceProviderBiz) ValidateServiceProvider(ctx context.Context, spID uint32, scope string) (bool, string, error) {

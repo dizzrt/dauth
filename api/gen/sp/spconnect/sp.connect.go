@@ -39,6 +39,9 @@ const (
 	// ServiceProviderServiceGetServiceProviderProcedure is the fully-qualified name of the
 	// ServiceProviderService's GetServiceProvider RPC.
 	ServiceProviderServiceGetServiceProviderProcedure = "/sp.ServiceProviderService/GetServiceProvider"
+	// ServiceProviderServiceListServiceProviderProcedure is the fully-qualified name of the
+	// ServiceProviderService's ListServiceProvider RPC.
+	ServiceProviderServiceListServiceProviderProcedure = "/sp.ServiceProviderService/ListServiceProvider"
 	// ServiceProviderServiceValidateServiceProviderProcedure is the fully-qualified name of the
 	// ServiceProviderService's ValidateServiceProvider RPC.
 	ServiceProviderServiceValidateServiceProviderProcedure = "/sp.ServiceProviderService/ValidateServiceProvider"
@@ -50,6 +53,8 @@ type ServiceProviderServiceClient interface {
 	CreateServiceProvider(context.Context, *connect.Request[sp.CreateServiceProviderRequest]) (*connect.Response[sp.CreateServiceProviderResponse], error)
 	// GetServiceProvider gets the service provider by id.
 	GetServiceProvider(context.Context, *connect.Request[sp.GetServiceProviderRequest]) (*connect.Response[sp.GetServiceProviderResponse], error)
+	// ListServiceProvider lists the service providers.
+	ListServiceProvider(context.Context, *connect.Request[sp.ListServiceProviderRequest]) (*connect.Response[sp.ListServiceProviderResponse], error)
 	// ValidateServiceProvider validates the service provider and scope.
 	ValidateServiceProvider(context.Context, *connect.Request[sp.ValidateServiceProviderRequest]) (*connect.Response[sp.ValidateServiceProviderResponse], error)
 }
@@ -77,6 +82,12 @@ func NewServiceProviderServiceClient(httpClient connect.HTTPClient, baseURL stri
 			connect.WithSchema(serviceProviderServiceMethods.ByName("GetServiceProvider")),
 			connect.WithClientOptions(opts...),
 		),
+		listServiceProvider: connect.NewClient[sp.ListServiceProviderRequest, sp.ListServiceProviderResponse](
+			httpClient,
+			baseURL+ServiceProviderServiceListServiceProviderProcedure,
+			connect.WithSchema(serviceProviderServiceMethods.ByName("ListServiceProvider")),
+			connect.WithClientOptions(opts...),
+		),
 		validateServiceProvider: connect.NewClient[sp.ValidateServiceProviderRequest, sp.ValidateServiceProviderResponse](
 			httpClient,
 			baseURL+ServiceProviderServiceValidateServiceProviderProcedure,
@@ -90,6 +101,7 @@ func NewServiceProviderServiceClient(httpClient connect.HTTPClient, baseURL stri
 type serviceProviderServiceClient struct {
 	createServiceProvider   *connect.Client[sp.CreateServiceProviderRequest, sp.CreateServiceProviderResponse]
 	getServiceProvider      *connect.Client[sp.GetServiceProviderRequest, sp.GetServiceProviderResponse]
+	listServiceProvider     *connect.Client[sp.ListServiceProviderRequest, sp.ListServiceProviderResponse]
 	validateServiceProvider *connect.Client[sp.ValidateServiceProviderRequest, sp.ValidateServiceProviderResponse]
 }
 
@@ -103,6 +115,11 @@ func (c *serviceProviderServiceClient) GetServiceProvider(ctx context.Context, r
 	return c.getServiceProvider.CallUnary(ctx, req)
 }
 
+// ListServiceProvider calls sp.ServiceProviderService.ListServiceProvider.
+func (c *serviceProviderServiceClient) ListServiceProvider(ctx context.Context, req *connect.Request[sp.ListServiceProviderRequest]) (*connect.Response[sp.ListServiceProviderResponse], error) {
+	return c.listServiceProvider.CallUnary(ctx, req)
+}
+
 // ValidateServiceProvider calls sp.ServiceProviderService.ValidateServiceProvider.
 func (c *serviceProviderServiceClient) ValidateServiceProvider(ctx context.Context, req *connect.Request[sp.ValidateServiceProviderRequest]) (*connect.Response[sp.ValidateServiceProviderResponse], error) {
 	return c.validateServiceProvider.CallUnary(ctx, req)
@@ -114,6 +131,8 @@ type ServiceProviderServiceHandler interface {
 	CreateServiceProvider(context.Context, *connect.Request[sp.CreateServiceProviderRequest]) (*connect.Response[sp.CreateServiceProviderResponse], error)
 	// GetServiceProvider gets the service provider by id.
 	GetServiceProvider(context.Context, *connect.Request[sp.GetServiceProviderRequest]) (*connect.Response[sp.GetServiceProviderResponse], error)
+	// ListServiceProvider lists the service providers.
+	ListServiceProvider(context.Context, *connect.Request[sp.ListServiceProviderRequest]) (*connect.Response[sp.ListServiceProviderResponse], error)
 	// ValidateServiceProvider validates the service provider and scope.
 	ValidateServiceProvider(context.Context, *connect.Request[sp.ValidateServiceProviderRequest]) (*connect.Response[sp.ValidateServiceProviderResponse], error)
 }
@@ -137,6 +156,12 @@ func NewServiceProviderServiceHandler(svc ServiceProviderServiceHandler, opts ..
 		connect.WithSchema(serviceProviderServiceMethods.ByName("GetServiceProvider")),
 		connect.WithHandlerOptions(opts...),
 	)
+	serviceProviderServiceListServiceProviderHandler := connect.NewUnaryHandler(
+		ServiceProviderServiceListServiceProviderProcedure,
+		svc.ListServiceProvider,
+		connect.WithSchema(serviceProviderServiceMethods.ByName("ListServiceProvider")),
+		connect.WithHandlerOptions(opts...),
+	)
 	serviceProviderServiceValidateServiceProviderHandler := connect.NewUnaryHandler(
 		ServiceProviderServiceValidateServiceProviderProcedure,
 		svc.ValidateServiceProvider,
@@ -149,6 +174,8 @@ func NewServiceProviderServiceHandler(svc ServiceProviderServiceHandler, opts ..
 			serviceProviderServiceCreateServiceProviderHandler.ServeHTTP(w, r)
 		case ServiceProviderServiceGetServiceProviderProcedure:
 			serviceProviderServiceGetServiceProviderHandler.ServeHTTP(w, r)
+		case ServiceProviderServiceListServiceProviderProcedure:
+			serviceProviderServiceListServiceProviderHandler.ServeHTTP(w, r)
 		case ServiceProviderServiceValidateServiceProviderProcedure:
 			serviceProviderServiceValidateServiceProviderHandler.ServeHTTP(w, r)
 		default:
@@ -166,6 +193,10 @@ func (UnimplementedServiceProviderServiceHandler) CreateServiceProvider(context.
 
 func (UnimplementedServiceProviderServiceHandler) GetServiceProvider(context.Context, *connect.Request[sp.GetServiceProviderRequest]) (*connect.Response[sp.GetServiceProviderResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("sp.ServiceProviderService.GetServiceProvider is not implemented"))
+}
+
+func (UnimplementedServiceProviderServiceHandler) ListServiceProvider(context.Context, *connect.Request[sp.ListServiceProviderRequest]) (*connect.Response[sp.ListServiceProviderResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("sp.ServiceProviderService.ListServiceProvider is not implemented"))
 }
 
 func (UnimplementedServiceProviderServiceHandler) ValidateServiceProvider(context.Context, *connect.Request[sp.ValidateServiceProviderRequest]) (*connect.Response[sp.ValidateServiceProviderResponse], error) {

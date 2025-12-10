@@ -29,6 +29,10 @@ func (handler *ServiceProviderHandler) GetServiceProvider(ctx context.Context, r
 	return handler.spApp.GetServiceProvider(ctx, req)
 }
 
+func (handler *ServiceProviderHandler) ListServiceProvider(ctx context.Context, req *sp.ListServiceProviderRequest) (*sp.ListServiceProviderResponse, error) {
+	return handler.spApp.ListServiceProvider(ctx, req)
+}
+
 func (handler *ServiceProviderHandler) ValidateServiceProvider(ctx context.Context, req *sp.ValidateServiceProviderRequest) (*sp.ValidateServiceProviderResponse, error) {
 	return handler.spApp.ValidateServiceProvider(ctx, req)
 }

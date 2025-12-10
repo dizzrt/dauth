@@ -9,6 +9,7 @@ import (
 type ServiceProviderRepo interface {
 	Create(ctx context.Context, sp *entity.ServiceProvider) (*entity.ServiceProvider, error)
 	Get(ctx context.Context, id uint32) (*entity.ServiceProvider, error)
+	List(ctx context.Context, size, offset uint32) ([]*entity.ServiceProvider, uint32, error)
 }
 
 type ScopeRepo interface {

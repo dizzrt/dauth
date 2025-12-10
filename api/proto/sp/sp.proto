@@ -35,6 +35,20 @@ message GetServiceProviderResponse {
     base.BaseResp base_resp = 255;
 }
 
+message ListServiceProviderRequest {
+    uint32 page = 1;
+    uint32 page_size = 2;
+
+    base.Base base = 255;
+}
+
+message ListServiceProviderResponse {
+    repeated ServiceProvider sp_list = 1;
+    uint32 total = 2;
+
+    base.BaseResp base_resp = 255;
+}
+
 message ValidateServiceProviderRequest {
     uint32 sp_id = 1;
     string scope = 2;
@@ -60,6 +74,14 @@ service ServiceProviderService {
 
     // GetServiceProvider gets the service provider by id.
     rpc GetServiceProvider(GetServiceProviderRequest) returns (GetServiceProviderResponse) {}
+
+    // ListServiceProvider lists the service providers.
+    rpc ListServiceProvider(ListServiceProviderRequest) returns (ListServiceProviderResponse) {
+        option (google.api.http) = {
+            post: "/sp/list"
+            body: "*"
+        };
+    }
 
     // ValidateServiceProvider validates the service provider and scope.
     rpc ValidateServiceProvider(ValidateServiceProviderRequest) returns (ValidateServiceProviderResponse) {}

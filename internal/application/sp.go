@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/api/gen/sp"
 	"github.com/dizzrt/dauth/internal/application/convert"
 	"github.com/dizzrt/dauth/internal/domain/sp/biz"
@@ -15,6 +16,7 @@ var _ ServiceProviderApplication = (*serviceProviderApplication)(nil)
 type ServiceProviderApplication interface {
 	CreateServiceProvider(ctx context.Context, req *sp.CreateServiceProviderRequest) (*sp.CreateServiceProviderResponse, error)
 	GetServiceProvider(ctx context.Context, req *sp.GetServiceProviderRequest) (*sp.GetServiceProviderResponse, error)
+	ListServiceProvider(ctx context.Context, req *sp.ListServiceProviderRequest) (*sp.ListServiceProviderResponse, error)
 	ValidateServiceProvider(ctx context.Context, req *sp.ValidateServiceProviderRequest) (*sp.ValidateServiceProviderResponse, error)
 }
 
@@ -71,6 +73,46 @@ func (app *serviceProviderApplication) GetServiceProvider(ctx context.Context, r
 			CreatedAt:   spEntity.CreatedAt.Unix(),
 			UpdatedAt:   spEntity.UpdatedAt.Unix(),
 		},
+		BaseResp: rpc.Success(),
+	}, nil
+}
+
+func (app *serviceProviderApplication) ListServiceProvider(ctx context.Context, req *sp.ListServiceProviderRequest) (*sp.ListServiceProviderResponse, error) {
+	dtoReq := convert.ListServiceProviderReqFromPB(req)
+	if dtoReq.Page < 1 {
+		return nil, errdef.InvalidParamsWithMsg("page must be greater than 0")
+	}
+
+	if dtoReq.PageSize < 1 {
+		return nil, errdef.InvalidParamsWithMsg("page_size must be greater than 0")
+	}
+
+	spList, total, err := app.spBiz.ListServiceProvider(ctx, dtoReq)
+	if err != nil {
+		return nil, err
+	}
+
+	respList := make([]*sp.ServiceProvider, 0, len(spList))
+	for _, p := range spList {
+		temp := &sp.ServiceProvider{
+			Id:          p.ID,
+			Name:        p.Name,
+			Description: p.Description,
+			RedirectUri: p.RedirectURI,
+			Status:      p.Status,
+			CreatedAt:   p.CreatedAt.Unix(),
+			UpdatedAt:   p.UpdatedAt.Unix(),
+		}
+
+		if p.DeletedAt.Valid {
+			temp.Status = sp.ServiceProvider_DELETED
+		}
+		respList = append(respList, temp)
+	}
+
+	return &sp.ListServiceProviderResponse{
+		SpList:   respList,
+		Total:    total,
 		BaseResp: rpc.Success(),
 	}, nil
 }
