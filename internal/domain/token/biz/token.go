@@ -38,10 +38,10 @@ func (biz *tokenBiz) Issue(ctx context.Context, uid uint32, clientID uint32, sco
 	accessExpire := 24 * time.Hour
 	refreshExpire := 7 * 24 * time.Hour
 
-	// validate client
-	resp, err := dauth.ValidateClient(ctx, uint32(clientID), scope)
+	// validate service provider
+	resp, err := dauth.ValidateServiceProvider(ctx, uint32(clientID), scope)
 	if err != nil || !resp.GetIsOk() {
-		// invalid client or scope
+		// invalid service provider or scope
 		return
 	}
 

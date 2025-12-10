@@ -10,15 +10,15 @@ import (
 	"github.com/dizzrt/dauth/internal/application"
 	"github.com/dizzrt/dauth/internal/conf"
 	biz4 "github.com/dizzrt/dauth/internal/domain/auth/biz"
-	biz3 "github.com/dizzrt/dauth/internal/domain/client/biz"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
+	biz3 "github.com/dizzrt/dauth/internal/domain/sp/biz"
 	biz2 "github.com/dizzrt/dauth/internal/domain/token/biz"
 	"github.com/dizzrt/dauth/internal/handler"
 	auth2 "github.com/dizzrt/dauth/internal/infra/cache/impl/auth"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/auth"
-	"github.com/dizzrt/dauth/internal/infra/repo/impl/client"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/identity"
+	"github.com/dizzrt/dauth/internal/infra/repo/impl/sp"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/token"
 	"github.com/dizzrt/dauth/internal/infra/utils/security/jwt"
 	"github.com/dizzrt/dauth/internal/server"
@@ -48,12 +48,12 @@ func wireApp() (*ellie.App, func(), error) {
 	tokenBiz := biz2.NewTokenBiz(tokenBlacklistRepo, jwtManager)
 	tokenApplication := application.NewTokenApplication(tokenBiz)
 	tokenHandler := handler.NewTokenHandler(tokenApplication)
-	clientRepo := client.NewClientRepoImpl(baseDB)
-	scopeRepo := client.NewScopeRepoImpl(baseDB)
-	clientScopeAssociationRepo := client.NewClientScopeAssociationRepoImpl(baseDB)
-	clientBiz := biz3.NewClientBiz(clientRepo, scopeRepo, clientScopeAssociationRepo)
-	clientApplication := application.NewClientApplication(clientBiz)
-	clientHandler := handler.NewClientHandler(clientApplication)
+	serviceProviderRepo := sp.NewServiceProviderRepoImpl(baseDB)
+	scopeRepo := sp.NewScopeRepoImpl(baseDB)
+	spScopeAssociationRepo := sp.NewSPScopeAssociationRepoImpl(baseDB)
+	serviceProviderBiz := biz3.NewServiceProviderBiz(serviceProviderRepo, scopeRepo, spScopeAssociationRepo)
+	serviceProviderApplication := application.NewServiceProviderApplication(serviceProviderBiz)
+	serviceProviderHandler := handler.NewServiceProviderHandler(serviceProviderApplication)
 	authorizationCodeRepo := auth.NewAuthorizationCodeRepoImpl(baseDB)
 	redisClient, cleanup2, err := foundation.NewRedisClient(appConfig)
 	if err != nil {
@@ -64,8 +64,8 @@ func wireApp() (*ellie.App, func(), error) {
 	authBiz := biz4.NewAuthBiz(authorizationCodeRepo, authorizationCodeCache)
 	authApplication := application.NewAuthApplication(authBiz)
 	authHandler := handler.NewAuthHandler(authApplication)
-	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler, authHandler)
-	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler, tokenHandler, clientHandler, authHandler)
+	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, tokenHandler, serviceProviderHandler, authHandler)
+	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler, tokenHandler, serviceProviderHandler, authHandler)
 	app, cleanup3, err := newApp(logWriter, tracerProvider, registrar, grpcServer, httpServer)
 	if err != nil {
 		cleanup2()

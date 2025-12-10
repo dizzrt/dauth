@@ -1,5 +1,5 @@
 version: v2
-clean: false
+clean: true
 plugins:
   - local: protoc-gen-ellie-go
     out: ./gen

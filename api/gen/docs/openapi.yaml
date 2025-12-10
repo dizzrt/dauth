@@ -6,31 +6,6 @@ info:
     title: ""
     version: 0.0.1
 paths:
-    /client/client/create:
-        post:
-            tags:
-                - ClientService
-            description: CreateClient creates a new client.
-            operationId: ClientService_CreateClient
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/CreateClientRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/CreateClientResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
     /identity/role:
         post:
             tags:
@@ -335,6 +310,31 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /sp/create:
+        post:
+            tags:
+                - ServiceProviderService
+            description: CreateServiceProvider creates a new service provider.
+            operationId: ServiceProviderService_CreateServiceProvider
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateServiceProviderRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateServiceProviderResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
 components:
     schemas:
         AssignRolesRequest:
@@ -367,7 +367,23 @@ components:
                     format: uint32
                 message:
                     type: string
-        CreateClientRequest:
+        CreateRoleRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                description:
+                    type: string
+                base:
+                    $ref: '#/components/schemas/Base'
+        CreateRoleResponse:
+            type: object
+            properties:
+                role:
+                    $ref: '#/components/schemas/Role'
+                baseResp:
+                    $ref: '#/components/schemas/BaseResp'
+        CreateServiceProviderRequest:
             type: object
             properties:
                 name:
@@ -385,28 +401,12 @@ components:
                         format: uint32
                 base:
                     $ref: '#/components/schemas/Base'
-        CreateClientResponse:
+        CreateServiceProviderResponse:
             type: object
             properties:
-                clientId:
+                spId:
                     type: integer
                     format: uint32
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
-        CreateRoleRequest:
-            type: object
-            properties:
-                name:
-                    type: string
-                description:
-                    type: string
-                base:
-                    $ref: '#/components/schemas/Base'
-        CreateRoleResponse:
-            type: object
-            properties:
-                role:
-                    $ref: '#/components/schemas/Role'
                 baseResp:
                     $ref: '#/components/schemas/BaseResp'
         CreateUserRequest:
@@ -624,6 +624,6 @@ components:
                 updatedAt:
                     type: string
 tags:
-    - name: ClientService
     - name: RoleService
+    - name: ServiceProviderService
     - name: UserService

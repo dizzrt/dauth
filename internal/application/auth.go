@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/dizzrt/dauth/api/gen/auth"
-	"github.com/dizzrt/dauth/api/gen/client"
 	"github.com/dizzrt/dauth/api/gen/errdef"
+	sp_api "github.com/dizzrt/dauth/api/gen/sp"
 	"github.com/dizzrt/dauth/internal/domain/auth/biz"
 	"github.com/dizzrt/dauth/internal/infra/rpc"
 	"github.com/dizzrt/dauth/internal/infra/rpc/dauth"
@@ -38,17 +38,17 @@ func (app *authApplication) GenerateAuthorizationCode(ctx context.Context, req *
 	}
 
 	// verify client
-	resp, err := dauth.GetClient(ctx, clientID)
+	resp, err := dauth.GetServiceProvider(ctx, clientID)
 	if err != nil {
 		return nil, err
 	}
 
-	cli := resp.GetClient()
-	if cli == nil || cli.Status != client.Client_ACTIVE {
+	sp := resp.GetSp()
+	if sp == nil || sp.Status != sp_api.ServiceProvider_ACTIVE {
 		return nil, errdef.AuthInvalidClient()
 	}
 
-	if cli.GetRedirectUri() != redirectURI {
+	if sp.GetRedirectUri() != redirectURI {
 		return nil, errdef.AuthInvalidRedirectURI()
 	}
 
