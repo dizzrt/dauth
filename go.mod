@@ -4,7 +4,7 @@ go 1.25.4
 
 require (
 	connectrpc.com/connect v1.19.0
-	github.com/dizzrt/ellie v0.3.13
+	github.com/dizzrt/ellie v0.3.14
 	github.com/dizzrt/ellie/contrib/registry/consul v1.0.0
 	github.com/gin-gonic/gin v1.11.0
 	github.com/go-playground/validator/v10 v10.28.0
@@ -12,6 +12,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/google/wire v0.7.0
 	github.com/hashicorp/consul/api v1.33.0
+	github.com/redis/go-redis/v9 v9.17.1
 	github.com/spf13/cobra v1.10.1
 	go.opentelemetry.io/otel v1.38.0
 	go.opentelemetry.io/otel/sdk v1.38.0
@@ -74,7 +75,6 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/quic-go/qpack v0.5.1 // indirect
 	github.com/quic-go/quic-go v0.54.0 // indirect
-	github.com/redis/go-redis/v9 v9.17.1 // indirect
 	github.com/sagikazarmark/locafero v0.12.0 // indirect
 	github.com/spf13/afero v1.15.0 // indirect
 	github.com/spf13/cast v1.10.0 // indirect

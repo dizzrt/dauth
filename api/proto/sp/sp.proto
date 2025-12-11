@@ -73,7 +73,11 @@ service ServiceProviderService {
     }
 
     // GetServiceProvider gets the service provider by id.
-    rpc GetServiceProvider(GetServiceProviderRequest) returns (GetServiceProviderResponse) {}
+    rpc GetServiceProvider(GetServiceProviderRequest) returns (GetServiceProviderResponse) {
+        option (google.api.http) = {
+            get: "/sp/detail/{sp_id}"
+        };
+    }
 
     // ListServiceProvider lists the service providers.
     rpc ListServiceProvider(ListServiceProviderRequest) returns (ListServiceProviderResponse) {

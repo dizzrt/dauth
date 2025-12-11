@@ -335,6 +335,32 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /sp/detail/{spId}:
+        get:
+            tags:
+                - ServiceProviderService
+            description: GetServiceProvider gets the service provider by id.
+            operationId: ServiceProviderService_GetServiceProvider
+            parameters:
+                - name: spId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetServiceProviderResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /sp/list:
         post:
             tags:
@@ -475,6 +501,13 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/Role'
+                baseResp:
+                    $ref: '#/components/schemas/BaseResp'
+        GetServiceProviderResponse:
+            type: object
+            properties:
+                sp:
+                    $ref: '#/components/schemas/ServiceProvider'
                 baseResp:
                     $ref: '#/components/schemas/BaseResp'
         GetUserResponse:

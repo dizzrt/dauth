@@ -51,7 +51,7 @@ func (app *serviceProviderApplication) CreateServiceProvider(ctx context.Context
 func (app *serviceProviderApplication) GetServiceProvider(ctx context.Context, req *sp.GetServiceProviderRequest) (*sp.GetServiceProviderResponse, error) {
 	spID := req.GetSpId()
 	if spID == 0 {
-		return nil, nil
+		return nil, errdef.InvalidParamsWithMsg("sp_id is required")
 	}
 
 	spEntity, err := app.spBiz.GetServiceProvider(ctx, spID)

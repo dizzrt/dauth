@@ -543,11 +543,11 @@ const file_sp_sp_proto_rawDesc = "" +
 	"\x1fValidateServiceProviderResponse\x12\x13\n" +
 	"\x05is_ok\x18\x01 \x01(\bR\x04isOk\x12\x16\n" +
 	"\x06reason\x18\x02 \x01(\tR\x06reason\x12,\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\xb7\x03\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\xd1\x03\n" +
 	"\x16ServiceProviderService\x12s\n" +
 	"\x15CreateServiceProvider\x12 .sp.CreateServiceProviderRequest\x1a!.sp.CreateServiceProviderResponse\"\x15\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
-	"/sp/create\x12U\n" +
-	"\x12GetServiceProvider\x12\x1d.sp.GetServiceProviderRequest\x1a\x1e.sp.GetServiceProviderResponse\"\x00\x12k\n" +
+	"/sp/create\x12o\n" +
+	"\x12GetServiceProvider\x12\x1d.sp.GetServiceProviderRequest\x1a\x1e.sp.GetServiceProviderResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/sp/detail/{sp_id}\x12k\n" +
 	"\x13ListServiceProvider\x12\x1e.sp.ListServiceProviderRequest\x1a\x1f.sp.ListServiceProviderResponse\"\x13\x82\xd3\xe4\x93\x02\r:\x01*\"\b/sp/list\x12d\n" +
 	"\x17ValidateServiceProvider\x12\".sp.ValidateServiceProviderRequest\x1a#.sp.ValidateServiceProviderResponse\"\x00B'Z%github.com/dizzrt/dauth/api/gen/sp;spb\x06proto3"
 
