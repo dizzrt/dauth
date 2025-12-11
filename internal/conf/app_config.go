@@ -24,6 +24,8 @@ var (
 )
 
 type AppConfig struct {
+	App App `mapstructure:"app"`
+
 	ENV     string
 	Address string
 
@@ -32,6 +34,10 @@ type AppConfig struct {
 	Server   Server   `mapstructure:"server"`
 	Tracing  Tracing  `mapstructure:"tracing"`
 	Registry Registry `mapstructure:"registry"`
+}
+
+type App struct {
+	Secret string `mapstructure:"secret"`
 }
 
 type Server struct {

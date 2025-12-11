@@ -7,6 +7,32 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+type ClaimsableToken interface {
+	Claims() jwt.Claims
+}
+
+type TokenType uint8
+
+const (
+	TokenTypeUnknown TokenType = iota
+	TokenTypeSSO
+	TokenTypeAccess
+	TokenTypeRefresh
+	TokenTypeIDToken
+)
+
+type TokenMeta struct {
+	Issuer      string    `json:"iss"`
+	IssuedAt    time.Time `json:"iat"`
+	ExpiresAt   time.Time `json:"exp"`
+	NotBeforeAt time.Time `json:"nbf"`
+	Subject     string    `json:"sub"`
+	Audience    []string  `json:"aud"`
+
+	UID  uint32    `json:"uid"`
+	Type TokenType `json:"type"`
+}
+
 type Token struct {
 	TokenID     string // unique token id for field jti(jwt)
 	UID         uint32

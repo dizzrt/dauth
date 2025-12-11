@@ -25,3 +25,6 @@ addr = "infra.dauth.com:8500"
 endpoint = "infra.dauth.com:4317"
 endpoint_type = "grpc"
 insecure = true
+
+[app]
+secret = "qwHCGNRsW5gCA8Mwdg2zU1Aa2mcmdiNrEUGLry2M3rN4udceG5WrCbCRHjbbXg4A"

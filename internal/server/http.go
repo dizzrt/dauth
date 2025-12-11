@@ -5,6 +5,7 @@ import (
 	"github.com/dizzrt/dauth/api/gen/sp"
 	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/dauth/internal/handler"
+	"github.com/dizzrt/dauth/internal/server/middleware"
 	"github.com/dizzrt/ellie/log"
 	"github.com/dizzrt/ellie/middleware/tracing"
 	"github.com/dizzrt/ellie/transport/http"
@@ -14,6 +15,7 @@ func NewHTTPServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *han
 	opts := []http.ServerOption{
 		http.Middleware(
 			tracing.TracingMiddleware(),
+			middleware.JwtAuthMiddleware(),
 		),
 	}
 
