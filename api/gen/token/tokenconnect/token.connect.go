@@ -33,6 +33,9 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// TokenServiceIssueSSOTokenProcedure is the fully-qualified name of the TokenService's
+	// IssueSSOToken RPC.
+	TokenServiceIssueSSOTokenProcedure = "/token.TokenService/IssueSSOToken"
 	// TokenServiceIssueProcedure is the fully-qualified name of the TokenService's Issue RPC.
 	TokenServiceIssueProcedure = "/token.TokenService/Issue"
 	// TokenServiceValidateProcedure is the fully-qualified name of the TokenService's Validate RPC.
@@ -43,6 +46,8 @@ const (
 
 // TokenServiceClient is a client for the token.TokenService service.
 type TokenServiceClient interface {
+	// IssueSSOToken issues a SSO token for the given uid.
+	IssueSSOToken(context.Context, *connect.Request[token.IssueSSOTokenRequest]) (*connect.Response[token.IssueSSOTokenResponse], error)
 	// Issue issues a token for the given uid and client_id.
 	Issue(context.Context, *connect.Request[token.IssueRequest]) (*connect.Response[token.IssueResponse], error)
 	// Validate validates a token.
@@ -62,6 +67,12 @@ func NewTokenServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 	baseURL = strings.TrimRight(baseURL, "/")
 	tokenServiceMethods := token.File_token_token_proto.Services().ByName("TokenService").Methods()
 	return &tokenServiceClient{
+		issueSSOToken: connect.NewClient[token.IssueSSOTokenRequest, token.IssueSSOTokenResponse](
+			httpClient,
+			baseURL+TokenServiceIssueSSOTokenProcedure,
+			connect.WithSchema(tokenServiceMethods.ByName("IssueSSOToken")),
+			connect.WithClientOptions(opts...),
+		),
 		issue: connect.NewClient[token.IssueRequest, token.IssueResponse](
 			httpClient,
 			baseURL+TokenServiceIssueProcedure,
@@ -85,9 +96,15 @@ func NewTokenServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 
 // tokenServiceClient implements TokenServiceClient.
 type tokenServiceClient struct {
-	issue    *connect.Client[token.IssueRequest, token.IssueResponse]
-	validate *connect.Client[token.ValidateRequest, token.ValidateResponse]
-	revoke   *connect.Client[token.RevokeRequest, token.RevokeResponse]
+	issueSSOToken *connect.Client[token.IssueSSOTokenRequest, token.IssueSSOTokenResponse]
+	issue         *connect.Client[token.IssueRequest, token.IssueResponse]
+	validate      *connect.Client[token.ValidateRequest, token.ValidateResponse]
+	revoke        *connect.Client[token.RevokeRequest, token.RevokeResponse]
+}
+
+// IssueSSOToken calls token.TokenService.IssueSSOToken.
+func (c *tokenServiceClient) IssueSSOToken(ctx context.Context, req *connect.Request[token.IssueSSOTokenRequest]) (*connect.Response[token.IssueSSOTokenResponse], error) {
+	return c.issueSSOToken.CallUnary(ctx, req)
 }
 
 // Issue calls token.TokenService.Issue.
@@ -107,6 +124,8 @@ func (c *tokenServiceClient) Revoke(ctx context.Context, req *connect.Request[to
 
 // TokenServiceHandler is an implementation of the token.TokenService service.
 type TokenServiceHandler interface {
+	// IssueSSOToken issues a SSO token for the given uid.
+	IssueSSOToken(context.Context, *connect.Request[token.IssueSSOTokenRequest]) (*connect.Response[token.IssueSSOTokenResponse], error)
 	// Issue issues a token for the given uid and client_id.
 	Issue(context.Context, *connect.Request[token.IssueRequest]) (*connect.Response[token.IssueResponse], error)
 	// Validate validates a token.
@@ -122,6 +141,12 @@ type TokenServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewTokenServiceHandler(svc TokenServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	tokenServiceMethods := token.File_token_token_proto.Services().ByName("TokenService").Methods()
+	tokenServiceIssueSSOTokenHandler := connect.NewUnaryHandler(
+		TokenServiceIssueSSOTokenProcedure,
+		svc.IssueSSOToken,
+		connect.WithSchema(tokenServiceMethods.ByName("IssueSSOToken")),
+		connect.WithHandlerOptions(opts...),
+	)
 	tokenServiceIssueHandler := connect.NewUnaryHandler(
 		TokenServiceIssueProcedure,
 		svc.Issue,
@@ -142,6 +167,8 @@ func NewTokenServiceHandler(svc TokenServiceHandler, opts ...connect.HandlerOpti
 	)
 	return "/token.TokenService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case TokenServiceIssueSSOTokenProcedure:
+			tokenServiceIssueSSOTokenHandler.ServeHTTP(w, r)
 		case TokenServiceIssueProcedure:
 			tokenServiceIssueHandler.ServeHTTP(w, r)
 		case TokenServiceValidateProcedure:
@@ -156,6 +183,10 @@ func NewTokenServiceHandler(svc TokenServiceHandler, opts ...connect.HandlerOpti
 
 // UnimplementedTokenServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedTokenServiceHandler struct{}
+
+func (UnimplementedTokenServiceHandler) IssueSSOToken(context.Context, *connect.Request[token.IssueSSOTokenRequest]) (*connect.Response[token.IssueSSOTokenResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("token.TokenService.IssueSSOToken is not implemented"))
+}
 
 func (UnimplementedTokenServiceHandler) Issue(context.Context, *connect.Request[token.IssueRequest]) (*connect.Response[token.IssueResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("token.TokenService.Issue is not implemented"))

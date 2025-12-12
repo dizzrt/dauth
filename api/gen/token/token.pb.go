@@ -23,6 +23,118 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type IssueSSOTokenRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Uid           uint32                 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	Base          *base.Base             `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IssueSSOTokenRequest) Reset() {
+	*x = IssueSSOTokenRequest{}
+	mi := &file_token_token_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IssueSSOTokenRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IssueSSOTokenRequest) ProtoMessage() {}
+
+func (x *IssueSSOTokenRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_token_token_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IssueSSOTokenRequest.ProtoReflect.Descriptor instead.
+func (*IssueSSOTokenRequest) Descriptor() ([]byte, []int) {
+	return file_token_token_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *IssueSSOTokenRequest) GetUid() uint32 {
+	if x != nil {
+		return x.Uid
+	}
+	return 0
+}
+
+func (x *IssueSSOTokenRequest) GetBase() *base.Base {
+	if x != nil {
+		return x.Base
+	}
+	return nil
+}
+
+type IssueSSOTokenResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	ExpiresAt     int64                  `protobuf:"varint,2,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	BaseResp      *base.BaseResp         `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IssueSSOTokenResponse) Reset() {
+	*x = IssueSSOTokenResponse{}
+	mi := &file_token_token_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IssueSSOTokenResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IssueSSOTokenResponse) ProtoMessage() {}
+
+func (x *IssueSSOTokenResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_token_token_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IssueSSOTokenResponse.ProtoReflect.Descriptor instead.
+func (*IssueSSOTokenResponse) Descriptor() ([]byte, []int) {
+	return file_token_token_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *IssueSSOTokenResponse) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *IssueSSOTokenResponse) GetExpiresAt() int64 {
+	if x != nil {
+		return x.ExpiresAt
+	}
+	return 0
+}
+
+func (x *IssueSSOTokenResponse) GetBaseResp() *base.BaseResp {
+	if x != nil {
+		return x.BaseResp
+	}
+	return nil
+}
+
 type IssueRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Uid           uint32                 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
@@ -35,7 +147,7 @@ type IssueRequest struct {
 
 func (x *IssueRequest) Reset() {
 	*x = IssueRequest{}
-	mi := &file_token_token_proto_msgTypes[0]
+	mi := &file_token_token_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -47,7 +159,7 @@ func (x *IssueRequest) String() string {
 func (*IssueRequest) ProtoMessage() {}
 
 func (x *IssueRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_token_token_proto_msgTypes[0]
+	mi := &file_token_token_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60,7 +172,7 @@ func (x *IssueRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IssueRequest.ProtoReflect.Descriptor instead.
 func (*IssueRequest) Descriptor() ([]byte, []int) {
-	return file_token_token_proto_rawDescGZIP(), []int{0}
+	return file_token_token_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *IssueRequest) GetUid() uint32 {
@@ -104,7 +216,7 @@ type IssueResponse struct {
 
 func (x *IssueResponse) Reset() {
 	*x = IssueResponse{}
-	mi := &file_token_token_proto_msgTypes[1]
+	mi := &file_token_token_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -116,7 +228,7 @@ func (x *IssueResponse) String() string {
 func (*IssueResponse) ProtoMessage() {}
 
 func (x *IssueResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_token_token_proto_msgTypes[1]
+	mi := &file_token_token_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -129,7 +241,7 @@ func (x *IssueResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IssueResponse.ProtoReflect.Descriptor instead.
 func (*IssueResponse) Descriptor() ([]byte, []int) {
-	return file_token_token_proto_rawDescGZIP(), []int{1}
+	return file_token_token_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *IssueResponse) GetAccessToken() string {
@@ -178,7 +290,7 @@ type ValidateRequest struct {
 
 func (x *ValidateRequest) Reset() {
 	*x = ValidateRequest{}
-	mi := &file_token_token_proto_msgTypes[2]
+	mi := &file_token_token_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -190,7 +302,7 @@ func (x *ValidateRequest) String() string {
 func (*ValidateRequest) ProtoMessage() {}
 
 func (x *ValidateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_token_token_proto_msgTypes[2]
+	mi := &file_token_token_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -203,7 +315,7 @@ func (x *ValidateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateRequest.ProtoReflect.Descriptor instead.
 func (*ValidateRequest) Descriptor() ([]byte, []int) {
-	return file_token_token_proto_rawDescGZIP(), []int{2}
+	return file_token_token_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ValidateRequest) GetToken() string {
@@ -239,7 +351,7 @@ type ValidateResponse struct {
 
 func (x *ValidateResponse) Reset() {
 	*x = ValidateResponse{}
-	mi := &file_token_token_proto_msgTypes[3]
+	mi := &file_token_token_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -251,7 +363,7 @@ func (x *ValidateResponse) String() string {
 func (*ValidateResponse) ProtoMessage() {}
 
 func (x *ValidateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_token_token_proto_msgTypes[3]
+	mi := &file_token_token_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -264,7 +376,7 @@ func (x *ValidateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateResponse.ProtoReflect.Descriptor instead.
 func (*ValidateResponse) Descriptor() ([]byte, []int) {
-	return file_token_token_proto_rawDescGZIP(), []int{3}
+	return file_token_token_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ValidateResponse) GetToken() *Token {
@@ -306,7 +418,7 @@ type RevokeRequest struct {
 
 func (x *RevokeRequest) Reset() {
 	*x = RevokeRequest{}
-	mi := &file_token_token_proto_msgTypes[4]
+	mi := &file_token_token_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -318,7 +430,7 @@ func (x *RevokeRequest) String() string {
 func (*RevokeRequest) ProtoMessage() {}
 
 func (x *RevokeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_token_token_proto_msgTypes[4]
+	mi := &file_token_token_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -331,7 +443,7 @@ func (x *RevokeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeRequest.ProtoReflect.Descriptor instead.
 func (*RevokeRequest) Descriptor() ([]byte, []int) {
-	return file_token_token_proto_rawDescGZIP(), []int{4}
+	return file_token_token_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *RevokeRequest) GetToken() string {
@@ -365,7 +477,7 @@ type RevokeResponse struct {
 
 func (x *RevokeResponse) Reset() {
 	*x = RevokeResponse{}
-	mi := &file_token_token_proto_msgTypes[5]
+	mi := &file_token_token_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -377,7 +489,7 @@ func (x *RevokeResponse) String() string {
 func (*RevokeResponse) ProtoMessage() {}
 
 func (x *RevokeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_token_token_proto_msgTypes[5]
+	mi := &file_token_token_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -390,7 +502,7 @@ func (x *RevokeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeResponse.ProtoReflect.Descriptor instead.
 func (*RevokeResponse) Descriptor() ([]byte, []int) {
-	return file_token_token_proto_rawDescGZIP(), []int{5}
+	return file_token_token_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *RevokeResponse) GetIsSuccess() bool {
@@ -411,7 +523,16 @@ var File_token_token_proto protoreflect.FileDescriptor
 
 const file_token_token_proto_rawDesc = "" +
 	"\n" +
-	"\x11token/token.proto\x12\x05token\x1a\x0fbase/base.proto\x1a\x18token/token_common.proto\x1a\x1cgoogle/api/annotations.proto\"t\n" +
+	"\x11token/token.proto\x12\x05token\x1a\x0fbase/base.proto\x1a\x18token/token_common.proto\x1a\x1cgoogle/api/annotations.proto\"I\n" +
+	"\x14IssueSSOTokenRequest\x12\x10\n" +
+	"\x03uid\x18\x01 \x01(\rR\x03uid\x12\x1f\n" +
+	"\x04base\x18\xff\x01 \x01(\v2\n" +
+	".base.BaseR\x04base\"z\n" +
+	"\x15IssueSSOTokenResponse\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1d\n" +
+	"\n" +
+	"expires_at\x18\x02 \x01(\x03R\texpiresAt\x12,\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"t\n" +
 	"\fIssueRequest\x12\x10\n" +
 	"\x03uid\x18\x01 \x01(\rR\x03uid\x12\x1b\n" +
 	"\tclient_id\x18\x02 \x01(\rR\bclientId\x12\x14\n" +
@@ -442,8 +563,9 @@ const file_token_token_proto_rawDesc = "" +
 	"\x0eRevokeResponse\x12\x1d\n" +
 	"\n" +
 	"is_success\x18\x01 \x01(\bR\tisSuccess\x12,\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\xbc\x01\n" +
-	"\fTokenService\x124\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\x8a\x02\n" +
+	"\fTokenService\x12L\n" +
+	"\rIssueSSOToken\x12\x1b.token.IssueSSOTokenRequest\x1a\x1c.token.IssueSSOTokenResponse\"\x00\x124\n" +
 	"\x05Issue\x12\x13.token.IssueRequest\x1a\x14.token.IssueResponse\"\x00\x12=\n" +
 	"\bValidate\x12\x16.token.ValidateRequest\x1a\x17.token.ValidateResponse\"\x00\x127\n" +
 	"\x06Revoke\x12\x14.token.RevokeRequest\x1a\x15.token.RevokeResponse\"\x00B-Z+github.com/dizzrt/dauth/api/gen/token;tokenb\x06proto3"
@@ -460,37 +582,43 @@ func file_token_token_proto_rawDescGZIP() []byte {
 	return file_token_token_proto_rawDescData
 }
 
-var file_token_token_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_token_token_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_token_token_proto_goTypes = []any{
-	(*IssueRequest)(nil),     // 0: token.IssueRequest
-	(*IssueResponse)(nil),    // 1: token.IssueResponse
-	(*ValidateRequest)(nil),  // 2: token.ValidateRequest
-	(*ValidateResponse)(nil), // 3: token.ValidateResponse
-	(*RevokeRequest)(nil),    // 4: token.RevokeRequest
-	(*RevokeResponse)(nil),   // 5: token.RevokeResponse
-	(*base.Base)(nil),        // 6: base.Base
-	(*base.BaseResp)(nil),    // 7: base.BaseResp
-	(*Token)(nil),            // 8: Token
+	(*IssueSSOTokenRequest)(nil),  // 0: token.IssueSSOTokenRequest
+	(*IssueSSOTokenResponse)(nil), // 1: token.IssueSSOTokenResponse
+	(*IssueRequest)(nil),          // 2: token.IssueRequest
+	(*IssueResponse)(nil),         // 3: token.IssueResponse
+	(*ValidateRequest)(nil),       // 4: token.ValidateRequest
+	(*ValidateResponse)(nil),      // 5: token.ValidateResponse
+	(*RevokeRequest)(nil),         // 6: token.RevokeRequest
+	(*RevokeResponse)(nil),        // 7: token.RevokeResponse
+	(*base.Base)(nil),             // 8: base.Base
+	(*base.BaseResp)(nil),         // 9: base.BaseResp
+	(*Token)(nil),                 // 10: Token
 }
 var file_token_token_proto_depIdxs = []int32{
-	6,  // 0: token.IssueRequest.base:type_name -> base.Base
-	7,  // 1: token.IssueResponse.base_resp:type_name -> base.BaseResp
-	6,  // 2: token.ValidateRequest.base:type_name -> base.Base
-	8,  // 3: token.ValidateResponse.token:type_name -> Token
-	7,  // 4: token.ValidateResponse.base_resp:type_name -> base.BaseResp
-	6,  // 5: token.RevokeRequest.base:type_name -> base.Base
-	7,  // 6: token.RevokeResponse.base_resp:type_name -> base.BaseResp
-	0,  // 7: token.TokenService.Issue:input_type -> token.IssueRequest
-	2,  // 8: token.TokenService.Validate:input_type -> token.ValidateRequest
-	4,  // 9: token.TokenService.Revoke:input_type -> token.RevokeRequest
-	1,  // 10: token.TokenService.Issue:output_type -> token.IssueResponse
-	3,  // 11: token.TokenService.Validate:output_type -> token.ValidateResponse
-	5,  // 12: token.TokenService.Revoke:output_type -> token.RevokeResponse
-	10, // [10:13] is the sub-list for method output_type
-	7,  // [7:10] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	8,  // 0: token.IssueSSOTokenRequest.base:type_name -> base.Base
+	9,  // 1: token.IssueSSOTokenResponse.base_resp:type_name -> base.BaseResp
+	8,  // 2: token.IssueRequest.base:type_name -> base.Base
+	9,  // 3: token.IssueResponse.base_resp:type_name -> base.BaseResp
+	8,  // 4: token.ValidateRequest.base:type_name -> base.Base
+	10, // 5: token.ValidateResponse.token:type_name -> Token
+	9,  // 6: token.ValidateResponse.base_resp:type_name -> base.BaseResp
+	8,  // 7: token.RevokeRequest.base:type_name -> base.Base
+	9,  // 8: token.RevokeResponse.base_resp:type_name -> base.BaseResp
+	0,  // 9: token.TokenService.IssueSSOToken:input_type -> token.IssueSSOTokenRequest
+	2,  // 10: token.TokenService.Issue:input_type -> token.IssueRequest
+	4,  // 11: token.TokenService.Validate:input_type -> token.ValidateRequest
+	6,  // 12: token.TokenService.Revoke:input_type -> token.RevokeRequest
+	1,  // 13: token.TokenService.IssueSSOToken:output_type -> token.IssueSSOTokenResponse
+	3,  // 14: token.TokenService.Issue:output_type -> token.IssueResponse
+	5,  // 15: token.TokenService.Validate:output_type -> token.ValidateResponse
+	7,  // 16: token.TokenService.Revoke:output_type -> token.RevokeResponse
+	13, // [13:17] is the sub-list for method output_type
+	9,  // [9:13] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_token_token_proto_init() }
@@ -505,7 +633,7 @@ func file_token_token_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_token_token_proto_rawDesc), len(file_token_token_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

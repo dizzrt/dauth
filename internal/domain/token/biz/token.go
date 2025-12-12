@@ -16,6 +16,7 @@ import (
 var _ TokenBiz = (*tokenBiz)(nil)
 
 type TokenBiz interface {
+	IssueSSOToken(ctx context.Context, uid uint32) (token string, expiresAt time.Time, err error)
 	Issue(ctx context.Context, uid uint32, clientID uint32, scope string) (accessToken string, refreshToken string, accessExpireAt, refreshExpireAt time.Time, err error)
 	Validate(ctx context.Context, token string, clientID uint32) (*entity.Token, bool, string, error)
 	Revoke(ctx context.Context, token string, reason string) error
@@ -31,6 +32,35 @@ func NewTokenBiz(tokenBlacklistRepo repo.TokenBlacklistRepo, jwtManager jwt.JWTM
 		tokenBlacklistRepo: tokenBlacklistRepo,
 		jwtManager:         jwtManager,
 	}
+}
+
+func (biz *tokenBiz) IssueSSOToken(ctx context.Context, uid uint32) (token string, expiresAt time.Time, err error) {
+	now := time.Now()
+	expiresAt = now.Add(24 * time.Hour) // TODO read from conf
+
+	ssoToken := &entity.SSOToken{
+		BaseToken: entity.BaseToken{
+			RegisteredClaims: jwt.RegisteredClaims{
+				ID:        uuid.NewString(),
+				Issuer:    "dauth",
+				Subject:   "dauth-sso",
+				Audience:  jwt.ClaimStrings{"dauth"},
+				IssuedAt:  jwt.NewNumericDate(now),
+				NotBefore: jwt.NewNumericDate(now),
+				ExpiresAt: jwt.NewNumericDate(expiresAt),
+			},
+			UID:  uid,
+			Type: entity.TokenTypeSSO,
+		},
+	}
+
+	ssoTokenStr, err := biz.jwtManager.Sign(ctx, ssoToken)
+	if err != nil {
+		log.CtxErrorf(ctx, "sign sso token failed: %v", err)
+		return
+	}
+
+	return ssoTokenStr, expiresAt, nil
 }
 
 func (biz *tokenBiz) Issue(ctx context.Context, uid uint32, clientID uint32, scope string) (accessToken string, refreshToken string, accessExpireAt, refreshExpireAt time.Time, err error) {

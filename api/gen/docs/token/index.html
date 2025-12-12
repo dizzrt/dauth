@@ -202,6 +202,14 @@
                 </li>
               
                 <li>
+                  <a href="#token.IssueSSOTokenRequest"><span class="badge">M</span>IssueSSOTokenRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#token.IssueSSOTokenResponse"><span class="badge">M</span>IssueSSOTokenResponse</a>
+                </li>
+              
+                <li>
                   <a href="#token.RevokeRequest"><span class="badge">M</span>RevokeRequest</a>
                 </li>
               
@@ -437,6 +445,75 @@
 
         
       
+        <h3 id="token.IssueSSOTokenRequest">IssueSSOTokenRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>uid</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#base.Base">base.Base</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="token.IssueSSOTokenResponse">IssueSSOTokenResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>expires_at</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_resp</td>
+                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="token.RevokeRequest">RevokeRequest</h3>
         <p></p>
 
@@ -602,6 +679,13 @@
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
           </thead>
           <tbody>
+            
+              <tr>
+                <td>IssueSSOToken</td>
+                <td><a href="#token.IssueSSOTokenRequest">IssueSSOTokenRequest</a></td>
+                <td><a href="#token.IssueSSOTokenResponse">IssueSSOTokenResponse</a></td>
+                <td><p>IssueSSOToken issues a SSO token for the given uid.</p></td>
+              </tr>
             
               <tr>
                 <td>Issue</td>

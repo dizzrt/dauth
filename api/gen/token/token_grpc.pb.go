@@ -19,15 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TokenService_Issue_FullMethodName    = "/token.TokenService/Issue"
-	TokenService_Validate_FullMethodName = "/token.TokenService/Validate"
-	TokenService_Revoke_FullMethodName   = "/token.TokenService/Revoke"
+	TokenService_IssueSSOToken_FullMethodName = "/token.TokenService/IssueSSOToken"
+	TokenService_Issue_FullMethodName         = "/token.TokenService/Issue"
+	TokenService_Validate_FullMethodName      = "/token.TokenService/Validate"
+	TokenService_Revoke_FullMethodName        = "/token.TokenService/Revoke"
 )
 
 // TokenServiceClient is the client API for TokenService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TokenServiceClient interface {
+	// IssueSSOToken issues a SSO token for the given uid.
+	IssueSSOToken(ctx context.Context, in *IssueSSOTokenRequest, opts ...grpc.CallOption) (*IssueSSOTokenResponse, error)
 	// Issue issues a token for the given uid and client_id.
 	Issue(ctx context.Context, in *IssueRequest, opts ...grpc.CallOption) (*IssueResponse, error)
 	// Validate validates a token.
@@ -42,6 +45,16 @@ type tokenServiceClient struct {
 
 func NewTokenServiceClient(cc grpc.ClientConnInterface) TokenServiceClient {
 	return &tokenServiceClient{cc}
+}
+
+func (c *tokenServiceClient) IssueSSOToken(ctx context.Context, in *IssueSSOTokenRequest, opts ...grpc.CallOption) (*IssueSSOTokenResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(IssueSSOTokenResponse)
+	err := c.cc.Invoke(ctx, TokenService_IssueSSOToken_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *tokenServiceClient) Issue(ctx context.Context, in *IssueRequest, opts ...grpc.CallOption) (*IssueResponse, error) {
@@ -78,6 +91,8 @@ func (c *tokenServiceClient) Revoke(ctx context.Context, in *RevokeRequest, opts
 // All implementations must embed UnimplementedTokenServiceServer
 // for forward compatibility.
 type TokenServiceServer interface {
+	// IssueSSOToken issues a SSO token for the given uid.
+	IssueSSOToken(context.Context, *IssueSSOTokenRequest) (*IssueSSOTokenResponse, error)
 	// Issue issues a token for the given uid and client_id.
 	Issue(context.Context, *IssueRequest) (*IssueResponse, error)
 	// Validate validates a token.
@@ -94,6 +109,9 @@ type TokenServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedTokenServiceServer struct{}
 
+func (UnimplementedTokenServiceServer) IssueSSOToken(context.Context, *IssueSSOTokenRequest) (*IssueSSOTokenResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method IssueSSOToken not implemented")
+}
 func (UnimplementedTokenServiceServer) Issue(context.Context, *IssueRequest) (*IssueResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Issue not implemented")
 }
@@ -122,6 +140,24 @@ func RegisterTokenServiceServer(s grpc.ServiceRegistrar, srv TokenServiceServer)
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&TokenService_ServiceDesc, srv)
+}
+
+func _TokenService_IssueSSOToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IssueSSOTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TokenServiceServer).IssueSSOToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TokenService_IssueSSOToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TokenServiceServer).IssueSSOToken(ctx, req.(*IssueSSOTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _TokenService_Issue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -185,6 +221,10 @@ var TokenService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "token.TokenService",
 	HandlerType: (*TokenServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "IssueSSOToken",
+			Handler:    _TokenService_IssueSSOToken_Handler,
+		},
 		{
 			MethodName: "Issue",
 			Handler:    _TokenService_Issue_Handler,

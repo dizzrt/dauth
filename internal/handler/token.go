@@ -21,6 +21,10 @@ func NewTokenHandler(tokenApp application.TokenApplication) *TokenHandler {
 	}
 }
 
+func (handler *TokenHandler) IssueSSOToken(ctx context.Context, req *token.IssueSSOTokenRequest) (*token.IssueSSOTokenResponse, error) {
+	return handler.tokenApp.IssueSSOToken(ctx, req)
+}
+
 func (handler *TokenHandler) Issue(ctx context.Context, req *token.IssueRequest) (*token.IssueResponse, error) {
 	return handler.tokenApp.Issue(ctx, req)
 }

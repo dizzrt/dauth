@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/api/gen/token"
 	"github.com/dizzrt/dauth/internal/domain/token/biz"
 	"github.com/dizzrt/dauth/internal/infra/rpc"
@@ -12,6 +13,7 @@ import (
 var _ TokenApplication = (*tokenApplication)(nil)
 
 type TokenApplication interface {
+	IssueSSOToken(context.Context, *token.IssueSSOTokenRequest) (*token.IssueSSOTokenResponse, error)
 	Issue(context.Context, *token.IssueRequest) (*token.IssueResponse, error)
 	Validate(context.Context, *token.ValidateRequest) (*token.ValidateResponse, error)
 	Revoke(context.Context, *token.RevokeRequest) (*token.RevokeResponse, error)
@@ -25,6 +27,23 @@ func NewTokenApplication(tokenBiz biz.TokenBiz) TokenApplication {
 	return &tokenApplication{
 		tokenBiz: tokenBiz,
 	}
+}
+
+func (app *tokenApplication) IssueSSOToken(ctx context.Context, req *token.IssueSSOTokenRequest) (*token.IssueSSOTokenResponse, error) {
+	if req.GetUid() == 0 {
+		return nil, errdef.InvalidParamsWithMsg("uid is required")
+	}
+
+	tokenStr, expiresAt, err := app.tokenBiz.IssueSSOToken(ctx, req.GetUid())
+	if err != nil {
+		return nil, err
+	}
+
+	return &token.IssueSSOTokenResponse{
+		Token:     tokenStr,
+		ExpiresAt: expiresAt.Unix(),
+		BaseResp:  rpc.Success(),
+	}, nil
 }
 
 func (app *tokenApplication) Issue(ctx context.Context, req *token.IssueRequest) (*token.IssueResponse, error) {

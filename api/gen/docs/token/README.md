@@ -9,6 +9,8 @@
 - [token/token.proto](#token_token-proto)
     - [IssueRequest](#token-IssueRequest)
     - [IssueResponse](#token-IssueResponse)
+    - [IssueSSOTokenRequest](#token-IssueSSOTokenRequest)
+    - [IssueSSOTokenResponse](#token-IssueSSOTokenResponse)
     - [RevokeRequest](#token-RevokeRequest)
     - [RevokeResponse](#token-RevokeResponse)
     - [ValidateRequest](#token-ValidateRequest)
@@ -104,6 +106,39 @@
 
 
 
+<a name="token-IssueSSOTokenRequest"></a>
+
+### IssueSSOTokenRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| uid | [uint32](#uint32) |  |  |
+| base | [base.Base](#base-Base) |  |  |
+
+
+
+
+
+
+<a name="token-IssueSSOTokenResponse"></a>
+
+### IssueSSOTokenResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| token | [string](#string) |  |  |
+| expires_at | [int64](#int64) |  |  |
+| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
+
+
+
+
+
+
 <a name="token-RevokeRequest"></a>
 
 ### RevokeRequest
@@ -185,6 +220,7 @@
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| IssueSSOToken | [IssueSSOTokenRequest](#token-IssueSSOTokenRequest) | [IssueSSOTokenResponse](#token-IssueSSOTokenResponse) | IssueSSOToken issues a SSO token for the given uid. |
 | Issue | [IssueRequest](#token-IssueRequest) | [IssueResponse](#token-IssueResponse) | Issue issues a token for the given uid and client_id. |
 | Validate | [ValidateRequest](#token-ValidateRequest) | [ValidateResponse](#token-ValidateResponse) | Validate validates a token. |
 | Revoke | [RevokeRequest](#token-RevokeRequest) | [RevokeResponse](#token-RevokeResponse) | Revoke revokes a token. |
