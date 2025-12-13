@@ -2,6 +2,7 @@ package application
 
 import (
 	"context"
+	"time"
 
 	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/api/gen/identity"
@@ -9,6 +10,7 @@ import (
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/dizzrt/dauth/internal/infra/rpc"
+	"github.com/dizzrt/dauth/internal/infra/rpc/dauth"
 	"github.com/dizzrt/dauth/internal/infra/utils"
 	"github.com/dizzrt/ellie/log"
 )
@@ -37,11 +39,12 @@ func NewIdentityApplication(userBiz biz.UserBiz, roleBiz biz.RoleBiz) IdentityAp
 }
 
 func (app *identityApplication) Login(ctx context.Context, req *identity.LoginRequest) (*identity.LoginResponse, error) {
-	var account string // only support email yet
+	var account string
 	if account = req.GetAccount(); account == "" {
 		return nil, errdef.IdentityInvalidAccountWithMsg("account can not be empty")
 	}
 
+	// only support email yet
 	if err := utils.Validate().Var(account, "email"); err != nil {
 		return nil, errdef.IdentityInvalidAccountWithMsg("malformed email").WithCause(err)
 	}
@@ -57,14 +60,25 @@ func (app *identityApplication) Login(ctx context.Context, req *identity.LoginRe
 		return nil, err
 	}
 
+	// issue sso token
+	resp, err := dauth.IssueSSOToken(ctx, user.ID)
+	if err != nil || resp.GetToken() == "" {
+		log.CtxErrorf(ctx, "user `%d` has authenticated successfully, but failed to issue sso token; err: %v", user.ID, err)
+		return nil, err
+	}
+
 	// update last login time
-	if err := app.userBiz.UpdateLastLoginTime(ctx, user.ID); err != nil {
+	now := time.Now()
+	user.LastLoginTime = now
+	if err := app.userBiz.UpdateLastLoginTime(ctx, user.ID, now); err != nil {
 		log.CtxErrorf(ctx, "user `%d` has logged in successfully, but failed to update the last login time; err: %v", user.ID, err)
 	}
 
 	return &identity.LoginResponse{
-		User:     convert.UserToIdentityUser(user),
-		BaseResp: rpc.Success(),
+		User:           convert.UserToIdentityUser(user),
+		Token:          resp.GetToken(),
+		TokenExpiresAt: resp.GetExpiresAt(),
+		BaseResp:       rpc.Success(),
 	}, nil
 }
 

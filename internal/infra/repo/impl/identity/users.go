@@ -79,3 +79,12 @@ func (impl *UserRepoImpl) UpdateUserStatus(ctx context.Context, uid uint32, stat
 
 	return impl.WrapError(err)
 }
+
+func (impl *UserRepoImpl) UpdateLastLoginTime(ctx context.Context, uid uint32, lastLoginTime time.Time) error {
+	db := impl.WithContext(ctx)
+	err := db.Model(&identity_model.User{}).
+		Where("id = ?", uid).
+		Update("last_login_time", lastLoginTime).Error
+
+	return impl.WrapError(err)
+}

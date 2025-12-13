@@ -4,6 +4,7 @@ import (
 	api_base "github.com/dizzrt/dauth/api/gen/base"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/api/gen/sp"
+	"github.com/dizzrt/dauth/api/gen/token"
 	"github.com/dizzrt/dauth/internal/infra/rpc/base"
 )
 
@@ -27,4 +28,8 @@ func UserServiceClient() identity.UserServiceClient {
 
 func ServiceProviderServiceClient() sp.ServiceProviderServiceClient {
 	return base.GetClient(base.CK_DAUTH_SERVICE_PROVIDER).(sp.ServiceProviderServiceClient)
+}
+
+func TokenServiceClient() token.TokenServiceClient {
+	return base.GetClient(base.CK_DAUTH_TOKEN).(token.TokenServiceClient)
 }

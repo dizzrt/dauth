@@ -16,6 +16,9 @@ message LoginRequest {
 
 message LoginResponse {
     User user = 1;
+    string token = 2;
+    int64 token_expires_at = 3;
+
     base.BaseResp base_resp = 255;
 }
 

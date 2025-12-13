@@ -84,11 +84,13 @@ func (x *LoginRequest) GetBase() *base.Base {
 }
 
 type LoginResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
-	BaseResp      *base.BaseResp         `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	User           *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	Token          string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	TokenExpiresAt int64                  `protobuf:"varint,3,opt,name=token_expires_at,json=tokenExpiresAt,proto3" json:"token_expires_at,omitempty"`
+	BaseResp       *base.BaseResp         `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *LoginResponse) Reset() {
@@ -126,6 +128,20 @@ func (x *LoginResponse) GetUser() *User {
 		return x.User
 	}
 	return nil
+}
+
+func (x *LoginResponse) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *LoginResponse) GetTokenExpiresAt() int64 {
+	if x != nil {
+		return x.TokenExpiresAt
+	}
+	return 0
 }
 
 func (x *LoginResponse) GetBaseResp() *base.BaseResp {
@@ -688,9 +704,11 @@ const file_identity_user_proto_rawDesc = "" +
 	"\aaccount\x18\x01 \x01(\tR\aaccount\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"X\n" +
+	".base.BaseR\x04base\"\x98\x01\n" +
 	"\rLoginResponse\x12\x19\n" +
-	"\x04user\x18\x01 \x01(\v2\x05.UserR\x04user\x12,\n" +
+	"\x04user\x18\x01 \x01(\v2\x05.UserR\x04user\x12\x14\n" +
+	"\x05token\x18\x02 \x01(\tR\x05token\x12(\n" +
+	"\x10token_expires_at\x18\x03 \x01(\x03R\x0etokenExpiresAt\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"l\n" +
 	"\x13AuthenticateRequest\x12\x18\n" +
 	"\aaccount\x18\x01 \x01(\tR\aaccount\x12\x1a\n" +

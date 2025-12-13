@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+	"time"
 
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
@@ -13,7 +14,7 @@ var _ UserBiz = (*userBiz)(nil)
 
 type UserBiz interface {
 	Authenticate(ctx context.Context, account string, password string) (*entity.User, error)
-	UpdateLastLoginTime(ctx context.Context, uid uint32) error
+	UpdateLastLoginTime(ctx context.Context, uid uint32, lastLoginTime time.Time) error
 	CreateUser(ctx context.Context, user *entity.User) (uint32, error)
 	GetUserByID(ctx context.Context, uid uint32) (*entity.User, error)
 	UpdateUserStatus(ctx context.Context, uid uint32, status identity.User_Status) error
@@ -44,9 +45,8 @@ func (biz *userBiz) Authenticate(ctx context.Context, account string, password s
 	return user, nil
 }
 
-func (biz *userBiz) UpdateLastLoginTime(ctx context.Context, uid uint32) error {
-	// TODO: update last login time
-	return nil
+func (biz *userBiz) UpdateLastLoginTime(ctx context.Context, uid uint32, lastLoginTime time.Time) error {
+	return biz.userRepo.UpdateLastLoginTime(ctx, uid, lastLoginTime)
 }
 
 func (biz *userBiz) CreateUser(ctx context.Context, user *entity.User) (uint32, error) {

@@ -490,6 +490,8 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | user | [User](#User) |  |  |
+| token | [string](#string) |  |  |
+| token_expires_at | [int64](#int64) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 

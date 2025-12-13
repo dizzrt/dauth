@@ -562,6 +562,10 @@ components:
             properties:
                 user:
                     $ref: '#/components/schemas/User'
+                token:
+                    type: string
+                tokenExpiresAt:
+                    type: string
                 baseResp:
                     $ref: '#/components/schemas/BaseResp'
         Role:
