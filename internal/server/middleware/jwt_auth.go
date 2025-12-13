@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"slices"
 
 	"github.com/dizzrt/dauth/api/gen/token"
@@ -27,18 +26,14 @@ func JwtAuthMiddleware() gin.HandlerFunc {
 
 		tokenStr := ctx.Request.Header.Get("Authorization")
 		if tokenStr == "" {
-			fmt.Println("tokenStr is empty")
 			unauthorized(ctx)
 			return
 		}
 
-		resp, err := dauth.ValidateToken(ctx, &token.ValidateRequest{
+		resp, err := dauth.ValidateToken(ctx.Request.Context(), &token.ValidateRequest{
 			Token: tokenStr,
 			Type:  token.Token_TokenType_SSO,
 		})
-
-		fmt.Println(resp)
-		fmt.Println(err)
 
 		if err != nil || resp.GetToken().Uid == 0 {
 			unauthorized(ctx)
