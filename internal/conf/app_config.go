@@ -37,7 +37,8 @@ type AppConfig struct {
 }
 
 type App struct {
-	Secret string `mapstructure:"secret"`
+	TokenTTL string `mapstructure:"token_ttl"`
+	Secret   string `mapstructure:"secret"`
 }
 
 type Server struct {

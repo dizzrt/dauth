@@ -27,4 +27,5 @@ endpoint_type = "grpc"
 insecure = true
 
 [app]
+token_ttl = "24h"
 secret = "qwHCGNRsW5gCA8Mwdg2zU1Aa2mcmdiNrEUGLry2M3rN4udceG5WrCbCRHjbbXg4A"

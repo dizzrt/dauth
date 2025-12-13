@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/ellie/log"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -16,8 +17,8 @@ const (
 )
 
 type JWTManager interface {
-	Sign(ctx context.Context, claims jwt.Claims) (string, error)
-	Verify(ctx context.Context, token string) (jwt.MapClaims, error)
+	Sign(ctx context.Context, claims jwt.Claims, secret []byte) (string, error)
+	Verify(ctx context.Context, token string, secret []byte, entity jwt.Claims) error
 }
 
 type jwtManager struct {
@@ -28,33 +29,30 @@ type jwtManager struct {
 	// privateKey []byte // for RS256/RS512
 }
 
-func NewJWTManager() JWTManager {
+func NewJWTManager(ac *conf.AppConfig) JWTManager {
 	// TODO read from config
 	return &jwtManager{
 		algorithm: _DEFAULT_ALGORITHM,
 		issuer:    _DEFAULT_ISSUER,
-		secret:    []byte("hJB1u5iM7yj0DzdhL0YfRuDDY4BVwLRWcivrdaVvHeDPwkKbmQLcvp90F171"),
+		secret:    []byte(ac.App.Secret),
 		// publicKey:  nil,
 		// privateKey: nil,
 	}
 }
 
-// Sign signs the claims with the given algorithm and secret.
-func (m *jwtManager) Sign(ctx context.Context, claims jwt.Claims) (string, error) {
+func (m *jwtManager) Sign(ctx context.Context, claims jwt.Claims, secret []byte) (string, error) {
+	if secret == nil {
+		secret = m.secret
+	}
+
 	signingMethod := jwt.GetSigningMethod(m.algorithm)
 	if signingMethod == nil {
-		log.CtxErrorf(ctx, "invalid algorithm: %s", m.algorithm)
-		return "", fmt.Errorf("invalid algorithm: %s", m.algorithm)
+		log.CtxErrorf(ctx, "unknown algorithm: %s", m.algorithm)
+		return "", fmt.Errorf("unknown algorithm: %s", m.algorithm)
 	}
 
 	token := jwt.NewWithClaims(signingMethod, claims)
-	if m.issuer != "" {
-		if mapClaims, ok := claims.(jwt.MapClaims); ok {
-			mapClaims["iss"] = m.issuer
-		}
-	}
-
-	signedToken, err := token.SignedString(m.secret)
+	signedToken, err := token.SignedString(secret)
 	if err != nil {
 		log.CtxErrorf(ctx, "sign token failed with claims: %v; err: %v", claims, err)
 		return "", err
@@ -63,27 +61,30 @@ func (m *jwtManager) Sign(ctx context.Context, claims jwt.Claims) (string, error
 	return signedToken, nil
 }
 
-func (m *jwtManager) Verify(ctx context.Context, token string) (jwt.MapClaims, error) {
-	jt, err := jwt.Parse(token, func(t *jwt.Token) (any, error) {
+func (m *jwtManager) Verify(ctx context.Context, token string, secret []byte, claims jwt.Claims) error {
+	if claims == nil {
+		return fmt.Errorf("claims is nil")
+	}
+
+	if secret == nil {
+		secret = m.secret
+	}
+
+	jt, err := jwt.ParseWithClaims(token, claims, func(t *jwt.Token) (any, error) {
 		if t.Method.Alg() != m.algorithm {
 			return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
 		}
 
-		return m.secret, nil
+		return secret, nil
 	})
 
 	if err != nil {
-		return nil, fmt.Errorf("parse token failed: %w", err)
+		return fmt.Errorf("parse token failed: %w", err)
 	}
 
 	if !jt.Valid {
-		return nil, fmt.Errorf("invalid token")
+		return fmt.Errorf("invalid token")
 	}
 
-	claims, ok := jt.Claims.(jwt.MapClaims)
-	if !ok {
-		return nil, fmt.Errorf("invalid token claims")
-	}
-
-	return claims, nil
+	return nil
 }

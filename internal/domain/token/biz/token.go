@@ -2,18 +2,28 @@ package biz
 
 import (
 	"context"
-	"errors"
 	"time"
 
+	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/dauth/internal/domain/token/entity"
 	"github.com/dizzrt/dauth/internal/domain/token/repo"
-	"github.com/dizzrt/dauth/internal/infra/rpc/dauth"
 	"github.com/dizzrt/dauth/internal/infra/utils/security/jwt"
 	"github.com/dizzrt/ellie/log"
 	"github.com/google/uuid"
 )
 
 var _ TokenBiz = (*tokenBiz)(nil)
+var tokenTTL time.Duration
+
+func init() {
+	ac := conf.GetAppConfig()
+
+	var err error
+	tokenTTL, err = time.ParseDuration(ac.App.TokenTTL)
+	if err != nil {
+		panic(err)
+	}
+}
 
 type TokenBiz interface {
 	IssueSSOToken(ctx context.Context, uid uint32) (token string, expiresAt time.Time, err error)
@@ -36,7 +46,7 @@ func NewTokenBiz(tokenBlacklistRepo repo.TokenBlacklistRepo, jwtManager jwt.JWTM
 
 func (biz *tokenBiz) IssueSSOToken(ctx context.Context, uid uint32) (token string, expiresAt time.Time, err error) {
 	now := time.Now()
-	expiresAt = now.Add(24 * time.Hour) // TODO read from conf
+	expiresAt = now.Add(tokenTTL)
 
 	ssoToken := &entity.SSOToken{
 		BaseToken: entity.BaseToken{
@@ -54,7 +64,7 @@ func (biz *tokenBiz) IssueSSOToken(ctx context.Context, uid uint32) (token strin
 		},
 	}
 
-	ssoTokenStr, err := biz.jwtManager.Sign(ctx, ssoToken)
+	ssoTokenStr, err := biz.jwtManager.Sign(ctx, ssoToken, nil)
 	if err != nil {
 		log.CtxErrorf(ctx, "sign sso token failed: %v", err)
 		return
@@ -65,109 +75,111 @@ func (biz *tokenBiz) IssueSSOToken(ctx context.Context, uid uint32) (token strin
 
 func (biz *tokenBiz) Issue(ctx context.Context, uid uint32, clientID uint32, scope string) (accessToken string, refreshToken string, accessExpireAt, refreshExpireAt time.Time, err error) {
 	// TODO read from config
-	accessExpire := 24 * time.Hour
-	refreshExpire := 7 * 24 * time.Hour
+	// accessExpire := 24 * time.Hour
+	// refreshExpire := 7 * 24 * time.Hour
 
-	// validate service provider
-	resp, err := dauth.ValidateServiceProvider(ctx, uint32(clientID), scope)
-	if err != nil || !resp.GetIsOk() {
-		// invalid service provider or scope
-		return
-	}
+	// // validate service provider
+	// resp, err := dauth.ValidateServiceProvider(ctx, uint32(clientID), scope)
+	// if err != nil || !resp.GetIsOk() {
+	// 	// invalid service provider or scope
+	// 	return
+	// }
 
-	now := time.Now()
-	accessExpireAt = now.Add(accessExpire)
-	accessTokenEntity := entity.Token{
-		TokenID:     uuid.NewString(),
-		UID:         uid,
-		ClientID:    clientID,
-		Issuer:      "dauth",
-		IssuedAt:    now,
-		NotBefore:   now,
-		ExpiresAt:   accessExpireAt,
-		Scope:       scope,
-		TokenType:   "Bearer",
-		Refreshable: false,
-	}
+	// now := time.Now()
+	// accessExpireAt = now.Add(accessExpire)
+	// accessTokenEntity := entity.Token{
+	// 	TokenID:     uuid.NewString(),
+	// 	UID:         uid,
+	// 	ClientID:    clientID,
+	// 	Issuer:      "dauth",
+	// 	IssuedAt:    now,
+	// 	NotBefore:   now,
+	// 	ExpiresAt:   accessExpireAt,
+	// 	Scope:       scope,
+	// 	TokenType:   "Bearer",
+	// 	Refreshable: false,
+	// }
 
-	refreshExpireAt = now.Add(refreshExpire)
-	refreshTokenEntity := entity.Token{
-		TokenID:     uuid.NewString(),
-		UID:         uid,
-		ClientID:    clientID,
-		Issuer:      "dauth",
-		IssuedAt:    now,
-		NotBefore:   now,
-		ExpiresAt:   refreshExpireAt,
-		Scope:       scope,
-		TokenType:   "Bearer",
-		Refreshable: true,
-	}
+	// refreshExpireAt = now.Add(refreshExpire)
+	// refreshTokenEntity := entity.Token{
+	// 	TokenID:     uuid.NewString(),
+	// 	UID:         uid,
+	// 	ClientID:    clientID,
+	// 	Issuer:      "dauth",
+	// 	IssuedAt:    now,
+	// 	NotBefore:   now,
+	// 	ExpiresAt:   refreshExpireAt,
+	// 	Scope:       scope,
+	// 	TokenType:   "Bearer",
+	// 	Refreshable: true,
+	// }
 
-	accessToken, err = biz.jwtManager.Sign(ctx, accessTokenEntity.Claims())
-	if err != nil {
-		log.CtxErrorf(ctx, "sign access token failed: %v", err)
-		return
-	}
+	// accessToken, err = biz.jwtManager.Sign(ctx, accessTokenEntity.Claims(), nil)
+	// if err != nil {
+	// 	log.CtxErrorf(ctx, "sign access token failed: %v", err)
+	// 	return
+	// }
 
-	refreshToken, err = biz.jwtManager.Sign(ctx, refreshTokenEntity.Claims())
-	if err != nil {
-		log.CtxErrorf(ctx, "sign refresh token failed: %v", err)
-		return
-	}
+	// refreshToken, err = biz.jwtManager.Sign(ctx, refreshTokenEntity.Claims(), nil)
+	// if err != nil {
+	// 	log.CtxErrorf(ctx, "sign refresh token failed: %v", err)
+	// 	return
+	// }
 
 	return
 }
 
 func (biz *tokenBiz) Validate(ctx context.Context, token string, clientID uint32) (*entity.Token, bool, string, error) {
-	claims, err := biz.jwtManager.Verify(ctx, token)
-	if err != nil {
-		return nil, false, err.Error(), err
-	}
+	// claims, err := biz.jwtManager.Verify(ctx, token, nil)
+	// if err != nil {
+	// 	return nil, false, err.Error(), err
+	// }
 
-	// convert claims to token entity
-	tokenEntity, err := entity.NewTokenFromClaims(claims)
-	if err != nil {
-		log.CtxErrorf(ctx, "convert claims to token entity failed: %v", err)
-		return nil, false, err.Error(), err
-	}
+	// // convert claims to token entity
+	// tokenEntity, err := entity.NewTokenFromClaims(claims)
+	// if err != nil {
+	// 	log.CtxErrorf(ctx, "convert claims to token entity failed: %v", err)
+	// 	return nil, false, err.Error(), err
+	// }
 
-	if tokenEntity.ClientID != clientID {
-		return nil, false, "client id not match", errors.New("client id not match")
-	}
+	// if tokenEntity.ClientID != clientID {
+	// 	return nil, false, "client id not match", errors.New("client id not match")
+	// }
 
-	// TODO add cache check
-	isRevoked, err := biz.tokenBlacklistRepo.IsRevoked(ctx, tokenEntity.TokenID)
-	if err != nil || isRevoked {
-		if err != nil {
-			log.CtxErrorf(ctx, "check token blacklist failed, token: %v, err: %v", token, err)
-		}
+	// // TODO add cache check
+	// isRevoked, err := biz.tokenBlacklistRepo.IsRevoked(ctx, tokenEntity.TokenID)
+	// if err != nil || isRevoked {
+	// 	if err != nil {
+	// 		log.CtxErrorf(ctx, "check token blacklist failed, token: %v, err: %v", token, err)
+	// 	}
 
-		return nil, false, "token is revoked", errors.New("token is revoked")
-	}
+	// 	return nil, false, "token is revoked", errors.New("token is revoked")
+	// }
 
-	return tokenEntity, true, "", nil
+	// return tokenEntity, true, "", nil
+
+	return nil, false, "", nil
 }
 
 func (biz *tokenBiz) Revoke(ctx context.Context, token string, reason string) error {
-	claims, err := biz.jwtManager.Verify(ctx, token)
-	if err != nil {
-		log.CtxErrorf(ctx, "verify token failed: %v", err)
-		return err
-	}
+	// claims, err := biz.jwtManager.Verify(ctx, token, nil)
+	// if err != nil {
+	// 	log.CtxErrorf(ctx, "verify token failed: %v", err)
+	// 	return err
+	// }
 
-	// convert claims to token entity
-	tokenEntity, err := entity.NewTokenFromClaims(claims)
-	if err != nil {
-		log.CtxErrorf(ctx, "convert claims to token entity failed: %v", err)
-		return err
-	}
+	// // convert claims to token entity
+	// tokenEntity, err := entity.NewTokenFromClaims(claims)
+	// if err != nil {
+	// 	log.CtxErrorf(ctx, "convert claims to token entity failed: %v", err)
+	// 	return err
+	// }
 
-	tid := tokenEntity.TokenID
-	if err := biz.tokenBlacklistRepo.Revoke(ctx, tid, reason, tokenEntity.ExpiresAt); err != nil {
-		log.CtxErrorf(ctx, "revoke token failed, token: %v, err: %v", token, err)
-		return err
-	}
+	// tid := tokenEntity.TokenID
+	// if err := biz.tokenBlacklistRepo.Revoke(ctx, tid, reason, tokenEntity.ExpiresAt); err != nil {
+	// 	log.CtxErrorf(ctx, "revoke token failed, token: %v, err: %v", token, err)
+	// 	return err
+	// }
 
 	return nil
 }

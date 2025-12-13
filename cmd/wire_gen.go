@@ -44,7 +44,7 @@ func wireApp() (*ellie.App, func(), error) {
 	identityApplication := application.NewIdentityApplication(userBiz, roleBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)
 	tokenBlacklistRepo := token.NewTokenBlacklistRepoImpl(baseDB)
-	jwtManager := jwt.NewJWTManager()
+	jwtManager := jwt.NewJWTManager(appConfig)
 	tokenBiz := biz2.NewTokenBiz(tokenBlacklistRepo, jwtManager)
 	tokenApplication := application.NewTokenApplication(tokenBiz)
 	tokenHandler := handler.NewTokenHandler(tokenApplication)
