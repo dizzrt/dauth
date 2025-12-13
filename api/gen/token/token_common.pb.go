@@ -21,18 +21,73 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type Token_TokenType int32
+
+const (
+	Token_TokenType_UNKNOWN Token_TokenType = 0
+	Token_TokenType_SSO     Token_TokenType = 1
+	Token_TokenType_ID      Token_TokenType = 2
+	Token_TokenType_ACCESS  Token_TokenType = 3
+	Token_TokenType_REFRESH Token_TokenType = 4
+)
+
+// Enum value maps for Token_TokenType.
+var (
+	Token_TokenType_name = map[int32]string{
+		0: "TokenType_UNKNOWN",
+		1: "TokenType_SSO",
+		2: "TokenType_ID",
+		3: "TokenType_ACCESS",
+		4: "TokenType_REFRESH",
+	}
+	Token_TokenType_value = map[string]int32{
+		"TokenType_UNKNOWN": 0,
+		"TokenType_SSO":     1,
+		"TokenType_ID":      2,
+		"TokenType_ACCESS":  3,
+		"TokenType_REFRESH": 4,
+	}
+)
+
+func (x Token_TokenType) Enum() *Token_TokenType {
+	p := new(Token_TokenType)
+	*p = x
+	return p
+}
+
+func (x Token_TokenType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Token_TokenType) Descriptor() protoreflect.EnumDescriptor {
+	return file_token_token_common_proto_enumTypes[0].Descriptor()
+}
+
+func (Token_TokenType) Type() protoreflect.EnumType {
+	return &file_token_token_common_proto_enumTypes[0]
+}
+
+func (x Token_TokenType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Token_TokenType.Descriptor instead.
+func (Token_TokenType) EnumDescriptor() ([]byte, []int) {
+	return file_token_token_common_proto_rawDescGZIP(), []int{0, 0}
+}
+
+// map to domain/token/entity/token.go BaseToken
 type Token struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	TokenId       string                 `protobuf:"bytes,1,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`
-	Uid           uint32                 `protobuf:"varint,2,opt,name=uid,proto3" json:"uid,omitempty"`
-	ClientId      uint32                 `protobuf:"varint,3,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
-	Issuer        string                 `protobuf:"bytes,4,opt,name=issuer,proto3" json:"issuer,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Issuer        string                 `protobuf:"bytes,2,opt,name=issuer,proto3" json:"issuer,omitempty"`
+	Subject       string                 `protobuf:"bytes,3,opt,name=subject,proto3" json:"subject,omitempty"`
+	Audience      []string               `protobuf:"bytes,4,rep,name=audience,proto3" json:"audience,omitempty"`
 	IssuedAt      int64                  `protobuf:"varint,5,opt,name=issued_at,json=issuedAt,proto3" json:"issued_at,omitempty"`
 	NotBefore     int64                  `protobuf:"varint,6,opt,name=not_before,json=notBefore,proto3" json:"not_before,omitempty"`
 	ExpiresAt     int64                  `protobuf:"varint,7,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
-	Scope         string                 `protobuf:"bytes,8,opt,name=scope,proto3" json:"scope,omitempty"`
-	TokenType     string                 `protobuf:"bytes,9,opt,name=token_type,json=tokenType,proto3" json:"token_type,omitempty"`
-	Refreshable   bool                   `protobuf:"varint,10,opt,name=refreshable,proto3" json:"refreshable,omitempty"`
+	Uid           uint32                 `protobuf:"varint,8,opt,name=uid,proto3" json:"uid,omitempty"`
+	Type          Token_TokenType        `protobuf:"varint,9,opt,name=type,proto3,enum=Token_TokenType" json:"type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -67,25 +122,11 @@ func (*Token) Descriptor() ([]byte, []int) {
 	return file_token_token_common_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Token) GetTokenId() string {
+func (x *Token) GetId() string {
 	if x != nil {
-		return x.TokenId
+		return x.Id
 	}
 	return ""
-}
-
-func (x *Token) GetUid() uint32 {
-	if x != nil {
-		return x.Uid
-	}
-	return 0
-}
-
-func (x *Token) GetClientId() uint32 {
-	if x != nil {
-		return x.ClientId
-	}
-	return 0
 }
 
 func (x *Token) GetIssuer() string {
@@ -93,6 +134,20 @@ func (x *Token) GetIssuer() string {
 		return x.Issuer
 	}
 	return ""
+}
+
+func (x *Token) GetSubject() string {
+	if x != nil {
+		return x.Subject
+	}
+	return ""
+}
+
+func (x *Token) GetAudience() []string {
+	if x != nil {
+		return x.Audience
+	}
+	return nil
 }
 
 func (x *Token) GetIssuedAt() int64 {
@@ -116,47 +171,43 @@ func (x *Token) GetExpiresAt() int64 {
 	return 0
 }
 
-func (x *Token) GetScope() string {
+func (x *Token) GetUid() uint32 {
 	if x != nil {
-		return x.Scope
+		return x.Uid
 	}
-	return ""
+	return 0
 }
 
-func (x *Token) GetTokenType() string {
+func (x *Token) GetType() Token_TokenType {
 	if x != nil {
-		return x.TokenType
+		return x.Type
 	}
-	return ""
-}
-
-func (x *Token) GetRefreshable() bool {
-	if x != nil {
-		return x.Refreshable
-	}
-	return false
+	return Token_TokenType_UNKNOWN
 }
 
 var File_token_token_common_proto protoreflect.FileDescriptor
 
 const file_token_token_common_proto_rawDesc = "" +
 	"\n" +
-	"\x18token/token_common.proto\"\x9b\x02\n" +
-	"\x05Token\x12\x19\n" +
-	"\btoken_id\x18\x01 \x01(\tR\atokenId\x12\x10\n" +
-	"\x03uid\x18\x02 \x01(\rR\x03uid\x12\x1b\n" +
-	"\tclient_id\x18\x03 \x01(\rR\bclientId\x12\x16\n" +
-	"\x06issuer\x18\x04 \x01(\tR\x06issuer\x12\x1b\n" +
+	"\x18token/token_common.proto\"\xee\x02\n" +
+	"\x05Token\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
+	"\x06issuer\x18\x02 \x01(\tR\x06issuer\x12\x18\n" +
+	"\asubject\x18\x03 \x01(\tR\asubject\x12\x1a\n" +
+	"\baudience\x18\x04 \x03(\tR\baudience\x12\x1b\n" +
 	"\tissued_at\x18\x05 \x01(\x03R\bissuedAt\x12\x1d\n" +
 	"\n" +
 	"not_before\x18\x06 \x01(\x03R\tnotBefore\x12\x1d\n" +
 	"\n" +
-	"expires_at\x18\a \x01(\x03R\texpiresAt\x12\x14\n" +
-	"\x05scope\x18\b \x01(\tR\x05scope\x12\x1d\n" +
-	"\n" +
-	"token_type\x18\t \x01(\tR\ttokenType\x12 \n" +
-	"\vrefreshable\x18\n" +
-	" \x01(\bR\vrefreshableB-Z+github.com/dizzrt/dauth/api/gen/token;tokenb\x06proto3"
+	"expires_at\x18\a \x01(\x03R\texpiresAt\x12\x10\n" +
+	"\x03uid\x18\b \x01(\rR\x03uid\x12$\n" +
+	"\x04type\x18\t \x01(\x0e2\x10.Token.TokenTypeR\x04type\"t\n" +
+	"\tTokenType\x12\x15\n" +
+	"\x11TokenType_UNKNOWN\x10\x00\x12\x11\n" +
+	"\rTokenType_SSO\x10\x01\x12\x10\n" +
+	"\fTokenType_ID\x10\x02\x12\x14\n" +
+	"\x10TokenType_ACCESS\x10\x03\x12\x15\n" +
+	"\x11TokenType_REFRESH\x10\x04B-Z+github.com/dizzrt/dauth/api/gen/token;tokenb\x06proto3"
 
 var (
 	file_token_token_common_proto_rawDescOnce sync.Once
@@ -170,16 +221,19 @@ func file_token_token_common_proto_rawDescGZIP() []byte {
 	return file_token_token_common_proto_rawDescData
 }
 
+var file_token_token_common_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_token_token_common_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_token_token_common_proto_goTypes = []any{
-	(*Token)(nil), // 0: Token
+	(Token_TokenType)(0), // 0: Token.TokenType
+	(*Token)(nil),        // 1: Token
 }
 var file_token_token_common_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0, // 0: Token.type:type_name -> Token.TokenType
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_token_token_common_proto_init() }
@@ -192,13 +246,14 @@ func file_token_token_common_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_token_token_common_proto_rawDesc), len(file_token_token_common_proto_rawDesc)),
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_token_token_common_proto_goTypes,
 		DependencyIndexes: file_token_token_common_proto_depIdxs,
+		EnumInfos:         file_token_token_common_proto_enumTypes,
 		MessageInfos:      file_token_token_common_proto_msgTypes,
 	}.Build()
 	File_token_token_common_proto = out.File

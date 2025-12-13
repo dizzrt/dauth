@@ -4,24 +4,15 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/dizzrt/dauth/api/gen/token"
 	"github.com/golang-jwt/jwt/v5"
-)
-
-type TokenType uint8
-
-const (
-	TokenTypeUnknown TokenType = iota
-	TokenTypeSSO
-	TokenTypeAccess
-	TokenTypeRefresh
-	TokenTypeIDToken
 )
 
 type BaseToken struct {
 	jwt.RegisteredClaims
 
-	UID  uint32    `json:"uid"`
-	Type TokenType `json:"type"`
+	UID  uint32                `json:"uid"`
+	Type token.Token_TokenType `json:"type"`
 }
 
 type Token struct {

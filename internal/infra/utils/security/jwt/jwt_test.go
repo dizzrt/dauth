@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	token_api "github.com/dizzrt/dauth/api/gen/token"
 	"github.com/dizzrt/dauth/internal/domain/token/entity"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
@@ -35,7 +36,7 @@ func getToken() jwt.Claims {
 				ExpiresAt: jwt.NewNumericDate(expiresAt),
 			},
 			UID:  10000,
-			Type: entity.TokenTypeSSO,
+			Type: token_api.Token_TokenType_SSO,
 		},
 	}
 
@@ -61,7 +62,7 @@ func TestJwt(t *testing.T) {
 		return
 	}
 
-	if ssoToken.Type != entity.TokenTypeSSO {
+	if ssoToken.Type != token_api.Token_TokenType_SSO {
 		t.Errorf("token type not sso: %v", ssoToken.Type)
 		return
 	}

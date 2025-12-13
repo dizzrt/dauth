@@ -14,3 +14,7 @@ func IssueSSOToken(ctx context.Context, uid uint32) (*token.IssueSSOTokenRespons
 
 	return rpc.TokenServiceClient().IssueSSOToken(ctx, req)
 }
+
+func ValidateToken(ctx context.Context, req *token.ValidateRequest) (*token.ValidateResponse, error) {
+	return rpc.TokenServiceClient().Validate(ctx, req)
+}

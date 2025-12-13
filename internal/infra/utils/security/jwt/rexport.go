@@ -6,6 +6,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+type Claims = jwt.Claims
 type NumericDate = jwt.NumericDate
 type ClaimStrings = jwt.ClaimStrings
 type RegisteredClaims = jwt.RegisteredClaims

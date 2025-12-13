@@ -183,6 +183,10 @@
                 </li>
               
               
+                <li>
+                  <a href="#.Token.TokenType"><span class="badge">E</span>Token.TokenType</a>
+                </li>
+              
               
               
             </ul>
@@ -248,7 +252,7 @@
 
       
         <h3 id=".Token">Token</h3>
-        <p></p>
+        <p>map to domain/token/entity/token.go BaseToken</p>
 
         
           <table class="field-table">
@@ -258,22 +262,8 @@
             <tbody>
               
                 <tr>
-                  <td>token_id</td>
+                  <td>id</td>
                   <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>uid</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>client_id</td>
-                  <td><a href="#uint32">uint32</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -282,6 +272,20 @@
                   <td>issuer</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>subject</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>audience</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
                   <td><p> </p></td>
                 </tr>
               
@@ -307,22 +311,15 @@
                 </tr>
               
                 <tr>
-                  <td>scope</td>
-                  <td><a href="#string">string</a></td>
+                  <td>uid</td>
+                  <td><a href="#uint32">uint32</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>token_type</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>refreshable</td>
-                  <td><a href="#bool">bool</a></td>
+                  <td>type</td>
+                  <td><a href="#Token.TokenType">Token.TokenType</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -335,6 +332,47 @@
         
       
 
+      
+        <h3 id=".Token.TokenType">Token.TokenType</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>TokenType_UNKNOWN</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TokenType_SSO</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TokenType_ID</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TokenType_ACCESS</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TokenType_REFRESH</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
       
 
       
@@ -601,6 +639,13 @@
                 </tr>
               
                 <tr>
+                  <td>type</td>
+                  <td><a href="#Token.TokenType">Token.TokenType</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
                   <td>client_id</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
@@ -634,20 +679,6 @@
                 <tr>
                   <td>token</td>
                   <td><a href="#Token">Token</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>is_valid</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>reason</td>
-                  <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>

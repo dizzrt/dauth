@@ -7,6 +7,7 @@ import (
 	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/api/gen/token"
 	"github.com/dizzrt/dauth/internal/domain/token/biz"
+	"github.com/dizzrt/dauth/internal/domain/token/dto"
 	"github.com/dizzrt/dauth/internal/infra/rpc"
 )
 
@@ -67,32 +68,39 @@ func (app *tokenApplication) Issue(ctx context.Context, req *token.IssueRequest)
 
 func (app *tokenApplication) Validate(ctx context.Context, req *token.ValidateRequest) (*token.ValidateResponse, error) {
 	ts := req.GetToken()
+	tokenType := req.GetType()
 	clientID := req.GetClientId()
 
-	if ts == "" || clientID == 0 {
-		return nil, fmt.Errorf("invalid params")
+	if ts == "" || tokenType == token.Token_TokenType_UNKNOWN {
+		return nil, errdef.InvalidParams()
 	}
 
-	tokenEntity, isValid, reason, err := app.tokenBiz.Validate(ctx, ts, req.GetClientId())
+	if clientID == 0 && (tokenType == token.Token_TokenType_ID || tokenType == token.Token_TokenType_ACCESS || tokenType == token.Token_TokenType_REFRESH) {
+		return nil, errdef.InvalidParamsWithMsg("client_id is required when token_type is ID, ACCESS or REFRESH")
+	}
+
+	bt, err := app.tokenBiz.Validate(ctx, &dto.ValidateRequest{
+		Token:     ts,
+		ClientID:  clientID,
+		TokenType: tokenType,
+	})
+
 	if err != nil {
 		return nil, err
 	}
 
 	return &token.ValidateResponse{
 		Token: &token.Token{
-			TokenId:     tokenEntity.TokenID,
-			Uid:         tokenEntity.UID,
-			ClientId:    tokenEntity.ClientID,
-			Issuer:      tokenEntity.Issuer,
-			IssuedAt:    tokenEntity.IssuedAt.Unix(),
-			NotBefore:   tokenEntity.NotBefore.Unix(),
-			ExpiresAt:   tokenEntity.ExpiresAt.Unix(),
-			Scope:       tokenEntity.Scope,
-			TokenType:   tokenEntity.TokenType,
-			Refreshable: tokenEntity.Refreshable,
+			Id:        bt.ID,
+			Issuer:    bt.Issuer,
+			Subject:   bt.Subject,
+			Audience:  bt.Audience,
+			IssuedAt:  bt.IssuedAt.Unix(),
+			NotBefore: bt.NotBefore.Unix(),
+			ExpiresAt: bt.ExpiresAt.Unix(),
+			Uid:       bt.UID,
+			Type:      bt.Type,
 		},
-		IsValid:  isValid,
-		Reason:   reason,
 		BaseResp: rpc.Success(),
 	}, nil
 }

@@ -39,15 +39,14 @@ message IssueResponse {
 
 message ValidateRequest {
     string token = 1;
-    uint32 client_id = 2;
+    Token.TokenType type = 2;
+    uint32 client_id = 3;
 
     base.Base base = 255;
 }
 
 message ValidateResponse {
     Token token = 1;
-    bool is_valid = 2;
-    string reason = 3;
 
     base.BaseResp base_resp = 255;
 }

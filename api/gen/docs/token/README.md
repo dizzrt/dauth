@@ -6,6 +6,8 @@
 - [token/token_common.proto](#token_token_common-proto)
     - [Token](#-Token)
   
+    - [Token.TokenType](#-Token-TokenType)
+  
 - [token/token.proto](#token_token-proto)
     - [IssueRequest](#token-IssueRequest)
     - [IssueResponse](#token-IssueResponse)
@@ -32,27 +34,41 @@
 <a name="-Token"></a>
 
 ### Token
-
+map to domain/token/entity/token.go BaseToken
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| token_id | [string](#string) |  |  |
-| uid | [uint32](#uint32) |  |  |
-| client_id | [uint32](#uint32) |  |  |
+| id | [string](#string) |  |  |
 | issuer | [string](#string) |  |  |
+| subject | [string](#string) |  |  |
+| audience | [string](#string) | repeated |  |
 | issued_at | [int64](#int64) |  |  |
 | not_before | [int64](#int64) |  |  |
 | expires_at | [int64](#int64) |  |  |
-| scope | [string](#string) |  |  |
-| token_type | [string](#string) |  |  |
-| refreshable | [bool](#bool) |  |  |
+| uid | [uint32](#uint32) |  |  |
+| type | [Token.TokenType](#Token-TokenType) |  |  |
 
 
 
 
 
  
+
+
+<a name="-Token-TokenType"></a>
+
+### Token.TokenType
+
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| TokenType_UNKNOWN | 0 |  |
+| TokenType_SSO | 1 |  |
+| TokenType_ID | 2 |  |
+| TokenType_ACCESS | 3 |  |
+| TokenType_REFRESH | 4 |  |
+
 
  
 
@@ -181,6 +197,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | token | [string](#string) |  |  |
+| type | [Token.TokenType](#Token-TokenType) |  |  |
 | client_id | [uint32](#uint32) |  |  |
 | base | [base.Base](#base-Base) |  |  |
 
@@ -198,8 +215,6 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | token | [Token](#Token) |  |  |
-| is_valid | [bool](#bool) |  |  |
-| reason | [string](#string) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 

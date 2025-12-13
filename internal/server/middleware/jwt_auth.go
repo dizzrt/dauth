@@ -1,13 +1,18 @@
 package middleware
 
 import (
+	"fmt"
 	"slices"
 
+	"github.com/dizzrt/dauth/api/gen/token"
+	"github.com/dizzrt/dauth/internal/infra/rpc/dauth"
 	"github.com/dizzrt/ellie/transport/http"
 	"github.com/gin-gonic/gin"
 )
 
-var authWhiteList = []string{}
+var authWhiteList = []string{
+	"/identity/user/login",
+}
 
 func unauthorized(ctx *gin.Context) {
 	ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"data": nil, "message": "unauthorized", "status": http.StatusUnauthorized})
@@ -22,26 +27,25 @@ func JwtAuthMiddleware() gin.HandlerFunc {
 
 		tokenStr := ctx.Request.Header.Get("Authorization")
 		if tokenStr == "" {
+			fmt.Println("tokenStr is empty")
 			unauthorized(ctx)
 			return
 		}
 
-		//   token, err := jwt.ParseWithClaims(tokenString, &JWTClaims{}, func(token *jwt.Token) (interface{}, error) {
-		//      return []byte("secret"), nil
-		//   })
+		resp, err := dauth.ValidateToken(ctx, &token.ValidateRequest{
+			Token: tokenStr,
+			Type:  token.Token_TokenType_SSO,
+		})
 
-		//   if err != nil {
-		//      unauthorized(ctx)
-		//      return
-		//   }
+		fmt.Println(resp)
+		fmt.Println(err)
 
-		//   if claims, ok := token.Claims.(*JWTClaims); !ok || !token.Valid {
-		//      unauthorized(ctx)
-		//      return
-		// }
+		if err != nil || resp.GetToken().Uid == 0 {
+			unauthorized(ctx)
+			return
+		}
 
-		//	ctx.Set("id", claims.ID)
-		//	ctx.Set("user_name", claims.UserName)
+		ctx.Set("uid", resp.GetToken().Uid)
 		ctx.Next()
 	}
 }

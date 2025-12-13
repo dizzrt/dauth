@@ -2,9 +2,12 @@ package biz
 
 import (
 	"context"
+	"fmt"
 	"time"
 
+	token_api "github.com/dizzrt/dauth/api/gen/token"
 	"github.com/dizzrt/dauth/internal/conf"
+	"github.com/dizzrt/dauth/internal/domain/token/dto"
 	"github.com/dizzrt/dauth/internal/domain/token/entity"
 	"github.com/dizzrt/dauth/internal/domain/token/repo"
 	"github.com/dizzrt/dauth/internal/infra/utils/security/jwt"
@@ -28,7 +31,7 @@ func init() {
 type TokenBiz interface {
 	IssueSSOToken(ctx context.Context, uid uint32) (token string, expiresAt time.Time, err error)
 	Issue(ctx context.Context, uid uint32, clientID uint32, scope string) (accessToken string, refreshToken string, accessExpireAt, refreshExpireAt time.Time, err error)
-	Validate(ctx context.Context, token string, clientID uint32) (*entity.Token, bool, string, error)
+	Validate(ctx context.Context, req *dto.ValidateRequest) (*entity.BaseToken, error)
 	Revoke(ctx context.Context, token string, reason string) error
 }
 
@@ -60,7 +63,7 @@ func (biz *tokenBiz) IssueSSOToken(ctx context.Context, uid uint32) (token strin
 				ExpiresAt: jwt.NewNumericDate(expiresAt),
 			},
 			UID:  uid,
-			Type: entity.TokenTypeSSO,
+			Type: token_api.Token_TokenType_SSO,
 		},
 	}
 
@@ -129,36 +132,64 @@ func (biz *tokenBiz) Issue(ctx context.Context, uid uint32, clientID uint32, sco
 	return
 }
 
-func (biz *tokenBiz) Validate(ctx context.Context, token string, clientID uint32) (*entity.Token, bool, string, error) {
-	// claims, err := biz.jwtManager.Verify(ctx, token, nil)
-	// if err != nil {
-	// 	return nil, false, err.Error(), err
-	// }
+func (biz *tokenBiz) Validate(ctx context.Context, req *dto.ValidateRequest) (*entity.BaseToken, error) {
+	var claims jwt.Claims
+	switch req.TokenType {
+	case token_api.Token_TokenType_SSO:
+		claims = &entity.SSOToken{}
+	// case token_api.Token_TokenType_ID:
+	// 	claims = &entity.IDToken{}
+	// case token_api.Token_TokenType_ACCESS:
+	// 	claims = &entity.AccessToken{}
+	// case token_api.Token_TokenType_REFRESH:
+	// 	claims = &entity.RefreshToken{}
+	default:
+		return nil, fmt.Errorf("invalid token type: %v", req.TokenType)
+	}
 
-	// // convert claims to token entity
-	// tokenEntity, err := entity.NewTokenFromClaims(claims)
-	// if err != nil {
-	// 	log.CtxErrorf(ctx, "convert claims to token entity failed: %v", err)
-	// 	return nil, false, err.Error(), err
-	// }
+	err := biz.jwtManager.Verify(ctx, req.Token, nil, claims)
+	if err != nil {
+		return nil, err
+	}
 
-	// if tokenEntity.ClientID != clientID {
-	// 	return nil, false, "client id not match", errors.New("client id not match")
-	// }
-
-	// // TODO add cache check
-	// isRevoked, err := biz.tokenBlacklistRepo.IsRevoked(ctx, tokenEntity.TokenID)
-	// if err != nil || isRevoked {
-	// 	if err != nil {
-	// 		log.CtxErrorf(ctx, "check token blacklist failed, token: %v, err: %v", token, err)
+	// extract baseToken
+	var baseToken *entity.BaseToken
+	switch req.TokenType {
+	case token_api.Token_TokenType_SSO:
+		if ssoToken, ok := claims.(*entity.SSOToken); ok {
+			baseToken = &ssoToken.BaseToken
+		}
+	// case token_api.Token_TokenType_ID:
+	// 	if idToken, ok := claims.(*entity.IDToken); ok {
+	// 		baseToken = &idToken.BaseToken
 	// 	}
+	// case token_api.Token_TokenType_ACCESS:
+	// 	if accessToken, ok := claims.(*entity.AccessToken); ok {
+	// 		baseToken = &accessToken.BaseToken
+	// 	}
+	// case token_api.Token_TokenType_REFRESH:
+	// 	if refreshToken, ok := claims.(*entity.RefreshToken); ok {
+	// 		baseToken = &refreshToken.BaseToken
+	// 	}
+	default:
+		baseToken = nil
+	}
 
-	// 	return nil, false, "token is revoked", errors.New("token is revoked")
-	// }
+	if baseToken == nil || baseToken.Type != req.TokenType {
+		return nil, fmt.Errorf("token type not match")
+	}
 
-	// return tokenEntity, true, "", nil
+	tokenID := baseToken.ID
+	isRevoked, err := biz.tokenBlacklistRepo.IsRevoked(ctx, tokenID)
+	if err != nil || isRevoked {
+		if err != nil {
+			log.CtxErrorf(ctx, "check token blacklist failed, token: %v, err: %v", req.Token, err)
+		}
 
-	return nil, false, "", nil
+		return nil, fmt.Errorf("token is revoked")
+	}
+
+	return baseToken, nil
 }
 
 func (biz *tokenBiz) Revoke(ctx context.Context, token string, reason string) error {
