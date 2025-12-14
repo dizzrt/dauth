@@ -5,12 +5,15 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	token_api "github.com/dizzrt/dauth/api/gen/token"
 	"github.com/dizzrt/dauth/internal/conf"
+	"github.com/dizzrt/dauth/internal/domain/token/cache"
 	"github.com/dizzrt/dauth/internal/domain/token/dto"
 	"github.com/dizzrt/dauth/internal/domain/token/entity"
 	"github.com/dizzrt/dauth/internal/domain/token/repo"
 	"github.com/dizzrt/dauth/internal/infra/utils/security/jwt"
+	"github.com/dizzrt/ellie/errors"
 	"github.com/dizzrt/ellie/log"
 	"github.com/google/uuid"
 )
@@ -37,12 +40,14 @@ type TokenBiz interface {
 
 type tokenBiz struct {
 	tokenBlacklistRepo repo.TokenBlacklistRepo
+	tokenRevokeCache   cache.TokenRevokeCache
 	jwtManager         jwt.JWTManager
 }
 
-func NewTokenBiz(tokenBlacklistRepo repo.TokenBlacklistRepo, jwtManager jwt.JWTManager) TokenBiz {
+func NewTokenBiz(tokenBlacklistRepo repo.TokenBlacklistRepo, tokenRevokeCache cache.TokenRevokeCache, jwtManager jwt.JWTManager) TokenBiz {
 	return &tokenBiz{
 		tokenBlacklistRepo: tokenBlacklistRepo,
+		tokenRevokeCache:   tokenRevokeCache,
 		jwtManager:         jwtManager,
 	}
 }
@@ -176,41 +181,38 @@ func (biz *tokenBiz) Validate(ctx context.Context, req *dto.ValidateRequest) (*e
 	}
 
 	if baseToken == nil || baseToken.Type != req.TokenType {
-		return nil, fmt.Errorf("token type not match")
+		return nil, errdef.TokenInvalidWithMsg("token type not match")
 	}
 
-	tokenID := baseToken.ID
-	isRevoked, err := biz.tokenBlacklistRepo.IsRevoked(ctx, tokenID)
+	isRevoked, _, err := biz.tokenRevokeCache.IsRevoked(ctx, req.Token)
 	if err != nil || isRevoked {
 		if err != nil {
-			log.CtxErrorf(ctx, "check token blacklist failed, token: %v, err: %v", req.Token, err)
+			log.CtxErrorf(ctx, "check token if revoked failed, token: %v, err: %v", req.Token, err)
+			return nil, err
 		}
 
-		return nil, fmt.Errorf("token is revoked")
+		// return nil, errdef.TokenRevoked()
+		return nil, errdef.TokenRevoked()
 	}
 
 	return baseToken, nil
 }
 
 func (biz *tokenBiz) Revoke(ctx context.Context, token string, reason string) error {
-	// claims, err := biz.jwtManager.Verify(ctx, token, nil)
-	// if err != nil {
-	// 	log.CtxErrorf(ctx, "verify token failed: %v", err)
-	// 	return err
-	// }
+	var claims entity.BaseToken
+	err := biz.jwtManager.Verify(ctx, token, nil, &claims)
+	if err != nil {
+		if errors.Is(err, errdef.TokenExpired()) || errors.Is(err, errdef.TokenRevoked()) {
+			return nil
+		}
 
-	// // convert claims to token entity
-	// tokenEntity, err := entity.NewTokenFromClaims(claims)
-	// if err != nil {
-	// 	log.CtxErrorf(ctx, "convert claims to token entity failed: %v", err)
-	// 	return err
-	// }
+		return err
+	}
 
-	// tid := tokenEntity.TokenID
-	// if err := biz.tokenBlacklistRepo.Revoke(ctx, tid, reason, tokenEntity.ExpiresAt); err != nil {
-	// 	log.CtxErrorf(ctx, "revoke token failed, token: %v, err: %v", token, err)
-	// 	return err
-	// }
+	if err = biz.tokenRevokeCache.Revoke(ctx, token, reason, claims.ExpiresAt.Time); err != nil {
+		log.CtxErrorf(ctx, "revoke token failed, token: %s, err: %v", token, err)
+		return err
+	}
 
 	return nil
 }

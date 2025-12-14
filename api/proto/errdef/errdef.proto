@@ -22,10 +22,13 @@ enum Errors {
     IdentityInvalidAccount = 101000 [(ellie.errors.code) = 101000];
     IdentityWrongPassword = 101001 [(ellie.errors.code) = 101001];
 
-    // client errors (domain: 02)
+    // sp errors (domain: 02)
     
 
     // token errors (domain: 03)
+    TokenInvalid = 103000 [(ellie.errors.code) = 103000];
+    TokenExpired = 103001 [(ellie.errors.code) = 103001];
+    TokenRevoked = 103002 [(ellie.errors.code) = 103002];
 
 
     // auth errors (domain: 04)

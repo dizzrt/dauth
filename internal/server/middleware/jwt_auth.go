@@ -1,10 +1,13 @@
 package middleware
 
 import (
+	"errors"
 	"slices"
 
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/api/gen/token"
 	"github.com/dizzrt/dauth/internal/infra/rpc/dauth"
+	"github.com/dizzrt/ellie/log"
 	"github.com/dizzrt/ellie/transport/http"
 	"github.com/gin-gonic/gin"
 )
@@ -36,6 +39,11 @@ func JwtAuthMiddleware() gin.HandlerFunc {
 		})
 
 		if err != nil || resp.GetToken().Uid == 0 {
+			if err != nil && !(errors.Is(err, errdef.TokenExpired()) || errors.Is(err, errdef.TokenRevoked())) {
+				// BUG errors.Is not work as expected
+				log.CtxErrorf(ctx, "validate token failed, token: %v, err: %v", tokenStr, err)
+			}
+
 			unauthorized(ctx)
 			return
 		}

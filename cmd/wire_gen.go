@@ -15,6 +15,7 @@ import (
 	biz2 "github.com/dizzrt/dauth/internal/domain/token/biz"
 	"github.com/dizzrt/dauth/internal/handler"
 	auth2 "github.com/dizzrt/dauth/internal/infra/cache/impl/auth"
+	token2 "github.com/dizzrt/dauth/internal/infra/cache/impl/token"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/auth"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/identity"
@@ -44,8 +45,14 @@ func wireApp() (*ellie.App, func(), error) {
 	identityApplication := application.NewIdentityApplication(userBiz, roleBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)
 	tokenBlacklistRepo := token.NewTokenBlacklistRepoImpl(baseDB)
-	jwtManager := jwt.NewJWTManager(appConfig)
-	tokenBiz := biz2.NewTokenBiz(tokenBlacklistRepo, jwtManager)
+	redisClient, cleanup2, err := foundation.NewRedisClient(appConfig)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	tokenRevokeCache := token2.NewTokenRevokeCacheImpl(redisClient)
+	jwtManager := jwt.NewJWTManager(appConfig, tokenRevokeCache)
+	tokenBiz := biz2.NewTokenBiz(tokenBlacklistRepo, tokenRevokeCache, jwtManager)
 	tokenApplication := application.NewTokenApplication(tokenBiz)
 	tokenHandler := handler.NewTokenHandler(tokenApplication)
 	serviceProviderRepo := sp.NewServiceProviderRepoImpl(baseDB)
@@ -55,11 +62,6 @@ func wireApp() (*ellie.App, func(), error) {
 	serviceProviderApplication := application.NewServiceProviderApplication(serviceProviderBiz)
 	serviceProviderHandler := handler.NewServiceProviderHandler(serviceProviderApplication)
 	authorizationCodeRepo := auth.NewAuthorizationCodeRepoImpl(baseDB)
-	redisClient, cleanup2, err := foundation.NewRedisClient(appConfig)
-	if err != nil {
-		cleanup()
-		return nil, nil, err
-	}
 	authorizationCodeCache := auth2.NewAuthorizationCodeCacheImpl(redisClient)
 	authBiz := biz4.NewAuthBiz(authorizationCodeRepo, authorizationCodeCache)
 	authApplication := application.NewAuthApplication(authBiz)

@@ -4,7 +4,9 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/internal/conf"
+	"github.com/dizzrt/dauth/internal/domain/token/cache"
 	"github.com/dizzrt/ellie/log"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -27,9 +29,11 @@ type jwtManager struct {
 	secret    []byte // for HS256/HS384/HS512
 	// publicKey  []byte // for RS256/RS512
 	// privateKey []byte // for RS256/RS512
+
+	revokeCache cache.TokenRevokeCache
 }
 
-func NewJWTManager(ac *conf.AppConfig) JWTManager {
+func NewJWTManager(ac *conf.AppConfig, revokeCache cache.TokenRevokeCache) JWTManager {
 	// TODO read from config
 	return &jwtManager{
 		algorithm: _DEFAULT_ALGORITHM,
@@ -37,6 +41,7 @@ func NewJWTManager(ac *conf.AppConfig) JWTManager {
 		secret:    []byte(ac.App.Secret),
 		// publicKey:  nil,
 		// privateKey: nil,
+		revokeCache: revokeCache,
 	}
 }
 
@@ -63,7 +68,7 @@ func (m *jwtManager) Sign(ctx context.Context, claims jwt.Claims, secret []byte)
 
 func (m *jwtManager) Verify(ctx context.Context, token string, secret []byte, claims jwt.Claims) error {
 	if claims == nil {
-		return fmt.Errorf("claims is nil")
+		return errdef.TokenInvalidWithMsg("claims is nil")
 	}
 
 	if secret == nil {
@@ -72,18 +77,28 @@ func (m *jwtManager) Verify(ctx context.Context, token string, secret []byte, cl
 
 	jt, err := jwt.ParseWithClaims(token, claims, func(t *jwt.Token) (any, error) {
 		if t.Method.Alg() != m.algorithm {
-			return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
+			return nil, errdef.TokenInvalidWithMsg("unexpected signing method: %v", t.Header["alg"])
 		}
 
 		return secret, nil
 	})
 
 	if err != nil {
-		return fmt.Errorf("parse token failed: %w", err)
+		return errdef.TokenInvalidWithMsg("parse token failed").WithCause(err)
 	}
 
 	if !jt.Valid {
-		return fmt.Errorf("invalid token")
+		return errdef.TokenExpired()
+	}
+
+	isRevoked, _, err := m.revokeCache.IsRevoked(ctx, token)
+	if err != nil {
+		log.CtxErrorf(ctx, "check token revoke cache failed: %s", err.Error())
+		return err
+	}
+
+	if isRevoked {
+		return errdef.TokenRevoked()
 	}
 
 	return nil

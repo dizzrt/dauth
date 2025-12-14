@@ -33,6 +33,10 @@ const (
 	// identity errors (domain: 01)
 	Errors_IdentityInvalidAccount Errors = 101000
 	Errors_IdentityWrongPassword  Errors = 101001
+	// token errors (domain: 03)
+	Errors_TokenInvalid Errors = 103000
+	Errors_TokenExpired Errors = 103001
+	Errors_TokenRevoked Errors = 103002
 	// auth errors (domain: 04)
 	Errors_AuthInvalidClient      Errors = 104000
 	Errors_AuthInvalidRedirectURI Errors = 104001
@@ -53,6 +57,9 @@ var (
 		100001: "InvalidParams",
 		101000: "IdentityInvalidAccount",
 		101001: "IdentityWrongPassword",
+		103000: "TokenInvalid",
+		103001: "TokenExpired",
+		103002: "TokenRevoked",
 		104000: "AuthInvalidClient",
 		104001: "AuthInvalidRedirectURI",
 		104002: "AuthInvalidScope",
@@ -66,6 +73,9 @@ var (
 		"InvalidParams":          100001,
 		"IdentityInvalidAccount": 101000,
 		"IdentityWrongPassword":  101001,
+		"TokenInvalid":           103000,
+		"TokenExpired":           103001,
+		"TokenRevoked":           103002,
 		"AuthInvalidClient":      104000,
 		"AuthInvalidRedirectURI": 104001,
 		"AuthInvalidScope":       104002,
@@ -106,13 +116,16 @@ var File_errdef_errdef_proto protoreflect.FileDescriptor
 
 const file_errdef_errdef_proto_rawDesc = "" +
 	"\n" +
-	"\x13errdef/errdef.proto\x1a\x19ellie/errors/errors.proto*\xe0\x02\n" +
+	"\x13errdef/errdef.proto\x1a\x19ellie/errors/errors.proto*\xb4\x03\n" +
 	"\x06Errors\x12\x11\n" +
 	"\aUNKNOWN\x10\x00\x1a\x04\xd0\xf3\x18\x00\x12\x15\n" +
 	"\aSuccess\x10\xa0\x8d\x06\x1a\x06\xd0\xf3\x18\xa0\x8d\x06\x12\x1b\n" +
 	"\rInvalidParams\x10\xa1\x8d\x06\x1a\x06\xd0\xf3\x18\xa1\x8d\x06\x12$\n" +
 	"\x16IdentityInvalidAccount\x10\x88\x95\x06\x1a\x06\xd0\xf3\x18\x88\x95\x06\x12#\n" +
-	"\x15IdentityWrongPassword\x10\x89\x95\x06\x1a\x06\xd0\xf3\x18\x89\x95\x06\x12\x1f\n" +
+	"\x15IdentityWrongPassword\x10\x89\x95\x06\x1a\x06\xd0\xf3\x18\x89\x95\x06\x12\x1a\n" +
+	"\fTokenInvalid\x10ؤ\x06\x1a\x06\xd0\xf3\x18ؤ\x06\x12\x1a\n" +
+	"\fTokenExpired\x10٤\x06\x1a\x06\xd0\xf3\x18٤\x06\x12\x1a\n" +
+	"\fTokenRevoked\x10ڤ\x06\x1a\x06\xd0\xf3\x18ڤ\x06\x12\x1f\n" +
 	"\x11AuthInvalidClient\x10\xc0\xac\x06\x1a\x06\xd0\xf3\x18\xc0\xac\x06\x12$\n" +
 	"\x16AuthInvalidRedirectURI\x10\xc1\xac\x06\x1a\x06\xd0\xf3\x18\xc1\xac\x06\x12\x1e\n" +
 	"\x10AuthInvalidScope\x10¬\x06\x1a\x06\xd0\xf3\x18¬\x06\x12\"\n" +

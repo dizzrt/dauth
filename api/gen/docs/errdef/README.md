@@ -31,6 +31,9 @@
 | InvalidParams | 100001 |  |
 | IdentityInvalidAccount | 101000 | identity errors (domain: 01) |
 | IdentityWrongPassword | 101001 |  |
+| TokenInvalid | 103000 | token errors (domain: 03) |
+| TokenExpired | 103001 |  |
+| TokenRevoked | 103002 |  |
 | AuthInvalidClient | 104000 | auth errors (domain: 04) |
 | AuthInvalidRedirectURI | 104001 |  |
 | AuthInvalidScope | 104002 |  |

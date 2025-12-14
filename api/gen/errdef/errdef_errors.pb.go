@@ -80,6 +80,56 @@ func IdentityWrongPasswordWithMsg(format string, args ...interface{}) *errors.Er
 	return errors.New(101001, Errors_IdentityWrongPassword.String(), fmt.Sprintf(format, args...))
 }
 
+// token errors (domain: 03)
+func IsTokenInvalid(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == Errors_TokenInvalid.String() && e.Code == 103000
+}
+
+// token errors (domain: 03)
+func TokenInvalid() *errors.Error {
+	return errors.New(103000, Errors_TokenInvalid.String(), "")
+}
+
+func TokenInvalidWithMsg(format string, args ...interface{}) *errors.Error {
+	return errors.New(103000, Errors_TokenInvalid.String(), fmt.Sprintf(format, args...))
+}
+
+func IsTokenExpired(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == Errors_TokenExpired.String() && e.Code == 103001
+}
+
+func TokenExpired() *errors.Error {
+	return errors.New(103001, Errors_TokenExpired.String(), "")
+}
+
+func TokenExpiredWithMsg(format string, args ...interface{}) *errors.Error {
+	return errors.New(103001, Errors_TokenExpired.String(), fmt.Sprintf(format, args...))
+}
+
+func IsTokenRevoked(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == Errors_TokenRevoked.String() && e.Code == 103002
+}
+
+func TokenRevoked() *errors.Error {
+	return errors.New(103002, Errors_TokenRevoked.String(), "")
+}
+
+func TokenRevokedWithMsg(format string, args ...interface{}) *errors.Error {
+	return errors.New(103002, Errors_TokenRevoked.String(), fmt.Sprintf(format, args...))
+}
+
 // auth errors (domain: 04)
 func IsAuthInvalidClient(err error) bool {
 	if err == nil {
