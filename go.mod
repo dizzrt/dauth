@@ -1,6 +1,6 @@
 module github.com/dizzrt/dauth
 
-go 1.25.4
+go 1.25.5
 
 // replace github.com/dizzrt/ellie => ../infra/ellie
 
