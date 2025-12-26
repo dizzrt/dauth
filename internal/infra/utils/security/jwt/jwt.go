@@ -2,6 +2,7 @@ package jwt
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/dizzrt/dauth/api/gen/errdef"
@@ -84,10 +85,19 @@ func (m *jwtManager) Verify(ctx context.Context, token string, secret []byte, cl
 	})
 
 	if err != nil {
-		return errdef.TokenInvalidWithMsg("parse token failed").WithCause(err)
+		// if errors.Is(err, jwt.ErrTokenExpired) {
+		// 	fmt.Println("XX1")
+		// 	return errdef.TokenExpired()
+		// }
+		err = errdef.TokenInvalidWithMsg("parse token failed").WithCause(err)
+		if errors.Is(err, jwt.ErrTokenExpired) {
+			err = errdef.TokenExpired().WithCause(err)
+		}
+		return err
 	}
 
 	if !jt.Valid {
+		fmt.Println("X1")
 		return errdef.TokenExpired()
 	}
 

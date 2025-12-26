@@ -1,13 +1,11 @@
 {
   "editor.formatOnSave": true,
-  "protoc": {
-    "options": [
-      "--proto_path=${workspaceFolder}/api/proto",
-      "--proto_path=${workspaceFolder}/third_party"
-    ]
-  },
   "gopls": {
     "build.buildFlags": ["-tags=wireinject"],
     "build.standaloneTags": ["ignore", "wireinject", "!wireinject"]
+  },
+  "[proto]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "bufbuild.vscode-buf"
   }
 }

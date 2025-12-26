@@ -9,6 +9,8 @@ import (
 	"github.com/dizzrt/dauth/internal/domain/token/biz"
 	"github.com/dizzrt/dauth/internal/domain/token/dto"
 	"github.com/dizzrt/dauth/internal/infra/rpc"
+	"github.com/dizzrt/ellie/errors"
+	"google.golang.org/grpc/codes"
 )
 
 var _ TokenApplication = (*tokenApplication)(nil)
@@ -86,7 +88,8 @@ func (app *tokenApplication) Validate(ctx context.Context, req *token.ValidateRe
 	})
 
 	if err != nil {
-		return nil, err
+		// return nil, err
+		return nil, errors.Marshal(codes.Unauthenticated, err)
 	}
 
 	return &token.ValidateResponse{

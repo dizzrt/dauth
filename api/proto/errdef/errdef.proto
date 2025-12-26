@@ -1,46 +1,60 @@
 syntax = "proto3";
 
-option go_package = "github.com/dizzrt/dauth/api/gen/errdef;errdef";
+package errdef;
 
 import "ellie/errors/errors.proto";
 
+option go_package = "github.com/dizzrt/dauth/api/gen/errdef;errdef";
+
 // Error code definition.
-//          type   domain/module   code  
-//  ------ ------ --------------- ------ 
-//   len    1      2               3     
-//   e.g.   1      00              000   
+//          type   domain/module   code
+//  ------ ------ --------------- ------
+//   len    1      2               3
+//   e.g.   1      00              000
 
 enum Errors {
-    UNKNOWN = 0 [(ellie.errors.code) = 0];
+  UNKNOWN = 0 [(ellie.errors.code) = 0];
 
-    // biz - type 1
-    // common errors
-    Success = 100000 [(ellie.errors.code) = 100000];
-    InvalidParams = 100001 [(ellie.errors.code) = 100001];
-    
-    // identity errors (domain: 01)
-    IdentityInvalidAccount = 101000 [(ellie.errors.code) = 101000];
-    IdentityWrongPassword = 101001 [(ellie.errors.code) = 101001];
+  // biz - type 1
+  // common errors
+  Success = 100000 [
+    (ellie.errors.code) = 100000,
+    (ellie.errors.status) = ERROR_STATUS_OK
+  ];
 
-    // sp errors (domain: 02)
-    
+  InvalidParams = 100001 [
+    (ellie.errors.code) = 100001,
+    (ellie.errors.status) = ERROR_STATUS_INVALID_ARGUMENT
+  ];
 
-    // token errors (domain: 03)
-    TokenInvalid = 103000 [(ellie.errors.code) = 103000];
-    TokenExpired = 103001 [(ellie.errors.code) = 103001];
-    TokenRevoked = 103002 [(ellie.errors.code) = 103002];
+  // identity errors (domain: 01)
+  IdentityInvalidAccount = 101000 [
+    (ellie.errors.code) = 101000,
+    (ellie.errors.status) = ERROR_STATUS_INVALID_ARGUMENT
+  ];
 
+  IdentityWrongPassword = 101001 [
+    (ellie.errors.code) = 101001,
+    (ellie.errors.status) = ERROR_STATUS_INVALID_ARGUMENT
+  ];
 
-    // auth errors (domain: 04)
-    AuthInvalidClient = 104000 [(ellie.errors.code) = 104000];
-    AuthInvalidRedirectURI = 104001 [(ellie.errors.code) = 104001];
-    AuthInvalidScope = 104002 [(ellie.errors.code) = 104002];
+  // sp errors (domain: 02)
 
-    // sys - type 2
-    // common
-    UnknownInternalError = 200000 [(ellie.errors.code) = 200000];
+  // token errors (domain: 03)
+  TokenInvalid = 103000 [(ellie.errors.code) = 103000];
+  TokenExpired = 103001 [(ellie.errors.code) = 103001];
+  TokenRevoked = 103002 [(ellie.errors.code) = 103002];
 
-    // db errors (module: 01)
-    RecordNotFound = 201000 [(ellie.errors.code) = 201000];
-    DuplicatedKey = 201001 [(ellie.errors.code) = 201001];
+  // auth errors (domain: 04)
+  AuthInvalidClient = 104000 [(ellie.errors.code) = 104000];
+  AuthInvalidRedirectURI = 104001 [(ellie.errors.code) = 104001];
+  AuthInvalidScope = 104002 [(ellie.errors.code) = 104002];
+
+  // sys - type 2
+  // common
+  UnknownInternalError = 200000 [(ellie.errors.code) = 200000];
+
+  // db errors (module: 01)
+  RecordNotFound = 201000 [(ellie.errors.code) = 201000];
+  DuplicatedKey = 201001 [(ellie.errors.code) = 201001];
 }

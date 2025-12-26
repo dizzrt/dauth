@@ -4,7 +4,7 @@
 ## Table of Contents
 
 - [errdef/errdef.proto](#errdef_errdef-proto)
-    - [Errors](#-Errors)
+    - [Errors](#errdef-Errors)
   
 - [Scalar Value Types](#scalar-value-types)
 
@@ -19,7 +19,7 @@
  
 
 
-<a name="-Errors"></a>
+<a name="errdef-Errors"></a>
 
 ### Errors
 
