@@ -675,20 +675,20 @@ var File_identity_role_proto protoreflect.FileDescriptor
 
 const file_identity_role_proto_rawDesc = "" +
 	"\n" +
-	"\x13identity/role.proto\x12\bidentity\x1a\x0fbase/base.proto\x1a\x1eidentity/identity_common.proto\x1a\x1cgoogle/api/annotations.proto\"j\n" +
+	"\x13identity/role.proto\x12\bidentity\x1a\x0fbase/base.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1eidentity/identity_common.proto\"j\n" +
 	"\x11CreateRoleRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"]\n" +
-	"\x12CreateRoleResponse\x12\x19\n" +
-	"\x04role\x18\x01 \x01(\v2\x05.RoleR\x04role\x12,\n" +
+	".base.BaseR\x04base\"f\n" +
+	"\x12CreateRoleResponse\x12\"\n" +
+	"\x04role\x18\x01 \x01(\v2\x0e.identity.RoleR\x04role\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"2\n" +
 	"\x0fGetRolesRequest\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"]\n" +
-	"\x10GetRolesResponse\x12\x1b\n" +
-	"\x05roles\x18\x01 \x03(\v2\x05.RoleR\x05roles\x12,\n" +
+	".base.BaseR\x04base\"f\n" +
+	"\x10GetRolesResponse\x12$\n" +
+	"\x05roles\x18\x01 \x03(\v2\x0e.identity.RoleR\x05roles\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"G\n" +
 	"\x12DeleteRolesRequest\x12\x10\n" +
 	"\x03ids\x18\x01 \x03(\rR\x03ids\x12\x1f\n" +
@@ -701,25 +701,25 @@ const file_identity_role_proto_rawDesc = "" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"]\n" +
-	"\x12UpdateRoleResponse\x12\x19\n" +
-	"\x04role\x18\x01 \x01(\v2\x05.RoleR\x04role\x12,\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"b\n" +
+	".base.BaseR\x04base\"f\n" +
+	"\x12UpdateRoleResponse\x12\"\n" +
+	"\x04role\x18\x01 \x01(\v2\x0e.identity.RoleR\x04role\x12,\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"k\n" +
 	"\x12AssignRolesRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1b\n" +
-	"\x05roles\x18\x02 \x03(\v2\x05.RoleR\x05roles\x12\x1f\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\x12$\n" +
+	"\x05roles\x18\x02 \x03(\v2\x0e.identity.RoleR\x05roles\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"^\n" +
-	"\x13AssignRolesResponse\x12\x19\n" +
-	"\x04user\x18\x01 \x01(\v2\x05.UserR\x04user\x12,\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"d\n" +
+	".base.BaseR\x04base\"g\n" +
+	"\x13AssignRolesResponse\x12\"\n" +
+	"\x04user\x18\x01 \x01(\v2\x0e.identity.UserR\x04user\x12,\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"m\n" +
 	"\x14UnassignRolesRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1b\n" +
-	"\x05roles\x18\x02 \x03(\v2\x05.RoleR\x05roles\x12\x1f\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\x12$\n" +
+	"\x05roles\x18\x02 \x03(\v2\x0e.identity.RoleR\x05roles\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"`\n" +
-	"\x15UnassignRolesResponse\x12\x19\n" +
-	"\x04user\x18\x01 \x01(\v2\x05.UserR\x04user\x12,\n" +
+	".base.BaseR\x04base\"i\n" +
+	"\x15UnassignRolesResponse\x12\"\n" +
+	"\x04user\x18\x01 \x01(\v2\x0e.identity.UserR\x04user\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\x8f\x05\n" +
 	"\vRoleService\x12b\n" +
 	"\n" +
@@ -758,29 +758,29 @@ var file_identity_role_proto_goTypes = []any{
 	(*UnassignRolesRequest)(nil),  // 10: identity.UnassignRolesRequest
 	(*UnassignRolesResponse)(nil), // 11: identity.UnassignRolesResponse
 	(*base.Base)(nil),             // 12: base.Base
-	(*Role)(nil),                  // 13: Role
+	(*Role)(nil),                  // 13: identity.Role
 	(*base.BaseResp)(nil),         // 14: base.BaseResp
-	(*User)(nil),                  // 15: User
+	(*User)(nil),                  // 15: identity.User
 }
 var file_identity_role_proto_depIdxs = []int32{
 	12, // 0: identity.CreateRoleRequest.base:type_name -> base.Base
-	13, // 1: identity.CreateRoleResponse.role:type_name -> Role
+	13, // 1: identity.CreateRoleResponse.role:type_name -> identity.Role
 	14, // 2: identity.CreateRoleResponse.base_resp:type_name -> base.BaseResp
 	12, // 3: identity.GetRolesRequest.base:type_name -> base.Base
-	13, // 4: identity.GetRolesResponse.roles:type_name -> Role
+	13, // 4: identity.GetRolesResponse.roles:type_name -> identity.Role
 	14, // 5: identity.GetRolesResponse.base_resp:type_name -> base.BaseResp
 	12, // 6: identity.DeleteRolesRequest.base:type_name -> base.Base
 	14, // 7: identity.DeleteRolesResponse.base_resp:type_name -> base.BaseResp
 	12, // 8: identity.UpdateRoleRequest.base:type_name -> base.Base
-	13, // 9: identity.UpdateRoleResponse.role:type_name -> Role
+	13, // 9: identity.UpdateRoleResponse.role:type_name -> identity.Role
 	14, // 10: identity.UpdateRoleResponse.base_resp:type_name -> base.BaseResp
-	13, // 11: identity.AssignRolesRequest.roles:type_name -> Role
+	13, // 11: identity.AssignRolesRequest.roles:type_name -> identity.Role
 	12, // 12: identity.AssignRolesRequest.base:type_name -> base.Base
-	15, // 13: identity.AssignRolesResponse.user:type_name -> User
+	15, // 13: identity.AssignRolesResponse.user:type_name -> identity.User
 	14, // 14: identity.AssignRolesResponse.base_resp:type_name -> base.BaseResp
-	13, // 15: identity.UnassignRolesRequest.roles:type_name -> Role
+	13, // 15: identity.UnassignRolesRequest.roles:type_name -> identity.Role
 	12, // 16: identity.UnassignRolesRequest.base:type_name -> base.Base
-	15, // 17: identity.UnassignRolesResponse.user:type_name -> User
+	15, // 17: identity.UnassignRolesResponse.user:type_name -> identity.User
 	14, // 18: identity.UnassignRolesResponse.base_resp:type_name -> base.BaseResp
 	0,  // 19: identity.RoleService.CreateRole:input_type -> identity.CreateRoleRequest
 	2,  // 20: identity.RoleService.GetRoles:input_type -> identity.GetRolesRequest

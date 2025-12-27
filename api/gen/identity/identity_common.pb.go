@@ -7,7 +7,6 @@
 package identity
 
 import (
-	_ "github.com/dizzrt/ellie/errors"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -131,7 +130,7 @@ type Role struct {
 	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	Status        Role_Status            `protobuf:"varint,4,opt,name=status,proto3,enum=Role_Status" json:"status,omitempty"`
+	Status        Role_Status            `protobuf:"varint,4,opt,name=status,proto3,enum=identity.Role_Status" json:"status,omitempty"`
 	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt     int64                  `protobuf:"varint,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -215,7 +214,7 @@ type User struct {
 	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
 	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username,omitempty"`
-	Status        User_Status            `protobuf:"varint,4,opt,name=status,proto3,enum=User_Status" json:"status,omitempty"`
+	Status        User_Status            `protobuf:"varint,4,opt,name=status,proto3,enum=identity.User_Status" json:"status,omitempty"`
 	Roles         []*Role                `protobuf:"bytes,5,rep,name=roles,proto3" json:"roles,omitempty"`
 	LastLoginAt   int64                  `protobuf:"varint,6,opt,name=last_login_at,json=lastLoginAt,proto3" json:"last_login_at,omitempty"`
 	CreatedAt     int64                  `protobuf:"varint,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
@@ -314,12 +313,12 @@ var File_identity_identity_common_proto protoreflect.FileDescriptor
 
 const file_identity_identity_common_proto_rawDesc = "" +
 	"\n" +
-	"\x1eidentity/identity_common.proto\x1a\x19ellie/errors/errors.proto\"\xf2\x01\n" +
+	"\x1eidentity/identity_common.proto\x12\bidentity\"\xfb\x01\n" +
 	"\x04Role\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
-	"\vdescription\x18\x03 \x01(\tR\vdescription\x12$\n" +
-	"\x06status\x18\x04 \x01(\x0e2\f.Role.StatusR\x06status\x12\x1d\n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12-\n" +
+	"\x06status\x18\x04 \x01(\x0e2\x15.identity.Role.StatusR\x06status\x12\x1d\n" +
 	"\n" +
 	"created_at\x18\x05 \x01(\x03R\tcreatedAt\x12\x1d\n" +
 	"\n" +
@@ -329,13 +328,13 @@ const file_identity_identity_common_proto_rawDesc = "" +
 	"\n" +
 	"\x06ACTIVE\x10\x01\x12\f\n" +
 	"\bINACTIVE\x10\x02\x12\v\n" +
-	"\aDELETED\x10\x03\"\xaf\x02\n" +
+	"\aDELETED\x10\x03\"\xc1\x02\n" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
-	"\busername\x18\x03 \x01(\tR\busername\x12$\n" +
-	"\x06status\x18\x04 \x01(\x0e2\f.User.StatusR\x06status\x12\x1b\n" +
-	"\x05roles\x18\x05 \x03(\v2\x05.RoleR\x05roles\x12\"\n" +
+	"\busername\x18\x03 \x01(\tR\busername\x12-\n" +
+	"\x06status\x18\x04 \x01(\x0e2\x15.identity.User.StatusR\x06status\x12$\n" +
+	"\x05roles\x18\x05 \x03(\v2\x0e.identity.RoleR\x05roles\x12\"\n" +
 	"\rlast_login_at\x18\x06 \x01(\x03R\vlastLoginAt\x12\x1d\n" +
 	"\n" +
 	"created_at\x18\a \x01(\x03R\tcreatedAt\x12\x1d\n" +
@@ -363,15 +362,15 @@ func file_identity_identity_common_proto_rawDescGZIP() []byte {
 var file_identity_identity_common_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_identity_identity_common_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_identity_identity_common_proto_goTypes = []any{
-	(Role_Status)(0), // 0: Role.Status
-	(User_Status)(0), // 1: User.Status
-	(*Role)(nil),     // 2: Role
-	(*User)(nil),     // 3: User
+	(Role_Status)(0), // 0: identity.Role.Status
+	(User_Status)(0), // 1: identity.User.Status
+	(*Role)(nil),     // 2: identity.Role
+	(*User)(nil),     // 3: identity.User
 }
 var file_identity_identity_common_proto_depIdxs = []int32{
-	0, // 0: Role.status:type_name -> Role.Status
-	1, // 1: User.status:type_name -> User.Status
-	2, // 2: User.roles:type_name -> Role
+	0, // 0: identity.Role.status:type_name -> identity.Role.Status
+	1, // 1: identity.User.status:type_name -> identity.User.Status
+	2, // 2: identity.User.roles:type_name -> identity.Role
 	3, // [3:3] is the sub-list for method output_type
 	3, // [3:3] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name

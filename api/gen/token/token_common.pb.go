@@ -87,7 +87,7 @@ type Token struct {
 	NotBefore     int64                  `protobuf:"varint,6,opt,name=not_before,json=notBefore,proto3" json:"not_before,omitempty"`
 	ExpiresAt     int64                  `protobuf:"varint,7,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	Uid           uint32                 `protobuf:"varint,8,opt,name=uid,proto3" json:"uid,omitempty"`
-	Type          Token_TokenType        `protobuf:"varint,9,opt,name=type,proto3,enum=Token_TokenType" json:"type,omitempty"`
+	Type          Token_TokenType        `protobuf:"varint,9,opt,name=type,proto3,enum=token.Token_TokenType" json:"type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -189,7 +189,7 @@ var File_token_token_common_proto protoreflect.FileDescriptor
 
 const file_token_token_common_proto_rawDesc = "" +
 	"\n" +
-	"\x18token/token_common.proto\"\xee\x02\n" +
+	"\x18token/token_common.proto\x12\x05token\"\xf4\x02\n" +
 	"\x05Token\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
 	"\x06issuer\x18\x02 \x01(\tR\x06issuer\x12\x18\n" +
@@ -200,8 +200,8 @@ const file_token_token_common_proto_rawDesc = "" +
 	"not_before\x18\x06 \x01(\x03R\tnotBefore\x12\x1d\n" +
 	"\n" +
 	"expires_at\x18\a \x01(\x03R\texpiresAt\x12\x10\n" +
-	"\x03uid\x18\b \x01(\rR\x03uid\x12$\n" +
-	"\x04type\x18\t \x01(\x0e2\x10.Token.TokenTypeR\x04type\"t\n" +
+	"\x03uid\x18\b \x01(\rR\x03uid\x12*\n" +
+	"\x04type\x18\t \x01(\x0e2\x16.token.Token.TokenTypeR\x04type\"t\n" +
 	"\tTokenType\x12\x15\n" +
 	"\x11TokenType_UNKNOWN\x10\x00\x12\x11\n" +
 	"\rTokenType_SSO\x10\x01\x12\x10\n" +
@@ -224,11 +224,11 @@ func file_token_token_common_proto_rawDescGZIP() []byte {
 var file_token_token_common_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_token_token_common_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_token_token_common_proto_goTypes = []any{
-	(Token_TokenType)(0), // 0: Token.TokenType
-	(*Token)(nil),        // 1: Token
+	(Token_TokenType)(0), // 0: token.Token.TokenType
+	(*Token)(nil),        // 1: token.Token
 }
 var file_token_token_common_proto_depIdxs = []int32{
-	0, // 0: Token.type:type_name -> Token.TokenType
+	0, // 0: token.Token.type:type_name -> token.Token.TokenType
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

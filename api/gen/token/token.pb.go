@@ -8,7 +8,6 @@ package token
 
 import (
 	base "github.com/dizzrt/dauth/api/gen/base"
-	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -282,7 +281,7 @@ func (x *IssueResponse) GetBaseResp() *base.BaseResp {
 type ValidateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	Type          Token_TokenType        `protobuf:"varint,2,opt,name=type,proto3,enum=Token_TokenType" json:"type,omitempty"`
+	Type          Token_TokenType        `protobuf:"varint,2,opt,name=type,proto3,enum=token.Token_TokenType" json:"type,omitempty"`
 	ClientId      uint32                 `protobuf:"varint,3,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
 	Base          *base.Base             `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -515,7 +514,7 @@ var File_token_token_proto protoreflect.FileDescriptor
 
 const file_token_token_proto_rawDesc = "" +
 	"\n" +
-	"\x11token/token.proto\x12\x05token\x1a\x0fbase/base.proto\x1a\x18token/token_common.proto\x1a\x1cgoogle/api/annotations.proto\"I\n" +
+	"\x11token/token.proto\x12\x05token\x1a\x0fbase/base.proto\x1a\x18token/token_common.proto\"I\n" +
 	"\x14IssueSSOTokenRequest\x12\x10\n" +
 	"\x03uid\x18\x01 \x01(\rR\x03uid\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
@@ -536,15 +535,15 @@ const file_token_token_proto_rawDesc = "" +
 	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\x12(\n" +
 	"\x10access_expire_at\x18\x03 \x01(\x03R\x0eaccessExpireAt\x12*\n" +
 	"\x11refresh_expire_at\x18\x04 \x01(\x03R\x0frefreshExpireAt\x12,\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"\x8b\x01\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"\x91\x01\n" +
 	"\x0fValidateRequest\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\x12$\n" +
-	"\x04type\x18\x02 \x01(\x0e2\x10.Token.TokenTypeR\x04type\x12\x1b\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12*\n" +
+	"\x04type\x18\x02 \x01(\x0e2\x16.token.Token.TokenTypeR\x04type\x12\x1b\n" +
 	"\tclient_id\x18\x03 \x01(\rR\bclientId\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"^\n" +
-	"\x10ValidateResponse\x12\x1c\n" +
-	"\x05token\x18\x01 \x01(\v2\x06.TokenR\x05token\x12,\n" +
+	".base.BaseR\x04base\"d\n" +
+	"\x10ValidateResponse\x12\"\n" +
+	"\x05token\x18\x01 \x01(\v2\f.token.TokenR\x05token\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"^\n" +
 	"\rRevokeRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x16\n" +
@@ -585,17 +584,17 @@ var file_token_token_proto_goTypes = []any{
 	(*RevokeResponse)(nil),        // 7: token.RevokeResponse
 	(*base.Base)(nil),             // 8: base.Base
 	(*base.BaseResp)(nil),         // 9: base.BaseResp
-	(Token_TokenType)(0),          // 10: Token.TokenType
-	(*Token)(nil),                 // 11: Token
+	(Token_TokenType)(0),          // 10: token.Token.TokenType
+	(*Token)(nil),                 // 11: token.Token
 }
 var file_token_token_proto_depIdxs = []int32{
 	8,  // 0: token.IssueSSOTokenRequest.base:type_name -> base.Base
 	9,  // 1: token.IssueSSOTokenResponse.base_resp:type_name -> base.BaseResp
 	8,  // 2: token.IssueRequest.base:type_name -> base.Base
 	9,  // 3: token.IssueResponse.base_resp:type_name -> base.BaseResp
-	10, // 4: token.ValidateRequest.type:type_name -> Token.TokenType
+	10, // 4: token.ValidateRequest.type:type_name -> token.Token.TokenType
 	8,  // 5: token.ValidateRequest.base:type_name -> base.Base
-	11, // 6: token.ValidateResponse.token:type_name -> Token
+	11, // 6: token.ValidateResponse.token:type_name -> token.Token
 	9,  // 7: token.ValidateResponse.base_resp:type_name -> base.BaseResp
 	8,  // 8: token.RevokeRequest.base:type_name -> base.Base
 	9,  // 9: token.RevokeResponse.base_resp:type_name -> base.BaseResp

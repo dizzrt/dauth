@@ -1,79 +1,79 @@
 syntax = "proto3";
 
 package token;
-option go_package = "github.com/dizzrt/dauth/api/gen/token;token";
 
 import "base/base.proto";
 import "token/token_common.proto";
-import "google/api/annotations.proto";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/token;token";
 
 message IssueSSOTokenRequest {
-    uint32 uid = 1;
+  uint32 uid = 1;
 
-    base.Base base = 255;
+  base.Base base = 255;
 }
 
 message IssueSSOTokenResponse {
-    string token = 1;
-    int64 expires_at = 2;
+  string token = 1;
+  int64 expires_at = 2;
 
-    base.BaseResp base_resp = 255;
+  base.BaseResp base_resp = 255;
 }
 
 message IssueRequest {
-    uint32 uid = 1;
-    uint32 client_id = 2;
-    string scope = 3;
+  uint32 uid = 1;
+  uint32 client_id = 2;
+  string scope = 3;
 
-    base.Base base = 255;
+  base.Base base = 255;
 }
 
 message IssueResponse {
-    string access_token = 1;
-    string refresh_token = 2;
-    int64 access_expire_at = 3;
-    int64 refresh_expire_at = 4;
+  string access_token = 1;
+  string refresh_token = 2;
+  int64 access_expire_at = 3;
+  int64 refresh_expire_at = 4;
 
-    base.BaseResp base_resp = 255;
+  base.BaseResp base_resp = 255;
 }
 
 message ValidateRequest {
-    string token = 1;
-    Token.TokenType type = 2;
-    uint32 client_id = 3;
+  string token = 1;
+  Token.TokenType type = 2;
+  uint32 client_id = 3;
 
-    base.Base base = 255;
+  base.Base base = 255;
 }
 
 message ValidateResponse {
-    Token token = 1;
+  Token token = 1;
 
-    base.BaseResp base_resp = 255;
+  base.BaseResp base_resp = 255;
 }
 
 message RevokeRequest {
-    string token = 1;
-    string reason = 2;
+  string token = 1;
+  string reason = 2;
 
-    base.Base base = 255;
+  base.Base base = 255;
 }
 
 message RevokeResponse {
-    bool is_success = 1;
+  bool is_success = 1;
 
-    base.BaseResp base_resp = 255;
+  base.BaseResp base_resp = 255;
 }
 
 service TokenService {
-    // IssueSSOToken issues a SSO token for the given uid.
-    rpc IssueSSOToken(IssueSSOTokenRequest) returns (IssueSSOTokenResponse) {}
-    
-    // Issue issues a token for the given uid and client_id.
-    rpc Issue(IssueRequest) returns (IssueResponse) {}
+  // IssueSSOToken issues a SSO token for the given uid.
+  rpc IssueSSOToken(IssueSSOTokenRequest) returns (IssueSSOTokenResponse) {}
 
-    // Validate validates a token.
-    rpc Validate(ValidateRequest) returns (ValidateResponse) {}
+  // Issue issues a token for the given uid and client_id.
+  rpc Issue(IssueRequest) returns (IssueResponse) {}
 
-    // Revoke revokes a token.
-    rpc Revoke(RevokeRequest) returns (RevokeResponse) {}
+  // Validate validates a token.
+  rpc Validate(ValidateRequest) returns (ValidateResponse) {}
+
+  // Revoke revokes a token.
+  rpc Revoke(RevokeRequest) returns (RevokeResponse) {}
 }

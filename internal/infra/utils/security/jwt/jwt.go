@@ -69,7 +69,7 @@ func (m *jwtManager) Sign(ctx context.Context, claims jwt.Claims, secret []byte)
 
 func (m *jwtManager) Verify(ctx context.Context, token string, secret []byte, claims jwt.Claims) error {
 	if claims == nil {
-		return errdef.TokenInvalidWithMsg("claims is nil")
+		return errdef.TokenInvalid().WithMessage("claims is nil")
 	}
 
 	if secret == nil {
@@ -78,18 +78,19 @@ func (m *jwtManager) Verify(ctx context.Context, token string, secret []byte, cl
 
 	jt, err := jwt.ParseWithClaims(token, claims, func(t *jwt.Token) (any, error) {
 		if t.Method.Alg() != m.algorithm {
-			return nil, errdef.TokenInvalidWithMsg("unexpected signing method: %v", t.Header["alg"])
+			return nil, errdef.TokenInvalid().WithMessage("unexpected signing method: %v", t.Header["alg"])
 		}
 
 		return secret, nil
 	})
 
 	if err != nil {
+		// TODO need fix
 		// if errors.Is(err, jwt.ErrTokenExpired) {
 		// 	fmt.Println("XX1")
 		// 	return errdef.TokenExpired()
 		// }
-		err = errdef.TokenInvalidWithMsg("parse token failed").WithCause(err)
+		err = errdef.TokenInvalid().WithMessage("parse token failed").WithCause(err)
 		if errors.Is(err, jwt.ErrTokenExpired) {
 			err = errdef.TokenExpired().WithCause(err)
 		}
@@ -97,7 +98,6 @@ func (m *jwtManager) Verify(ctx context.Context, token string, secret []byte, cl
 	}
 
 	if !jt.Valid {
-		fmt.Println("X1")
 		return errdef.TokenExpired()
 	}
 

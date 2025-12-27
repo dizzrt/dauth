@@ -507,7 +507,7 @@ var File_sp_sp_proto protoreflect.FileDescriptor
 
 const file_sp_sp_proto_rawDesc = "" +
 	"\n" +
-	"\vsp/sp.proto\x12\x02sp\x1a\x0fbase/base.proto\x1a\x12sp/sp_common.proto\x1a\x1cgoogle/api/annotations.proto\"\xc8\x01\n" +
+	"\vsp/sp.proto\x12\x02sp\x1a\x0fbase/base.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x12sp/sp_common.proto\"\xc8\x01\n" +
 	"\x1cCreateServiceProviderRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x16\n" +
@@ -522,17 +522,17 @@ const file_sp_sp_proto_rawDesc = "" +
 	"\x19GetServiceProviderRequest\x12\x13\n" +
 	"\x05sp_id\x18\x01 \x01(\rR\x04spId\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"l\n" +
-	"\x1aGetServiceProviderResponse\x12 \n" +
-	"\x02sp\x18\x01 \x01(\v2\x10.ServiceProviderR\x02sp\x12,\n" +
+	".base.BaseR\x04base\"o\n" +
+	"\x1aGetServiceProviderResponse\x12#\n" +
+	"\x02sp\x18\x01 \x01(\v2\x13.sp.ServiceProviderR\x02sp\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"n\n" +
 	"\x1aListServiceProviderRequest\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\rR\x04page\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\rR\bpageSize\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"\x8c\x01\n" +
-	"\x1bListServiceProviderResponse\x12)\n" +
-	"\asp_list\x18\x01 \x03(\v2\x10.ServiceProviderR\x06spList\x12\x14\n" +
+	".base.BaseR\x04base\"\x8f\x01\n" +
+	"\x1bListServiceProviderResponse\x12,\n" +
+	"\asp_list\x18\x01 \x03(\v2\x13.sp.ServiceProviderR\x06spList\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\rR\x05total\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"l\n" +
 	"\x1eValidateServiceProviderRequest\x12\x13\n" +
@@ -575,16 +575,16 @@ var file_sp_sp_proto_goTypes = []any{
 	(*ValidateServiceProviderResponse)(nil), // 7: sp.ValidateServiceProviderResponse
 	(*base.Base)(nil),                       // 8: base.Base
 	(*base.BaseResp)(nil),                   // 9: base.BaseResp
-	(*ServiceProvider)(nil),                 // 10: ServiceProvider
+	(*ServiceProvider)(nil),                 // 10: sp.ServiceProvider
 }
 var file_sp_sp_proto_depIdxs = []int32{
 	8,  // 0: sp.CreateServiceProviderRequest.base:type_name -> base.Base
 	9,  // 1: sp.CreateServiceProviderResponse.base_resp:type_name -> base.BaseResp
 	8,  // 2: sp.GetServiceProviderRequest.base:type_name -> base.Base
-	10, // 3: sp.GetServiceProviderResponse.sp:type_name -> ServiceProvider
+	10, // 3: sp.GetServiceProviderResponse.sp:type_name -> sp.ServiceProvider
 	9,  // 4: sp.GetServiceProviderResponse.base_resp:type_name -> base.BaseResp
 	8,  // 5: sp.ListServiceProviderRequest.base:type_name -> base.Base
-	10, // 6: sp.ListServiceProviderResponse.sp_list:type_name -> ServiceProvider
+	10, // 6: sp.ListServiceProviderResponse.sp_list:type_name -> sp.ServiceProvider
 	9,  // 7: sp.ListServiceProviderResponse.base_resp:type_name -> base.BaseResp
 	8,  // 8: sp.ValidateServiceProviderRequest.base:type_name -> base.Base
 	9,  // 9: sp.ValidateServiceProviderResponse.base_resp:type_name -> base.BaseResp

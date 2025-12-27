@@ -4,7 +4,7 @@
 ## Table of Contents
 
 - [auth/auht_common.proto](#auth_auht_common-proto)
-    - [AuthorizationCode](#-AuthorizationCode)
+    - [AuthorizationCode](#auth-AuthorizationCode)
   
 - [auth/auth.proto](#auth_auth-proto)
     - [ExchangeTokenRequest](#auth-ExchangeTokenRequest)
@@ -25,7 +25,7 @@
 
 
 
-<a name="-AuthorizationCode"></a>
+<a name="auth-AuthorizationCode"></a>
 
 ### AuthorizationCode
 

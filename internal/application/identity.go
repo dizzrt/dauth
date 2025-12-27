@@ -41,30 +41,30 @@ func NewIdentityApplication(userBiz biz.UserBiz, roleBiz biz.RoleBiz) IdentityAp
 func (app *identityApplication) Login(ctx context.Context, req *identity.LoginRequest) (*identity.LoginResponse, error) {
 	var account string
 	if account = req.GetAccount(); account == "" {
-		return nil, errdef.IdentityInvalidAccountWithMsg("account can not be empty")
+		return nil, errdef.InvalidArgument().WithMessage("account can not be empty")
 	}
 
 	// only support email yet
 	if err := utils.Validate().Var(account, "email"); err != nil {
-		return nil, errdef.IdentityInvalidAccountWithMsg("malformed email").WithCause(err)
+		return nil, errdef.InvalidArgument().WithMessage("malformed email").WithCause(err)
 	}
 
 	var pwd string
 	if pwd = req.GetPassword(); pwd == "" {
-		return nil, errdef.IdentityWrongPassword()
+		return nil, errdef.InvalidArgument().WithMessage("password can not be empty")
 	}
 
 	// authenticate user
 	user, err := app.userBiz.Authenticate(ctx, account, pwd)
 	if err != nil {
-		return nil, err
+		return nil, errdef.IdentityAuthenticationFailed().WithCause(err)
 	}
 
 	// issue sso token
 	resp, err := dauth.IssueSSOToken(ctx, user.ID)
 	if err != nil || resp.GetToken() == "" {
 		log.CtxErrorf(ctx, "user `%d` has authenticated successfully, but failed to issue sso token; err: %v", user.ID, err)
-		return nil, err
+		return nil, errdef.IdentityAuthenticationFailed().WithCause(err)
 	}
 
 	// update last login time
@@ -85,16 +85,16 @@ func (app *identityApplication) Login(ctx context.Context, req *identity.LoginRe
 func (app *identityApplication) Authenticate(ctx context.Context, req *identity.AuthenticateRequest) (*identity.AuthenticateResponse, error) {
 	var account string // only support email yet
 	if account = req.GetAccount(); account == "" {
-		return nil, errdef.IdentityInvalidAccountWithMsg("account can not be empty")
+		return nil, errdef.InvalidArgument().WithMessage("account can not be empty")
 	}
 
 	if err := utils.Validate().Var(account, "email"); err != nil {
-		return nil, errdef.IdentityInvalidAccountWithMsg("malformed email").WithCause(err)
+		return nil, errdef.InvalidArgument().WithMessage("malformed email").WithCause(err)
 	}
 
 	var pwd string
 	if pwd = req.GetPassword(); pwd == "" {
-		return nil, errdef.IdentityWrongPassword()
+		return nil, errdef.InvalidArgument().WithMessage("password can not be empty")
 	}
 
 	user, err := app.userBiz.Authenticate(ctx, account, pwd)
@@ -118,7 +118,7 @@ func (app *identityApplication) CreateUser(ctx context.Context, req *identity.Cr
 
 	// validate user
 	if err := utils.Validate().Struct(user); err != nil {
-		return nil, errdef.InvalidParams().WithCause(err)
+		return nil, errdef.InvalidArgument().WithCause(err)
 	}
 
 	uid, err := app.userBiz.CreateUser(ctx, user)
@@ -163,7 +163,7 @@ func (app *identityApplication) UpdateUserPassword(ctx context.Context, req *ide
 	uid := req.GetId()
 	pwd := req.GetPassword()
 	if pwd == "" {
-		return nil, errdef.IdentityWrongPassword()
+		return nil, errdef.InvalidArgument().WithMessage("password can not be empty")
 	}
 
 	err := app.userBiz.UpdateUserPassword(ctx, uid, pwd)

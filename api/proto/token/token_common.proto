@@ -1,25 +1,27 @@
 syntax = "proto3";
 
+package token;
+
 option go_package = "github.com/dizzrt/dauth/api/gen/token;token";
 
 // map to domain/token/entity/token.go BaseToken
 message Token {
-    enum TokenType {
-        TokenType_UNKNOWN = 0;
-        TokenType_SSO = 1;
-        TokenType_ID = 2;
-        TokenType_ACCESS = 3;
-        TokenType_REFRESH = 4;
-    }
+  enum TokenType {
+    TokenType_UNKNOWN = 0;
+    TokenType_SSO = 1;
+    TokenType_ID = 2;
+    TokenType_ACCESS = 3;
+    TokenType_REFRESH = 4;
+  }
 
-    string id = 1;
-    string issuer = 2;
-    string subject = 3;
-    repeated string audience = 4;
-    int64 issued_at = 5;
-    int64 not_before = 6;
-    int64 expires_at = 7;
+  string id = 1;
+  string issuer = 2;
+  string subject = 3;
+  repeated string audience = 4;
+  int64 issued_at = 5;
+  int64 not_before = 6;
+  int64 expires_at = 7;
 
-    uint32 uid = 8;
-    TokenType type = 9;
+  uint32 uid = 8;
+  TokenType type = 9;
 }

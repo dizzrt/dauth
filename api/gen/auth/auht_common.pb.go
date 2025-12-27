@@ -133,7 +133,7 @@ var File_auth_auht_common_proto protoreflect.FileDescriptor
 
 const file_auth_auht_common_proto_rawDesc = "" +
 	"\n" +
-	"\x16auth/auht_common.proto\"\xf4\x01\n" +
+	"\x16auth/auht_common.proto\x12\x04auth\"\xf4\x01\n" +
 	"\x11AuthorizationCode\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x17\n" +
@@ -160,7 +160,7 @@ func file_auth_auht_common_proto_rawDescGZIP() []byte {
 
 var file_auth_auht_common_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_auth_auht_common_proto_goTypes = []any{
-	(*AuthorizationCode)(nil), // 0: AuthorizationCode
+	(*AuthorizationCode)(nil), // 0: auth.AuthorizationCode
 }
 var file_auth_auht_common_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

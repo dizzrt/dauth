@@ -4,11 +4,11 @@
 ## Table of Contents
 
 - [identity/identity_common.proto](#identity_identity_common-proto)
-    - [Role](#-Role)
-    - [User](#-User)
+    - [Role](#identity-Role)
+    - [User](#identity-User)
   
-    - [Role.Status](#-Role-Status)
-    - [User.Status](#-User-Status)
+    - [Role.Status](#identity-Role-Status)
+    - [User.Status](#identity-User-Status)
   
 - [identity/role.proto](#identity_role-proto)
     - [AssignRolesRequest](#identity-AssignRolesRequest)
@@ -53,7 +53,7 @@
 
 
 
-<a name="-Role"></a>
+<a name="identity-Role"></a>
 
 ### Role
 
@@ -64,7 +64,7 @@
 | id | [uint32](#uint32) |  |  |
 | name | [string](#string) |  |  |
 | description | [string](#string) |  |  |
-| status | [Role.Status](#Role-Status) |  |  |
+| status | [Role.Status](#identity-Role-Status) |  |  |
 | created_at | [int64](#int64) |  |  |
 | updated_at | [int64](#int64) |  |  |
 
@@ -73,7 +73,7 @@
 
 
 
-<a name="-User"></a>
+<a name="identity-User"></a>
 
 ### User
 
@@ -84,8 +84,8 @@
 | id | [uint32](#uint32) |  |  |
 | email | [string](#string) |  |  |
 | username | [string](#string) |  |  |
-| status | [User.Status](#User-Status) |  |  |
-| roles | [Role](#Role) | repeated |  |
+| status | [User.Status](#identity-User-Status) |  |  |
+| roles | [Role](#identity-Role) | repeated |  |
 | last_login_at | [int64](#int64) |  |  |
 | created_at | [int64](#int64) |  |  |
 | updated_at | [int64](#int64) |  |  |
@@ -97,7 +97,7 @@
  
 
 
-<a name="-Role-Status"></a>
+<a name="identity-Role-Status"></a>
 
 ### Role.Status
 
@@ -111,7 +111,7 @@
 
 
 
-<a name="-User-Status"></a>
+<a name="identity-User-Status"></a>
 
 ### User.Status
 
@@ -148,7 +148,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | id | [uint32](#uint32) |  |  |
-| roles | [Role](#Role) | repeated |  |
+| roles | [Role](#identity-Role) | repeated |  |
 | base | [base.Base](#base-Base) |  |  |
 
 
@@ -164,7 +164,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| user | [User](#User) |  |  |
+| user | [User](#identity-User) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
@@ -197,7 +197,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| role | [Role](#Role) |  |  |
+| role | [Role](#identity-Role) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
@@ -259,7 +259,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| roles | [Role](#Role) | repeated |  |
+| roles | [Role](#identity-Role) | repeated |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
@@ -276,7 +276,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | id | [uint32](#uint32) |  |  |
-| roles | [Role](#Role) | repeated |  |
+| roles | [Role](#identity-Role) | repeated |  |
 | base | [base.Base](#base-Base) |  |  |
 
 
@@ -292,7 +292,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| user | [User](#User) |  |  |
+| user | [User](#identity-User) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
@@ -326,7 +326,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| role | [Role](#Role) |  |  |
+| role | [Role](#identity-Role) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
@@ -390,7 +390,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| user | [User](#User) |  |  |
+| user | [User](#identity-User) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
@@ -456,7 +456,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| user | [User](#User) |  |  |
+| user | [User](#identity-User) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
@@ -489,7 +489,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| user | [User](#User) |  |  |
+| user | [User](#identity-User) |  |  |
 | token | [string](#string) |  |  |
 | token_expires_at | [int64](#int64) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
@@ -540,7 +540,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | id | [uint32](#uint32) |  |  |
-| status | [User.Status](#User-Status) |  |  |
+| status | [User.Status](#identity-User-Status) |  |  |
 | base | [base.Base](#base-Base) |  |  |
 
 
