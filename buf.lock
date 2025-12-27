@@ -2,8 +2,8 @@
 version: v2
 deps:
   - name: buf.build/dizzrt/ellie
-    commit: c48d82487e784b29a98ba928f08ba8f7
-    digest: b5:ed2b7071fa4de2181be573892c3d239bd8c36c0a7abcf6f7150dd53a1e33d282ba7114925af3f2d10cb59057ab2c510805a05e22d98bd4ca59254ced10270c7a
+    commit: 1e020bbee6974c13861349355cfb268b
+    digest: b5:a1188704cf79a2c78a76968ad8ed7eadfcba1dd03dd641cbf40df80872c5c46cb96a376281da925ac50fdd857edc8e7fbdb41dfd63475c510c3d9ee5ad8b88a8
   - name: buf.build/googleapis/googleapis
     commit: 004180b77378443887d3b55cabc00384
     digest: b5:e8f475fe3330f31f5fd86ac689093bcd274e19611a09db91f41d637cb9197881ce89882b94d13a58738e53c91c6e4bae7dc1feba85f590164c975a89e25115dc

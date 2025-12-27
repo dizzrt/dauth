@@ -25,14 +25,14 @@ const (
 type Errors int32
 
 const (
-	Errors_UNKNOWN Errors = 0
+	Errors_UNSPECIFIED Errors = 0
+	Errors_Unknown     Errors = -1
 	// biz - type 1
 	// common errors
-	Errors_Success       Errors = 100000
-	Errors_InvalidParams Errors = 100001
+	Errors_Success         Errors = 100000
+	Errors_InvalidArgument Errors = 100001
 	// identity errors (domain: 01)
-	Errors_IdentityInvalidAccount Errors = 101000
-	Errors_IdentityWrongPassword  Errors = 101001
+	Errors_IdentityAuthenticationFailed Errors = 101000
 	// token errors (domain: 03)
 	Errors_TokenInvalid Errors = 103000
 	Errors_TokenExpired Errors = 103001
@@ -43,7 +43,7 @@ const (
 	Errors_AuthInvalidScope       Errors = 104002
 	// sys - type 2
 	// common
-	Errors_UnknownInternalError Errors = 200000
+	Errors_Internal Errors = 200000
 	// db errors (module: 01)
 	Errors_RecordNotFound Errors = 201000
 	Errors_DuplicatedKey  Errors = 201001
@@ -52,36 +52,36 @@ const (
 // Enum value maps for Errors.
 var (
 	Errors_name = map[int32]string{
-		0:      "UNKNOWN",
+		0:      "UNSPECIFIED",
+		-1:     "Unknown",
 		100000: "Success",
-		100001: "InvalidParams",
-		101000: "IdentityInvalidAccount",
-		101001: "IdentityWrongPassword",
+		100001: "InvalidArgument",
+		101000: "IdentityAuthenticationFailed",
 		103000: "TokenInvalid",
 		103001: "TokenExpired",
 		103002: "TokenRevoked",
 		104000: "AuthInvalidClient",
 		104001: "AuthInvalidRedirectURI",
 		104002: "AuthInvalidScope",
-		200000: "UnknownInternalError",
+		200000: "Internal",
 		201000: "RecordNotFound",
 		201001: "DuplicatedKey",
 	}
 	Errors_value = map[string]int32{
-		"UNKNOWN":                0,
-		"Success":                100000,
-		"InvalidParams":          100001,
-		"IdentityInvalidAccount": 101000,
-		"IdentityWrongPassword":  101001,
-		"TokenInvalid":           103000,
-		"TokenExpired":           103001,
-		"TokenRevoked":           103002,
-		"AuthInvalidClient":      104000,
-		"AuthInvalidRedirectURI": 104001,
-		"AuthInvalidScope":       104002,
-		"UnknownInternalError":   200000,
-		"RecordNotFound":         201000,
-		"DuplicatedKey":          201001,
+		"UNSPECIFIED":                  0,
+		"Unknown":                      -1,
+		"Success":                      100000,
+		"InvalidArgument":              100001,
+		"IdentityAuthenticationFailed": 101000,
+		"TokenInvalid":                 103000,
+		"TokenExpired":                 103001,
+		"TokenRevoked":                 103002,
+		"AuthInvalidClient":            104000,
+		"AuthInvalidRedirectURI":       104001,
+		"AuthInvalidScope":             104002,
+		"Internal":                     200000,
+		"RecordNotFound":               201000,
+		"DuplicatedKey":                201001,
 	}
 )
 
@@ -116,24 +116,34 @@ var File_errdef_errdef_proto protoreflect.FileDescriptor
 
 const file_errdef_errdef_proto_rawDesc = "" +
 	"\n" +
-	"\x13errdef/errdef.proto\x12\x06errdef\x1a\x19ellie/errors/errors.proto*\xbc\x03\n" +
-	"\x06Errors\x12\x11\n" +
-	"\aUNKNOWN\x10\x00\x1a\x04\x88\xb2\x19\x00\x12\x19\n" +
+	"\x13errdef/errdef.proto\x12\x06errdef\x1a\x19ellie/errors/errors.proto*\xe2\x03\n" +
+	"\x06Errors\x12\x0f\n" +
+	"\vUNSPECIFIED\x10\x00\x12'\n" +
+	"\aUnknown\x10\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\x1a\x11\x88\xb2\x19\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\x90\xb2\x19\x03\x12\x19\n" +
 	"\aSuccess\x10\xa0\x8d\x06\x1a\n" +
-	"\x88\xb2\x19\xa0\x8d\x06\x90\xb2\x19\x01\x12\x1f\n" +
-	"\rInvalidParams\x10\xa1\x8d\x06\x1a\n" +
-	"\x88\xb2\x19\xa1\x8d\x06\x90\xb2\x19\x04\x12$\n" +
-	"\x16IdentityInvalidAccount\x10\x88\x95\x06\x1a\x06\x88\xb2\x19\x88\x95\x06\x12#\n" +
-	"\x15IdentityWrongPassword\x10\x89\x95\x06\x1a\x06\x88\xb2\x19\x89\x95\x06\x12\x1a\n" +
-	"\fTokenInvalid\x10ؤ\x06\x1a\x06\x88\xb2\x19ؤ\x06\x12\x1a\n" +
-	"\fTokenExpired\x10٤\x06\x1a\x06\x88\xb2\x19٤\x06\x12\x1a\n" +
-	"\fTokenRevoked\x10ڤ\x06\x1a\x06\x88\xb2\x19ڤ\x06\x12\x1f\n" +
-	"\x11AuthInvalidClient\x10\xc0\xac\x06\x1a\x06\x88\xb2\x19\xc0\xac\x06\x12$\n" +
-	"\x16AuthInvalidRedirectURI\x10\xc1\xac\x06\x1a\x06\x88\xb2\x19\xc1\xac\x06\x12\x1e\n" +
-	"\x10AuthInvalidScope\x10¬\x06\x1a\x06\x88\xb2\x19¬\x06\x12\"\n" +
-	"\x14UnknownInternalError\x10\xc0\x9a\f\x1a\x06\x88\xb2\x19\xc0\x9a\f\x12\x1c\n" +
-	"\x0eRecordNotFound\x10\xa8\xa2\f\x1a\x06\x88\xb2\x19\xa8\xa2\f\x12\x1b\n" +
-	"\rDuplicatedKey\x10\xa9\xa2\f\x1a\x06\x88\xb2\x19\xa9\xa2\fB/Z-github.com/dizzrt/dauth/api/gen/errdef;errdefb\x06proto3"
+	"\x88\xb2\x19\xa0\x8d\x06\x90\xb2\x19\x01\x12!\n" +
+	"\x0fInvalidArgument\x10\xa1\x8d\x06\x1a\n" +
+	"\x88\xb2\x19\xa1\x8d\x06\x90\xb2\x19\x04\x12.\n" +
+	"\x1cIdentityAuthenticationFailed\x10\x88\x95\x06\x1a\n" +
+	"\x88\xb2\x19\x88\x95\x06\x90\xb2\x19\x11\x12\x1e\n" +
+	"\fTokenInvalid\x10ؤ\x06\x1a\n" +
+	"\x88\xb2\x19ؤ\x06\x90\xb2\x19\x11\x12\x1e\n" +
+	"\fTokenExpired\x10٤\x06\x1a\n" +
+	"\x88\xb2\x19٤\x06\x90\xb2\x19\x11\x12\x1e\n" +
+	"\fTokenRevoked\x10ڤ\x06\x1a\n" +
+	"\x88\xb2\x19ڤ\x06\x90\xb2\x19\x11\x12#\n" +
+	"\x11AuthInvalidClient\x10\xc0\xac\x06\x1a\n" +
+	"\x88\xb2\x19\xc0\xac\x06\x90\xb2\x19\b\x12(\n" +
+	"\x16AuthInvalidRedirectURI\x10\xc1\xac\x06\x1a\n" +
+	"\x88\xb2\x19\xc1\xac\x06\x90\xb2\x19\x04\x12\"\n" +
+	"\x10AuthInvalidScope\x10¬\x06\x1a\n" +
+	"\x88\xb2\x19¬\x06\x90\xb2\x19\x04\x12\x1a\n" +
+	"\bInternal\x10\xc0\x9a\f\x1a\n" +
+	"\x88\xb2\x19\xc0\x9a\f\x90\xb2\x19\x0e\x12 \n" +
+	"\x0eRecordNotFound\x10\xa8\xa2\f\x1a\n" +
+	"\x88\xb2\x19\xa8\xa2\f\x90\xb2\x19\x06\x12\x1f\n" +
+	"\rDuplicatedKey\x10\xa9\xa2\f\x1a\n" +
+	"\x88\xb2\x19\xa9\xa2\f\x90\xb2\x19\aB/Z-github.com/dizzrt/dauth/api/gen/errdef;errdefb\x06proto3"
 
 var (
 	file_errdef_errdef_proto_rawDescOnce sync.Once

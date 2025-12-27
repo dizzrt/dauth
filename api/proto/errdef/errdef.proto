@@ -13,7 +13,12 @@ option go_package = "github.com/dizzrt/dauth/api/gen/errdef;errdef";
 //   e.g.   1      00              000
 
 enum Errors {
-  UNKNOWN = 0 [(ellie.errors.code) = 0];
+  UNSPECIFIED = 0;
+
+  Unknown = -1 [
+    (ellie.errors.code) = -1,
+    (ellie.errors.status) = ERROR_STATUS_UNKNOWN
+  ];
 
   // biz - type 1
   // common errors
@@ -22,39 +27,66 @@ enum Errors {
     (ellie.errors.status) = ERROR_STATUS_OK
   ];
 
-  InvalidParams = 100001 [
+  InvalidArgument = 100001 [
     (ellie.errors.code) = 100001,
     (ellie.errors.status) = ERROR_STATUS_INVALID_ARGUMENT
   ];
 
   // identity errors (domain: 01)
-  IdentityInvalidAccount = 101000 [
+  IdentityAuthenticationFailed = 101000 [
     (ellie.errors.code) = 101000,
-    (ellie.errors.status) = ERROR_STATUS_INVALID_ARGUMENT
-  ];
-
-  IdentityWrongPassword = 101001 [
-    (ellie.errors.code) = 101001,
-    (ellie.errors.status) = ERROR_STATUS_INVALID_ARGUMENT
+    (ellie.errors.status) = ERROR_STATUS_UNAUTHENTICATED
   ];
 
   // sp errors (domain: 02)
 
   // token errors (domain: 03)
-  TokenInvalid = 103000 [(ellie.errors.code) = 103000];
-  TokenExpired = 103001 [(ellie.errors.code) = 103001];
-  TokenRevoked = 103002 [(ellie.errors.code) = 103002];
+  TokenInvalid = 103000 [
+    (ellie.errors.code) = 103000,
+    (ellie.errors.status) = ERROR_STATUS_UNAUTHENTICATED
+  ];
+
+  TokenExpired = 103001 [
+    (ellie.errors.code) = 103001,
+    (ellie.errors.status) = ERROR_STATUS_UNAUTHENTICATED
+  ];
+
+  TokenRevoked = 103002 [
+    (ellie.errors.code) = 103002,
+    (ellie.errors.status) = ERROR_STATUS_UNAUTHENTICATED
+  ];
 
   // auth errors (domain: 04)
-  AuthInvalidClient = 104000 [(ellie.errors.code) = 104000];
-  AuthInvalidRedirectURI = 104001 [(ellie.errors.code) = 104001];
-  AuthInvalidScope = 104002 [(ellie.errors.code) = 104002];
+  AuthInvalidClient = 104000 [
+    (ellie.errors.code) = 104000,
+    (ellie.errors.status) = ERROR_STATUS_PERMISSION_DENIED
+  ];
+
+  AuthInvalidRedirectURI = 104001 [
+    (ellie.errors.code) = 104001,
+    (ellie.errors.status) = ERROR_STATUS_INVALID_ARGUMENT
+  ];
+
+  AuthInvalidScope = 104002 [
+    (ellie.errors.code) = 104002,
+    (ellie.errors.status) = ERROR_STATUS_INVALID_ARGUMENT
+  ];
 
   // sys - type 2
   // common
-  UnknownInternalError = 200000 [(ellie.errors.code) = 200000];
+  Internal = 200000 [
+    (ellie.errors.code) = 200000,
+    (ellie.errors.status) = ERROR_STATUS_INTERNAL
+  ];
 
   // db errors (module: 01)
-  RecordNotFound = 201000 [(ellie.errors.code) = 201000];
-  DuplicatedKey = 201001 [(ellie.errors.code) = 201001];
+  RecordNotFound = 201000 [
+    (ellie.errors.code) = 201000,
+    (ellie.errors.status) = ERROR_STATUS_NOT_FOUND
+  ];
+
+  DuplicatedKey = 201001 [
+    (ellie.errors.code) = 201001,
+    (ellie.errors.status) = ERROR_STATUS_ALREADY_EXISTS
+  ];
 }
