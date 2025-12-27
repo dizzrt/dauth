@@ -1,10 +1,12 @@
 module github.com/dizzrt/dauth
 
-go 1.25.4
+go 1.25.5
+
+// replace github.com/dizzrt/ellie => ../infra/ellie
 
 require (
 	connectrpc.com/connect v1.19.0
-	github.com/dizzrt/ellie v0.3.14
+	github.com/dizzrt/ellie v0.4.4
 	github.com/dizzrt/ellie/contrib/registry/consul v1.0.0
 	github.com/gin-gonic/gin v1.11.0
 	github.com/go-playground/validator/v10 v10.28.0

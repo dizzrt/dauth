@@ -490,7 +490,7 @@ func (x *GetUserResponse) GetBaseResp() *base.BaseResp {
 type UpdateUserStatusRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Status        User_Status            `protobuf:"varint,2,opt,name=status,proto3,enum=User_Status" json:"status,omitempty"`
+	Status        User_Status            `protobuf:"varint,2,opt,name=status,proto3,enum=identity.User_Status" json:"status,omitempty"`
 	Base          *base.Base             `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -699,14 +699,14 @@ var File_identity_user_proto protoreflect.FileDescriptor
 
 const file_identity_user_proto_rawDesc = "" +
 	"\n" +
-	"\x13identity/user.proto\x12\bidentity\x1a\x0fbase/base.proto\x1a\x1eidentity/identity_common.proto\x1a\x1cgoogle/api/annotations.proto\"e\n" +
+	"\x13identity/user.proto\x12\bidentity\x1a\x0fbase/base.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1eidentity/identity_common.proto\"e\n" +
 	"\fLoginRequest\x12\x18\n" +
 	"\aaccount\x18\x01 \x01(\tR\aaccount\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"\x98\x01\n" +
-	"\rLoginResponse\x12\x19\n" +
-	"\x04user\x18\x01 \x01(\v2\x05.UserR\x04user\x12\x14\n" +
+	".base.BaseR\x04base\"\xa1\x01\n" +
+	"\rLoginResponse\x12\"\n" +
+	"\x04user\x18\x01 \x01(\v2\x0e.identity.UserR\x04user\x12\x14\n" +
 	"\x05token\x18\x02 \x01(\tR\x05token\x12(\n" +
 	"\x10token_expires_at\x18\x03 \x01(\x03R\x0etokenExpiresAt\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"l\n" +
@@ -714,9 +714,9 @@ const file_identity_user_proto_rawDesc = "" +
 	"\aaccount\x18\x01 \x01(\tR\aaccount\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"_\n" +
-	"\x14AuthenticateResponse\x12\x19\n" +
-	"\x04user\x18\x01 \x01(\v2\x05.UserR\x04user\x12,\n" +
+	".base.BaseR\x04base\"h\n" +
+	"\x14AuthenticateResponse\x12\"\n" +
+	"\x04user\x18\x01 \x01(\v2\x0e.identity.UserR\x04user\x12,\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"\x82\x01\n" +
 	"\x11CreateUserRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
@@ -730,13 +730,13 @@ const file_identity_user_proto_rawDesc = "" +
 	"\x0eGetUserRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"Z\n" +
-	"\x0fGetUserResponse\x12\x19\n" +
-	"\x04user\x18\x01 \x01(\v2\x05.UserR\x04user\x12,\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"p\n" +
+	".base.BaseR\x04base\"c\n" +
+	"\x0fGetUserResponse\x12\"\n" +
+	"\x04user\x18\x01 \x01(\v2\x0e.identity.UserR\x04user\x12,\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"y\n" +
 	"\x17UpdateUserStatusRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\x12$\n" +
-	"\x06status\x18\x02 \x01(\x0e2\f.User.StatusR\x06status\x12\x1f\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\x12-\n" +
+	"\x06status\x18\x02 \x01(\x0e2\x15.identity.User.StatusR\x06status\x12\x1f\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\n" +
 	".base.BaseR\x04base\"H\n" +
 	"\x18UpdateUserStatusResponse\x12,\n" +
@@ -784,23 +784,23 @@ var file_identity_user_proto_goTypes = []any{
 	(*UpdateUserPasswordRequest)(nil),  // 10: identity.UpdateUserPasswordRequest
 	(*UpdateUserPasswordResponse)(nil), // 11: identity.UpdateUserPasswordResponse
 	(*base.Base)(nil),                  // 12: base.Base
-	(*User)(nil),                       // 13: User
+	(*User)(nil),                       // 13: identity.User
 	(*base.BaseResp)(nil),              // 14: base.BaseResp
-	(User_Status)(0),                   // 15: User.Status
+	(User_Status)(0),                   // 15: identity.User.Status
 }
 var file_identity_user_proto_depIdxs = []int32{
 	12, // 0: identity.LoginRequest.base:type_name -> base.Base
-	13, // 1: identity.LoginResponse.user:type_name -> User
+	13, // 1: identity.LoginResponse.user:type_name -> identity.User
 	14, // 2: identity.LoginResponse.base_resp:type_name -> base.BaseResp
 	12, // 3: identity.AuthenticateRequest.base:type_name -> base.Base
-	13, // 4: identity.AuthenticateResponse.user:type_name -> User
+	13, // 4: identity.AuthenticateResponse.user:type_name -> identity.User
 	14, // 5: identity.AuthenticateResponse.base_resp:type_name -> base.BaseResp
 	12, // 6: identity.CreateUserRequest.base:type_name -> base.Base
 	14, // 7: identity.CreateUserResponse.base_resp:type_name -> base.BaseResp
 	12, // 8: identity.GetUserRequest.base:type_name -> base.Base
-	13, // 9: identity.GetUserResponse.user:type_name -> User
+	13, // 9: identity.GetUserResponse.user:type_name -> identity.User
 	14, // 10: identity.GetUserResponse.base_resp:type_name -> base.BaseResp
-	15, // 11: identity.UpdateUserStatusRequest.status:type_name -> User.Status
+	15, // 11: identity.UpdateUserStatusRequest.status:type_name -> identity.User.Status
 	12, // 12: identity.UpdateUserStatusRequest.base:type_name -> base.Base
 	14, // 13: identity.UpdateUserStatusResponse.base_resp:type_name -> base.BaseResp
 	12, // 14: identity.UpdateUserPasswordRequest.base:type_name -> base.Base

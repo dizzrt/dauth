@@ -1,12 +1,12 @@
 syntax = "proto3";
 
 package base;
+
 option go_package = "github.com/dizzrt/dauth/api/gen/base;base";
 
-message Base {
-}
+message Base {}
 
 message BaseResp {
-    uint32 code = 1;
-    string message = 2;
+  uint32 code = 1;
+  string message = 2;
 }

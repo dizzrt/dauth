@@ -181,7 +181,7 @@ func (biz *tokenBiz) Validate(ctx context.Context, req *dto.ValidateRequest) (*e
 	}
 
 	if baseToken == nil || baseToken.Type != req.TokenType {
-		return nil, errdef.TokenInvalidWithMsg("token type not match")
+		return nil, errdef.TokenInvalid().WithMessage("token type not match")
 	}
 
 	isRevoked, _, err := biz.tokenRevokeCache.IsRevoked(ctx, req.Token)

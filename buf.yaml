@@ -1,7 +1,8 @@
+# For details on buf.yaml configuration, visit https://buf.build/docs/configuration/v2/buf-yaml
 version: v2
 modules:
-  - path: proto
-    name: buf.build/example/example
+  - path: api/proto
+    name: buf.build/dauth/dauth
 
 deps:
   - buf.build/googleapis/googleapis
@@ -13,10 +14,12 @@ lint:
     - FIELD_NOT_REQUIRED
     - PACKAGE_DIRECTORY_MATCH
     - PACKAGE_NO_IMPORT_CYCLE
+    - ENUM_VALUE_UPPER_SNAKE_CASE
   disallow_comment_ignores: true
 breaking:
   use:
     - FILE
   except:
+    - FILE_SAME_PACKAGE
     - EXTENSION_NO_DELETE
     - FIELD_SAME_DEFAULT

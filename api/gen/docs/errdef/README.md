@@ -4,7 +4,7 @@
 ## Table of Contents
 
 - [errdef/errdef.proto](#errdef_errdef-proto)
-    - [Errors](#-Errors)
+    - [Errors](#errdef-Errors)
   
 - [Scalar Value Types](#scalar-value-types)
 
@@ -19,25 +19,25 @@
  
 
 
-<a name="-Errors"></a>
+<a name="errdef-Errors"></a>
 
 ### Errors
 
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| UNKNOWN | 0 |  |
+| UNSPECIFIED | 0 |  |
+| Unknown | -1 |  |
 | Success | 100000 | biz - type 1 common errors |
-| InvalidParams | 100001 |  |
-| IdentityInvalidAccount | 101000 | identity errors (domain: 01) |
-| IdentityWrongPassword | 101001 |  |
+| InvalidArgument | 100001 |  |
+| IdentityAuthenticationFailed | 101000 | identity errors (domain: 01) |
 | TokenInvalid | 103000 | token errors (domain: 03) |
 | TokenExpired | 103001 |  |
 | TokenRevoked | 103002 |  |
 | AuthInvalidClient | 104000 | auth errors (domain: 04) |
 | AuthInvalidRedirectURI | 104001 |  |
 | AuthInvalidScope | 104002 |  |
-| UnknownInternalError | 200000 | sys - type 2 common |
+| Internal | 200000 | sys - type 2 common |
 | RecordNotFound | 201000 | db errors (module: 01) |
 | DuplicatedKey | 201001 |  |
 

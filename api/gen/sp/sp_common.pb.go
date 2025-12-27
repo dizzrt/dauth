@@ -79,7 +79,7 @@ type ServiceProvider struct {
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	RedirectUri   string                 `protobuf:"bytes,4,opt,name=redirect_uri,json=redirectUri,proto3" json:"redirect_uri,omitempty"`
-	Status        ServiceProvider_Status `protobuf:"varint,5,opt,name=status,proto3,enum=ServiceProvider_Status" json:"status,omitempty"`
+	Status        ServiceProvider_Status `protobuf:"varint,5,opt,name=status,proto3,enum=sp.ServiceProvider_Status" json:"status,omitempty"`
 	CreatedAt     int64                  `protobuf:"varint,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt     int64                  `protobuf:"varint,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -169,13 +169,13 @@ var File_sp_sp_common_proto protoreflect.FileDescriptor
 
 const file_sp_sp_common_proto_rawDesc = "" +
 	"\n" +
-	"\x12sp/sp_common.proto\"\xab\x02\n" +
+	"\x12sp/sp_common.proto\x12\x02sp\"\xae\x02\n" +
 	"\x0fServiceProvider\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12!\n" +
-	"\fredirect_uri\x18\x04 \x01(\tR\vredirectUri\x12/\n" +
-	"\x06status\x18\x05 \x01(\x0e2\x17.ServiceProvider.StatusR\x06status\x12\x1d\n" +
+	"\fredirect_uri\x18\x04 \x01(\tR\vredirectUri\x122\n" +
+	"\x06status\x18\x05 \x01(\x0e2\x1a.sp.ServiceProvider.StatusR\x06status\x12\x1d\n" +
 	"\n" +
 	"created_at\x18\x06 \x01(\x03R\tcreatedAt\x12\x1d\n" +
 	"\n" +
@@ -202,11 +202,11 @@ func file_sp_sp_common_proto_rawDescGZIP() []byte {
 var file_sp_sp_common_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_sp_sp_common_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_sp_sp_common_proto_goTypes = []any{
-	(ServiceProvider_Status)(0), // 0: ServiceProvider.Status
-	(*ServiceProvider)(nil),     // 1: ServiceProvider
+	(ServiceProvider_Status)(0), // 0: sp.ServiceProvider.Status
+	(*ServiceProvider)(nil),     // 1: sp.ServiceProvider
 }
 var file_sp_sp_common_proto_depIdxs = []int32{
-	0, // 0: ServiceProvider.status:type_name -> ServiceProvider.Status
+	0, // 0: sp.ServiceProvider.status:type_name -> sp.ServiceProvider.Status
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

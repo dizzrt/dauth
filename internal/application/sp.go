@@ -51,7 +51,7 @@ func (app *serviceProviderApplication) CreateServiceProvider(ctx context.Context
 func (app *serviceProviderApplication) GetServiceProvider(ctx context.Context, req *sp.GetServiceProviderRequest) (*sp.GetServiceProviderResponse, error) {
 	spID := req.GetSpId()
 	if spID == 0 {
-		return nil, errdef.InvalidParamsWithMsg("sp_id is required")
+		return nil, errdef.InvalidArgument().WithMessage("sp_id is required")
 	}
 
 	spEntity, err := app.spBiz.GetServiceProvider(ctx, spID)
@@ -80,11 +80,11 @@ func (app *serviceProviderApplication) GetServiceProvider(ctx context.Context, r
 func (app *serviceProviderApplication) ListServiceProvider(ctx context.Context, req *sp.ListServiceProviderRequest) (*sp.ListServiceProviderResponse, error) {
 	dtoReq := convert.ListServiceProviderReqFromPB(req)
 	if dtoReq.Page < 1 {
-		return nil, errdef.InvalidParamsWithMsg("page must be greater than 0")
+		return nil, errdef.InvalidArgument().WithMessage("page must be greater than 0")
 	}
 
 	if dtoReq.PageSize < 1 {
-		return nil, errdef.InvalidParamsWithMsg("page_size must be greater than 0")
+		return nil, errdef.InvalidArgument().WithMessage("page_size must be greater than 0")
 	}
 
 	spList, total, err := app.spBiz.ListServiceProvider(ctx, dtoReq)

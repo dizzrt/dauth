@@ -34,7 +34,7 @@ func (app *authApplication) GenerateAuthorizationCode(ctx context.Context, req *
 	clientID := req.GetClientId()
 	redirectURI := req.GetRedirectUri()
 	if UserID == 0 || clientID == 0 || redirectURI == "" {
-		return nil, errdef.InvalidParams()
+		return nil, errdef.InvalidArgument()
 	}
 
 	// verify client

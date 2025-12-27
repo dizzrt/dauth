@@ -1,120 +1,119 @@
 syntax = "proto3";
 
 package identity;
-option go_package = "github.com/dizzrt/dauth/api/gen/identity;identity";
 
 import "base/base.proto";
-import "identity/identity_common.proto";
 import "google/api/annotations.proto";
+import "identity/identity_common.proto";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/identity;identity";
 
 message LoginRequest {
-    string account = 1;
-    string password = 2;
+  string account = 1;
+  string password = 2;
 
-    base.Base base = 255;
+  base.Base base = 255;
 }
 
 message LoginResponse {
-    User user = 1;
-    string token = 2;
-    int64 token_expires_at = 3;
+  User user = 1;
+  string token = 2;
+  int64 token_expires_at = 3;
 
-    base.BaseResp base_resp = 255;
+  base.BaseResp base_resp = 255;
 }
 
 message AuthenticateRequest {
-    string account = 1;
-    string password = 2;
-    base.Base base = 255;
+  string account = 1;
+  string password = 2;
+  base.Base base = 255;
 }
 
 message AuthenticateResponse {
-    User user = 1;
-    base.BaseResp base_resp = 255;
+  User user = 1;
+  base.BaseResp base_resp = 255;
 }
 
 message CreateUserRequest {
-    string email = 1;
-    string username = 2;
-    string password = 3;
-    base.Base base = 255;
+  string email = 1;
+  string username = 2;
+  string password = 3;
+  base.Base base = 255;
 }
 
 message CreateUserResponse {
-    uint32 id = 1;
-    base.BaseResp base_resp = 255;
+  uint32 id = 1;
+  base.BaseResp base_resp = 255;
 }
 
 message GetUserRequest {
-    uint32 id = 1;
-    base.Base base = 255;
+  uint32 id = 1;
+  base.Base base = 255;
 }
 
 message GetUserResponse {
-    User user = 1;
-    base.BaseResp base_resp = 255;
+  User user = 1;
+  base.BaseResp base_resp = 255;
 }
 
 message UpdateUserStatusRequest {
-    uint32 id = 1;
-    User.Status status = 2;
-    base.Base base = 255;
+  uint32 id = 1;
+  User.Status status = 2;
+  base.Base base = 255;
 }
 
 message UpdateUserStatusResponse {
-    base.BaseResp base_resp = 255;
+  base.BaseResp base_resp = 255;
 }
 
 message UpdateUserPasswordRequest {
-    uint32 id = 1;
-    string password = 2;
-    base.Base base = 255;
+  uint32 id = 1;
+  string password = 2;
+  base.Base base = 255;
 }
 
 message UpdateUserPasswordResponse {
-    base.BaseResp base_resp = 255;
+  base.BaseResp base_resp = 255;
 }
 
 service UserService {
-    // Login logs in a user.
-    rpc Login(LoginRequest) returns (LoginResponse) {
-        option (google.api.http) = {
-            post: "/identity/user/login"
-            body: "*"
-        };
-    }
+  // Login logs in a user.
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/identity/user/login"
+      body: "*"
+    };
+  }
 
-    // Authenticate authenticates a user.
-    rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {}
+  // Authenticate authenticates a user.
+  rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {}
 
-    // CreateUser creates a new user.
-    rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
-        option (google.api.http) = {
-            post: "/identity/user/create"
-            body: "*"
-        };
-    }
+  // CreateUser creates a new user.
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+      post: "/identity/user/create"
+      body: "*"
+    };
+  }
 
-    // GetUser gets a user by ID.
-    rpc GetUser(GetUserRequest) returns (GetUserResponse) {
-        option (google.api.http) = {
-            get: "/identity/user/{id}"
-        };
-    }
+  // GetUser gets a user by ID.
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = {get: "/identity/user/{id}"};
+  }
 
-    // UpdateUserStatus updates the status of a user.
-    rpc UpdateUserStatus(UpdateUserStatusRequest) returns (UpdateUserStatusResponse) {
-        option (google.api.http) = {
-            put: "/identity/user/{id}/status"
-            body: "*"
-        };
-    }
+  // UpdateUserStatus updates the status of a user.
+  rpc UpdateUserStatus(UpdateUserStatusRequest) returns (UpdateUserStatusResponse) {
+    option (google.api.http) = {
+      put: "/identity/user/{id}/status"
+      body: "*"
+    };
+  }
 
-    // UpdateUserPassword updates the password of a user.   
-    rpc UpdateUserPassword(UpdateUserPasswordRequest) returns (UpdateUserPasswordResponse) {
-        option (google.api.http) = {
-            put: "/identity/user/{id}/password"
-            body: "*"
-        };
-    }
+  // UpdateUserPassword updates the password of a user.
+  rpc UpdateUserPassword(UpdateUserPasswordRequest) returns (UpdateUserPasswordResponse) {
+    option (google.api.http) = {
+      put: "/identity/user/{id}/password"
+      body: "*"
+    };
+  }
 }

@@ -2,26 +2,26 @@ version: v2
 clean: true
 plugins:
   - local: protoc-gen-ellie-go
-    out: ./gen
+    out: ./api/gen
     opt: paths=source_relative
   - local: protoc-gen-ellie-go-http
-    out: ./gen
+    out: ./api/gen
     opt: paths=source_relative
   - local: protoc-gen-ellie-go-errors
-    out: ./gen
+    out: ./api/gen
     opt: paths=source_relative
   - remote: buf.build/grpc/go
-    out: ./gen
+    out: ./api/gen
     opt: paths=source_relative
-  - remote: buf.build/connectrpc/go:v1.18.1
-    out: ./gen
+  - remote: buf.build/connectrpc/go:v1.19.1
+    out: ./api/gen
     opt: paths=source_relative
   - remote: buf.build/community/pseudomuto-doc:v1.5.1
-    out: ./gen/docs
+    out: ./api/gen/docs
     opt: markdown,README.md,source_relative
   - remote: buf.build/community/pseudomuto-doc:v1.5.1
-    out: ./gen/docs
+    out: ./api/gen/docs
     opt: html,index.html,source_relative
-  - remote: buf.build/community/google-gnostic-openapi:v0.7.0
-    out: ./gen/docs
+  - remote: buf.build/community/google-gnostic-openapi:v0.7.1
+    out: ./api/gen/docs
     opt: paths=source_relative,enum_type=string

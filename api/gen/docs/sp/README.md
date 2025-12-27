@@ -4,9 +4,9 @@
 ## Table of Contents
 
 - [sp/sp_common.proto](#sp_sp_common-proto)
-    - [ServiceProvider](#-ServiceProvider)
+    - [ServiceProvider](#sp-ServiceProvider)
   
-    - [ServiceProvider.Status](#-ServiceProvider-Status)
+    - [ServiceProvider.Status](#sp-ServiceProvider-Status)
   
 - [sp/sp.proto](#sp_sp-proto)
     - [CreateServiceProviderRequest](#sp-CreateServiceProviderRequest)
@@ -31,7 +31,7 @@
 
 
 
-<a name="-ServiceProvider"></a>
+<a name="sp-ServiceProvider"></a>
 
 ### ServiceProvider
 
@@ -43,7 +43,7 @@
 | name | [string](#string) |  |  |
 | description | [string](#string) |  |  |
 | redirect_uri | [string](#string) |  |  |
-| status | [ServiceProvider.Status](#ServiceProvider-Status) |  |  |
+| status | [ServiceProvider.Status](#sp-ServiceProvider-Status) |  |  |
 | created_at | [int64](#int64) |  |  |
 | updated_at | [int64](#int64) |  |  |
 
@@ -54,7 +54,7 @@
  
 
 
-<a name="-ServiceProvider-Status"></a>
+<a name="sp-ServiceProvider-Status"></a>
 
 ### ServiceProvider.Status
 
@@ -142,7 +142,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| sp | [ServiceProvider](#ServiceProvider) |  |  |
+| sp | [ServiceProvider](#sp-ServiceProvider) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
@@ -175,7 +175,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| sp_list | [ServiceProvider](#ServiceProvider) | repeated |  |
+| sp_list | [ServiceProvider](#sp-ServiceProvider) | repeated |  |
 | total | [uint32](#uint32) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 

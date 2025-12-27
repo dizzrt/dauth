@@ -4,9 +4,9 @@
 ## Table of Contents
 
 - [token/token_common.proto](#token_token_common-proto)
-    - [Token](#-Token)
+    - [Token](#token-Token)
   
-    - [Token.TokenType](#-Token-TokenType)
+    - [Token.TokenType](#token-Token-TokenType)
   
 - [token/token.proto](#token_token-proto)
     - [IssueRequest](#token-IssueRequest)
@@ -31,7 +31,7 @@
 
 
 
-<a name="-Token"></a>
+<a name="token-Token"></a>
 
 ### Token
 map to domain/token/entity/token.go BaseToken
@@ -47,7 +47,7 @@ map to domain/token/entity/token.go BaseToken
 | not_before | [int64](#int64) |  |  |
 | expires_at | [int64](#int64) |  |  |
 | uid | [uint32](#uint32) |  |  |
-| type | [Token.TokenType](#Token-TokenType) |  |  |
+| type | [Token.TokenType](#token-Token-TokenType) |  |  |
 
 
 
@@ -56,7 +56,7 @@ map to domain/token/entity/token.go BaseToken
  
 
 
-<a name="-Token-TokenType"></a>
+<a name="token-Token-TokenType"></a>
 
 ### Token.TokenType
 
@@ -197,7 +197,7 @@ map to domain/token/entity/token.go BaseToken
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | token | [string](#string) |  |  |
-| type | [Token.TokenType](#Token-TokenType) |  |  |
+| type | [Token.TokenType](#token-Token-TokenType) |  |  |
 | client_id | [uint32](#uint32) |  |  |
 | base | [base.Base](#base-Base) |  |  |
 
@@ -214,7 +214,7 @@ map to domain/token/entity/token.go BaseToken
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| token | [Token](#Token) |  |  |
+| token | [Token](#token-Token) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 

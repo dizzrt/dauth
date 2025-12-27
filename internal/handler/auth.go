@@ -5,6 +5,8 @@ import (
 
 	"github.com/dizzrt/dauth/api/gen/auth"
 	"github.com/dizzrt/dauth/internal/application"
+	"github.com/dizzrt/ellie/errors"
+	"google.golang.org/grpc/codes"
 )
 
 var _ auth.AuthServiceServer = (*AuthHandler)(nil)
@@ -22,7 +24,8 @@ func NewAuthHandler(authApp application.AuthApplication) *AuthHandler {
 }
 
 func (handler *AuthHandler) GenerateAuthorizationCode(ctx context.Context, req *auth.GenerateAuthorizationCodeRequest) (*auth.GenerateAuthorizationCodeResponse, error) {
-	return handler.authApp.GenerateAuthorizationCode(ctx, req)
+	resp, err := handler.authApp.GenerateAuthorizationCode(ctx, req)
+	return resp, errors.Marshal(codes.Unknown, err)
 }
 
 func (handler *AuthHandler) ExchangeToken(ctx context.Context, req *auth.ExchangeTokenRequest) (*auth.ExchangeTokenResponse, error) {

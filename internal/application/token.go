@@ -9,6 +9,8 @@ import (
 	"github.com/dizzrt/dauth/internal/domain/token/biz"
 	"github.com/dizzrt/dauth/internal/domain/token/dto"
 	"github.com/dizzrt/dauth/internal/infra/rpc"
+	"github.com/dizzrt/ellie/errors"
+	"google.golang.org/grpc/codes"
 )
 
 var _ TokenApplication = (*tokenApplication)(nil)
@@ -32,7 +34,7 @@ func NewTokenApplication(tokenBiz biz.TokenBiz) TokenApplication {
 
 func (app *tokenApplication) IssueSSOToken(ctx context.Context, req *token.IssueSSOTokenRequest) (*token.IssueSSOTokenResponse, error) {
 	if req.GetUid() == 0 {
-		return nil, errdef.InvalidParamsWithMsg("uid is required")
+		return nil, errdef.InvalidArgument().WithMessage("uid is required")
 	}
 
 	tokenStr, expiresAt, err := app.tokenBiz.IssueSSOToken(ctx, req.GetUid())
@@ -72,11 +74,11 @@ func (app *tokenApplication) Validate(ctx context.Context, req *token.ValidateRe
 	clientID := req.GetClientId()
 
 	if ts == "" || tokenType == token.Token_TokenType_UNKNOWN {
-		return nil, errdef.InvalidParams()
+		return nil, errdef.InvalidArgument()
 	}
 
 	if clientID == 0 && (tokenType == token.Token_TokenType_ID || tokenType == token.Token_TokenType_ACCESS || tokenType == token.Token_TokenType_REFRESH) {
-		return nil, errdef.InvalidParamsWithMsg("client_id is required when token_type is ID, ACCESS or REFRESH")
+		return nil, errdef.InvalidArgument().WithMessage("client_id is required when token_type is ID, ACCESS or REFRESH")
 	}
 
 	bt, err := app.tokenBiz.Validate(ctx, &dto.ValidateRequest{
@@ -86,7 +88,8 @@ func (app *tokenApplication) Validate(ctx context.Context, req *token.ValidateRe
 	})
 
 	if err != nil {
-		return nil, err
+		// return nil, err
+		return nil, errors.Marshal(codes.Unauthenticated, err)
 	}
 
 	return &token.ValidateResponse{

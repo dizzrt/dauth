@@ -8,7 +8,6 @@ package auth
 
 import (
 	base "github.com/dizzrt/dauth/api/gen/base"
-	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -307,7 +306,7 @@ var File_auth_auth_proto protoreflect.FileDescriptor
 
 const file_auth_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x0fauth/auth.proto\x12\x04auth\x1a\x0fbase/base.proto\x1a\x16auth/auht_common.proto\x1a\x1cgoogle/api/annotations.proto\"\xb2\x01\n" +
+	"\x0fauth/auth.proto\x12\x04auth\x1a\x0fbase/base.proto\"\xb2\x01\n" +
 	" GenerateAuthorizationCodeRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\rR\x06userId\x12\x1b\n" +
 	"\tclient_id\x18\x02 \x01(\rR\bclientId\x12!\n" +
@@ -377,7 +376,6 @@ func file_auth_auth_proto_init() {
 	if File_auth_auth_proto != nil {
 		return
 	}
-	file_auth_auht_common_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
