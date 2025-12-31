@@ -5,6 +5,7 @@ import (
 
 	"github.com/dizzrt/dauth/api/gen/sp"
 	"github.com/dizzrt/dauth/internal/infra/rpc"
+	"github.com/dizzrt/ellie/errors"
 )
 
 func GetServiceProvider(ctx context.Context, spID uint32) (*sp.GetServiceProviderResponse, error) {
@@ -12,7 +13,7 @@ func GetServiceProvider(ctx context.Context, spID uint32) (*sp.GetServiceProvide
 		SpId: spID,
 	}
 
-	return rpc.ServiceProviderServiceClient().GetServiceProvider(ctx, req)
+	return errors.UnwrapGRPCResponse(rpc.ServiceProviderServiceClient().GetServiceProvider(ctx, req))
 }
 
 func ValidateServiceProvider(ctx context.Context, spID uint32, scope string) (*sp.ValidateServiceProviderResponse, error) {
@@ -21,5 +22,5 @@ func ValidateServiceProvider(ctx context.Context, spID uint32, scope string) (*s
 		Scope: scope,
 	}
 
-	return rpc.ServiceProviderServiceClient().ValidateServiceProvider(ctx, req)
+	return errors.UnwrapGRPCResponse(rpc.ServiceProviderServiceClient().ValidateServiceProvider(ctx, req))
 }

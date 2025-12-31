@@ -152,6 +152,7 @@ func (biz *tokenBiz) Validate(ctx context.Context, req *dto.ValidateRequest) (*e
 		return nil, fmt.Errorf("invalid token type: %v", req.TokenType)
 	}
 
+	// check token if expired/revoked or invalid
 	err := biz.jwtManager.Verify(ctx, req.Token, nil, claims)
 	if err != nil {
 		return nil, err
@@ -181,18 +182,8 @@ func (biz *tokenBiz) Validate(ctx context.Context, req *dto.ValidateRequest) (*e
 	}
 
 	if baseToken == nil || baseToken.Type != req.TokenType {
+		log.CtxInfof(ctx, "verify token failed: token type not match")
 		return nil, errdef.TokenInvalid().WithMessage("token type not match")
-	}
-
-	isRevoked, _, err := biz.tokenRevokeCache.IsRevoked(ctx, req.Token)
-	if err != nil || isRevoked {
-		if err != nil {
-			log.CtxErrorf(ctx, "check token if revoked failed, token: %v, err: %v", req.Token, err)
-			return nil, err
-		}
-
-		// return nil, errdef.TokenRevoked()
-		return nil, errdef.TokenRevoked()
 	}
 
 	return baseToken, nil

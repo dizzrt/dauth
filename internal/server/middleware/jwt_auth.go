@@ -1,12 +1,12 @@
 package middleware
 
 import (
-	"fmt"
 	"slices"
 
 	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/api/gen/token"
 	"github.com/dizzrt/dauth/internal/infra/rpc/dauth"
+	"github.com/dizzrt/dauth/internal/infra/utils/ctxutil"
 	"github.com/dizzrt/ellie/errors"
 	"github.com/dizzrt/ellie/log"
 	"github.com/dizzrt/ellie/transport/http"
@@ -19,15 +19,6 @@ var authWhiteList = []string{
 
 func unauthorized(ctx *gin.Context) {
 	ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"data": nil, "message": "unauthorized", "status": http.StatusUnauthorized})
-}
-
-func r(err error) {
-	if err == nil {
-		return
-	}
-
-	fmt.Printf("XAX: %s\n", err.Error())
-	r(errors.Unwrap(err))
 }
 
 func JwtAuthMiddleware() gin.HandlerFunc {
@@ -48,24 +39,22 @@ func JwtAuthMiddleware() gin.HandlerFunc {
 			Type:  token.Token_TokenType_SSO,
 		})
 
-		err = errors.Unmarshal(err)
-		r(err)
-
-		if err != nil || resp.GetToken().Uid == 0 {
-			// if err != nil && !(errors.Is(err, errdef.TokenExpired()) || errors.Is(err, errdef.TokenRevoked()) || errors.Is(err, jwt.ErrTokenExpired)) {
-			// 	// BUG errors.Is not work as expected
-			// 	log.CtxErrorf(ctx, "validate token failed, token: %v, err: %v", tokenStr, err)
-			// }
-
-			if errors.Is(err, errdef.TokenExpired()) {
-				log.CtxInfo(ctx, "Hahaha")
+		if err != nil {
+			if !errors.Is(err, errdef.TokenExpired()) && !errors.Is(err, errdef.TokenRevoked()) && !errors.Is(err, errdef.TokenInvalid()) {
+				log.CtxErrorf(ctx, "validate token failed, token: %s, err: %v", tokenStr, err)
 			}
 
 			unauthorized(ctx)
 			return
 		}
 
-		ctx.Set("uid", resp.GetToken().Uid)
+		uid := resp.GetToken().GetUid()
+		if uid == 0 {
+			unauthorized(ctx)
+			return
+		}
+
+		ctxutil.SetUid(ctx, uid) // inject uid to context
 		ctx.Next()
 	}
 }

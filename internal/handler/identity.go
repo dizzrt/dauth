@@ -5,6 +5,7 @@ import (
 
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/application"
+	"github.com/dizzrt/ellie/errors"
 )
 
 var _ identity.UserServiceServer = (*IdentityHandler)(nil)
@@ -26,27 +27,27 @@ func NewIdentityHandler(identityApp application.IdentityApplication) *IdentityHa
 // region user service
 
 func (handler *IdentityHandler) Login(ctx context.Context, req *identity.LoginRequest) (*identity.LoginResponse, error) {
-	return handler.identityApp.Login(ctx, req)
+	return errors.WrapGRPCResponse(handler.identityApp.Login(ctx, req))
 }
 
 func (handler *IdentityHandler) Authenticate(ctx context.Context, req *identity.AuthenticateRequest) (*identity.AuthenticateResponse, error) {
-	return handler.identityApp.Authenticate(ctx, req)
+	return errors.WrapGRPCResponse(handler.identityApp.Authenticate(ctx, req))
 }
 
 func (handler *IdentityHandler) CreateUser(ctx context.Context, req *identity.CreateUserRequest) (*identity.CreateUserResponse, error) {
-	return handler.identityApp.CreateUser(ctx, req)
+	return errors.WrapGRPCResponse(handler.identityApp.CreateUser(ctx, req))
 }
 
 func (handler *IdentityHandler) GetUser(ctx context.Context, req *identity.GetUserRequest) (*identity.GetUserResponse, error) {
-	return handler.identityApp.GetUser(ctx, req)
+	return errors.WrapGRPCResponse(handler.identityApp.GetUser(ctx, req))
 }
 
 func (handler *IdentityHandler) UpdateUserStatus(ctx context.Context, req *identity.UpdateUserStatusRequest) (*identity.UpdateUserStatusResponse, error) {
-	return handler.identityApp.UpdateUserStatus(ctx, req)
+	return errors.WrapGRPCResponse(handler.identityApp.UpdateUserStatus(ctx, req))
 }
 
 func (handler *IdentityHandler) UpdateUserPassword(ctx context.Context, req *identity.UpdateUserPasswordRequest) (*identity.UpdateUserPasswordResponse, error) {
-	return handler.identityApp.UpdateUserPassword(ctx, req)
+	return errors.WrapGRPCResponse(handler.identityApp.UpdateUserPassword(ctx, req))
 }
 
 // endregion user service

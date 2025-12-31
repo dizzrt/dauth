@@ -5,6 +5,7 @@ import (
 
 	"github.com/dizzrt/dauth/api/gen/sp"
 	"github.com/dizzrt/dauth/internal/application"
+	"github.com/dizzrt/ellie/errors"
 )
 
 var _ sp.ServiceProviderServiceServer = (*ServiceProviderHandler)(nil)
@@ -22,17 +23,17 @@ func NewServiceProviderHandler(spApp application.ServiceProviderApplication) *Se
 }
 
 func (handler *ServiceProviderHandler) CreateServiceProvider(ctx context.Context, req *sp.CreateServiceProviderRequest) (*sp.CreateServiceProviderResponse, error) {
-	return handler.spApp.CreateServiceProvider(ctx, req)
+	return errors.WrapGRPCResponse(handler.spApp.CreateServiceProvider(ctx, req))
 }
 
 func (handler *ServiceProviderHandler) GetServiceProvider(ctx context.Context, req *sp.GetServiceProviderRequest) (*sp.GetServiceProviderResponse, error) {
-	return handler.spApp.GetServiceProvider(ctx, req)
+	return errors.WrapGRPCResponse(handler.spApp.GetServiceProvider(ctx, req))
 }
 
 func (handler *ServiceProviderHandler) ListServiceProvider(ctx context.Context, req *sp.ListServiceProviderRequest) (*sp.ListServiceProviderResponse, error) {
-	return handler.spApp.ListServiceProvider(ctx, req)
+	return errors.WrapGRPCResponse(handler.spApp.ListServiceProvider(ctx, req))
 }
 
 func (handler *ServiceProviderHandler) ValidateServiceProvider(ctx context.Context, req *sp.ValidateServiceProviderRequest) (*sp.ValidateServiceProviderResponse, error) {
-	return handler.spApp.ValidateServiceProvider(ctx, req)
+	return errors.WrapGRPCResponse(handler.spApp.ValidateServiceProvider(ctx, req))
 }

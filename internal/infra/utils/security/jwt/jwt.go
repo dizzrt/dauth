@@ -85,16 +85,12 @@ func (m *jwtManager) Verify(ctx context.Context, token string, secret []byte, cl
 	})
 
 	if err != nil {
-		// TODO need fix
-		// if errors.Is(err, jwt.ErrTokenExpired) {
-		// 	fmt.Println("XX1")
-		// 	return errdef.TokenExpired()
-		// }
-		err = errdef.TokenInvalid().WithMessage("parse token failed").WithCause(err)
 		if errors.Is(err, jwt.ErrTokenExpired) {
-			err = errdef.TokenExpired().WithCause(err)
+			return errdef.TokenExpired()
 		}
-		return err
+
+		log.CtxErrorf(ctx, "parse token '%s' failed, err: %s", token, err.Error())
+		return errdef.TokenInvalid().WithMessage("parse token failed").WithCause(err)
 	}
 
 	if !jt.Valid {

@@ -13,9 +13,5 @@ func GetUser(ctx context.Context, uid uint32) (*identity.GetUserResponse, error)
 		Id: uid,
 	}
 
-	return A(rpc.UserServiceClient().GetUser(ctx, req))
-}
-
-func A[T any](v T, err error) (T, error) {
-	return v, errors.Unmarshal(err)
+	return errors.UnwrapGRPCResponse(rpc.UserServiceClient().GetUser(ctx, req))
 }
