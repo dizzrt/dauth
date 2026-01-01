@@ -1,5 +1,7 @@
 FROM --platform=$BUILDPLATFORM golang:1.25 AS builder
 ARG GOPROXY=https://goproxy.cn,direct
+ARG TARGETOS
+ARG TARGETARCH
 
 ARG ENV
 ARG VERSION

@@ -30,6 +30,7 @@ type AppConfig struct {
 	Address string
 
 	DB       DB       `mapstructure:"db"`
+	Redis    Redis    `mapstructure:"redis"`
 	Log      Log      `mapstructure:"log"`
 	Server   Server   `mapstructure:"server"`
 	Tracing  Tracing  `mapstructure:"tracing"`
@@ -68,6 +69,11 @@ type DB struct {
 	Password string `mapstructure:"password"`
 	Database string `mapstructure:"database"`
 	Addr     string `mapstructure:"addr"`
+}
+
+type Redis struct {
+	Addr     string `mapstructure:"addr"`
+	Password string `mapstructure:"password"`
 }
 
 type Registry struct {

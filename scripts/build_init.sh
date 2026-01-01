@@ -46,7 +46,7 @@ fi
 
 # If version not provided via environment variable, set default version
 if [ -z "$_VERSION" ]; then
-    _VERSION="v0.0.0"
+    _VERSION="${ENV}_$(date +"%Y%m%d%H%M%S")"
 fi
 
 # Version function used for version string comparison
@@ -63,7 +63,7 @@ mkdir_output() {
 }
 
 # Go and node version checks.
-TARGET_GO_VERSION="1.25.4"
+TARGET_GO_VERSION="1.25.5"
 GO_VERSION=`go version | { read _ _ v _; echo ${v#go}; }`
 if [ "$(version ${GO_VERSION})" -lt "$(version $TARGET_GO_VERSION)" ];
 then

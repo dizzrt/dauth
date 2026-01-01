@@ -18,6 +18,10 @@ password = "u6xYzLEu4xZQg2jPJHMk"
 database = "dauth"
 addr = "infra.dauth.com:3306"
 
+[redis]
+addr = "infra.dauth.com:6379"
+password = "ExpDnKWj8nCQDiWxuTRv"
+
 [registry]
 addr = "infra.dauth.com:8500"
 

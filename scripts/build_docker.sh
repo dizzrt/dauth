@@ -10,8 +10,6 @@ echo "Start building docker image dauth:${_VERSION}..."
 
 docker buildx build -f ./scripts/Dockerfile \
     --platform="${PLATFORM}" \
-    --build-arg GOOS="${GOOS}" \
-    --build-arg GOARCH="${GOARCH}" \
     --build-arg ENV="${ENV}" \
     --build-arg VERSION="${_VERSION}" \
     --build-arg GIT_COMMIT="${GIT_COMMIT}" \

@@ -1,0 +1,16 @@
+[log]
+file = "/var/logs/service/dauth/{{YYYY}}{{MM}}{{DD}}{{hh}}.log"
+symlink = "/var/logs/dauth.log"
+output_type = "file"
+
+[db]
+addr = "mysql:3306"
+
+[redis]
+addr = "redis:6379"
+
+[registry]
+addr = "consul:8500"
+
+[tracing]
+endpoint = "tempo:4317"

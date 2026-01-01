@@ -13,10 +13,10 @@ type RedisClient struct {
 	clusterClient *redis.ClusterClient
 }
 
-func NewRedisClient(_ *conf.AppConfig) (*RedisClient, func(), error) {
+func NewRedisClient(ac *conf.AppConfig) (*RedisClient, func(), error) {
 	client := redis.NewClient(&redis.Options{
-		Addr:         "infra.dauth.com:6379",
-		Password:     "ExpDnKWj8nCQDiWxuTRv",
+		Addr:         ac.Redis.Addr,
+		Password:     ac.Redis.Password,
 		DB:           0,
 		PoolSize:     10,
 		MinIdleConns: 5,
