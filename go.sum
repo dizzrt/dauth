@@ -44,8 +44,6 @@ github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f h1:lO4WD4F/rVNCu3HqELle0jiPLLBs70cWOduZpkS1E78=
 github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f/go.mod h1:cuUVRXasLTGF7a8hSLbxyZXjz+1KgoB3wDUb6vlszIc=
-github.com/dizzrt/ellie v0.4.8 h1:DqeIFB9uX+XDTTtvf/eA8zbRRxlYnu18xXlLDGm0J0A=
-github.com/dizzrt/ellie v0.4.8/go.mod h1:qYogzmA4KNdPVdEgMPIrdVapVT+X7j8lY8X44xtSp7I=
 github.com/dizzrt/ellie v0.4.9 h1:956VeGkEjplQETLQee+HjDcF5hBuc6mg+ADVb6aMkb8=
 github.com/dizzrt/ellie v0.4.9/go.mod h1:qYogzmA4KNdPVdEgMPIrdVapVT+X7j8lY8X44xtSp7I=
 github.com/dizzrt/ellie/contrib/registry/consul v1.0.0 h1:tefEiFOKhPqDzJBSufxNmtnuLC+AJ0+mAUf/g6oRC7c=
