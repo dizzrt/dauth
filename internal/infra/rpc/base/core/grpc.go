@@ -1,6 +1,8 @@
 package core
 
 import (
+	"crypto/tls"
+	"errors"
 	"sync"
 	"time"
 
@@ -50,7 +52,29 @@ type clientManager struct {
 }
 
 func (cm *clientManager) newConn(endpoint string) (*grpc.ClientConn, error) {
-	conn, err := transport_grpc.DialInsecure(
+	tlsConf := &tls.Config{
+		MinVersion: tls.VersionTLS12,
+	}
+
+	c := conf.GetAppConfig()
+	serverConf := c.Server.GRPC
+	if serverConf.TLSConfig.CertPath != "" && serverConf.TLSConfig.KeyPath != "" {
+		cert, err := tls.LoadX509KeyPair(serverConf.TLSConfig.CertPath, serverConf.TLSConfig.KeyPath)
+		if err != nil {
+			return nil, err
+		}
+
+		tlsConf.Certificates = []tls.Certificate{cert}
+		if c.ENV == "dev" {
+			// skip tls verify in dev env
+			tlsConf.InsecureSkipVerify = true
+		}
+	} else {
+		return nil, errors.New("dauth must run with TLS enabled. Please configure both server.grpc.tls.cert_path and server.grpc.tls.key_path in the configuration file")
+	}
+
+	conn, err := transport_grpc.Dial(
+		transport_grpc.WithTLSConfig(tlsConf),
 		transport_grpc.WithEndpoint(endpoint),
 		transport_grpc.WithDiscovery(discoverer),
 		transport_grpc.WithPrintDiscoveryDebugLog(true),

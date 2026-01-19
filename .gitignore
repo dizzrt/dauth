@@ -33,3 +33,6 @@ logs
 
 # Apple Desktop services store
 .DS_Store
+
+# TLS certificates
+configs/tls

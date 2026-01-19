@@ -1,6 +1,8 @@
 package server
 
 import (
+	"crypto/tls"
+
 	"github.com/dizzrt/dauth/api/gen/auth"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/api/gen/sp"
@@ -19,9 +21,31 @@ func NewGRPCServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *han
 		),
 	}
 
-	grpcServerConf := c.Server.GRPC
-	if grpcServerConf.Addr != "" {
-		opts = append(opts, grpc.Address(grpcServerConf.Addr))
+	serverConf := c.Server.GRPC
+	if serverConf.Addr != "" {
+		opts = append(opts, grpc.Address(serverConf.Addr))
+	}
+
+	if serverConf.TLSConfig.CertPath != "" && serverConf.TLSConfig.KeyPath != "" {
+		tlsConfig := &tls.Config{
+			MinVersion: tls.VersionTLS12,
+		}
+
+		// load server certificate and key
+		cert, err := tls.LoadX509KeyPair(serverConf.TLSConfig.CertPath, serverConf.TLSConfig.KeyPath)
+		if err != nil {
+			panic(err)
+		}
+
+		tlsConfig.Certificates = []tls.Certificate{cert}
+		if c.ENV == "dev" {
+			// skip tls verify in dev env
+			tlsConfig.InsecureSkipVerify = true
+		}
+
+		opts = append(opts, grpc.TLSConfig(tlsConfig))
+	} else {
+		panic("dauth must run with TLS enabled. Please configure both server.grpc.tls.cert_path and server.grpc.tls.key_path in the configuration file")
 	}
 
 	srv := grpc.NewServer(opts...)

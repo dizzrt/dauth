@@ -1,8 +1,12 @@
 [server.grpc]
 addr = ":50051"
+tls.cert_path = "configs/tls/server.crt"
+tls.key_path = "configs/tls/server.key"
 
 [server.http]
 addr = ":8081"
+tls.cert_path = "configs/tls/server.crt"
+tls.key_path = "configs/tls/server.key"
 
 [log]
 file = "logs/{{YYYY}}{{MM}}{{DD}}{{hh}}.log"

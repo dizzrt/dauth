@@ -48,11 +48,18 @@ type Server struct {
 }
 
 type GRPCServer struct {
-	Addr string `mapstructure:"addr"`
+	Addr      string    `mapstructure:"addr"`
+	TLSConfig TLSConfig `mapstructure:"tls"`
 }
 
 type HTTPServer struct {
-	Addr string `mapstructure:"addr"`
+	Addr      string    `mapstructure:"addr"`
+	TLSConfig TLSConfig `mapstructure:"tls"`
+}
+
+type TLSConfig struct {
+	CertPath string `mapstructure:"cert_path"`
+	KeyPath  string `mapstructure:"key_path"`
 }
 
 type Log struct {
