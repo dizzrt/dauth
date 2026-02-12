@@ -3,174 +3,10 @@
 
 openapi: 3.0.3
 info:
-    title: ""
+    title: UserService API
     version: 0.0.1
 paths:
-    /identity/role:
-        post:
-            tags:
-                - RoleService
-            description: CreateRole creates a new role.
-            operationId: RoleService_CreateRole
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/CreateRoleRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/CreateRoleResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /identity/role/{id}:
-        put:
-            tags:
-                - RoleService
-            description: UpdateRole updates a role by ID.
-            operationId: RoleService_UpdateRole
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: integer
-                    format: uint32
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/UpdateRoleRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/UpdateRoleResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /identity/role/{id}/roles:
-        put:
-            tags:
-                - RoleService
-            description: AssignRoles assigns roles to a user.
-            operationId: RoleService_AssignRoles
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: integer
-                    format: uint32
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/AssignRolesRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/AssignRolesResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-        post:
-            tags:
-                - RoleService
-            description: UnassignRoles unassigns roles from a user.
-            operationId: RoleService_UnassignRoles
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: integer
-                    format: uint32
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/UnassignRolesRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/UnassignRolesResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /identity/roles:
-        get:
-            tags:
-                - RoleService
-            description: GetRoles gets all roles.
-            operationId: RoleService_GetRoles
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/GetRolesResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /identity/roles/delete:
-        post:
-            tags:
-                - RoleService
-            description: DeleteRoles deletes roles by IDs.
-            operationId: RoleService_DeleteRoles
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/DeleteRolesRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/DeleteRolesResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /identity/user/create:
+    /identity/user:
         post:
             tags:
                 - UserService
@@ -195,39 +31,14 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /identity/user/login:
-        post:
-            tags:
-                - UserService
-            description: Login logs in a user.
-            operationId: UserService_Login
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/LoginRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/LoginResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /identity/user/{id}:
+    /identity/user/{uid}:
         get:
             tags:
                 - UserService
             description: GetUser gets a user by ID.
             operationId: UserService_GetUser
             parameters:
-                - name: id
+                - name: uid
                   in: path
                   required: true
                   schema:
@@ -246,167 +57,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /identity/user/{id}/password:
-        put:
-            tags:
-                - UserService
-            description: UpdateUserPassword updates the password of a user.
-            operationId: UserService_UpdateUserPassword
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: integer
-                    format: uint32
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/UpdateUserPasswordRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/UpdateUserPasswordResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /identity/user/{id}/status:
-        put:
-            tags:
-                - UserService
-            description: UpdateUserStatus updates the status of a user.
-            operationId: UserService_UpdateUserStatus
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: integer
-                    format: uint32
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/UpdateUserStatusRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/UpdateUserStatusResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /sp/create:
-        post:
-            tags:
-                - ServiceProviderService
-            description: CreateServiceProvider creates a new service provider.
-            operationId: ServiceProviderService_CreateServiceProvider
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/CreateServiceProviderRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/CreateServiceProviderResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /sp/detail/{spId}:
-        get:
-            tags:
-                - ServiceProviderService
-            description: GetServiceProvider gets the service provider by id.
-            operationId: ServiceProviderService_GetServiceProvider
-            parameters:
-                - name: spId
-                  in: path
-                  required: true
-                  schema:
-                    type: integer
-                    format: uint32
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/GetServiceProviderResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /sp/list:
-        post:
-            tags:
-                - ServiceProviderService
-            description: ListServiceProvider lists the service providers.
-            operationId: ServiceProviderService_ListServiceProvider
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/ListServiceProviderRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ListServiceProviderResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
 components:
     schemas:
-        AssignRolesRequest:
-            type: object
-            properties:
-                id:
-                    type: integer
-                    format: uint32
-                roles:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/Role'
-                base:
-                    $ref: '#/components/schemas/Base'
-        AssignRolesResponse:
-            type: object
-            properties:
-                user:
-                    $ref: '#/components/schemas/User'
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
         Base:
             type: object
             properties: {}
@@ -418,96 +70,36 @@ components:
                     format: uint32
                 message:
                     type: string
-        CreateRoleRequest:
-            type: object
-            properties:
-                name:
-                    type: string
-                description:
-                    type: string
-                base:
-                    $ref: '#/components/schemas/Base'
-        CreateRoleResponse:
-            type: object
-            properties:
-                role:
-                    $ref: '#/components/schemas/Role'
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
-        CreateServiceProviderRequest:
-            type: object
-            properties:
-                name:
-                    type: string
-                description:
-                    type: string
-                secret:
-                    type: string
-                redirectUri:
-                    type: string
-                scopes:
-                    type: array
-                    items:
-                        type: integer
-                        format: uint32
-                base:
-                    $ref: '#/components/schemas/Base'
-        CreateServiceProviderResponse:
-            type: object
-            properties:
-                spId:
-                    type: integer
-                    format: uint32
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
         CreateUserRequest:
             type: object
             properties:
-                email:
+                password:
                     type: string
                 username:
                     type: string
-                password:
+                phone:
                     type: string
+                email:
+                    type: string
+                nickname:
+                    type: string
+                status:
+                    enum:
+                        - USER_STATUS_UNSPECIFIED
+                        - ENABLED
+                        - DISABLED
+                        - LOCKED
+                    type: string
+                    format: enum
+                extend:
+                    $ref: '#/components/schemas/UserExtend'
                 base:
                     $ref: '#/components/schemas/Base'
         CreateUserResponse:
             type: object
             properties:
-                id:
-                    type: integer
-                    format: uint32
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
-        DeleteRolesRequest:
-            type: object
-            properties:
-                ids:
-                    type: array
-                    items:
-                        type: integer
-                        format: uint32
-                base:
-                    $ref: '#/components/schemas/Base'
-        DeleteRolesResponse:
-            type: object
-            properties:
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
-        GetRolesResponse:
-            type: object
-            properties:
-                roles:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/Role'
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
-        GetServiceProviderResponse:
-            type: object
-            properties:
-                sp:
-                    $ref: '#/components/schemas/ServiceProvider'
+                user:
+                    $ref: '#/components/schemas/User'
                 baseResp:
                     $ref: '#/components/schemas/BaseResp'
         GetUserResponse:
@@ -525,95 +117,6 @@ components:
                     description: The type of the serialized message.
             additionalProperties: true
             description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-        ListServiceProviderRequest:
-            type: object
-            properties:
-                page:
-                    type: integer
-                    format: uint32
-                pageSize:
-                    type: integer
-                    format: uint32
-                base:
-                    $ref: '#/components/schemas/Base'
-        ListServiceProviderResponse:
-            type: object
-            properties:
-                spList:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/ServiceProvider'
-                total:
-                    type: integer
-                    format: uint32
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
-        LoginRequest:
-            type: object
-            properties:
-                account:
-                    type: string
-                password:
-                    type: string
-                base:
-                    $ref: '#/components/schemas/Base'
-        LoginResponse:
-            type: object
-            properties:
-                user:
-                    $ref: '#/components/schemas/User'
-                token:
-                    type: string
-                tokenExpiresAt:
-                    type: string
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
-        Role:
-            type: object
-            properties:
-                id:
-                    type: integer
-                    format: uint32
-                name:
-                    type: string
-                description:
-                    type: string
-                status:
-                    enum:
-                        - UNSPECIFIED
-                        - ACTIVE
-                        - INACTIVE
-                        - DELETED
-                    type: string
-                    format: enum
-                createdAt:
-                    type: string
-                updatedAt:
-                    type: string
-        ServiceProvider:
-            type: object
-            properties:
-                id:
-                    type: integer
-                    format: uint32
-                name:
-                    type: string
-                description:
-                    type: string
-                redirectUri:
-                    type: string
-                status:
-                    enum:
-                        - UNSPECIFIED
-                        - ACTIVE
-                        - INACTIVE
-                        - DELETED
-                    type: string
-                    format: enum
-                createdAt:
-                    type: string
-                updatedAt:
-                    type: string
         Status:
             type: object
             properties:
@@ -630,109 +133,46 @@ components:
                         $ref: '#/components/schemas/GoogleProtobufAny'
                     description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
             description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
-        UnassignRolesRequest:
-            type: object
-            properties:
-                id:
-                    type: integer
-                    format: uint32
-                roles:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/Role'
-                base:
-                    $ref: '#/components/schemas/Base'
-        UnassignRolesResponse:
-            type: object
-            properties:
-                user:
-                    $ref: '#/components/schemas/User'
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
-        UpdateRoleRequest:
-            type: object
-            properties:
-                id:
-                    type: integer
-                    format: uint32
-                name:
-                    type: string
-                description:
-                    type: string
-                base:
-                    $ref: '#/components/schemas/Base'
-        UpdateRoleResponse:
-            type: object
-            properties:
-                role:
-                    $ref: '#/components/schemas/Role'
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
-        UpdateUserPasswordRequest:
-            type: object
-            properties:
-                id:
-                    type: integer
-                    format: uint32
-                password:
-                    type: string
-                base:
-                    $ref: '#/components/schemas/Base'
-        UpdateUserPasswordResponse:
-            type: object
-            properties:
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
-        UpdateUserStatusRequest:
-            type: object
-            properties:
-                id:
-                    type: integer
-                    format: uint32
-                status:
-                    enum:
-                        - UNSPECIFIED
-                        - ACTIVE
-                        - INACTIVE
-                        - DELETED
-                    type: string
-                    format: enum
-                base:
-                    $ref: '#/components/schemas/Base'
-        UpdateUserStatusResponse:
-            type: object
-            properties:
-                baseResp:
-                    $ref: '#/components/schemas/BaseResp'
         User:
             type: object
             properties:
-                id:
+                uid:
                     type: integer
                     format: uint32
-                email:
-                    type: string
                 username:
                     type: string
                 status:
                     enum:
-                        - UNSPECIFIED
-                        - ACTIVE
-                        - INACTIVE
-                        - DELETED
+                        - USER_STATUS_UNSPECIFIED
+                        - ENABLED
+                        - DISABLED
+                        - LOCKED
                     type: string
                     format: enum
-                roles:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/Role'
+                phone:
+                    type: string
+                email:
+                    type: string
+                nickname:
+                    type: string
+                avatar:
+                    type: string
+                extend:
+                    $ref: '#/components/schemas/UserExtend'
                 lastLoginAt:
                     type: string
+                    format: date-time
                 createdAt:
                     type: string
+                    format: date-time
                 updatedAt:
                     type: string
+                    format: date-time
+                deletedAt:
+                    type: string
+                    format: date-time
+        UserExtend:
+            type: object
+            properties: {}
 tags:
-    - name: RoleService
-    - name: ServiceProviderService
     - name: UserService

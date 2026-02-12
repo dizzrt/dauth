@@ -33,70 +33,18 @@ var _ = v1_21_0.HTTPRequestMethodKey
 const TRACER_NAME_USER = "github.com/dizzrt/dauth/api/gen/identity"
 const OperationUserServiceCreateUser = "/UserService/CreateUser"
 const OperationUserServiceGetUser = "/UserService/GetUser"
-const OperationUserServiceLogin = "/UserService/Login"
-const OperationUserServiceUpdateUserPassword = "/UserService/UpdateUserPassword"
-const OperationUserServiceUpdateUserStatus = "/UserService/UpdateUserStatus"
 
 type UserServiceHTTPServer interface {
 	// CreateUser CreateUser creates a new user.
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	// GetUser GetUser gets a user by ID.
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
-	// Login Login logs in a user.
-	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	// UpdateUserPassword UpdateUserPassword updates the password of a user.
-	UpdateUserPassword(context.Context, *UpdateUserPasswordRequest) (*UpdateUserPasswordResponse, error)
-	// UpdateUserStatus UpdateUserStatus updates the status of a user.
-	UpdateUserStatus(context.Context, *UpdateUserStatusRequest) (*UpdateUserStatusResponse, error)
 }
 
 func RegisterUserServiceHTTPServer(hs *http.Server, srv UserServiceHTTPServer) {
 	r := hs.Engine()
-	r.POST("/identity/user/login", _user_UserService_POST_Login_HTTP_Handler(hs, srv))
-	r.POST("/identity/user/create", _user_UserService_POST_CreateUser_HTTP_Handler(hs, srv))
-	r.GET("/identity/user/:id", _user_UserService_GET_GetUser_HTTP_Handler(hs, srv))
-	r.PUT("/identity/user/:id/status", _user_UserService_PUT_UpdateUserStatus_HTTP_Handler(hs, srv))
-	r.PUT("/identity/user/:id/password", _user_UserService_PUT_UpdateUserPassword_HTTP_Handler(hs, srv))
-}
-func _user_UserService_POST_Login_HTTP_Handler(hs *http.Server, srv UserServiceHTTPServer) gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		var req LoginRequest
-		if err := ginx.DecodeRequest(ctx, &req); err != nil {
-			ctx.JSON(http.StatusBadRequest, hs.WrapHTTPResponse(nil, err))
-			ctx.Abort()
-			return
-		}
-
-		greq := ctx.Request
-		rctx := greq.Context()
-		rctx = log.ExtractFromTextMapCarrier(rctx, propagation.HeaderCarrier(greq.Header))
-		attributes := []attribute.KeyValue{
-			v1_21_0.HTTPRequestMethodKey.String(greq.Method),
-			v1_21_0.HTTPRouteKey.String(greq.URL.String()),
-			attribute.String("log.id", log.LogIDFromContext(rctx)),
-		}
-
-		tracer := otel.Tracer(TRACER_NAME_USER)
-		rctx, span := tracer.Start(rctx, "_UserService_Login_0_HTTP_Handler",
-			trace.WithSpanKind(trace.SpanKindServer),
-			trace.WithAttributes(attributes...),
-		)
-		defer span.End()
-
-		sctx := span.SpanContext()
-		rctx = log.WithTraceID(rctx, sctx.TraceID().String())
-		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
-
-		res, err := srv.Login(rctx, &req)
-		ctx.Request = ctx.Request.WithContext(rctx)
-		if err != nil {
-			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))
-			ctx.Abort()
-			return
-		}
-
-		hs.EncodeResponse(ctx, res, err)
-	}
+	r.POST("/identity/user", _user_UserService_POST_CreateUser_HTTP_Handler(hs, srv))
+	r.GET("/identity/user/:uid", _user_UserService_GET_GetUser_HTTP_Handler(hs, srv))
 }
 func _user_UserService_POST_CreateUser_HTTP_Handler(hs *http.Server, srv UserServiceHTTPServer) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -168,86 +116,6 @@ func _user_UserService_GET_GetUser_HTTP_Handler(hs *http.Server, srv UserService
 		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
 
 		res, err := srv.GetUser(rctx, &req)
-		ctx.Request = ctx.Request.WithContext(rctx)
-		if err != nil {
-			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))
-			ctx.Abort()
-			return
-		}
-
-		hs.EncodeResponse(ctx, res, err)
-	}
-}
-func _user_UserService_PUT_UpdateUserStatus_HTTP_Handler(hs *http.Server, srv UserServiceHTTPServer) gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		var req UpdateUserStatusRequest
-		if err := ginx.DecodeRequest(ctx, &req); err != nil {
-			ctx.JSON(http.StatusBadRequest, hs.WrapHTTPResponse(nil, err))
-			ctx.Abort()
-			return
-		}
-
-		greq := ctx.Request
-		rctx := greq.Context()
-		rctx = log.ExtractFromTextMapCarrier(rctx, propagation.HeaderCarrier(greq.Header))
-		attributes := []attribute.KeyValue{
-			v1_21_0.HTTPRequestMethodKey.String(greq.Method),
-			v1_21_0.HTTPRouteKey.String(greq.URL.String()),
-			attribute.String("log.id", log.LogIDFromContext(rctx)),
-		}
-
-		tracer := otel.Tracer(TRACER_NAME_USER)
-		rctx, span := tracer.Start(rctx, "_UserService_UpdateUserStatus_0_HTTP_Handler",
-			trace.WithSpanKind(trace.SpanKindServer),
-			trace.WithAttributes(attributes...),
-		)
-		defer span.End()
-
-		sctx := span.SpanContext()
-		rctx = log.WithTraceID(rctx, sctx.TraceID().String())
-		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
-
-		res, err := srv.UpdateUserStatus(rctx, &req)
-		ctx.Request = ctx.Request.WithContext(rctx)
-		if err != nil {
-			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))
-			ctx.Abort()
-			return
-		}
-
-		hs.EncodeResponse(ctx, res, err)
-	}
-}
-func _user_UserService_PUT_UpdateUserPassword_HTTP_Handler(hs *http.Server, srv UserServiceHTTPServer) gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		var req UpdateUserPasswordRequest
-		if err := ginx.DecodeRequest(ctx, &req); err != nil {
-			ctx.JSON(http.StatusBadRequest, hs.WrapHTTPResponse(nil, err))
-			ctx.Abort()
-			return
-		}
-
-		greq := ctx.Request
-		rctx := greq.Context()
-		rctx = log.ExtractFromTextMapCarrier(rctx, propagation.HeaderCarrier(greq.Header))
-		attributes := []attribute.KeyValue{
-			v1_21_0.HTTPRequestMethodKey.String(greq.Method),
-			v1_21_0.HTTPRouteKey.String(greq.URL.String()),
-			attribute.String("log.id", log.LogIDFromContext(rctx)),
-		}
-
-		tracer := otel.Tracer(TRACER_NAME_USER)
-		rctx, span := tracer.Start(rctx, "_UserService_UpdateUserPassword_0_HTTP_Handler",
-			trace.WithSpanKind(trace.SpanKindServer),
-			trace.WithAttributes(attributes...),
-		)
-		defer span.End()
-
-		sctx := span.SpanContext()
-		rctx = log.WithTraceID(rctx, sctx.TraceID().String())
-		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
-
-		res, err := srv.UpdateUserPassword(rctx, &req)
 		ctx.Request = ctx.Request.WithContext(rctx)
 		if err != nil {
 			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))

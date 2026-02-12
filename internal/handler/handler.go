@@ -6,7 +6,4 @@ import (
 
 var ProviderSet = wire.NewSet(
 	NewIdentityHandler,
-	NewTokenHandler,
-	NewServiceProviderHandler,
-	NewAuthHandler,
 )

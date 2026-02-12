@@ -3,42 +3,17 @@
 
 ## Table of Contents
 
-- [identity/identity_common.proto](#identity_identity_common-proto)
-    - [Role](#identity-Role)
+- [identity/common.proto](#identity_common-proto)
     - [User](#identity-User)
+    - [UserExtend](#identity-UserExtend)
   
-    - [Role.Status](#identity-Role-Status)
-    - [User.Status](#identity-User-Status)
-  
-- [identity/role.proto](#identity_role-proto)
-    - [AssignRolesRequest](#identity-AssignRolesRequest)
-    - [AssignRolesResponse](#identity-AssignRolesResponse)
-    - [CreateRoleRequest](#identity-CreateRoleRequest)
-    - [CreateRoleResponse](#identity-CreateRoleResponse)
-    - [DeleteRolesRequest](#identity-DeleteRolesRequest)
-    - [DeleteRolesResponse](#identity-DeleteRolesResponse)
-    - [GetRolesRequest](#identity-GetRolesRequest)
-    - [GetRolesResponse](#identity-GetRolesResponse)
-    - [UnassignRolesRequest](#identity-UnassignRolesRequest)
-    - [UnassignRolesResponse](#identity-UnassignRolesResponse)
-    - [UpdateRoleRequest](#identity-UpdateRoleRequest)
-    - [UpdateRoleResponse](#identity-UpdateRoleResponse)
-  
-    - [RoleService](#identity-RoleService)
+    - [UserStatus](#identity-UserStatus)
   
 - [identity/user.proto](#identity_user-proto)
-    - [AuthenticateRequest](#identity-AuthenticateRequest)
-    - [AuthenticateResponse](#identity-AuthenticateResponse)
     - [CreateUserRequest](#identity-CreateUserRequest)
     - [CreateUserResponse](#identity-CreateUserResponse)
     - [GetUserRequest](#identity-GetUserRequest)
     - [GetUserResponse](#identity-GetUserResponse)
-    - [LoginRequest](#identity-LoginRequest)
-    - [LoginResponse](#identity-LoginResponse)
-    - [UpdateUserPasswordRequest](#identity-UpdateUserPasswordRequest)
-    - [UpdateUserPasswordResponse](#identity-UpdateUserPasswordResponse)
-    - [UpdateUserStatusRequest](#identity-UpdateUserStatusRequest)
-    - [UpdateUserStatusResponse](#identity-UpdateUserStatusResponse)
   
     - [UserService](#identity-UserService)
   
@@ -46,30 +21,10 @@
 
 
 
-<a name="identity_identity_common-proto"></a>
+<a name="identity_common-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## identity/identity_common.proto
-
-
-
-<a name="identity-Role"></a>
-
-### Role
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [uint32](#uint32) |  |  |
-| name | [string](#string) |  |  |
-| description | [string](#string) |  |  |
-| status | [Role.Status](#identity-Role-Status) |  |  |
-| created_at | [int64](#int64) |  |  |
-| updated_at | [int64](#int64) |  |  |
-
-
-
+## identity/common.proto
 
 
 
@@ -81,14 +36,28 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| id | [uint32](#uint32) |  |  |
-| email | [string](#string) |  |  |
-| username | [string](#string) |  |  |
-| status | [User.Status](#identity-User-Status) |  |  |
-| roles | [Role](#identity-Role) | repeated |  |
-| last_login_at | [int64](#int64) |  |  |
-| created_at | [int64](#int64) |  |  |
-| updated_at | [int64](#int64) |  |  |
+| uid | [uint32](#uint32) | optional |  |
+| username | [string](#string) | optional |  |
+| status | [UserStatus](#identity-UserStatus) | optional |  |
+| phone | [string](#string) | optional |  |
+| email | [string](#string) | optional |  |
+| nickname | [string](#string) | optional |  |
+| avatar | [string](#string) | optional |  |
+| extend | [UserExtend](#identity-UserExtend) | optional |  |
+| last_login_at | [google.protobuf.Timestamp](#google-protobuf-Timestamp) | optional |  |
+| created_at | [google.protobuf.Timestamp](#google-protobuf-Timestamp) | optional |  |
+| updated_at | [google.protobuf.Timestamp](#google-protobuf-Timestamp) | optional |  |
+| deleted_at | [google.protobuf.Timestamp](#google-protobuf-Timestamp) | optional |  |
+
+
+
+
+
+
+<a name="identity-UserExtend"></a>
+
+### UserExtend
+
 
 
 
@@ -97,262 +66,22 @@
  
 
 
-<a name="identity-Role-Status"></a>
+<a name="identity-UserStatus"></a>
 
-### Role.Status
+### UserStatus
 
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| UNSPECIFIED | 0 |  |
-| ACTIVE | 1 |  |
-| INACTIVE | 2 |  |
-| DELETED | 3 |  |
-
-
-
-<a name="identity-User-Status"></a>
-
-### User.Status
-
-
-| Name | Number | Description |
-| ---- | ------ | ----------- |
-| UNSPECIFIED | 0 |  |
-| ACTIVE | 1 |  |
-| INACTIVE | 2 |  |
-| DELETED | 3 |  |
+| USER_STATUS_UNSPECIFIED | 0 |  |
+| ENABLED | 1 | 启用 |
+| DISABLED | 2 | 禁用 |
+| LOCKED | 3 | 锁定（密码/MFA验证失败触发） |
 
 
  
 
  
-
- 
-
-
-
-<a name="identity_role-proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## identity/role.proto
-
-
-
-<a name="identity-AssignRolesRequest"></a>
-
-### AssignRolesRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [uint32](#uint32) |  |  |
-| roles | [Role](#identity-Role) | repeated |  |
-| base | [base.Base](#base-Base) |  |  |
-
-
-
-
-
-
-<a name="identity-AssignRolesResponse"></a>
-
-### AssignRolesResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| user | [User](#identity-User) |  |  |
-| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
-
-
-
-
-
-
-<a name="identity-CreateRoleRequest"></a>
-
-### CreateRoleRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| name | [string](#string) |  |  |
-| description | [string](#string) |  |  |
-| base | [base.Base](#base-Base) |  |  |
-
-
-
-
-
-
-<a name="identity-CreateRoleResponse"></a>
-
-### CreateRoleResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| role | [Role](#identity-Role) |  |  |
-| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
-
-
-
-
-
-
-<a name="identity-DeleteRolesRequest"></a>
-
-### DeleteRolesRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| ids | [uint32](#uint32) | repeated |  |
-| base | [base.Base](#base-Base) |  |  |
-
-
-
-
-
-
-<a name="identity-DeleteRolesResponse"></a>
-
-### DeleteRolesResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
-
-
-
-
-
-
-<a name="identity-GetRolesRequest"></a>
-
-### GetRolesRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| base | [base.Base](#base-Base) |  |  |
-
-
-
-
-
-
-<a name="identity-GetRolesResponse"></a>
-
-### GetRolesResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| roles | [Role](#identity-Role) | repeated |  |
-| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
-
-
-
-
-
-
-<a name="identity-UnassignRolesRequest"></a>
-
-### UnassignRolesRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [uint32](#uint32) |  |  |
-| roles | [Role](#identity-Role) | repeated |  |
-| base | [base.Base](#base-Base) |  |  |
-
-
-
-
-
-
-<a name="identity-UnassignRolesResponse"></a>
-
-### UnassignRolesResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| user | [User](#identity-User) |  |  |
-| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
-
-
-
-
-
-
-<a name="identity-UpdateRoleRequest"></a>
-
-### UpdateRoleRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [uint32](#uint32) |  |  |
-| name | [string](#string) |  |  |
-| description | [string](#string) |  |  |
-| base | [base.Base](#base-Base) |  |  |
-
-
-
-
-
-
-<a name="identity-UpdateRoleResponse"></a>
-
-### UpdateRoleResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| role | [Role](#identity-Role) |  |  |
-| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
-
-
-
-
-
- 
-
- 
-
- 
-
-
-<a name="identity-RoleService"></a>
-
-### RoleService
-
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| CreateRole | [CreateRoleRequest](#identity-CreateRoleRequest) | [CreateRoleResponse](#identity-CreateRoleResponse) | CreateRole creates a new role. |
-| GetRoles | [GetRolesRequest](#identity-GetRolesRequest) | [GetRolesResponse](#identity-GetRolesResponse) | GetRoles gets all roles. |
-| DeleteRoles | [DeleteRolesRequest](#identity-DeleteRolesRequest) | [DeleteRolesResponse](#identity-DeleteRolesResponse) | DeleteRoles deletes roles by IDs. |
-| UpdateRole | [UpdateRoleRequest](#identity-UpdateRoleRequest) | [UpdateRoleResponse](#identity-UpdateRoleResponse) | UpdateRole updates a role by ID. |
-| AssignRoles | [AssignRolesRequest](#identity-AssignRolesRequest) | [AssignRolesResponse](#identity-AssignRolesResponse) | AssignRoles assigns roles to a user. |
-| UnassignRoles | [UnassignRolesRequest](#identity-UnassignRolesRequest) | [UnassignRolesResponse](#identity-UnassignRolesResponse) | UnassignRoles unassigns roles from a user. |
 
  
 
@@ -365,39 +94,6 @@
 
 
 
-<a name="identity-AuthenticateRequest"></a>
-
-### AuthenticateRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| account | [string](#string) |  |  |
-| password | [string](#string) |  |  |
-| base | [base.Base](#base-Base) |  |  |
-
-
-
-
-
-
-<a name="identity-AuthenticateResponse"></a>
-
-### AuthenticateResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| user | [User](#identity-User) |  |  |
-| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
-
-
-
-
-
-
 <a name="identity-CreateUserRequest"></a>
 
 ### CreateUserRequest
@@ -406,9 +102,13 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| email | [string](#string) |  |  |
-| username | [string](#string) |  |  |
 | password | [string](#string) |  |  |
+| username | [string](#string) | optional |  |
+| phone | [string](#string) | optional |  |
+| email | [string](#string) | optional |  |
+| nickname | [string](#string) | optional |  |
+| status | [UserStatus](#identity-UserStatus) | optional |  |
+| extend | [UserExtend](#identity-UserExtend) | optional |  |
 | base | [base.Base](#base-Base) |  |  |
 
 
@@ -424,7 +124,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| id | [uint32](#uint32) |  |  |
+| user | [User](#identity-User) |  |  |
 | base_resp | [base.BaseResp](#base-BaseResp) |  |  |
 
 
@@ -440,7 +140,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| id | [uint32](#uint32) |  |  |
+| uid | [uint32](#uint32) |  |  |
 | base | [base.Base](#base-Base) |  |  |
 
 
@@ -463,105 +163,6 @@
 
 
 
-
-<a name="identity-LoginRequest"></a>
-
-### LoginRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| account | [string](#string) |  |  |
-| password | [string](#string) |  |  |
-| base | [base.Base](#base-Base) |  |  |
-
-
-
-
-
-
-<a name="identity-LoginResponse"></a>
-
-### LoginResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| user | [User](#identity-User) |  |  |
-| token | [string](#string) |  |  |
-| token_expires_at | [int64](#int64) |  |  |
-| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
-
-
-
-
-
-
-<a name="identity-UpdateUserPasswordRequest"></a>
-
-### UpdateUserPasswordRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [uint32](#uint32) |  |  |
-| password | [string](#string) |  |  |
-| base | [base.Base](#base-Base) |  |  |
-
-
-
-
-
-
-<a name="identity-UpdateUserPasswordResponse"></a>
-
-### UpdateUserPasswordResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
-
-
-
-
-
-
-<a name="identity-UpdateUserStatusRequest"></a>
-
-### UpdateUserStatusRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| id | [uint32](#uint32) |  |  |
-| status | [User.Status](#identity-User-Status) |  |  |
-| base | [base.Base](#base-Base) |  |  |
-
-
-
-
-
-
-<a name="identity-UpdateUserStatusResponse"></a>
-
-### UpdateUserStatusResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
-
-
-
-
-
  
 
  
@@ -576,12 +177,8 @@
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Login | [LoginRequest](#identity-LoginRequest) | [LoginResponse](#identity-LoginResponse) | Login logs in a user. |
-| Authenticate | [AuthenticateRequest](#identity-AuthenticateRequest) | [AuthenticateResponse](#identity-AuthenticateResponse) | Authenticate authenticates a user. |
 | CreateUser | [CreateUserRequest](#identity-CreateUserRequest) | [CreateUserResponse](#identity-CreateUserResponse) | CreateUser creates a new user. |
 | GetUser | [GetUserRequest](#identity-GetUserRequest) | [GetUserResponse](#identity-GetUserResponse) | GetUser gets a user by ID. |
-| UpdateUserStatus | [UpdateUserStatusRequest](#identity-UpdateUserStatusRequest) | [UpdateUserStatusResponse](#identity-UpdateUserStatusResponse) | UpdateUserStatus updates the status of a user. |
-| UpdateUserPassword | [UpdateUserPasswordRequest](#identity-UpdateUserPasswordRequest) | [UpdateUserPasswordResponse](#identity-UpdateUserPasswordResponse) | UpdateUserPassword updates the password of a user. |
 
  
 

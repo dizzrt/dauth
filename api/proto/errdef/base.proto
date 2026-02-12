@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package errdef;
+
+import "ellie/errors/errors.proto";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/errdef;errdef";
+
+// common errors
+enum BaseErrors {
+  UNSPECIFIED = 0;
+
+  Unknown = -1 [
+    (ellie.errors.code) = -1,
+    (ellie.errors.status) = ERROR_STATUS_UNKNOWN
+  ];
+
+  Success = 100000 [
+    (ellie.errors.code) = 100000,
+    (ellie.errors.status) = ERROR_STATUS_OK
+  ];
+
+  InvalidArgument = 100001 [
+    (ellie.errors.code) = 100001,
+    (ellie.errors.status) = ERROR_STATUS_INVALID_ARGUMENT
+  ];
+}

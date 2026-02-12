@@ -9,19 +9,10 @@ package cmd
 import (
 	"github.com/dizzrt/dauth/internal/application"
 	"github.com/dizzrt/dauth/internal/conf"
-	biz4 "github.com/dizzrt/dauth/internal/domain/auth/biz"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
-	biz3 "github.com/dizzrt/dauth/internal/domain/sp/biz"
-	biz2 "github.com/dizzrt/dauth/internal/domain/token/biz"
 	"github.com/dizzrt/dauth/internal/handler"
-	auth2 "github.com/dizzrt/dauth/internal/infra/cache/impl/auth"
-	token2 "github.com/dizzrt/dauth/internal/infra/cache/impl/token"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
-	"github.com/dizzrt/dauth/internal/infra/repo/impl/auth"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/identity"
-	"github.com/dizzrt/dauth/internal/infra/repo/impl/sp"
-	"github.com/dizzrt/dauth/internal/infra/repo/impl/token"
-	"github.com/dizzrt/dauth/internal/infra/utils/security/jwt"
 	"github.com/dizzrt/dauth/internal/server"
 	"github.com/dizzrt/ellie"
 )
@@ -39,43 +30,16 @@ func wireApp() (*ellie.App, func(), error) {
 	baseDB := foundation.NewBaseDB(appConfig)
 	userRepo := identity.NewUserRepoImpl(baseDB)
 	userBiz := biz.NewUserBiz(userRepo)
-	roleRepo := identity.NewRoleRepoImpl(baseDB)
-	userRoleAssociationRepo := identity.NewUserRoleAssociationRepoImpl(baseDB)
-	roleBiz := biz.NewRoleBiz(roleRepo, userRoleAssociationRepo)
-	identityApplication := application.NewIdentityApplication(userBiz, roleBiz)
+	identityApplication := application.NewIdentityApplication(userBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)
-	tokenBlacklistRepo := token.NewTokenBlacklistRepoImpl(baseDB)
-	redisClient, cleanup2, err := foundation.NewRedisClient(appConfig)
+	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler)
+	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler)
+	app, cleanup2, err := newApp(logWriter, tracerProvider, registrar, grpcServer, httpServer)
 	if err != nil {
-		cleanup()
-		return nil, nil, err
-	}
-	tokenRevokeCache := token2.NewTokenRevokeCacheImpl(redisClient)
-	jwtManager := jwt.NewJWTManager(appConfig, tokenRevokeCache)
-	tokenBiz := biz2.NewTokenBiz(tokenBlacklistRepo, tokenRevokeCache, jwtManager)
-	tokenApplication := application.NewTokenApplication(tokenBiz)
-	tokenHandler := handler.NewTokenHandler(tokenApplication)
-	serviceProviderRepo := sp.NewServiceProviderRepoImpl(baseDB)
-	scopeRepo := sp.NewScopeRepoImpl(baseDB)
-	spScopeAssociationRepo := sp.NewSPScopeAssociationRepoImpl(baseDB)
-	serviceProviderBiz := biz3.NewServiceProviderBiz(serviceProviderRepo, scopeRepo, spScopeAssociationRepo)
-	serviceProviderApplication := application.NewServiceProviderApplication(serviceProviderBiz)
-	serviceProviderHandler := handler.NewServiceProviderHandler(serviceProviderApplication)
-	authorizationCodeRepo := auth.NewAuthorizationCodeRepoImpl(baseDB)
-	authorizationCodeCache := auth2.NewAuthorizationCodeCacheImpl(redisClient)
-	authBiz := biz4.NewAuthBiz(authorizationCodeRepo, authorizationCodeCache)
-	authApplication := application.NewAuthApplication(authBiz)
-	authHandler := handler.NewAuthHandler(authApplication)
-	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, tokenHandler, serviceProviderHandler, authHandler)
-	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler, tokenHandler, serviceProviderHandler, authHandler)
-	app, cleanup3, err := newApp(logWriter, tracerProvider, registrar, grpcServer, httpServer)
-	if err != nil {
-		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
 	return app, func() {
-		cleanup3()
 		cleanup2()
 		cleanup()
 	}, nil

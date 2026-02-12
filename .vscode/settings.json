@@ -1,8 +1,14 @@
 {
   "editor.formatOnSave": true,
   "gopls": {
-    "build.buildFlags": ["-tags=wireinject"],
-    "build.standaloneTags": ["ignore", "wireinject", "!wireinject"]
+    "build.buildFlags": [
+      "-tags=wireinject"
+    ],
+    "build.standaloneTags": [
+      "ignore",
+      "wireinject",
+      "!wireinject"
+    ]
   },
   "[proto]": {
     "editor.formatOnSave": true,

@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package errdef;
+
+import "ellie/errors/errors.proto";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/errdef;errdef";
+
+// sys - type 2
+enum SysErrors {
+  SysUNSPECIFIED = 0;
+
+  // region common
+
+  Internal = 200000 [
+    (ellie.errors.code) = 200000,
+    (ellie.errors.status) = ERROR_STATUS_INTERNAL
+  ];
+
+  // endregion common
+
+  // db errors (module: 01)
+
+  RecordNotFound = 201000 [
+    (ellie.errors.code) = 201000,
+    (ellie.errors.status) = ERROR_STATUS_NOT_FOUND
+  ];
+
+  DuplicatedKey = 201001 [
+    (ellie.errors.code) = 201001,
+    (ellie.errors.status) = ERROR_STATUS_ALREADY_EXISTS
+  ];
+
+  // endregion db
+}

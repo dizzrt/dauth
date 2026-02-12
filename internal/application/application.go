@@ -4,7 +4,4 @@ import "github.com/google/wire"
 
 var ProviderSet = wire.NewSet(
 	NewIdentityApplication,
-	NewTokenApplication,
-	NewServiceProviderApplication,
-	NewAuthApplication,
 )

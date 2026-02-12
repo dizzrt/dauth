@@ -175,90 +175,23 @@
         
           
           <li>
-            <a href="#identity%2fidentity_common.proto">identity/identity_common.proto</a>
+            <a href="#identity%2fcommon.proto">identity/common.proto</a>
             <ul>
-              
-                <li>
-                  <a href="#identity.Role"><span class="badge">M</span>Role</a>
-                </li>
               
                 <li>
                   <a href="#identity.User"><span class="badge">M</span>User</a>
                 </li>
               
-              
                 <li>
-                  <a href="#identity.Role.Status"><span class="badge">E</span>Role.Status</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.User.Status"><span class="badge">E</span>User.Status</a>
+                  <a href="#identity.UserExtend"><span class="badge">M</span>UserExtend</a>
                 </li>
               
               
-              
-            </ul>
-          </li>
-        
-          
-          <li>
-            <a href="#identity%2frole.proto">identity/role.proto</a>
-            <ul>
-              
                 <li>
-                  <a href="#identity.AssignRolesRequest"><span class="badge">M</span>AssignRolesRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.AssignRolesResponse"><span class="badge">M</span>AssignRolesResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.CreateRoleRequest"><span class="badge">M</span>CreateRoleRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.CreateRoleResponse"><span class="badge">M</span>CreateRoleResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.DeleteRolesRequest"><span class="badge">M</span>DeleteRolesRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.DeleteRolesResponse"><span class="badge">M</span>DeleteRolesResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.GetRolesRequest"><span class="badge">M</span>GetRolesRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.GetRolesResponse"><span class="badge">M</span>GetRolesResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.UnassignRolesRequest"><span class="badge">M</span>UnassignRolesRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.UnassignRolesResponse"><span class="badge">M</span>UnassignRolesResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.UpdateRoleRequest"><span class="badge">M</span>UpdateRoleRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.UpdateRoleResponse"><span class="badge">M</span>UpdateRoleResponse</a>
+                  <a href="#identity.UserStatus"><span class="badge">E</span>UserStatus</a>
                 </li>
               
               
-              
-              
-                <li>
-                  <a href="#identity.RoleService"><span class="badge">S</span>RoleService</a>
-                </li>
               
             </ul>
           </li>
@@ -267,14 +200,6 @@
           <li>
             <a href="#identity%2fuser.proto">identity/user.proto</a>
             <ul>
-              
-                <li>
-                  <a href="#identity.AuthenticateRequest"><span class="badge">M</span>AuthenticateRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.AuthenticateResponse"><span class="badge">M</span>AuthenticateResponse</a>
-                </li>
               
                 <li>
                   <a href="#identity.CreateUserRequest"><span class="badge">M</span>CreateUserRequest</a>
@@ -290,30 +215,6 @@
               
                 <li>
                   <a href="#identity.GetUserResponse"><span class="badge">M</span>GetUserResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.LoginRequest"><span class="badge">M</span>LoginRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.LoginResponse"><span class="badge">M</span>LoginResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.UpdateUserPasswordRequest"><span class="badge">M</span>UpdateUserPasswordRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.UpdateUserPasswordResponse"><span class="badge">M</span>UpdateUserPasswordResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.UpdateUserStatusRequest"><span class="badge">M</span>UpdateUserStatusRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#identity.UpdateUserStatusResponse"><span class="badge">M</span>UpdateUserStatusResponse</a>
                 </li>
               
               
@@ -333,69 +234,10 @@
     
       
       <div class="file-heading">
-        <h2 id="identity/identity_common.proto">identity/identity_common.proto</h2><a href="#title">Top</a>
+        <h2 id="identity/common.proto">identity/common.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
-      
-        <h3 id="identity.Role">Role</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>description</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>status</td>
-                  <td><a href="#identity.Role.Status">Role.Status</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>created_at</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>updated_at</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
       
         <h3 id="identity.User">User</h3>
         <p></p>
@@ -408,58 +250,86 @@
             <tbody>
               
                 <tr>
-                  <td>id</td>
+                  <td>uid</td>
                   <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>email</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
                   <td>username</td>
                   <td><a href="#string">string</a></td>
-                  <td></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
                   <td>status</td>
-                  <td><a href="#identity.User.Status">User.Status</a></td>
-                  <td></td>
+                  <td><a href="#identity.UserStatus">UserStatus</a></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>roles</td>
-                  <td><a href="#identity.Role">Role</a></td>
-                  <td>repeated</td>
+                  <td>phone</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>email</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>nickname</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>avatar</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>extend</td>
+                  <td><a href="#identity.UserExtend">UserExtend</a></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
                   <td>last_login_at</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
                   <td>created_at</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
                   <td>updated_at</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>deleted_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
@@ -470,9 +340,16 @@
 
         
       
+        <h3 id="identity.UserExtend">UserExtend</h3>
+        <p></p>
+
+        
+
+        
+      
 
       
-        <h3 id="identity.Role.Status">Role.Status</h3>
+        <h3 id="identity.UserStatus">UserStatus</h3>
         <p></p>
         <table class="enum-table">
           <thead>
@@ -481,62 +358,27 @@
           <tbody>
             
               <tr>
-                <td>UNSPECIFIED</td>
+                <td>USER_STATUS_UNSPECIFIED</td>
                 <td>0</td>
                 <td><p></p></td>
               </tr>
             
               <tr>
-                <td>ACTIVE</td>
+                <td>ENABLED</td>
                 <td>1</td>
-                <td><p></p></td>
+                <td><p>启用</p></td>
               </tr>
             
               <tr>
-                <td>INACTIVE</td>
+                <td>DISABLED</td>
                 <td>2</td>
-                <td><p></p></td>
+                <td><p>禁用</p></td>
               </tr>
             
               <tr>
-                <td>DELETED</td>
+                <td>LOCKED</td>
                 <td>3</td>
-                <td><p></p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
-        <h3 id="identity.User.Status">User.Status</h3>
-        <p></p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>UNSPECIFIED</td>
-                <td>0</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>ACTIVE</td>
-                <td>1</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>INACTIVE</td>
-                <td>2</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>DELETED</td>
-                <td>3</td>
-                <td><p></p></td>
+                <td><p>锁定（密码/MFA验证失败触发）</p></td>
               </tr>
             
           </tbody>
@@ -546,545 +388,6 @@
       
 
       
-    
-      
-      <div class="file-heading">
-        <h2 id="identity/role.proto">identity/role.proto</h2><a href="#title">Top</a>
-      </div>
-      <p></p>
-
-      
-        <h3 id="identity.AssignRolesRequest">AssignRolesRequest</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>roles</td>
-                  <td><a href="#identity.Role">Role</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base</td>
-                  <td><a href="#base.Base">base.Base</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.AssignRolesResponse">AssignRolesResponse</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>user</td>
-                  <td><a href="#identity.User">User</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base_resp</td>
-                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.CreateRoleRequest">CreateRoleRequest</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>description</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base</td>
-                  <td><a href="#base.Base">base.Base</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.CreateRoleResponse">CreateRoleResponse</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>role</td>
-                  <td><a href="#identity.Role">Role</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base_resp</td>
-                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.DeleteRolesRequest">DeleteRolesRequest</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>ids</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base</td>
-                  <td><a href="#base.Base">base.Base</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.DeleteRolesResponse">DeleteRolesResponse</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>base_resp</td>
-                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.GetRolesRequest">GetRolesRequest</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>base</td>
-                  <td><a href="#base.Base">base.Base</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.GetRolesResponse">GetRolesResponse</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>roles</td>
-                  <td><a href="#identity.Role">Role</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base_resp</td>
-                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.UnassignRolesRequest">UnassignRolesRequest</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>roles</td>
-                  <td><a href="#identity.Role">Role</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base</td>
-                  <td><a href="#base.Base">base.Base</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.UnassignRolesResponse">UnassignRolesResponse</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>user</td>
-                  <td><a href="#identity.User">User</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base_resp</td>
-                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.UpdateRoleRequest">UpdateRoleRequest</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>description</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base</td>
-                  <td><a href="#base.Base">base.Base</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.UpdateRoleResponse">UpdateRoleResponse</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>role</td>
-                  <td><a href="#identity.Role">Role</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base_resp</td>
-                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-
-      
-
-      
-
-      
-        <h3 id="identity.RoleService">RoleService</h3>
-        <p></p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>CreateRole</td>
-                <td><a href="#identity.CreateRoleRequest">CreateRoleRequest</a></td>
-                <td><a href="#identity.CreateRoleResponse">CreateRoleResponse</a></td>
-                <td><p>CreateRole creates a new role.</p></td>
-              </tr>
-            
-              <tr>
-                <td>GetRoles</td>
-                <td><a href="#identity.GetRolesRequest">GetRolesRequest</a></td>
-                <td><a href="#identity.GetRolesResponse">GetRolesResponse</a></td>
-                <td><p>GetRoles gets all roles.</p></td>
-              </tr>
-            
-              <tr>
-                <td>DeleteRoles</td>
-                <td><a href="#identity.DeleteRolesRequest">DeleteRolesRequest</a></td>
-                <td><a href="#identity.DeleteRolesResponse">DeleteRolesResponse</a></td>
-                <td><p>DeleteRoles deletes roles by IDs.</p></td>
-              </tr>
-            
-              <tr>
-                <td>UpdateRole</td>
-                <td><a href="#identity.UpdateRoleRequest">UpdateRoleRequest</a></td>
-                <td><a href="#identity.UpdateRoleResponse">UpdateRoleResponse</a></td>
-                <td><p>UpdateRole updates a role by ID.</p></td>
-              </tr>
-            
-              <tr>
-                <td>AssignRoles</td>
-                <td><a href="#identity.AssignRolesRequest">AssignRolesRequest</a></td>
-                <td><a href="#identity.AssignRolesResponse">AssignRolesResponse</a></td>
-                <td><p>AssignRoles assigns roles to a user.</p></td>
-              </tr>
-            
-              <tr>
-                <td>UnassignRoles</td>
-                <td><a href="#identity.UnassignRolesRequest">UnassignRolesRequest</a></td>
-                <td><a href="#identity.UnassignRolesResponse">UnassignRolesResponse</a></td>
-                <td><p>UnassignRoles unassigns roles from a user.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-
-        
-          
-          
-          <h4>Methods with HTTP bindings</h4>
-          <table>
-            <thead>
-              <tr>
-                <td>Method Name</td>
-                <td>Method</td>
-                <td>Pattern</td>
-                <td>Body</td>
-              </tr>
-            </thead>
-            <tbody>
-            
-              
-              
-              <tr>
-                <td>CreateRole</td>
-                <td>POST</td>
-                <td>/identity/role</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>GetRoles</td>
-                <td>GET</td>
-                <td>/identity/roles</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>DeleteRoles</td>
-                <td>POST</td>
-                <td>/identity/roles/delete</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>UpdateRole</td>
-                <td>PUT</td>
-                <td>/identity/role/{id}</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>AssignRoles</td>
-                <td>PUT</td>
-                <td>/identity/role/{id}/roles</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>UnassignRoles</td>
-                <td>POST</td>
-                <td>/identity/role/{id}/roles</td>
-                <td>*</td>
-              </tr>
-              
-            
-            </tbody>
-          </table>
-          
-        
     
       
       <div class="file-heading">
@@ -1092,75 +395,6 @@
       </div>
       <p></p>
 
-      
-        <h3 id="identity.AuthenticateRequest">AuthenticateRequest</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>account</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>password</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base</td>
-                  <td><a href="#base.Base">base.Base</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.AuthenticateResponse">AuthenticateResponse</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>user</td>
-                  <td><a href="#identity.User">User</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base_resp</td>
-                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
       
         <h3 id="identity.CreateUserRequest">CreateUserRequest</h3>
         <p></p>
@@ -1173,7 +407,7 @@
             <tbody>
               
                 <tr>
-                  <td>email</td>
+                  <td>password</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -1182,14 +416,42 @@
                 <tr>
                   <td>username</td>
                   <td><a href="#string">string</a></td>
-                  <td></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>password</td>
+                  <td>phone</td>
                   <td><a href="#string">string</a></td>
-                  <td></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>email</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>nickname</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#identity.UserStatus">UserStatus</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>extend</td>
+                  <td><a href="#identity.UserExtend">UserExtend</a></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               
@@ -1218,8 +480,8 @@
             <tbody>
               
                 <tr>
-                  <td>id</td>
-                  <td><a href="#uint32">uint32</a></td>
+                  <td>user</td>
+                  <td><a href="#identity.User">User</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -1249,7 +511,7 @@
             <tbody>
               
                 <tr>
-                  <td>id</td>
+                  <td>uid</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -1300,213 +562,6 @@
 
         
       
-        <h3 id="identity.LoginRequest">LoginRequest</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>account</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>password</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base</td>
-                  <td><a href="#base.Base">base.Base</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.LoginResponse">LoginResponse</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>user</td>
-                  <td><a href="#identity.User">User</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>token</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>token_expires_at</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base_resp</td>
-                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.UpdateUserPasswordRequest">UpdateUserPasswordRequest</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>password</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base</td>
-                  <td><a href="#base.Base">base.Base</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.UpdateUserPasswordResponse">UpdateUserPasswordResponse</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>base_resp</td>
-                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.UpdateUserStatusRequest">UpdateUserStatusRequest</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>status</td>
-                  <td><a href="#identity.User.Status">User.Status</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>base</td>
-                  <td><a href="#base.Base">base.Base</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="identity.UpdateUserStatusResponse">UpdateUserStatusResponse</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>base_resp</td>
-                  <td><a href="#base.BaseResp">base.BaseResp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
 
       
 
@@ -1522,20 +577,6 @@
           <tbody>
             
               <tr>
-                <td>Login</td>
-                <td><a href="#identity.LoginRequest">LoginRequest</a></td>
-                <td><a href="#identity.LoginResponse">LoginResponse</a></td>
-                <td><p>Login logs in a user.</p></td>
-              </tr>
-            
-              <tr>
-                <td>Authenticate</td>
-                <td><a href="#identity.AuthenticateRequest">AuthenticateRequest</a></td>
-                <td><a href="#identity.AuthenticateResponse">AuthenticateResponse</a></td>
-                <td><p>Authenticate authenticates a user.</p></td>
-              </tr>
-            
-              <tr>
                 <td>CreateUser</td>
                 <td><a href="#identity.CreateUserRequest">CreateUserRequest</a></td>
                 <td><a href="#identity.CreateUserResponse">CreateUserResponse</a></td>
@@ -1547,20 +588,6 @@
                 <td><a href="#identity.GetUserRequest">GetUserRequest</a></td>
                 <td><a href="#identity.GetUserResponse">GetUserResponse</a></td>
                 <td><p>GetUser gets a user by ID.</p></td>
-              </tr>
-            
-              <tr>
-                <td>UpdateUserStatus</td>
-                <td><a href="#identity.UpdateUserStatusRequest">UpdateUserStatusRequest</a></td>
-                <td><a href="#identity.UpdateUserStatusResponse">UpdateUserStatusResponse</a></td>
-                <td><p>UpdateUserStatus updates the status of a user.</p></td>
-              </tr>
-            
-              <tr>
-                <td>UpdateUserPassword</td>
-                <td><a href="#identity.UpdateUserPasswordRequest">UpdateUserPasswordRequest</a></td>
-                <td><a href="#identity.UpdateUserPasswordResponse">UpdateUserPasswordResponse</a></td>
-                <td><p>UpdateUserPassword updates the password of a user.</p></td>
               </tr>
             
           </tbody>
@@ -1584,19 +611,9 @@
               
               
               <tr>
-                <td>Login</td>
-                <td>POST</td>
-                <td>/identity/user/login</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
                 <td>CreateUser</td>
                 <td>POST</td>
-                <td>/identity/user/create</td>
+                <td>/identity/user</td>
                 <td>*</td>
               </tr>
               
@@ -1606,28 +623,8 @@
               <tr>
                 <td>GetUser</td>
                 <td>GET</td>
-                <td>/identity/user/{id}</td>
+                <td>/identity/user/{uid}</td>
                 <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>UpdateUserStatus</td>
-                <td>PUT</td>
-                <td>/identity/user/{id}/status</td>
-                <td>*</td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>UpdateUserPassword</td>
-                <td>PUT</td>
-                <td>/identity/user/{id}/password</td>
-                <td>*</td>
               </tr>
               
             

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package errdef;
+
+import "ellie/errors/errors.proto";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/errdef;errdef";
+
+// identity errors (domain: 01)
+enum IdentityErrors {
+  IdentityUNSPECIFIED = 0;
+
+  IdentityAuthenticationFailed = 101000 [
+    (ellie.errors.code) = 101000,
+    (ellie.errors.status) = ERROR_STATUS_UNAUTHENTICATED
+  ];
+}

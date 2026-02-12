@@ -28,7 +28,7 @@ func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (ui
 		Email:         user.Email,
 		Username:      user.Username,
 		Password:      user.Password,
-		Status:        uint(identity.User_ACTIVE),
+		Status:        uint(identity.UserStatus_ENABLED),
 		LastLoginTime: time.Now(),
 	}
 
@@ -48,43 +48,4 @@ func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.
 	}
 
 	return model.ToEntity(), nil
-}
-
-func (impl *UserRepoImpl) GetUserByEmail(ctx context.Context, email string) (*entity.User, error) {
-	var model *identity_model.User
-
-	db := impl.WithContext(ctx)
-	if err := db.Where("email = ?", email).
-		First(&model).Error; err != nil {
-		return nil, impl.WrapError(err)
-	}
-
-	return model.ToEntity(), nil
-}
-
-func (impl *UserRepoImpl) UpdateUserPassword(ctx context.Context, uid uint32, password string) error {
-	db := impl.WithContext(ctx)
-	err := db.Model(&identity_model.User{}).Where("id = ?", uid).
-		Update("password", password).Error
-
-	return impl.WrapError(err)
-}
-
-func (impl *UserRepoImpl) UpdateUserStatus(ctx context.Context, uid uint32, status identity.User_Status) error {
-	mStatus := uint(status)
-	db := impl.WithContext(ctx)
-	err := db.Model(&identity_model.User{}).
-		Where("id = ?", uid).
-		Update("status", mStatus).Error
-
-	return impl.WrapError(err)
-}
-
-func (impl *UserRepoImpl) UpdateLastLoginTime(ctx context.Context, uid uint32, lastLoginTime time.Time) error {
-	db := impl.WithContext(ctx)
-	err := db.Model(&identity_model.User{}).
-		Where("id = ?", uid).
-		Update("last_login_time", lastLoginTime).Error
-
-	return impl.WrapError(err)
 }

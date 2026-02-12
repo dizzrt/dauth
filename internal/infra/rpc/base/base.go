@@ -12,8 +12,6 @@ const (
 
 var clientSet = []core.Client{
 	{Key: CK_DAUTH_IDENTITY_USER, Endpoint: _ENDPOINT_DAUTH, Builder: NewUserServiceClient},
-	{Key: CK_DAUTH_SERVICE_PROVIDER, Endpoint: _ENDPOINT_DAUTH, Builder: NewServiceProviderServiceClient},
-	{Key: CK_DAUTH_TOKEN, Endpoint: _ENDPOINT_DAUTH, Builder: NewTokenServiceClient},
 }
 
 func init() {

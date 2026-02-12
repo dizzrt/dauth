@@ -10,7 +10,7 @@ import (
 
 func GetUser(ctx context.Context, uid uint32) (*identity.GetUserResponse, error) {
 	req := &identity.GetUserRequest{
-		Id: uid,
+		Uid: uid,
 	}
 
 	return errors.UnwrapGRPCResponse(rpc.UserServiceClient().GetUser(ctx, req))

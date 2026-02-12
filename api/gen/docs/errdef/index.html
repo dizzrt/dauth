@@ -175,12 +175,53 @@
         
           
           <li>
-            <a href="#errdef%2ferrdef.proto">errdef/errdef.proto</a>
+            <a href="#errdef%2fbase.proto">errdef/base.proto</a>
             <ul>
               
               
                 <li>
-                  <a href="#errdef.Errors"><span class="badge">E</span>Errors</a>
+                  <a href="#errdef.BaseErrors"><span class="badge">E</span>BaseErrors</a>
+                </li>
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
+            <a href="#errdef%2ferrdef.proto">errdef/errdef.proto</a>
+            <ul>
+              
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
+            <a href="#errdef%2fidentity.proto">errdef/identity.proto</a>
+            <ul>
+              
+              
+                <li>
+                  <a href="#errdef.IdentityErrors"><span class="badge">E</span>IdentityErrors</a>
+                </li>
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
+            <a href="#errdef%2fsys.proto">errdef/sys.proto</a>
+            <ul>
+              
+              
+                <li>
+                  <a href="#errdef.SysErrors"><span class="badge">E</span>SysErrors</a>
                 </li>
               
               
@@ -195,15 +236,15 @@
     
       
       <div class="file-heading">
-        <h2 id="errdef/errdef.proto">errdef/errdef.proto</h2><a href="#title">Top</a>
+        <h2 id="errdef/base.proto">errdef/base.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
       
 
       
-        <h3 id="errdef.Errors">Errors</h3>
-        <p></p>
+        <h3 id="errdef.BaseErrors">BaseErrors</h3>
+        <p>common errors</p>
         <table class="enum-table">
           <thead>
             <tr><td>Name</td><td>Number</td><td>Description</td></tr>
@@ -225,8 +266,7 @@
               <tr>
                 <td>Success</td>
                 <td>100000</td>
-                <td><p>biz - type 1
-common errors</p></td>
+                <td><p></p></td>
               </tr>
             
               <tr>
@@ -235,59 +275,98 @@ common errors</p></td>
                 <td><p></p></td>
               </tr>
             
+          </tbody>
+        </table>
+      
+
+      
+
+      
+    
+      
+      <div class="file-heading">
+        <h2 id="errdef/errdef.proto">errdef/errdef.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+
+      
+
+      
+
+      
+    
+      
+      <div class="file-heading">
+        <h2 id="errdef/identity.proto">errdef/identity.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+
+      
+        <h3 id="errdef.IdentityErrors">IdentityErrors</h3>
+        <p>identity errors (domain: 01)</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>IdentityUNSPECIFIED</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
               <tr>
                 <td>IdentityAuthenticationFailed</td>
                 <td>101000</td>
-                <td><p>identity errors (domain: 01)</p></td>
-              </tr>
-            
-              <tr>
-                <td>TokenInvalid</td>
-                <td>103000</td>
-                <td><p>token errors (domain: 03)</p></td>
-              </tr>
-            
-              <tr>
-                <td>TokenExpired</td>
-                <td>103001</td>
                 <td><p></p></td>
               </tr>
             
-              <tr>
-                <td>TokenRevoked</td>
-                <td>103002</td>
-                <td><p></p></td>
-              </tr>
+          </tbody>
+        </table>
+      
+
+      
+
+      
+    
+      
+      <div class="file-heading">
+        <h2 id="errdef/sys.proto">errdef/sys.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+
+      
+        <h3 id="errdef.SysErrors">SysErrors</h3>
+        <p>sys - type 2</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
             
               <tr>
-                <td>AuthInvalidClient</td>
-                <td>104000</td>
-                <td><p>auth errors (domain: 04)</p></td>
-              </tr>
-            
-              <tr>
-                <td>AuthInvalidRedirectURI</td>
-                <td>104001</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>AuthInvalidScope</td>
-                <td>104002</td>
+                <td>SysUNSPECIFIED</td>
+                <td>0</td>
                 <td><p></p></td>
               </tr>
             
               <tr>
                 <td>Internal</td>
                 <td>200000</td>
-                <td><p>sys - type 2
-common</p></td>
+                <td><p></p></td>
               </tr>
             
               <tr>
                 <td>RecordNotFound</td>
                 <td>201000</td>
-                <td><p>db errors (module: 01)</p></td>
+                <td><p></p></td>
               </tr>
             
               <tr>

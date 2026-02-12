@@ -3,10 +3,47 @@
 
 ## Table of Contents
 
+- [errdef/base.proto](#errdef_base-proto)
+    - [BaseErrors](#errdef-BaseErrors)
+  
 - [errdef/errdef.proto](#errdef_errdef-proto)
-    - [Errors](#errdef-Errors)
+- [errdef/identity.proto](#errdef_identity-proto)
+    - [IdentityErrors](#errdef-IdentityErrors)
+  
+- [errdef/sys.proto](#errdef_sys-proto)
+    - [SysErrors](#errdef-SysErrors)
   
 - [Scalar Value Types](#scalar-value-types)
+
+
+
+<a name="errdef_base-proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## errdef/base.proto
+
+
+ 
+
+
+<a name="errdef-BaseErrors"></a>
+
+### BaseErrors
+common errors
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| UNSPECIFIED | 0 |  |
+| Unknown | -1 |  |
+| Success | 100000 |  |
+| InvalidArgument | 100001 |  |
+
+
+ 
+
+ 
+
+ 
 
 
 
@@ -18,27 +55,61 @@
 
  
 
+ 
 
-<a name="errdef-Errors"></a>
+ 
 
-### Errors
+ 
 
+
+
+<a name="errdef_identity-proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## errdef/identity.proto
+
+
+ 
+
+
+<a name="errdef-IdentityErrors"></a>
+
+### IdentityErrors
+identity errors (domain: 01)
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| UNSPECIFIED | 0 |  |
-| Unknown | -1 |  |
-| Success | 100000 | biz - type 1 common errors |
-| InvalidArgument | 100001 |  |
-| IdentityAuthenticationFailed | 101000 | identity errors (domain: 01) |
-| TokenInvalid | 103000 | token errors (domain: 03) |
-| TokenExpired | 103001 |  |
-| TokenRevoked | 103002 |  |
-| AuthInvalidClient | 104000 | auth errors (domain: 04) |
-| AuthInvalidRedirectURI | 104001 |  |
-| AuthInvalidScope | 104002 |  |
-| Internal | 200000 | sys - type 2 common |
-| RecordNotFound | 201000 | db errors (module: 01) |
+| IdentityUNSPECIFIED | 0 |  |
+| IdentityAuthenticationFailed | 101000 |  |
+
+
+ 
+
+ 
+
+ 
+
+
+
+<a name="errdef_sys-proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## errdef/sys.proto
+
+
+ 
+
+
+<a name="errdef-SysErrors"></a>
+
+### SysErrors
+sys - type 2
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| SysUNSPECIFIED | 0 |  |
+| Internal | 200000 |  |
+| RecordNotFound | 201000 |  |
 | DuplicatedKey | 201001 |  |
 
 
