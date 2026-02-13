@@ -12,6 +12,7 @@ import (
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	"github.com/dizzrt/dauth/internal/handler"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
+	"github.com/dizzrt/dauth/internal/infra/repo/core"
 	"github.com/dizzrt/dauth/internal/infra/repo/impl/identity"
 	"github.com/dizzrt/dauth/internal/server"
 	"github.com/dizzrt/ellie"
@@ -27,8 +28,9 @@ func wireApp() (*ellie.App, func(), error) {
 		return nil, nil, err
 	}
 	registrar := foundation.NewRegistrar(appConfig)
-	baseDB := foundation.NewBaseDB(appConfig)
-	userRepo := identity.NewUserRepoImpl(baseDB)
+	db := foundation.NewDB(appConfig)
+	repoCore := core.NewRepoCore(db)
+	userRepo := identity.NewUserRepoImpl(repoCore)
 	userBiz := biz.NewUserBiz(userRepo)
 	identityApplication := application.NewIdentityApplication(userBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)

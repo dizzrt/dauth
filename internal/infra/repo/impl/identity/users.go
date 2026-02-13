@@ -2,50 +2,44 @@ package identity
 
 import (
 	"context"
-	"time"
 
-	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/dizzrt/dauth/internal/domain/identity/repo"
-	"github.com/dizzrt/dauth/internal/infra/foundation"
-	identity_model "github.com/dizzrt/dauth/internal/infra/repo/model/identity"
+	"github.com/dizzrt/dauth/internal/infra/repo/core"
+	"github.com/dizzrt/dauth/internal/infra/repo/core/gen/dao"
+	"github.com/dizzrt/dauth/internal/infra/repo/core/gen/model"
+	"github.com/dizzrt/dauth/internal/infra/utils"
+	"github.com/dizzrt/ellie/log"
 )
 
 var _ repo.UserRepo = (*UserRepoImpl)(nil)
 
 type UserRepoImpl struct {
-	*foundation.BaseDB
+	core.RepoCore
 }
 
-func NewUserRepoImpl(base *foundation.BaseDB) repo.UserRepo {
+func NewUserRepoImpl(repoCore core.RepoCore) repo.UserRepo {
 	return &UserRepoImpl{
-		BaseDB: base,
+		RepoCore: repoCore,
 	}
 }
 
-func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) (uint32, error) {
-	model := &identity_model.User{
-		Email:         user.Email,
-		Username:      user.Username,
-		Password:      user.Password,
-		Status:        uint(identity.UserStatus_ENABLED),
-		LastLoginTime: time.Now(),
+func (impl *UserRepoImpl) WithContext(ctx context.Context) dao.IIdentityUserDo {
+	return impl.Query().IdentityUser.WithContext(ctx)
+}
+
+func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) error {
+	m := model.IdentityUser{}
+	err := impl.WithContext(ctx).Create(&m)
+	if err != nil {
+		log.CtxErrorf(ctx, "create user failed, err: %v", err)
+		return utils.WrapError(err)
 	}
 
-	db := impl.WithContext(ctx)
-	if err := db.Create(&model).Error; err != nil {
-		return 0, impl.WrapError(err)
-	}
-
-	return uint32(model.ID), nil
+	user.UID = uint32(m.ID)
+	return nil
 }
 
 func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.User, error) {
-	var model *identity_model.User
-	db := impl.WithContext(ctx)
-	if err := db.Where("id = ?", uid).First(&model).Error; err != nil {
-		return nil, impl.WrapError(err)
-	}
-
-	return model.ToEntity(), nil
+	return nil, nil
 }

@@ -9,15 +9,17 @@ import (
 )
 
 type User struct {
-	UID           uint32              `validate:"required"`
-	Username      string              `validate:"required,max=32"`
-	Nickname      string              `validate:"required,max=32"`
-	Phone         string              `validate:"required,phone"`
-	Email         string              `validate:"required,email"`
-	Avatar        string              `validate:"required,url"`
-	Password      string              `validate:"required"`
+	UID      uint32 `validate:"required"`
+	Password string `validate:"required"`
+
+	Username *string `validate:"required,max=32"`
+	Nickname *string `validate:"required,max=32"`
+	Phone    *string `validate:"required,phone"`
+	Email    *string `validate:"required,email"`
+	Avatar   *string `validate:"required,url"`
+
 	Status        identity.UserStatus `validate:"required"`
-	LastLoginTime time.Time
+	LastLoginTime *time.Time
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 	DeletedAt     gorm.DeletedAt

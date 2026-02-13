@@ -7,6 +7,6 @@ import (
 )
 
 type UserRepo interface {
-	CreateUser(ctx context.Context, user *entity.User) (uint32, error)
+	CreateUser(ctx context.Context, user *entity.User) error
 	GetUserByID(ctx context.Context, uid uint32) (*entity.User, error)
 }
