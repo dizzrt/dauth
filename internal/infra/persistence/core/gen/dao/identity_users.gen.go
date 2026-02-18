@@ -17,7 +17,7 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"github.com/dizzrt/dauth/internal/infra/repo/core/gen/model"
+	"github.com/dizzrt/dauth/internal/infra/persistence/core/gen/model"
 )
 
 func newIdentityUser(db *gorm.DB, opts ...gen.DOOption) identityUser {
@@ -29,11 +29,14 @@ func newIdentityUser(db *gorm.DB, opts ...gen.DOOption) identityUser {
 	tableName := _identityUser.identityUserDo.TableName()
 	_identityUser.ALL = field.NewAsterisk(tableName)
 	_identityUser.ID = field.NewInt32(tableName, "id")
-	_identityUser.Email = field.NewString(tableName, "email")
 	_identityUser.Username = field.NewString(tableName, "username")
+	_identityUser.Nickname = field.NewString(tableName, "nickname")
+	_identityUser.Phone = field.NewString(tableName, "phone")
+	_identityUser.Email = field.NewString(tableName, "email")
+	_identityUser.Avatar = field.NewString(tableName, "avatar")
 	_identityUser.Password = field.NewString(tableName, "password")
 	_identityUser.Status = field.NewInt32(tableName, "status")
-	_identityUser.LastLoginTime = field.NewTime(tableName, "last_login_time")
+	_identityUser.LastLoginAt = field.NewTime(tableName, "last_login_at")
 	_identityUser.CreatedAt = field.NewTime(tableName, "created_at")
 	_identityUser.UpdatedAt = field.NewTime(tableName, "updated_at")
 	_identityUser.DeletedAt = field.NewField(tableName, "deleted_at")
@@ -46,16 +49,19 @@ func newIdentityUser(db *gorm.DB, opts ...gen.DOOption) identityUser {
 type identityUser struct {
 	identityUserDo identityUserDo
 
-	ALL           field.Asterisk
-	ID            field.Int32 // uid,user_id
-	Email         field.String
-	Username      field.String
-	Password      field.String
-	Status        field.Int32
-	LastLoginTime field.Time
-	CreatedAt     field.Time
-	UpdatedAt     field.Time
-	DeletedAt     field.Field
+	ALL         field.Asterisk
+	ID          field.Int32 // uid,user_id
+	Username    field.String
+	Nickname    field.String
+	Phone       field.String
+	Email       field.String
+	Avatar      field.String
+	Password    field.String
+	Status      field.Int32 // 1-ENABLED 2-DISABLED 3-LOCKED
+	LastLoginAt field.Time
+	CreatedAt   field.Time
+	UpdatedAt   field.Time
+	DeletedAt   field.Field
 
 	fieldMap map[string]field.Expr
 }
@@ -73,11 +79,14 @@ func (i identityUser) As(alias string) *identityUser {
 func (i *identityUser) updateTableName(table string) *identityUser {
 	i.ALL = field.NewAsterisk(table)
 	i.ID = field.NewInt32(table, "id")
-	i.Email = field.NewString(table, "email")
 	i.Username = field.NewString(table, "username")
+	i.Nickname = field.NewString(table, "nickname")
+	i.Phone = field.NewString(table, "phone")
+	i.Email = field.NewString(table, "email")
+	i.Avatar = field.NewString(table, "avatar")
 	i.Password = field.NewString(table, "password")
 	i.Status = field.NewInt32(table, "status")
-	i.LastLoginTime = field.NewTime(table, "last_login_time")
+	i.LastLoginAt = field.NewTime(table, "last_login_at")
 	i.CreatedAt = field.NewTime(table, "created_at")
 	i.UpdatedAt = field.NewTime(table, "updated_at")
 	i.DeletedAt = field.NewField(table, "deleted_at")
@@ -109,13 +118,16 @@ func (i *identityUser) GetFieldByName(fieldName string) (field.OrderExpr, bool) 
 }
 
 func (i *identityUser) fillFieldMap() {
-	i.fieldMap = make(map[string]field.Expr, 9)
+	i.fieldMap = make(map[string]field.Expr, 12)
 	i.fieldMap["id"] = i.ID
-	i.fieldMap["email"] = i.Email
 	i.fieldMap["username"] = i.Username
+	i.fieldMap["nickname"] = i.Nickname
+	i.fieldMap["phone"] = i.Phone
+	i.fieldMap["email"] = i.Email
+	i.fieldMap["avatar"] = i.Avatar
 	i.fieldMap["password"] = i.Password
 	i.fieldMap["status"] = i.Status
-	i.fieldMap["last_login_time"] = i.LastLoginTime
+	i.fieldMap["last_login_at"] = i.LastLoginAt
 	i.fieldMap["created_at"] = i.CreatedAt
 	i.fieldMap["updated_at"] = i.UpdatedAt
 	i.fieldMap["deleted_at"] = i.DeletedAt

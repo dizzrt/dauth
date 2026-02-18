@@ -12,8 +12,8 @@ import (
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	"github.com/dizzrt/dauth/internal/handler"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
-	"github.com/dizzrt/dauth/internal/infra/repo/core"
-	"github.com/dizzrt/dauth/internal/infra/repo/impl/identity"
+	"github.com/dizzrt/dauth/internal/infra/persistence/core"
+	"github.com/dizzrt/dauth/internal/infra/persistence/impl/identity"
 	"github.com/dizzrt/dauth/internal/server"
 	"github.com/dizzrt/ellie"
 )

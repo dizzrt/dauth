@@ -12,17 +12,17 @@ type User struct {
 	UID      uint32 `validate:"required"`
 	Password string `validate:"required"`
 
-	Username *string `validate:"required,max=32"`
+	Username string  `validate:"required,max=32"`
 	Nickname *string `validate:"required,max=32"`
 	Phone    *string `validate:"required,phone"`
 	Email    *string `validate:"required,email"`
 	Avatar   *string `validate:"required,url"`
 
-	Status        identity.UserStatus `validate:"required"`
-	LastLoginTime *time.Time
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-	DeletedAt     gorm.DeletedAt
+	Status      identity.UserStatus `validate:"required"`
+	LastLoginAt *time.Time
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	DeletedAt   gorm.DeletedAt
 }
 
 func (u *User) VerifyPassword(password string) error {

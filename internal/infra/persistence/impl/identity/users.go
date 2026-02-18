@@ -5,11 +5,11 @@ import (
 
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/dizzrt/dauth/internal/domain/identity/repo"
-	"github.com/dizzrt/dauth/internal/infra/repo/core"
-	"github.com/dizzrt/dauth/internal/infra/repo/core/gen/dao"
-	"github.com/dizzrt/dauth/internal/infra/repo/core/gen/model"
+	"github.com/dizzrt/dauth/internal/infra/persistence/core"
+	"github.com/dizzrt/dauth/internal/infra/persistence/core/gen/dao"
 	"github.com/dizzrt/dauth/internal/infra/utils"
 	"github.com/dizzrt/ellie/log"
+	"gorm.io/gorm"
 )
 
 var _ repo.UserRepo = (*UserRepoImpl)(nil)
@@ -29,8 +29,8 @@ func (impl *UserRepoImpl) WithContext(ctx context.Context) dao.IIdentityUserDo {
 }
 
 func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) error {
-	m := model.IdentityUser{}
-	err := impl.WithContext(ctx).Create(&m)
+	m := fromIdentityUserEntity(user)
+	err := impl.WithContext(ctx).Create(m)
 	if err != nil {
 		log.CtxErrorf(ctx, "create user failed, err: %v", err)
 		return utils.WrapError(err)
@@ -41,5 +41,15 @@ func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) err
 }
 
 func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.User, error) {
-	return nil, nil
+	m, err := impl.WithContext(ctx).Where(dao.IdentityUser.ID.Eq(int32(uid))).First()
+	if err != nil {
+		if err != gorm.ErrRecordNotFound {
+			log.CtxErrorf(ctx, "get user by id failed, err: %v", err)
+		}
+
+		return nil, utils.WrapError(err)
+	}
+
+	user := toIdentityUserEntity(m)
+	return user, nil
 }

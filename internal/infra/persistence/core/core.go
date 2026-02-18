@@ -1,7 +1,7 @@
 package core
 
 import (
-	"github.com/dizzrt/dauth/internal/infra/repo/core/gen/dao"
+	"github.com/dizzrt/dauth/internal/infra/persistence/core/gen/dao"
 	"gorm.io/gorm"
 )
 

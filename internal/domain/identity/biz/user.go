@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/domain/identity/dto"
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
@@ -58,5 +59,14 @@ func (biz *userBiz) CreateUser(ctx context.Context, user *dto.CreateUserDTO) (*e
 }
 
 func (biz *userBiz) GetUser(ctx context.Context, uid uint32) (*entity.User, error) {
-	return nil, nil
+	user, err := biz.userRepo.GetUserByID(ctx, uid)
+	if err != nil {
+		if !errdef.IsRecordNotFound(err) {
+			log.CtxErrorf(ctx, "[Identity] get user failed, err: %v", err)
+		}
+
+		return nil, err
+	}
+
+	return user, nil
 }

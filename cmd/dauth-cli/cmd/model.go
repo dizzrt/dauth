@@ -9,6 +9,11 @@ import (
 	"gorm.io/gen"
 )
 
+var (
+	allTables bool
+	tableName string
+)
+
 // modelCmd represents the model command
 var modelCmd = &cobra.Command{
 	Use:   "model",
@@ -20,9 +25,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := execute(); err != nil {
-			fmt.Println(err)
-		}
+		execute()
 	},
 }
 
@@ -38,26 +41,38 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// modelCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	modelCmd.Flags().BoolVar(&allTables, "all", false, "Generate models for all tables")
+	modelCmd.Flags().StringVarP(&tableName, "table", "t", "", "Table name to generate model")
 }
 
 func execute() error {
+	if !allTables && tableName == "" {
+		fmt.Println("Please specify table name or use --all to generate models for all tables")
+		return nil
+	}
+
 	conf := conf.GetAppConfig()
 	db := foundation.NewDB(conf)
 
 	g := gen.NewGenerator(gen.Config{
-		OutPath:          "internal/infra/repo/core/gen/dao",
-		ModelPkgPath:     "internal/infra/repo/core/gen/model",
+		OutPath:          "internal/infra/persistence/core/gen/dao",
+		ModelPkgPath:     "internal/infra/persistence/core/gen/model",
 		Mode:             gen.WithDefaultQuery | gen.WithQueryInterface,
 		FieldNullable:    true,
 		FieldWithTypeTag: true,
 	})
 
 	g.UseDB(db)
-	m := g.GenerateAllTable()
-	// m := g.GenerateModel("identity_users")
-	g.ApplyBasic(m...)
+
+	if tableName != "" {
+		m := g.GenerateModel(tableName)
+		g.ApplyBasic(m)
+	} else {
+		m := g.GenerateAllTable()
+		g.ApplyBasic(m...)
+	}
 
 	g.Execute()
-
 	return nil
 }
