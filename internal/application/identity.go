@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/dizzrt/dauth/api/gen/common"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	"github.com/dizzrt/dauth/internal/domain/identity/dto"
@@ -16,6 +17,7 @@ var _ IdentityApplication = (*identityApplication)(nil)
 type IdentityApplication interface {
 	CreateUser(context.Context, *identity.CreateUserRequest) (*identity.CreateUserResponse, error)
 	GetUser(context.Context, *identity.GetUserRequest) (*identity.GetUserResponse, error)
+	ListUsers(context.Context, *identity.ListUsersRequest) (*identity.ListUsersResponse, error)
 }
 
 type identityApplication struct {
@@ -119,6 +121,60 @@ func (app *identityApplication) GetUser(ctx context.Context, req *identity.GetUs
 	resp := &identity.GetUserResponse{
 		User: u,
 		// BaseResp: ,
+	}
+
+	return resp, nil
+}
+
+func (app *identityApplication) ListUsers(ctx context.Context, req *identity.ListUsersRequest) (*identity.ListUsersResponse, error) {
+	page := req.GetPagination().GetPage()
+	if page <= 0 {
+		page = 1
+	}
+
+	size := req.GetPagination().GetSize()
+	if size <= 0 {
+		size = 20
+	}
+
+	users, total, err := app.userBiz.ListUsers(ctx, page, size)
+	if err != nil {
+		log.CtxErrorf(ctx, "list users failed, err: %v", err)
+		return nil, err
+	}
+
+	resp := &identity.ListUsersResponse{
+		Users: make([]*identity.User, 0, len(users)),
+		Pagination: &common.Pagination{
+			Page:  page,
+			Size:  size,
+			Total: total,
+		},
+	}
+
+	for _, user := range users {
+		u := &identity.User{
+			Uid:       &user.UID,
+			Username:  &user.Username,
+			Status:    &user.Status,
+			Phone:     user.Phone,
+			Email:     user.Email,
+			Nickname:  user.Nickname,
+			Avatar:    user.Avatar,
+			Extend:    nil,
+			CreatedAt: timestamppb.New(user.CreatedAt),
+			UpdatedAt: timestamppb.New(user.UpdatedAt),
+		}
+
+		if user.LastLoginAt != nil {
+			u.LastLoginAt = timestamppb.New(*user.LastLoginAt)
+		}
+
+		if user.DeletedAt.Valid {
+			u.DeletedAt = timestamppb.New(user.DeletedAt.Time)
+		}
+
+		resp.Users = append(resp.Users, u)
 	}
 
 	return resp, nil

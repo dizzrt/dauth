@@ -3,6 +3,7 @@ syntax = "proto3";
 package identity;
 
 import "common/base.proto";
+import "common/pagination.proto";
 import "google/api/annotations.proto";
 import "identity/types.proto";
 
@@ -38,6 +39,18 @@ message GetUserResponse {
   common.BaseResp base_resp = 255;
 }
 
+message ListUsersRequest {
+  common.Pagination pagination = 254;
+  common.Base base = 255;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+
+  common.Pagination pagination = 254;
+  common.BaseResp base_resp = 255;
+}
+
 service UserService {
   // CreateUser creates a new user.
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
@@ -50,5 +63,10 @@ service UserService {
   // GetUser gets a user by ID.
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {
     option (google.api.http) = {get: "/identity/user/{uid}"};
+  }
+
+  // ListUsers lists all users.
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
+    option (google.api.http) = {get: "/identity/users"};
   }
 }

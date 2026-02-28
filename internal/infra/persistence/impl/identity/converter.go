@@ -39,3 +39,12 @@ func toIdentityUserEntity(model *model.IdentityUser) *entity.User {
 		DeletedAt:   model.DeletedAt,
 	}
 }
+
+func toIdentityUserEntities(models []*model.IdentityUser) []*entity.User {
+	entities := make([]*entity.User, 0, len(models))
+	for _, model := range models {
+		entities = append(entities, toIdentityUserEntity(model))
+	}
+
+	return entities
+}

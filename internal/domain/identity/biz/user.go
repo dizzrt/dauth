@@ -18,6 +18,7 @@ var _ UserBiz = (*userBiz)(nil)
 type UserBiz interface {
 	CreateUser(ctx context.Context, user *dto.CreateUserDTO) (*entity.User, error)
 	GetUser(ctx context.Context, uid uint32) (*entity.User, error)
+	ListUsers(ctx context.Context, page, size int32) ([]*entity.User, int64, error)
 }
 
 type userBiz struct {
@@ -69,4 +70,14 @@ func (biz *userBiz) GetUser(ctx context.Context, uid uint32) (*entity.User, erro
 	}
 
 	return user, nil
+}
+
+func (biz *userBiz) ListUsers(ctx context.Context, page, size int32) ([]*entity.User, int64, error) {
+	users, total, err := biz.userRepo.ListUsers(ctx, page, size)
+	if err != nil {
+		log.CtxErrorf(ctx, "[Identity] list users failed, err: %v", err)
+		return nil, 0, err
+	}
+
+	return users, total, nil
 }

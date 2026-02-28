@@ -29,3 +29,7 @@ func (handler *IdentityHandler) CreateUser(ctx context.Context, req *identity.Cr
 func (handler *IdentityHandler) GetUser(ctx context.Context, req *identity.GetUserRequest) (*identity.GetUserResponse, error) {
 	return errors.WrapGRPCResponse(handler.identityApp.GetUser(ctx, req))
 }
+
+func (handler *IdentityHandler) ListUsers(ctx context.Context, req *identity.ListUsersRequest) (*identity.ListUsersResponse, error) {
+	return errors.WrapGRPCResponse(handler.identityApp.ListUsers(ctx, req))
+}

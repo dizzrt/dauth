@@ -14,6 +14,8 @@
     - [CreateUserResponse](#identity-CreateUserResponse)
     - [GetUserRequest](#identity-GetUserRequest)
     - [GetUserResponse](#identity-GetUserResponse)
+    - [ListUsersRequest](#identity-ListUsersRequest)
+    - [ListUsersResponse](#identity-ListUsersResponse)
   
     - [UserService](#identity-UserService)
   
@@ -163,6 +165,39 @@
 
 
 
+
+<a name="identity-ListUsersRequest"></a>
+
+### ListUsersRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| pagination | [common.Pagination](#common-Pagination) |  |  |
+| base | [common.Base](#common-Base) |  |  |
+
+
+
+
+
+
+<a name="identity-ListUsersResponse"></a>
+
+### ListUsersResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| users | [User](#identity-User) | repeated |  |
+| pagination | [common.Pagination](#common-Pagination) |  |  |
+| base_resp | [common.BaseResp](#common-BaseResp) |  |  |
+
+
+
+
+
  
 
  
@@ -179,6 +214,7 @@
 | ----------- | ------------ | ------------- | ------------|
 | CreateUser | [CreateUserRequest](#identity-CreateUserRequest) | [CreateUserResponse](#identity-CreateUserResponse) | CreateUser creates a new user. |
 | GetUser | [GetUserRequest](#identity-GetUserRequest) | [GetUserResponse](#identity-GetUserResponse) | GetUser gets a user by ID. |
+| ListUsers | [ListUsersRequest](#identity-ListUsersRequest) | [ListUsersResponse](#identity-ListUsersResponse) | ListUsers lists all users. |
 
  
 

@@ -53,3 +53,18 @@ func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.
 	user := toIdentityUserEntity(m)
 	return user, nil
 }
+
+func (impl *UserRepoImpl) ListUsers(ctx context.Context, page, size int32) ([]*entity.User, int64, error) {
+	offset := (page - 1) * size
+	users, total, err := impl.WithContext(ctx).
+		Where(dao.IdentityUser.DeletedAt.Eq(nil)).
+		Order(dao.IdentityUser.ID.Asc()).
+		FindByPage(int(offset), int(size))
+
+	if err != nil {
+		log.CtxErrorf(ctx, "list users failed, err: %v", err)
+		return nil, 0, utils.WrapError(err)
+	}
+
+	return toIdentityUserEntities(users), total, nil
+}

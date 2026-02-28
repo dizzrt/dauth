@@ -9,4 +9,5 @@ import (
 type UserRepo interface {
 	CreateUser(ctx context.Context, user *entity.User) error
 	GetUserByID(ctx context.Context, uid uint32) (*entity.User, error)
+	ListUsers(ctx context.Context, page, size int32) ([]*entity.User, int64, error)
 }
