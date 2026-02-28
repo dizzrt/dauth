@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package identity;
 
-import "base/base.proto";
+import "common/base.proto";
 import "google/api/annotations.proto";
-import "identity/common.proto";
+import "identity/types.proto";
 
 option go_package = "github.com/dizzrt/dauth/api/gen/identity;identity";
 
@@ -17,25 +17,25 @@ message CreateUserRequest {
   optional UserStatus status = 6;
   optional UserExtend extend = 7;
 
-  base.Base base = 255;
+  common.Base base = 255;
 }
 
 message CreateUserResponse {
   User user = 1;
 
-  base.BaseResp base_resp = 255;
+  common.BaseResp base_resp = 255;
 }
 
 message GetUserRequest {
   uint32 uid = 1;
 
-  base.Base base = 255;
+  common.Base base = 255;
 }
 
 message GetUserResponse {
   User user = 1;
 
-  base.BaseResp base_resp = 255;
+  common.BaseResp base_resp = 255;
 }
 
 service UserService {

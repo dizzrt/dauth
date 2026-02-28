@@ -3,22 +3,25 @@
 
 ## Table of Contents
 
-- [base/base.proto](#base_base-proto)
-    - [Base](#base-Base)
-    - [BaseResp](#base-BaseResp)
+- [common/base.proto](#common_base-proto)
+    - [Base](#common-Base)
+    - [BaseResp](#common-BaseResp)
+  
+- [common/pagination.proto](#common_pagination-proto)
+    - [Pagination](#common-Pagination)
   
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="base_base-proto"></a>
+<a name="common_base-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## base/base.proto
+## common/base.proto
 
 
 
-<a name="base-Base"></a>
+<a name="common-Base"></a>
 
 ### Base
 
@@ -28,7 +31,7 @@
 
 
 
-<a name="base-BaseResp"></a>
+<a name="common-BaseResp"></a>
 
 ### BaseResp
 
@@ -38,6 +41,39 @@
 | ----- | ---- | ----- | ----------- |
 | code | [uint32](#uint32) |  |  |
 | message | [string](#string) |  |  |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+<a name="common_pagination-proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## common/pagination.proto
+
+
+
+<a name="common-Pagination"></a>
+
+### Pagination
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| page | [int32](#int32) |  |  |
+| size | [int32](#int32) |  |  |
+| total | [int64](#int64) |  |  |
 
 
 

@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.10-ellie.1
 // 	protoc        (unknown)
-// source: identity/common.proto
+// source: identity/types.proto
 
 package identity
 
@@ -58,11 +58,11 @@ func (x UserStatus) String() string {
 }
 
 func (UserStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_identity_common_proto_enumTypes[0].Descriptor()
+	return file_identity_types_proto_enumTypes[0].Descriptor()
 }
 
 func (UserStatus) Type() protoreflect.EnumType {
-	return &file_identity_common_proto_enumTypes[0]
+	return &file_identity_types_proto_enumTypes[0]
 }
 
 func (x UserStatus) Number() protoreflect.EnumNumber {
@@ -71,7 +71,7 @@ func (x UserStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use UserStatus.Descriptor instead.
 func (UserStatus) EnumDescriptor() ([]byte, []int) {
-	return file_identity_common_proto_rawDescGZIP(), []int{0}
+	return file_identity_types_proto_rawDescGZIP(), []int{0}
 }
 
 type UserExtend struct {
@@ -82,7 +82,7 @@ type UserExtend struct {
 
 func (x *UserExtend) Reset() {
 	*x = UserExtend{}
-	mi := &file_identity_common_proto_msgTypes[0]
+	mi := &file_identity_types_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -94,7 +94,7 @@ func (x *UserExtend) String() string {
 func (*UserExtend) ProtoMessage() {}
 
 func (x *UserExtend) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_common_proto_msgTypes[0]
+	mi := &file_identity_types_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -107,7 +107,7 @@ func (x *UserExtend) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserExtend.ProtoReflect.Descriptor instead.
 func (*UserExtend) Descriptor() ([]byte, []int) {
-	return file_identity_common_proto_rawDescGZIP(), []int{0}
+	return file_identity_types_proto_rawDescGZIP(), []int{0}
 }
 
 type User struct {
@@ -130,7 +130,7 @@ type User struct {
 
 func (x *User) Reset() {
 	*x = User{}
-	mi := &file_identity_common_proto_msgTypes[1]
+	mi := &file_identity_types_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -142,7 +142,7 @@ func (x *User) String() string {
 func (*User) ProtoMessage() {}
 
 func (x *User) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_common_proto_msgTypes[1]
+	mi := &file_identity_types_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -155,7 +155,7 @@ func (x *User) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use User.ProtoReflect.Descriptor instead.
 func (*User) Descriptor() ([]byte, []int) {
-	return file_identity_common_proto_rawDescGZIP(), []int{1}
+	return file_identity_types_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *User) GetUid() uint32 {
@@ -242,11 +242,11 @@ func (x *User) GetDeletedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-var File_identity_common_proto protoreflect.FileDescriptor
+var File_identity_types_proto protoreflect.FileDescriptor
 
-const file_identity_common_proto_rawDesc = "" +
+const file_identity_types_proto_rawDesc = "" +
 	"\n" +
-	"\x15identity/common.proto\x12\bidentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\f\n" +
+	"\x14identity/types.proto\x12\bidentity\x1a\x1fgoogle/protobuf/timestamp.proto\"\f\n" +
 	"\n" +
 	"UserExtend\"\xb3\x05\n" +
 	"\x04User\x12\x15\n" +
@@ -288,26 +288,26 @@ const file_identity_common_proto_rawDesc = "" +
 	"\x06LOCKED\x10\x03B3Z1github.com/dizzrt/dauth/api/gen/identity;identityb\x06proto3"
 
 var (
-	file_identity_common_proto_rawDescOnce sync.Once
-	file_identity_common_proto_rawDescData []byte
+	file_identity_types_proto_rawDescOnce sync.Once
+	file_identity_types_proto_rawDescData []byte
 )
 
-func file_identity_common_proto_rawDescGZIP() []byte {
-	file_identity_common_proto_rawDescOnce.Do(func() {
-		file_identity_common_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_identity_common_proto_rawDesc), len(file_identity_common_proto_rawDesc)))
+func file_identity_types_proto_rawDescGZIP() []byte {
+	file_identity_types_proto_rawDescOnce.Do(func() {
+		file_identity_types_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_identity_types_proto_rawDesc), len(file_identity_types_proto_rawDesc)))
 	})
-	return file_identity_common_proto_rawDescData
+	return file_identity_types_proto_rawDescData
 }
 
-var file_identity_common_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_identity_common_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_identity_common_proto_goTypes = []any{
+var file_identity_types_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_identity_types_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_identity_types_proto_goTypes = []any{
 	(UserStatus)(0),               // 0: identity.UserStatus
 	(*UserExtend)(nil),            // 1: identity.UserExtend
 	(*User)(nil),                  // 2: identity.User
 	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
 }
-var file_identity_common_proto_depIdxs = []int32{
+var file_identity_types_proto_depIdxs = []int32{
 	0, // 0: identity.User.status:type_name -> identity.UserStatus
 	1, // 1: identity.User.extend:type_name -> identity.UserExtend
 	3, // 2: identity.User.last_login_at:type_name -> google.protobuf.Timestamp
@@ -321,28 +321,28 @@ var file_identity_common_proto_depIdxs = []int32{
 	0, // [0:6] is the sub-list for field type_name
 }
 
-func init() { file_identity_common_proto_init() }
-func file_identity_common_proto_init() {
-	if File_identity_common_proto != nil {
+func init() { file_identity_types_proto_init() }
+func file_identity_types_proto_init() {
+	if File_identity_types_proto != nil {
 		return
 	}
-	file_identity_common_proto_msgTypes[1].OneofWrappers = []any{}
+	file_identity_types_proto_msgTypes[1].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_identity_common_proto_rawDesc), len(file_identity_common_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_identity_types_proto_rawDesc), len(file_identity_types_proto_rawDesc)),
 			NumEnums:      1,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_identity_common_proto_goTypes,
-		DependencyIndexes: file_identity_common_proto_depIdxs,
-		EnumInfos:         file_identity_common_proto_enumTypes,
-		MessageInfos:      file_identity_common_proto_msgTypes,
+		GoTypes:           file_identity_types_proto_goTypes,
+		DependencyIndexes: file_identity_types_proto_depIdxs,
+		EnumInfos:         file_identity_types_proto_enumTypes,
+		MessageInfos:      file_identity_types_proto_msgTypes,
 	}.Build()
-	File_identity_common_proto = out.File
-	file_identity_common_proto_goTypes = nil
-	file_identity_common_proto_depIdxs = nil
+	File_identity_types_proto = out.File
+	file_identity_types_proto_goTypes = nil
+	file_identity_types_proto_depIdxs = nil
 }

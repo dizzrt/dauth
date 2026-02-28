@@ -7,7 +7,7 @@
 package identity
 
 import (
-	base "github.com/dizzrt/dauth/api/gen/base"
+	common "github.com/dizzrt/dauth/api/gen/common"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -32,7 +32,7 @@ type CreateUserRequest struct {
 	Nickname      *string                `protobuf:"bytes,5,opt,name=nickname,proto3,oneof" json:"nickname,omitempty"`
 	Status        *UserStatus            `protobuf:"varint,6,opt,name=status,proto3,enum=identity.UserStatus,oneof" json:"status,omitempty"`
 	Extend        *UserExtend            `protobuf:"bytes,7,opt,name=extend,proto3,oneof" json:"extend,omitempty"`
-	Base          *base.Base             `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
+	Base          *common.Base           `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -116,7 +116,7 @@ func (x *CreateUserRequest) GetExtend() *UserExtend {
 	return nil
 }
 
-func (x *CreateUserRequest) GetBase() *base.Base {
+func (x *CreateUserRequest) GetBase() *common.Base {
 	if x != nil {
 		return x.Base
 	}
@@ -126,7 +126,7 @@ func (x *CreateUserRequest) GetBase() *base.Base {
 type CreateUserResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
-	BaseResp      *base.BaseResp         `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
+	BaseResp      *common.BaseResp       `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -168,7 +168,7 @@ func (x *CreateUserResponse) GetUser() *User {
 	return nil
 }
 
-func (x *CreateUserResponse) GetBaseResp() *base.BaseResp {
+func (x *CreateUserResponse) GetBaseResp() *common.BaseResp {
 	if x != nil {
 		return x.BaseResp
 	}
@@ -178,7 +178,7 @@ func (x *CreateUserResponse) GetBaseResp() *base.BaseResp {
 type GetUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Uid           uint32                 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
-	Base          *base.Base             `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
+	Base          *common.Base           `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -220,7 +220,7 @@ func (x *GetUserRequest) GetUid() uint32 {
 	return 0
 }
 
-func (x *GetUserRequest) GetBase() *base.Base {
+func (x *GetUserRequest) GetBase() *common.Base {
 	if x != nil {
 		return x.Base
 	}
@@ -230,7 +230,7 @@ func (x *GetUserRequest) GetBase() *base.Base {
 type GetUserResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
-	BaseResp      *base.BaseResp         `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
+	BaseResp      *common.BaseResp       `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -272,7 +272,7 @@ func (x *GetUserResponse) GetUser() *User {
 	return nil
 }
 
-func (x *GetUserResponse) GetBaseResp() *base.BaseResp {
+func (x *GetUserResponse) GetBaseResp() *common.BaseResp {
 	if x != nil {
 		return x.BaseResp
 	}
@@ -283,7 +283,7 @@ var File_identity_user_proto protoreflect.FileDescriptor
 
 const file_identity_user_proto_rawDesc = "" +
 	"\n" +
-	"\x13identity/user.proto\x12\bidentity\x1a\x0fbase/base.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x15identity/common.proto\"\xf2\x02\n" +
+	"\x13identity/user.proto\x12\bidentity\x1a\x11common/base.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x14identity/types.proto\"\xf4\x02\n" +
 	"\x11CreateUserRequest\x12\x1a\n" +
 	"\bpassword\x18\x01 \x01(\tR\bpassword\x12\x1f\n" +
 	"\busername\x18\x02 \x01(\tH\x00R\busername\x88\x01\x01\x12\x19\n" +
@@ -291,25 +291,23 @@ const file_identity_user_proto_rawDesc = "" +
 	"\x05email\x18\x04 \x01(\tH\x02R\x05email\x88\x01\x01\x12\x1f\n" +
 	"\bnickname\x18\x05 \x01(\tH\x03R\bnickname\x88\x01\x01\x121\n" +
 	"\x06status\x18\x06 \x01(\x0e2\x14.identity.UserStatusH\x04R\x06status\x88\x01\x01\x121\n" +
-	"\x06extend\x18\a \x01(\v2\x14.identity.UserExtendH\x05R\x06extend\x88\x01\x01\x12\x1f\n" +
-	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04baseB\v\n" +
+	"\x06extend\x18\a \x01(\v2\x14.identity.UserExtendH\x05R\x06extend\x88\x01\x01\x12!\n" +
+	"\x04base\x18\xff\x01 \x01(\v2\f.common.BaseR\x04baseB\v\n" +
 	"\t_usernameB\b\n" +
 	"\x06_phoneB\b\n" +
 	"\x06_emailB\v\n" +
 	"\t_nicknameB\t\n" +
 	"\a_statusB\t\n" +
-	"\a_extend\"f\n" +
+	"\a_extend\"h\n" +
 	"\x12CreateUserResponse\x12\"\n" +
-	"\x04user\x18\x01 \x01(\v2\x0e.identity.UserR\x04user\x12,\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp\"C\n" +
+	"\x04user\x18\x01 \x01(\v2\x0e.identity.UserR\x04user\x12.\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp\"E\n" +
 	"\x0eGetUserRequest\x12\x10\n" +
-	"\x03uid\x18\x01 \x01(\rR\x03uid\x12\x1f\n" +
-	"\x04base\x18\xff\x01 \x01(\v2\n" +
-	".base.BaseR\x04base\"c\n" +
+	"\x03uid\x18\x01 \x01(\rR\x03uid\x12!\n" +
+	"\x04base\x18\xff\x01 \x01(\v2\f.common.BaseR\x04base\"e\n" +
 	"\x0fGetUserResponse\x12\"\n" +
-	"\x04user\x18\x01 \x01(\v2\x0e.identity.UserR\x04user\x12,\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x0e.base.BaseRespR\bbaseResp2\xcf\x01\n" +
+	"\x04user\x18\x01 \x01(\v2\x0e.identity.UserR\x04user\x12.\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp2\xcf\x01\n" +
 	"\vUserService\x12b\n" +
 	"\n" +
 	"CreateUser\x12\x1b.identity.CreateUserRequest\x1a\x1c.identity.CreateUserResponse\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/identity/user\x12\\\n" +
@@ -335,19 +333,19 @@ var file_identity_user_proto_goTypes = []any{
 	(*GetUserResponse)(nil),    // 3: identity.GetUserResponse
 	(UserStatus)(0),            // 4: identity.UserStatus
 	(*UserExtend)(nil),         // 5: identity.UserExtend
-	(*base.Base)(nil),          // 6: base.Base
+	(*common.Base)(nil),        // 6: common.Base
 	(*User)(nil),               // 7: identity.User
-	(*base.BaseResp)(nil),      // 8: base.BaseResp
+	(*common.BaseResp)(nil),    // 8: common.BaseResp
 }
 var file_identity_user_proto_depIdxs = []int32{
 	4,  // 0: identity.CreateUserRequest.status:type_name -> identity.UserStatus
 	5,  // 1: identity.CreateUserRequest.extend:type_name -> identity.UserExtend
-	6,  // 2: identity.CreateUserRequest.base:type_name -> base.Base
+	6,  // 2: identity.CreateUserRequest.base:type_name -> common.Base
 	7,  // 3: identity.CreateUserResponse.user:type_name -> identity.User
-	8,  // 4: identity.CreateUserResponse.base_resp:type_name -> base.BaseResp
-	6,  // 5: identity.GetUserRequest.base:type_name -> base.Base
+	8,  // 4: identity.CreateUserResponse.base_resp:type_name -> common.BaseResp
+	6,  // 5: identity.GetUserRequest.base:type_name -> common.Base
 	7,  // 6: identity.GetUserResponse.user:type_name -> identity.User
-	8,  // 7: identity.GetUserResponse.base_resp:type_name -> base.BaseResp
+	8,  // 7: identity.GetUserResponse.base_resp:type_name -> common.BaseResp
 	0,  // 8: identity.UserService.CreateUser:input_type -> identity.CreateUserRequest
 	2,  // 9: identity.UserService.GetUser:input_type -> identity.GetUserRequest
 	1,  // 10: identity.UserService.CreateUser:output_type -> identity.CreateUserResponse
@@ -364,7 +362,7 @@ func file_identity_user_proto_init() {
 	if File_identity_user_proto != nil {
 		return
 	}
-	file_identity_common_proto_init()
+	file_identity_types_proto_init()
 	file_identity_user_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

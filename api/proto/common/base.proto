@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package base;
+package common;
 
-option go_package = "github.com/dizzrt/dauth/api/gen/base;base";
+option go_package = "github.com/dizzrt/dauth/api/gen/common;common";
 
 message Base {}
 

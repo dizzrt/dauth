@@ -3,7 +3,7 @@
 
 ## Table of Contents
 
-- [identity/common.proto](#identity_common-proto)
+- [identity/types.proto](#identity_types-proto)
     - [User](#identity-User)
     - [UserExtend](#identity-UserExtend)
   
@@ -21,10 +21,10 @@
 
 
 
-<a name="identity_common-proto"></a>
+<a name="identity_types-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## identity/common.proto
+## identity/types.proto
 
 
 
@@ -109,7 +109,7 @@
 | nickname | [string](#string) | optional |  |
 | status | [UserStatus](#identity-UserStatus) | optional |  |
 | extend | [UserExtend](#identity-UserExtend) | optional |  |
-| base | [base.Base](#base-Base) |  |  |
+| base | [common.Base](#common-Base) |  |  |
 
 
 
@@ -125,7 +125,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | user | [User](#identity-User) |  |  |
-| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
+| base_resp | [common.BaseResp](#common-BaseResp) |  |  |
 
 
 
@@ -141,7 +141,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | uid | [uint32](#uint32) |  |  |
-| base | [base.Base](#base-Base) |  |  |
+| base | [common.Base](#common-Base) |  |  |
 
 
 
@@ -157,7 +157,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | user | [User](#identity-User) |  |  |
-| base_resp | [base.BaseResp](#base-BaseResp) |  |  |
+| base_resp | [common.BaseResp](#common-BaseResp) |  |  |
 
 
 

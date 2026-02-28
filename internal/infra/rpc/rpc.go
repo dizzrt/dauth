@@ -1,7 +1,7 @@
 package rpc
 
 import (
-	api_base "github.com/dizzrt/dauth/api/gen/base"
+	api_common "github.com/dizzrt/dauth/api/gen/common"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/infra/rpc/base"
 )
@@ -9,14 +9,14 @@ import (
 const SuccessCode uint32 = 10000
 const SuccessMessage string = "OK"
 
-func NewBaseResp(code uint32, message string) *api_base.BaseResp {
-	return &api_base.BaseResp{
+func NewBaseResp(code uint32, message string) *api_common.BaseResp {
+	return &api_common.BaseResp{
 		Code:    code,
 		Message: message,
 	}
 }
 
-func Success() *api_base.BaseResp {
+func Success() *api_common.BaseResp {
 	return NewBaseResp(SuccessCode, SuccessMessage)
 }
 
