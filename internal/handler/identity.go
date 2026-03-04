@@ -33,3 +33,7 @@ func (handler *IdentityHandler) GetUser(ctx context.Context, req *identity.GetUs
 func (handler *IdentityHandler) ListUsers(ctx context.Context, req *identity.ListUsersRequest) (*identity.ListUsersResponse, error) {
 	return errors.WrapGRPCResponse(handler.identityApp.ListUsers(ctx, req))
 }
+
+func (handler *IdentityHandler) UpdateUserStatus(ctx context.Context, req *identity.UpdateUserStatusRequest) (*identity.UpdateUserStatusResponse, error) {
+	return errors.WrapGRPCResponse(handler.identityApp.UpdateUserStatus(ctx, req))
+}

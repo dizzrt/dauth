@@ -57,6 +57,38 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /identity/user/{uid}/status:
+        patch:
+            tags:
+                - UserService
+            description: UpdateUserStatus updates a user's status.
+            operationId: UserService_UpdateUserStatus
+            parameters:
+                - name: uid
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateUserStatusRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateUserStatusResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /identity/users:
         get:
             tags:
@@ -189,6 +221,35 @@ components:
                         $ref: '#/components/schemas/GoogleProtobufAny'
                     description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
             description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+        UpdateUserStatusRequest:
+            type: object
+            properties:
+                uid:
+                    type: integer
+                    format: uint32
+                status:
+                    enum:
+                        - USER_STATUS_UNSPECIFIED
+                        - ENABLED
+                        - DISABLED
+                        - LOCKED
+                    type: string
+                    format: enum
+                base:
+                    $ref: '#/components/schemas/Base'
+        UpdateUserStatusResponse:
+            type: object
+            properties:
+                status:
+                    enum:
+                        - USER_STATUS_UNSPECIFIED
+                        - ENABLED
+                        - DISABLED
+                        - LOCKED
+                    type: string
+                    format: enum
+                baseResp:
+                    $ref: '#/components/schemas/BaseResp'
         User:
             type: object
             properties:

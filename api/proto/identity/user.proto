@@ -51,6 +51,19 @@ message ListUsersResponse {
   common.BaseResp base_resp = 255;
 }
 
+message UpdateUserStatusRequest {
+  uint32 uid = 1;
+  UserStatus status = 2;
+
+  common.Base base = 255;
+}
+
+message UpdateUserStatusResponse {
+  UserStatus status = 1; // new status
+
+  common.BaseResp base_resp = 255;
+}
+
 service UserService {
   // CreateUser creates a new user.
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
@@ -68,5 +81,13 @@ service UserService {
   // ListUsers lists all users.
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
     option (google.api.http) = {get: "/identity/users"};
+  }
+
+  // UpdateUserStatus updates a user's status.
+  rpc UpdateUserStatus(UpdateUserStatusRequest) returns (UpdateUserStatusResponse) {
+    option (google.api.http) = {
+      patch: "/identity/user/{uid}/status"
+      body: "*"
+    };
   }
 }

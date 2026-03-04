@@ -16,6 +16,8 @@
     - [GetUserResponse](#identity-GetUserResponse)
     - [ListUsersRequest](#identity-ListUsersRequest)
     - [ListUsersResponse](#identity-ListUsersResponse)
+    - [UpdateUserStatusRequest](#identity-UpdateUserStatusRequest)
+    - [UpdateUserStatusResponse](#identity-UpdateUserStatusResponse)
   
     - [UserService](#identity-UserService)
   
@@ -198,6 +200,39 @@
 
 
 
+
+<a name="identity-UpdateUserStatusRequest"></a>
+
+### UpdateUserStatusRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| uid | [uint32](#uint32) |  |  |
+| status | [UserStatus](#identity-UserStatus) |  |  |
+| base | [common.Base](#common-Base) |  |  |
+
+
+
+
+
+
+<a name="identity-UpdateUserStatusResponse"></a>
+
+### UpdateUserStatusResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| status | [UserStatus](#identity-UserStatus) |  | new status |
+| base_resp | [common.BaseResp](#common-BaseResp) |  |  |
+
+
+
+
+
  
 
  
@@ -215,6 +250,7 @@
 | CreateUser | [CreateUserRequest](#identity-CreateUserRequest) | [CreateUserResponse](#identity-CreateUserResponse) | CreateUser creates a new user. |
 | GetUser | [GetUserRequest](#identity-GetUserRequest) | [GetUserResponse](#identity-GetUserResponse) | GetUser gets a user by ID. |
 | ListUsers | [ListUsersRequest](#identity-ListUsersRequest) | [ListUsersResponse](#identity-ListUsersResponse) | ListUsers lists all users. |
+| UpdateUserStatus | [UpdateUserStatusRequest](#identity-UpdateUserStatusRequest) | [UpdateUserStatusResponse](#identity-UpdateUserStatusResponse) | UpdateUserStatus updates a user&#39;s status. |
 
  
 

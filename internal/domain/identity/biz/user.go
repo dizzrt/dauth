@@ -19,6 +19,7 @@ type UserBiz interface {
 	CreateUser(ctx context.Context, user *dto.CreateUserDTO) (*entity.User, error)
 	GetUser(ctx context.Context, uid uint32) (*entity.User, error)
 	ListUsers(ctx context.Context, page, size int32) ([]*entity.User, int64, error)
+	UpdateUserStatus(ctx context.Context, uid uint32, status identity.UserStatus) (identity.UserStatus, error)
 }
 
 type userBiz struct {
@@ -80,4 +81,14 @@ func (biz *userBiz) ListUsers(ctx context.Context, page, size int32) ([]*entity.
 	}
 
 	return users, total, nil
+}
+
+func (biz *userBiz) UpdateUserStatus(ctx context.Context, uid uint32, status identity.UserStatus) (identity.UserStatus, error) {
+	newStatus := status
+	if err := biz.userRepo.UpdateUserStatus(ctx, uid, status); err != nil {
+		log.CtxErrorf(ctx, "[Identity] update user status failed, err: %v", err)
+		return newStatus, err
+	}
+
+	return newStatus, nil
 }

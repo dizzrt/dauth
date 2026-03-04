@@ -2,9 +2,9 @@ package application
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/dizzrt/dauth/api/gen/common"
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	"github.com/dizzrt/dauth/internal/domain/identity/dto"
@@ -18,6 +18,7 @@ type IdentityApplication interface {
 	CreateUser(context.Context, *identity.CreateUserRequest) (*identity.CreateUserResponse, error)
 	GetUser(context.Context, *identity.GetUserRequest) (*identity.GetUserResponse, error)
 	ListUsers(context.Context, *identity.ListUsersRequest) (*identity.ListUsersResponse, error)
+	UpdateUserStatus(context.Context, *identity.UpdateUserStatusRequest) (*identity.UpdateUserStatusResponse, error)
 }
 
 type identityApplication struct {
@@ -33,12 +34,12 @@ func NewIdentityApplication(userBiz biz.UserBiz) IdentityApplication {
 func (app *identityApplication) CreateUser(ctx context.Context, req *identity.CreateUserRequest) (*identity.CreateUserResponse, error) {
 	pwd := req.GetPassword()
 	if pwd == "" {
-		return nil, fmt.Errorf("password can not be empty")
+		return nil, errdef.InvalidArgument().WithMessage("password can not be empty")
 	}
 
 	username := req.GetUsername()
 	if username == "" {
-		return nil, fmt.Errorf("username can not be empty")
+		return nil, errdef.InvalidArgument().WithMessage("username can not be empty")
 	}
 
 	dto := &dto.CreateUserDTO{
@@ -88,7 +89,7 @@ func (app *identityApplication) CreateUser(ctx context.Context, req *identity.Cr
 func (app *identityApplication) GetUser(ctx context.Context, req *identity.GetUserRequest) (*identity.GetUserResponse, error) {
 	uid := req.GetUid()
 	if uid == 0 {
-		return nil, fmt.Errorf("invalid uid")
+		return nil, errdef.InvalidArgument().WithMessage("invalid uid")
 	}
 
 	user, err := app.userBiz.GetUser(ctx, uid)
@@ -175,6 +176,30 @@ func (app *identityApplication) ListUsers(ctx context.Context, req *identity.Lis
 		}
 
 		resp.Users = append(resp.Users, u)
+	}
+
+	return resp, nil
+}
+
+func (app *identityApplication) UpdateUserStatus(ctx context.Context, req *identity.UpdateUserStatusRequest) (*identity.UpdateUserStatusResponse, error) {
+	uid := req.GetUid()
+	if uid == 0 {
+		return nil, errdef.InvalidArgument().WithMessage("invalid uid")
+	}
+
+	status := req.GetStatus()
+	if status == identity.UserStatus_USER_STATUS_UNSPECIFIED {
+		return nil, errdef.InvalidArgument().WithMessage("unknown user status '%v'", status)
+	}
+
+	newStatus, err := app.userBiz.UpdateUserStatus(ctx, uid, status)
+	if err != nil {
+		log.CtxErrorf(ctx, "update user status failed, err: %v", err)
+		return nil, err
+	}
+
+	resp := &identity.UpdateUserStatusResponse{
+		Status: newStatus,
 	}
 
 	return resp, nil

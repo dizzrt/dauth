@@ -225,6 +225,14 @@
                   <a href="#identity.ListUsersResponse"><span class="badge">M</span>ListUsersResponse</a>
                 </li>
               
+                <li>
+                  <a href="#identity.UpdateUserStatusRequest"><span class="badge">M</span>UpdateUserStatusRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#identity.UpdateUserStatusResponse"><span class="badge">M</span>UpdateUserStatusResponse</a>
+                </li>
+              
               
               
               
@@ -639,6 +647,75 @@
 
         
       
+        <h3 id="identity.UpdateUserStatusRequest">UpdateUserStatusRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>uid</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#identity.UserStatus">UserStatus</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#common.Base">common.Base</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="identity.UpdateUserStatusResponse">UpdateUserStatusResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#identity.UserStatus">UserStatus</a></td>
+                  <td></td>
+                  <td><p>new status </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_resp</td>
+                  <td><a href="#common.BaseResp">common.BaseResp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -672,6 +749,13 @@
                 <td><a href="#identity.ListUsersRequest">ListUsersRequest</a></td>
                 <td><a href="#identity.ListUsersResponse">ListUsersResponse</a></td>
                 <td><p>ListUsers lists all users.</p></td>
+              </tr>
+            
+              <tr>
+                <td>UpdateUserStatus</td>
+                <td><a href="#identity.UpdateUserStatusRequest">UpdateUserStatusRequest</a></td>
+                <td><a href="#identity.UpdateUserStatusResponse">UpdateUserStatusResponse</a></td>
+                <td><p>UpdateUserStatus updates a user&#39;s status.</p></td>
               </tr>
             
           </tbody>
@@ -719,6 +803,16 @@
                 <td>GET</td>
                 <td>/identity/users</td>
                 <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>UpdateUserStatus</td>
+                <td>PATCH</td>
+                <td>/identity/user/{uid}/status</td>
+                <td>*</td>
               </tr>
               
             

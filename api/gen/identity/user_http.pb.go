@@ -34,6 +34,7 @@ const TRACER_NAME_USER = "github.com/dizzrt/dauth/api/gen/identity"
 const OperationUserServiceCreateUser = "/UserService/CreateUser"
 const OperationUserServiceGetUser = "/UserService/GetUser"
 const OperationUserServiceListUsers = "/UserService/ListUsers"
+const OperationUserServiceUpdateUserStatus = "/UserService/UpdateUserStatus"
 
 type UserServiceHTTPServer interface {
 	// CreateUser CreateUser creates a new user.
@@ -42,6 +43,8 @@ type UserServiceHTTPServer interface {
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
 	// ListUsers ListUsers lists all users.
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
+	// UpdateUserStatus UpdateUserStatus updates a user&#39;s status.
+	UpdateUserStatus(context.Context, *UpdateUserStatusRequest) (*UpdateUserStatusResponse, error)
 }
 
 func RegisterUserServiceHTTPServer(hs *http.Server, srv UserServiceHTTPServer) {
@@ -49,6 +52,7 @@ func RegisterUserServiceHTTPServer(hs *http.Server, srv UserServiceHTTPServer) {
 	r.POST("/identity/user", _user_UserService_POST_CreateUser_HTTP_Handler(hs, srv))
 	r.GET("/identity/user/:uid", _user_UserService_GET_GetUser_HTTP_Handler(hs, srv))
 	r.GET("/identity/users", _user_UserService_GET_ListUsers_HTTP_Handler(hs, srv))
+	r.PATCH("/identity/user/:uid/status", _user_UserService_PATCH_UpdateUserStatus_HTTP_Handler(hs, srv))
 }
 func _user_UserService_POST_CreateUser_HTTP_Handler(hs *http.Server, srv UserServiceHTTPServer) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -160,6 +164,46 @@ func _user_UserService_GET_ListUsers_HTTP_Handler(hs *http.Server, srv UserServi
 		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
 
 		res, err := srv.ListUsers(rctx, &req)
+		ctx.Request = ctx.Request.WithContext(rctx)
+		if err != nil {
+			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))
+			ctx.Abort()
+			return
+		}
+
+		hs.EncodeResponse(ctx, res, err)
+	}
+}
+func _user_UserService_PATCH_UpdateUserStatus_HTTP_Handler(hs *http.Server, srv UserServiceHTTPServer) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req UpdateUserStatusRequest
+		if err := ginx.DecodeRequest(ctx, &req); err != nil {
+			ctx.JSON(http.StatusBadRequest, hs.WrapHTTPResponse(nil, err))
+			ctx.Abort()
+			return
+		}
+
+		greq := ctx.Request
+		rctx := greq.Context()
+		rctx = log.ExtractFromTextMapCarrier(rctx, propagation.HeaderCarrier(greq.Header))
+		attributes := []attribute.KeyValue{
+			v1_21_0.HTTPRequestMethodKey.String(greq.Method),
+			v1_21_0.HTTPRouteKey.String(greq.URL.String()),
+			attribute.String("log.id", log.LogIDFromContext(rctx)),
+		}
+
+		tracer := otel.Tracer(TRACER_NAME_USER)
+		rctx, span := tracer.Start(rctx, "_UserService_UpdateUserStatus_0_HTTP_Handler",
+			trace.WithSpanKind(trace.SpanKindServer),
+			trace.WithAttributes(attributes...),
+		)
+		defer span.End()
+
+		sctx := span.SpanContext()
+		rctx = log.WithTraceID(rctx, sctx.TraceID().String())
+		rctx = log.WithSpanID(rctx, sctx.SpanID().String())
+
+		res, err := srv.UpdateUserStatus(rctx, &req)
 		ctx.Request = ctx.Request.WithContext(rctx)
 		if err != nil {
 			ctx.JSON(http.HTTPStatusCodeFromError(err), hs.WrapHTTPResponse(res, err))

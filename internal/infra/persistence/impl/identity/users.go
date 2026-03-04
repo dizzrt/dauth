@@ -3,6 +3,7 @@ package identity
 import (
 	"context"
 
+	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/dizzrt/dauth/internal/domain/identity/repo"
 	"github.com/dizzrt/dauth/internal/infra/persistence/core"
@@ -67,4 +68,22 @@ func (impl *UserRepoImpl) ListUsers(ctx context.Context, page, size int32) ([]*e
 	}
 
 	return toIdentityUserEntities(users), total, nil
+}
+
+func (impl *UserRepoImpl) UpdateUserStatus(ctx context.Context, uid uint32, status identity.UserStatus) error {
+	info, err := impl.WithContext(ctx).
+		Where(dao.IdentityUser.ID.Eq(int32(uid))).
+		Update(dao.IdentityUser.Status, int32(status))
+
+	if err != nil {
+		log.CtxErrorf(ctx, "update user status failed, err: %v", err)
+		return utils.WrapError(err)
+	}
+
+	if info.Error != nil {
+		log.CtxErrorf(ctx, "update user status failed, err: %v", info.Error)
+		return utils.WrapError(info.Error)
+	}
+
+	return nil
 }
