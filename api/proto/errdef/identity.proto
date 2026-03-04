@@ -10,8 +10,8 @@ option go_package = "github.com/dizzrt/dauth/api/gen/errdef;errdef";
 enum IdentityErrors {
   IdentityUNSPECIFIED = 0;
 
-  IdentityAuthenticationFailed = 101000 [
+  UserExist = 101000 [
     (ellie.errors.code) = 101000,
-    (ellie.errors.status) = ERROR_STATUS_UNAUTHENTICATED
+    (ellie.errors.status) = ERROR_STATUS_ALREADY_EXISTS
   ];
 }

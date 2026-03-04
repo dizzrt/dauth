@@ -8,19 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var authWhiteList = []string{
-	"/identity/user/login",
-}
-
 func unauthorized(ctx *gin.Context) {
 	ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"data": nil, "message": "unauthorized", "status": http.StatusUnauthorized})
 }
 
 func JwtAuthMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		if slices.Contains(authWhiteList, ctx.FullPath()) {
-			ctx.Next()
-			return
+		method := ctx.Request.Method
+		if wl, ok := authWhiteList[method]; ok {
+			if slices.Contains(wl, ctx.FullPath()) {
+				ctx.Next()
+				return
+			}
 		}
 
 		tokenStr := ctx.Request.Header.Get("Authorization")

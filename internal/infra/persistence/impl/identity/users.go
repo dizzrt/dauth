@@ -3,6 +3,7 @@ package identity
 import (
 	"context"
 
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/domain/identity/entity"
 	"github.com/dizzrt/dauth/internal/domain/identity/repo"
@@ -31,10 +32,13 @@ func (impl *UserRepoImpl) WithContext(ctx context.Context) dao.IIdentityUserDo {
 
 func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) error {
 	m := fromIdentityUserEntity(user)
-	err := impl.WithContext(ctx).Create(m)
+	err := utils.WrapError(impl.WithContext(ctx).Create(m))
 	if err != nil {
-		log.CtxErrorf(ctx, "create user failed, err: %v", err)
-		return utils.WrapError(err)
+		if !errdef.IsDuplicatedKey(err) {
+			log.CtxErrorf(ctx, "create user failed, err: %v", err)
+		}
+
+		return err
 	}
 
 	user.UID = uint32(m.ID)

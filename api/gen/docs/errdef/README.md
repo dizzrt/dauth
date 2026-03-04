@@ -80,7 +80,7 @@ identity errors (domain: 01)
 | Name | Number | Description |
 | ---- | ------ | ----------- |
 | IdentityUNSPECIFIED | 0 |  |
-| IdentityAuthenticationFailed | 101000 |  |
+| UserExist | 101000 |  |
 
 
  

@@ -10,8 +10,8 @@ import "identity/types.proto";
 option go_package = "github.com/dizzrt/dauth/api/gen/identity;identity";
 
 message CreateUserRequest {
-  string password = 1;
-  optional string username = 2;
+  string username = 1;
+  string password = 2;
   optional string phone = 3;
   optional string email = 4;
   optional string nickname = 5;

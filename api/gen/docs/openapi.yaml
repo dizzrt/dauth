@@ -139,9 +139,9 @@ components:
         CreateUserRequest:
             type: object
             properties:
-                password:
-                    type: string
                 username:
+                    type: string
+                password:
                     type: string
                 phone:
                     type: string

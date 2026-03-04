@@ -25,8 +25,8 @@ const (
 
 type CreateUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Password      string                 `protobuf:"bytes,1,opt,name=password,proto3" json:"password,omitempty"`
-	Username      *string                `protobuf:"bytes,2,opt,name=username,proto3,oneof" json:"username,omitempty"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
 	Phone         *string                `protobuf:"bytes,3,opt,name=phone,proto3,oneof" json:"phone,omitempty"`
 	Email         *string                `protobuf:"bytes,4,opt,name=email,proto3,oneof" json:"email,omitempty"`
 	Nickname      *string                `protobuf:"bytes,5,opt,name=nickname,proto3,oneof" json:"nickname,omitempty"`
@@ -67,16 +67,16 @@ func (*CreateUserRequest) Descriptor() ([]byte, []int) {
 	return file_identity_user_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CreateUserRequest) GetPassword() string {
+func (x *CreateUserRequest) GetUsername() string {
 	if x != nil {
-		return x.Password
+		return x.Username
 	}
 	return ""
 }
 
-func (x *CreateUserRequest) GetUsername() string {
-	if x != nil && x.Username != nil {
-		return *x.Username
+func (x *CreateUserRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
 	}
 	return ""
 }
@@ -507,17 +507,16 @@ var File_identity_user_proto protoreflect.FileDescriptor
 
 const file_identity_user_proto_rawDesc = "" +
 	"\n" +
-	"\x13identity/user.proto\x12\bidentity\x1a\x11common/base.proto\x1a\x17common/pagination.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x14identity/types.proto\"\xf4\x02\n" +
+	"\x13identity/user.proto\x12\bidentity\x1a\x11common/base.proto\x1a\x17common/pagination.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x14identity/types.proto\"\xe2\x02\n" +
 	"\x11CreateUserRequest\x12\x1a\n" +
-	"\bpassword\x18\x01 \x01(\tR\bpassword\x12\x1f\n" +
-	"\busername\x18\x02 \x01(\tH\x00R\busername\x88\x01\x01\x12\x19\n" +
-	"\x05phone\x18\x03 \x01(\tH\x01R\x05phone\x88\x01\x01\x12\x19\n" +
-	"\x05email\x18\x04 \x01(\tH\x02R\x05email\x88\x01\x01\x12\x1f\n" +
-	"\bnickname\x18\x05 \x01(\tH\x03R\bnickname\x88\x01\x01\x121\n" +
-	"\x06status\x18\x06 \x01(\x0e2\x14.identity.UserStatusH\x04R\x06status\x88\x01\x01\x121\n" +
-	"\x06extend\x18\a \x01(\v2\x14.identity.UserExtendH\x05R\x06extend\x88\x01\x01\x12!\n" +
-	"\x04base\x18\xff\x01 \x01(\v2\f.common.BaseR\x04baseB\v\n" +
-	"\t_usernameB\b\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x19\n" +
+	"\x05phone\x18\x03 \x01(\tH\x00R\x05phone\x88\x01\x01\x12\x19\n" +
+	"\x05email\x18\x04 \x01(\tH\x01R\x05email\x88\x01\x01\x12\x1f\n" +
+	"\bnickname\x18\x05 \x01(\tH\x02R\bnickname\x88\x01\x01\x121\n" +
+	"\x06status\x18\x06 \x01(\x0e2\x14.identity.UserStatusH\x03R\x06status\x88\x01\x01\x121\n" +
+	"\x06extend\x18\a \x01(\v2\x14.identity.UserExtendH\x04R\x06extend\x88\x01\x01\x12!\n" +
+	"\x04base\x18\xff\x01 \x01(\v2\f.common.BaseR\x04baseB\b\n" +
 	"\x06_phoneB\b\n" +
 	"\x06_emailB\v\n" +
 	"\t_nicknameB\t\n" +

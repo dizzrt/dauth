@@ -8,6 +8,7 @@ import (
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	"github.com/dizzrt/dauth/internal/domain/identity/dto"
+	"github.com/dizzrt/dauth/internal/infra/rpc"
 	"github.com/dizzrt/ellie/log"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -32,19 +33,19 @@ func NewIdentityApplication(userBiz biz.UserBiz) IdentityApplication {
 }
 
 func (app *identityApplication) CreateUser(ctx context.Context, req *identity.CreateUserRequest) (*identity.CreateUserResponse, error) {
-	pwd := req.GetPassword()
-	if pwd == "" {
-		return nil, errdef.InvalidArgument().WithMessage("password can not be empty")
-	}
-
 	username := req.GetUsername()
 	if username == "" {
 		return nil, errdef.InvalidArgument().WithMessage("username can not be empty")
 	}
 
+	pwd := req.GetPassword()
+	if pwd == "" {
+		return nil, errdef.InvalidArgument().WithMessage("password can not be empty")
+	}
+
 	dto := &dto.CreateUserDTO{
-		Password: req.GetPassword(),
 		Username: req.GetUsername(),
+		Password: req.GetPassword(),
 		Nickname: req.Nickname,
 		Phone:    req.Phone,
 		Email:    req.Email,
@@ -53,7 +54,11 @@ func (app *identityApplication) CreateUser(ctx context.Context, req *identity.Cr
 
 	user, err := app.userBiz.CreateUser(ctx, dto)
 	if err != nil {
-		log.CtxErrorf(ctx, "")
+		if errdef.IsDuplicatedKey(err) {
+			return nil, errdef.UserExist().WithMessage("user already exist")
+		}
+
+		log.CtxErrorf(ctx, "create user failed, err: %v", err)
 		return nil, err
 	}
 
@@ -70,17 +75,9 @@ func (app *identityApplication) CreateUser(ctx context.Context, req *identity.Cr
 		UpdatedAt: timestamppb.New(user.UpdatedAt),
 	}
 
-	if user.LastLoginAt != nil {
-		u.LastLoginAt = timestamppb.New(*user.LastLoginAt)
-	}
-
-	if user.DeletedAt.Valid {
-		u.DeletedAt = timestamppb.New(user.DeletedAt.Time)
-	}
-
 	resp := &identity.CreateUserResponse{
-		User: u,
-		// BaseResp: ,
+		User:     u,
+		BaseResp: rpc.Success(),
 	}
 
 	return resp, nil

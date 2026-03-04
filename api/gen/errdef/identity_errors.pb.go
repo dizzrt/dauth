@@ -11,18 +11,18 @@ import (
 	codes "google.golang.org/grpc/codes"
 )
 
-func IsIdentityAuthenticationFailed(err error) bool {
+func IsUserExist(err error) bool {
 	if err == nil {
 		return false
 	}
 
 	se := errors.NewStandardErrorFromError(err)
-	return se.Reason() == IdentityErrors_IdentityAuthenticationFailed.String() && se.Code() == 101000
+	return se.Reason() == IdentityErrors_UserExist.String() && se.Code() == 101000
 }
 
-func IdentityAuthenticationFailed() errors.AdvancedError {
+func UserExist() errors.AdvancedError {
 	var status *codes.Code = nil
-	status = errors.StatusPtrFromInt(16) // Unauthenticated
+	status = errors.StatusPtrFromInt(6) // AlreadyExists
 
-	return errors.NewStandardError(status, 101000, IdentityErrors_IdentityAuthenticationFailed.String(), "")
+	return errors.NewStandardError(status, 101000, IdentityErrors_UserExist.String(), "")
 }

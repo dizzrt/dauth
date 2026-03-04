@@ -26,19 +26,19 @@ const (
 type IdentityErrors int32
 
 const (
-	IdentityErrors_IdentityUNSPECIFIED          IdentityErrors = 0
-	IdentityErrors_IdentityAuthenticationFailed IdentityErrors = 101000
+	IdentityErrors_IdentityUNSPECIFIED IdentityErrors = 0
+	IdentityErrors_UserExist           IdentityErrors = 101000
 )
 
 // Enum value maps for IdentityErrors.
 var (
 	IdentityErrors_name = map[int32]string{
 		0:      "IdentityUNSPECIFIED",
-		101000: "IdentityAuthenticationFailed",
+		101000: "UserExist",
 	}
 	IdentityErrors_value = map[string]int32{
-		"IdentityUNSPECIFIED":          0,
-		"IdentityAuthenticationFailed": 101000,
+		"IdentityUNSPECIFIED": 0,
+		"UserExist":           101000,
 	}
 )
 
@@ -73,11 +73,11 @@ var File_errdef_identity_proto protoreflect.FileDescriptor
 
 const file_errdef_identity_proto_rawDesc = "" +
 	"\n" +
-	"\x15errdef/identity.proto\x12\x06errdef\x1a\x19ellie/errors/errors.proto*Y\n" +
+	"\x15errdef/identity.proto\x12\x06errdef\x1a\x19ellie/errors/errors.proto*F\n" +
 	"\x0eIdentityErrors\x12\x17\n" +
-	"\x13IdentityUNSPECIFIED\x10\x00\x12.\n" +
-	"\x1cIdentityAuthenticationFailed\x10\x88\x95\x06\x1a\n" +
-	"\x88\xb2\x19\x88\x95\x06\x90\xb2\x19\x11B/Z-github.com/dizzrt/dauth/api/gen/errdef;errdefb\x06proto3"
+	"\x13IdentityUNSPECIFIED\x10\x00\x12\x1b\n" +
+	"\tUserExist\x10\x88\x95\x06\x1a\n" +
+	"\x88\xb2\x19\x88\x95\x06\x90\xb2\x19\aB/Z-github.com/dizzrt/dauth/api/gen/errdef;errdefb\x06proto3"
 
 var (
 	file_errdef_identity_proto_rawDescOnce sync.Once

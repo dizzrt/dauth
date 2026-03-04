@@ -106,8 +106,8 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
+| username | [string](#string) |  |  |
 | password | [string](#string) |  |  |
-| username | [string](#string) | optional |  |
 | phone | [string](#string) | optional |  |
 | email | [string](#string) | optional |  |
 | nickname | [string](#string) | optional |  |

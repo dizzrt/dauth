@@ -53,7 +53,10 @@ func (biz *userBiz) CreateUser(ctx context.Context, user *dto.CreateUserDTO) (*e
 	}
 
 	if err = biz.userRepo.CreateUser(ctx, entityUser); err != nil {
-		log.CtxErrorf(ctx, "[Identity] create user failed, err: %v", err)
+		if !errdef.IsDuplicatedKey(err) {
+			log.CtxErrorf(ctx, "[Identity] create user failed, err: %v", err)
+		}
+
 		return nil, err
 	}
 
