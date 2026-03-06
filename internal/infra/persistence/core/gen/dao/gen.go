@@ -16,34 +16,49 @@ import (
 )
 
 var (
-	Q            = new(Query)
-	IdentityUser *identityUser
+	Q                 = new(Query)
+	AuthnAttempt      *authnAttempt
+	AuthnPolicy       *authnPolicy
+	AuthnPolicyTarget *authnPolicyTarget
+	IdentityUser      *identityUser
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
+	AuthnAttempt = &Q.AuthnAttempt
+	AuthnPolicy = &Q.AuthnPolicy
+	AuthnPolicyTarget = &Q.AuthnPolicyTarget
 	IdentityUser = &Q.IdentityUser
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:           db,
-		IdentityUser: newIdentityUser(db, opts...),
+		db:                db,
+		AuthnAttempt:      newAuthnAttempt(db, opts...),
+		AuthnPolicy:       newAuthnPolicy(db, opts...),
+		AuthnPolicyTarget: newAuthnPolicyTarget(db, opts...),
+		IdentityUser:      newIdentityUser(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	IdentityUser identityUser
+	AuthnAttempt      authnAttempt
+	AuthnPolicy       authnPolicy
+	AuthnPolicyTarget authnPolicyTarget
+	IdentityUser      identityUser
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:           db,
-		IdentityUser: q.IdentityUser.clone(db),
+		db:                db,
+		AuthnAttempt:      q.AuthnAttempt.clone(db),
+		AuthnPolicy:       q.AuthnPolicy.clone(db),
+		AuthnPolicyTarget: q.AuthnPolicyTarget.clone(db),
+		IdentityUser:      q.IdentityUser.clone(db),
 	}
 }
 
@@ -57,18 +72,27 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:           db,
-		IdentityUser: q.IdentityUser.replaceDB(db),
+		db:                db,
+		AuthnAttempt:      q.AuthnAttempt.replaceDB(db),
+		AuthnPolicy:       q.AuthnPolicy.replaceDB(db),
+		AuthnPolicyTarget: q.AuthnPolicyTarget.replaceDB(db),
+		IdentityUser:      q.IdentityUser.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	IdentityUser IIdentityUserDo
+	AuthnAttempt      IAuthnAttemptDo
+	AuthnPolicy       IAuthnPolicyDo
+	AuthnPolicyTarget IAuthnPolicyTargetDo
+	IdentityUser      IIdentityUserDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		IdentityUser: q.IdentityUser.WithContext(ctx),
+		AuthnAttempt:      q.AuthnAttempt.WithContext(ctx),
+		AuthnPolicy:       q.AuthnPolicy.WithContext(ctx),
+		AuthnPolicyTarget: q.AuthnPolicyTarget.WithContext(ctx),
+		IdentityUser:      q.IdentityUser.WithContext(ctx),
 	}
 }
 
