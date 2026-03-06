@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package authn;
+
+import "authn/types.proto";
+import "common/base.proto";
+import "google/api/annotations.proto";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/authn;authn";
+
+message LoginRequest {
+  string account = 1;
+  string password = 2;
+  optional string client_ip = 3;
+  optional string user_agent = 4;
+  optional string did = 5;
+  optional string client_id = 6;
+
+  common.Base base = 255;
+}
+
+message LoginResponse {
+  AuthnResult result = 1;
+
+  common.BaseResp base_resp = 255;
+}
+
+message LogoutRequest {
+  uint32 uid = 1;
+  optional string session_id = 2;
+  optional string client_id = 3;
+
+  common.Base base = 255;
+}
+
+message LogoutResponse {
+  bool success = 1;
+
+  common.BaseResp base_resp = 255;
+}
+
+service AuthnService {
+  // Login logs in a user with the given account and password.
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/authn/login"
+      body: "*"
+    };
+  }
+
+  // Logout logs out a user with the given uid, session_id, and client_id.
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {
+    option (google.api.http) = {
+      post: "/authn/logout"
+      body: "*"
+    };
+  }
+}

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package authn;
+
+// import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/authn;authn";
+
+enum AuthnType {
+  AUTHN_TYPE_UNSPECIFIED = 0;
+
+  PASSWORD = 1; // 密码
+  PASSWORD_MFA = 2; // 密码+MFA
+  THIRD_PARTY = 3; // 第三方身份
+}
+
+enum AuthnAttemptStatus {
+  AUTHN_ATTEMPT_STATUS_UNSPECIFIED = 0;
+
+  SUCCESS = 1;
+  FAILURE = 2;
+  BLOCKED = 3; // 拦截（风控等因素）
+}
+
+message AuthnResult {
+  bool success = 1;
+  uint32 uid = 2;
+  optional string session_id = 3;
+  optional int32 remaining_pwd_attempts = 4;
+  optional int32 remaining_mfa_attempts = 5;
+  optional bool user_locked = 6;
+  optional string redirect_url = 7;
+}

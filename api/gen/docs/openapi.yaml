@@ -3,9 +3,59 @@
 
 openapi: 3.0.3
 info:
-    title: UserService API
+    title: ""
     version: 0.0.1
 paths:
+    /authn/login:
+        post:
+            tags:
+                - AuthnService
+            description: Login logs in a user with the given account and password.
+            operationId: AuthnService_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/LoginResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /authn/logout:
+        post:
+            tags:
+                - AuthnService
+            description: Logout logs out a user with the given uid, session_id, and client_id.
+            operationId: AuthnService_Logout
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LogoutRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/LogoutResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /identity/user:
         post:
             tags:
@@ -125,6 +175,26 @@ paths:
                                 $ref: '#/components/schemas/Status'
 components:
     schemas:
+        AuthnResult:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                uid:
+                    type: integer
+                    format: uint32
+                sessionId:
+                    type: string
+                remainingPwdAttempts:
+                    type: integer
+                    format: int32
+                remainingMfaAttempts:
+                    type: integer
+                    format: int32
+                userLocked:
+                    type: boolean
+                redirectUrl:
+                    type: string
         Base:
             type: object
             properties: {}
@@ -192,6 +262,49 @@ components:
                         $ref: '#/components/schemas/User'
                 pagination:
                     $ref: '#/components/schemas/Pagination'
+                baseResp:
+                    $ref: '#/components/schemas/BaseResp'
+        LoginRequest:
+            type: object
+            properties:
+                account:
+                    type: string
+                password:
+                    type: string
+                clientIp:
+                    type: string
+                userAgent:
+                    type: string
+                did:
+                    type: string
+                clientId:
+                    type: string
+                base:
+                    $ref: '#/components/schemas/Base'
+        LoginResponse:
+            type: object
+            properties:
+                result:
+                    $ref: '#/components/schemas/AuthnResult'
+                baseResp:
+                    $ref: '#/components/schemas/BaseResp'
+        LogoutRequest:
+            type: object
+            properties:
+                uid:
+                    type: integer
+                    format: uint32
+                sessionId:
+                    type: string
+                clientId:
+                    type: string
+                base:
+                    $ref: '#/components/schemas/Base'
+        LogoutResponse:
+            type: object
+            properties:
+                success:
+                    type: boolean
                 baseResp:
                     $ref: '#/components/schemas/BaseResp'
         Pagination:
@@ -292,4 +405,5 @@ components:
             type: object
             properties: {}
 tags:
+    - name: AuthnService
     - name: UserService

@@ -3,6 +3,7 @@ package server
 import (
 	"crypto/tls"
 
+	"github.com/dizzrt/dauth/api/gen/authn"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/dauth/internal/handler"
@@ -12,7 +13,7 @@ import (
 	"github.com/dizzrt/ellie/transport/http"
 )
 
-func NewHTTPServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *handler.IdentityHandler) *http.Server {
+func NewHTTPServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *handler.IdentityHandler, authnHandler *handler.AuthnHandler) *http.Server {
 	opts := []http.ServerOption{
 		http.Middleware(
 			tracing.TracingMiddleware(),
@@ -49,6 +50,7 @@ func NewHTTPServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *han
 
 	srv := http.NewServer(opts...)
 	identity.RegisterUserServiceHTTPServer(srv, identityHandler)
+	authn.RegisterAuthnServiceHTTPServer(srv, authnHandler)
 
 	return srv
 }

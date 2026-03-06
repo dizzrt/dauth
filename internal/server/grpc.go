@@ -3,6 +3,7 @@ package server
 import (
 	"crypto/tls"
 
+	"github.com/dizzrt/dauth/api/gen/authn"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/dauth/internal/handler"
@@ -11,7 +12,7 @@ import (
 	"github.com/dizzrt/ellie/transport/grpc"
 )
 
-func NewGRPCServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *handler.IdentityHandler) *grpc.Server {
+func NewGRPCServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *handler.IdentityHandler, authnHandler *handler.AuthnHandler) *grpc.Server {
 	opts := []grpc.ServerOption{
 		grpc.UnaryInterceptor(
 			tracing.UnaryServerInterceptor(),
@@ -47,6 +48,7 @@ func NewGRPCServer(c *conf.AppConfig, logger log.LogWriter, identityHandler *han
 
 	srv := grpc.NewServer(opts...)
 	identity.RegisterUserServiceServer(srv, identityHandler)
+	authn.RegisterAuthnServiceServer(srv, authnHandler)
 
 	return srv
 }

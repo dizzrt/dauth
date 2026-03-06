@@ -34,8 +34,10 @@ func wireApp() (*ellie.App, func(), error) {
 	userBiz := biz.NewUserBiz(userRepo)
 	identityApplication := application.NewIdentityApplication(userBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)
-	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler)
-	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler)
+	authnApplication := application.NewAuthnApplication()
+	authnHandler := handler.NewAuthnHandler(authnApplication)
+	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, authnHandler)
+	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler, authnHandler)
 	app, cleanup2, err := newApp(logWriter, tracerProvider, registrar, grpcServer, httpServer)
 	if err != nil {
 		cleanup()
