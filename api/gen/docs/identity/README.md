@@ -12,6 +12,8 @@
 - [identity/user.proto](#identity_user-proto)
     - [CreateUserRequest](#identity-CreateUserRequest)
     - [CreateUserResponse](#identity-CreateUserResponse)
+    - [GetUserByNameRequest](#identity-GetUserByNameRequest)
+    - [GetUserByNameResponse](#identity-GetUserByNameResponse)
     - [GetUserRequest](#identity-GetUserRequest)
     - [GetUserResponse](#identity-GetUserResponse)
     - [ListUsersRequest](#identity-ListUsersRequest)
@@ -123,6 +125,38 @@
 <a name="identity-CreateUserResponse"></a>
 
 ### CreateUserResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| user | [User](#identity-User) |  |  |
+| base_resp | [common.BaseResp](#common-BaseResp) |  |  |
+
+
+
+
+
+
+<a name="identity-GetUserByNameRequest"></a>
+
+### GetUserByNameRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| username | [string](#string) |  |  |
+| base | [common.Base](#common-Base) |  |  |
+
+
+
+
+
+
+<a name="identity-GetUserByNameResponse"></a>
+
+### GetUserByNameResponse
 
 
 
@@ -249,6 +283,7 @@
 | ----------- | ------------ | ------------- | ------------|
 | CreateUser | [CreateUserRequest](#identity-CreateUserRequest) | [CreateUserResponse](#identity-CreateUserResponse) | CreateUser creates a new user. |
 | GetUser | [GetUserRequest](#identity-GetUserRequest) | [GetUserResponse](#identity-GetUserResponse) | GetUser gets a user by ID. |
+| GetUserByName | [GetUserByNameRequest](#identity-GetUserByNameRequest) | [GetUserByNameResponse](#identity-GetUserByNameResponse) | GetUserByName gets a user by username. |
 | ListUsers | [ListUsersRequest](#identity-ListUsersRequest) | [ListUsersResponse](#identity-ListUsersResponse) | ListUsers lists all users. |
 | UpdateUserStatus | [UpdateUserStatusRequest](#identity-UpdateUserStatusRequest) | [UpdateUserStatusResponse](#identity-UpdateUserStatusResponse) | UpdateUserStatus updates a user&#39;s status. |
 

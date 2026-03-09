@@ -11,7 +11,6 @@ import (
 	"github.com/dizzrt/dauth/internal/infra/persistence/core/gen/dao"
 	"github.com/dizzrt/dauth/internal/infra/utils"
 	"github.com/dizzrt/ellie/log"
-	"gorm.io/gorm"
 )
 
 var _ repo.UserRepo = (*UserRepoImpl)(nil)
@@ -46,13 +45,39 @@ func (impl *UserRepoImpl) CreateUser(ctx context.Context, user *entity.User) err
 }
 
 func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.User, error) {
-	m, err := impl.WithContext(ctx).Where(dao.IdentityUser.ID.Eq(int32(uid))).First()
+	query := impl.Query()
+	m, err := impl.WithContext(ctx).Where(
+		query.IdentityUser.ID.Eq(int32(uid)),
+		query.IdentityUser.DeletedAt.Eq(nil),
+	).First()
+
 	if err != nil {
-		if err != gorm.ErrRecordNotFound {
+		err = utils.WrapError(err)
+		if !errdef.IsRecordNotFound(err) {
 			log.CtxErrorf(ctx, "get user by id failed, err: %v", err)
 		}
 
-		return nil, utils.WrapError(err)
+		return nil, err
+	}
+
+	user := toIdentityUserEntity(m)
+	return user, nil
+}
+
+func (impl *UserRepoImpl) GetUserByName(ctx context.Context, username string) (*entity.User, error) {
+	query := impl.Query()
+	m, err := impl.WithContext(ctx).Where(
+		query.IdentityUser.Username.Eq(username),
+		query.IdentityUser.DeletedAt.Eq(nil),
+	).First()
+
+	if err != nil {
+		err = utils.WrapError(err)
+		if !errdef.IsRecordNotFound(err) {
+			log.CtxErrorf(ctx, "get user by name failed, err: %v", err)
+		}
+
+		return nil, err
 	}
 
 	user := toIdentityUserEntity(m)
@@ -61,9 +86,11 @@ func (impl *UserRepoImpl) GetUserByID(ctx context.Context, uid uint32) (*entity.
 
 func (impl *UserRepoImpl) ListUsers(ctx context.Context, page, size int32) ([]*entity.User, int64, error) {
 	offset := (page - 1) * size
+
+	query := impl.Query()
 	users, total, err := impl.WithContext(ctx).
-		Where(dao.IdentityUser.DeletedAt.Eq(nil)).
-		Order(dao.IdentityUser.ID.Asc()).
+		Where(query.IdentityUser.DeletedAt.Eq(nil)).
+		Order(query.IdentityUser.ID.Asc()).
 		FindByPage(int(offset), int(size))
 
 	if err != nil {
@@ -75,9 +102,10 @@ func (impl *UserRepoImpl) ListUsers(ctx context.Context, page, size int32) ([]*e
 }
 
 func (impl *UserRepoImpl) UpdateUserStatus(ctx context.Context, uid uint32, status identity.UserStatus) error {
+	query := impl.Query()
 	info, err := impl.WithContext(ctx).
-		Where(dao.IdentityUser.ID.Eq(int32(uid))).
-		Update(dao.IdentityUser.Status, int32(status))
+		Where(query.IdentityUser.ID.Eq(int32(uid))).
+		Update(query.IdentityUser.Status, int32(status))
 
 	if err != nil {
 		log.CtxErrorf(ctx, "update user status failed, err: %v", err)

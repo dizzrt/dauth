@@ -58,7 +58,7 @@ func execute() error {
 	g := gen.NewGenerator(gen.Config{
 		OutPath:          "internal/infra/persistence/core/gen/dao",
 		ModelPkgPath:     "internal/infra/persistence/core/gen/model",
-		Mode:             gen.WithDefaultQuery | gen.WithQueryInterface,
+		Mode:             gen.WithQueryInterface,
 		FieldNullable:    true,
 		FieldWithTypeTag: true,
 	})

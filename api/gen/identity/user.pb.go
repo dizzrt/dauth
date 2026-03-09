@@ -279,6 +279,110 @@ func (x *GetUserResponse) GetBaseResp() *common.BaseResp {
 	return nil
 }
 
+type GetUserByNameRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Base          *common.Base           `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserByNameRequest) Reset() {
+	*x = GetUserByNameRequest{}
+	mi := &file_identity_user_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserByNameRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserByNameRequest) ProtoMessage() {}
+
+func (x *GetUserByNameRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_identity_user_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserByNameRequest.ProtoReflect.Descriptor instead.
+func (*GetUserByNameRequest) Descriptor() ([]byte, []int) {
+	return file_identity_user_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetUserByNameRequest) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *GetUserByNameRequest) GetBase() *common.Base {
+	if x != nil {
+		return x.Base
+	}
+	return nil
+}
+
+type GetUserByNameResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	BaseResp      *common.BaseResp       `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserByNameResponse) Reset() {
+	*x = GetUserByNameResponse{}
+	mi := &file_identity_user_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserByNameResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserByNameResponse) ProtoMessage() {}
+
+func (x *GetUserByNameResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_identity_user_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserByNameResponse.ProtoReflect.Descriptor instead.
+func (*GetUserByNameResponse) Descriptor() ([]byte, []int) {
+	return file_identity_user_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetUserByNameResponse) GetUser() *User {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
+func (x *GetUserByNameResponse) GetBaseResp() *common.BaseResp {
+	if x != nil {
+		return x.BaseResp
+	}
+	return nil
+}
+
 type ListUsersRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Pagination    *common.Pagination     `protobuf:"bytes,254,opt,name=pagination,proto3" json:"pagination,omitempty"`
@@ -289,7 +393,7 @@ type ListUsersRequest struct {
 
 func (x *ListUsersRequest) Reset() {
 	*x = ListUsersRequest{}
-	mi := &file_identity_user_proto_msgTypes[4]
+	mi := &file_identity_user_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -301,7 +405,7 @@ func (x *ListUsersRequest) String() string {
 func (*ListUsersRequest) ProtoMessage() {}
 
 func (x *ListUsersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_user_proto_msgTypes[4]
+	mi := &file_identity_user_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -314,7 +418,7 @@ func (x *ListUsersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListUsersRequest.ProtoReflect.Descriptor instead.
 func (*ListUsersRequest) Descriptor() ([]byte, []int) {
-	return file_identity_user_proto_rawDescGZIP(), []int{4}
+	return file_identity_user_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ListUsersRequest) GetPagination() *common.Pagination {
@@ -342,7 +446,7 @@ type ListUsersResponse struct {
 
 func (x *ListUsersResponse) Reset() {
 	*x = ListUsersResponse{}
-	mi := &file_identity_user_proto_msgTypes[5]
+	mi := &file_identity_user_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -354,7 +458,7 @@ func (x *ListUsersResponse) String() string {
 func (*ListUsersResponse) ProtoMessage() {}
 
 func (x *ListUsersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_user_proto_msgTypes[5]
+	mi := &file_identity_user_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -367,7 +471,7 @@ func (x *ListUsersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListUsersResponse.ProtoReflect.Descriptor instead.
 func (*ListUsersResponse) Descriptor() ([]byte, []int) {
-	return file_identity_user_proto_rawDescGZIP(), []int{5}
+	return file_identity_user_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ListUsersResponse) GetUsers() []*User {
@@ -402,7 +506,7 @@ type UpdateUserStatusRequest struct {
 
 func (x *UpdateUserStatusRequest) Reset() {
 	*x = UpdateUserStatusRequest{}
-	mi := &file_identity_user_proto_msgTypes[6]
+	mi := &file_identity_user_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -414,7 +518,7 @@ func (x *UpdateUserStatusRequest) String() string {
 func (*UpdateUserStatusRequest) ProtoMessage() {}
 
 func (x *UpdateUserStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_user_proto_msgTypes[6]
+	mi := &file_identity_user_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -427,7 +531,7 @@ func (x *UpdateUserStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUserStatusRequest.ProtoReflect.Descriptor instead.
 func (*UpdateUserStatusRequest) Descriptor() ([]byte, []int) {
-	return file_identity_user_proto_rawDescGZIP(), []int{6}
+	return file_identity_user_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *UpdateUserStatusRequest) GetUid() uint32 {
@@ -461,7 +565,7 @@ type UpdateUserStatusResponse struct {
 
 func (x *UpdateUserStatusResponse) Reset() {
 	*x = UpdateUserStatusResponse{}
-	mi := &file_identity_user_proto_msgTypes[7]
+	mi := &file_identity_user_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -473,7 +577,7 @@ func (x *UpdateUserStatusResponse) String() string {
 func (*UpdateUserStatusResponse) ProtoMessage() {}
 
 func (x *UpdateUserStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_user_proto_msgTypes[7]
+	mi := &file_identity_user_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -486,7 +590,7 @@ func (x *UpdateUserStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUserStatusResponse.ProtoReflect.Descriptor instead.
 func (*UpdateUserStatusResponse) Descriptor() ([]byte, []int) {
-	return file_identity_user_proto_rawDescGZIP(), []int{7}
+	return file_identity_user_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *UpdateUserStatusResponse) GetStatus() UserStatus {
@@ -530,6 +634,12 @@ const file_identity_user_proto_rawDesc = "" +
 	"\x04base\x18\xff\x01 \x01(\v2\f.common.BaseR\x04base\"e\n" +
 	"\x0fGetUserResponse\x12\"\n" +
 	"\x04user\x18\x01 \x01(\v2\x0e.identity.UserR\x04user\x12.\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp\"U\n" +
+	"\x14GetUserByNameRequest\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12!\n" +
+	"\x04base\x18\xff\x01 \x01(\v2\f.common.BaseR\x04base\"k\n" +
+	"\x15GetUserByNameResponse\x12\"\n" +
+	"\x04user\x18\x01 \x01(\v2\x0e.identity.UserR\x04user\x12.\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp\"j\n" +
 	"\x10ListUsersRequest\x123\n" +
 	"\n" +
@@ -548,11 +658,12 @@ const file_identity_user_proto_rawDesc = "" +
 	"\x04base\x18\xff\x01 \x01(\v2\f.common.BaseR\x04base\"x\n" +
 	"\x18UpdateUserStatusResponse\x12,\n" +
 	"\x06status\x18\x01 \x01(\x0e2\x14.identity.UserStatusR\x06status\x12.\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp2\xb2\x03\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp2\xac\x04\n" +
 	"\vUserService\x12b\n" +
 	"\n" +
 	"CreateUser\x12\x1b.identity.CreateUserRequest\x1a\x1c.identity.CreateUserResponse\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/identity/user\x12\\\n" +
-	"\aGetUser\x12\x18.identity.GetUserRequest\x1a\x19.identity.GetUserResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/identity/user/{uid}\x12]\n" +
+	"\aGetUser\x12\x18.identity.GetUserRequest\x1a\x19.identity.GetUserResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/identity/user/{uid}\x12x\n" +
+	"\rGetUserByName\x12\x1e.identity.GetUserByNameRequest\x1a\x1f.identity.GetUserByNameResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/identity/user/name/{username}\x12]\n" +
 	"\tListUsers\x12\x1a.identity.ListUsersRequest\x1a\x1b.identity.ListUsersResponse\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/identity/users\x12\x81\x01\n" +
 	"\x10UpdateUserStatus\x12!.identity.UpdateUserStatusRequest\x1a\".identity.UpdateUserStatusResponse\"&\x82\xd3\xe4\x93\x02 :\x01*2\x1b/identity/user/{uid}/statusB3Z1github.com/dizzrt/dauth/api/gen/identity;identityb\x06proto3"
 
@@ -568,54 +679,61 @@ func file_identity_user_proto_rawDescGZIP() []byte {
 	return file_identity_user_proto_rawDescData
 }
 
-var file_identity_user_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_identity_user_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_identity_user_proto_goTypes = []any{
 	(*CreateUserRequest)(nil),        // 0: identity.CreateUserRequest
 	(*CreateUserResponse)(nil),       // 1: identity.CreateUserResponse
 	(*GetUserRequest)(nil),           // 2: identity.GetUserRequest
 	(*GetUserResponse)(nil),          // 3: identity.GetUserResponse
-	(*ListUsersRequest)(nil),         // 4: identity.ListUsersRequest
-	(*ListUsersResponse)(nil),        // 5: identity.ListUsersResponse
-	(*UpdateUserStatusRequest)(nil),  // 6: identity.UpdateUserStatusRequest
-	(*UpdateUserStatusResponse)(nil), // 7: identity.UpdateUserStatusResponse
-	(UserStatus)(0),                  // 8: identity.UserStatus
-	(*UserExtend)(nil),               // 9: identity.UserExtend
-	(*common.Base)(nil),              // 10: common.Base
-	(*User)(nil),                     // 11: identity.User
-	(*common.BaseResp)(nil),          // 12: common.BaseResp
-	(*common.Pagination)(nil),        // 13: common.Pagination
+	(*GetUserByNameRequest)(nil),     // 4: identity.GetUserByNameRequest
+	(*GetUserByNameResponse)(nil),    // 5: identity.GetUserByNameResponse
+	(*ListUsersRequest)(nil),         // 6: identity.ListUsersRequest
+	(*ListUsersResponse)(nil),        // 7: identity.ListUsersResponse
+	(*UpdateUserStatusRequest)(nil),  // 8: identity.UpdateUserStatusRequest
+	(*UpdateUserStatusResponse)(nil), // 9: identity.UpdateUserStatusResponse
+	(UserStatus)(0),                  // 10: identity.UserStatus
+	(*UserExtend)(nil),               // 11: identity.UserExtend
+	(*common.Base)(nil),              // 12: common.Base
+	(*User)(nil),                     // 13: identity.User
+	(*common.BaseResp)(nil),          // 14: common.BaseResp
+	(*common.Pagination)(nil),        // 15: common.Pagination
 }
 var file_identity_user_proto_depIdxs = []int32{
-	8,  // 0: identity.CreateUserRequest.status:type_name -> identity.UserStatus
-	9,  // 1: identity.CreateUserRequest.extend:type_name -> identity.UserExtend
-	10, // 2: identity.CreateUserRequest.base:type_name -> common.Base
-	11, // 3: identity.CreateUserResponse.user:type_name -> identity.User
-	12, // 4: identity.CreateUserResponse.base_resp:type_name -> common.BaseResp
-	10, // 5: identity.GetUserRequest.base:type_name -> common.Base
-	11, // 6: identity.GetUserResponse.user:type_name -> identity.User
-	12, // 7: identity.GetUserResponse.base_resp:type_name -> common.BaseResp
-	13, // 8: identity.ListUsersRequest.pagination:type_name -> common.Pagination
-	10, // 9: identity.ListUsersRequest.base:type_name -> common.Base
-	11, // 10: identity.ListUsersResponse.users:type_name -> identity.User
-	13, // 11: identity.ListUsersResponse.pagination:type_name -> common.Pagination
-	12, // 12: identity.ListUsersResponse.base_resp:type_name -> common.BaseResp
-	8,  // 13: identity.UpdateUserStatusRequest.status:type_name -> identity.UserStatus
-	10, // 14: identity.UpdateUserStatusRequest.base:type_name -> common.Base
-	8,  // 15: identity.UpdateUserStatusResponse.status:type_name -> identity.UserStatus
-	12, // 16: identity.UpdateUserStatusResponse.base_resp:type_name -> common.BaseResp
-	0,  // 17: identity.UserService.CreateUser:input_type -> identity.CreateUserRequest
-	2,  // 18: identity.UserService.GetUser:input_type -> identity.GetUserRequest
-	4,  // 19: identity.UserService.ListUsers:input_type -> identity.ListUsersRequest
-	6,  // 20: identity.UserService.UpdateUserStatus:input_type -> identity.UpdateUserStatusRequest
-	1,  // 21: identity.UserService.CreateUser:output_type -> identity.CreateUserResponse
-	3,  // 22: identity.UserService.GetUser:output_type -> identity.GetUserResponse
-	5,  // 23: identity.UserService.ListUsers:output_type -> identity.ListUsersResponse
-	7,  // 24: identity.UserService.UpdateUserStatus:output_type -> identity.UpdateUserStatusResponse
-	21, // [21:25] is the sub-list for method output_type
-	17, // [17:21] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	10, // 0: identity.CreateUserRequest.status:type_name -> identity.UserStatus
+	11, // 1: identity.CreateUserRequest.extend:type_name -> identity.UserExtend
+	12, // 2: identity.CreateUserRequest.base:type_name -> common.Base
+	13, // 3: identity.CreateUserResponse.user:type_name -> identity.User
+	14, // 4: identity.CreateUserResponse.base_resp:type_name -> common.BaseResp
+	12, // 5: identity.GetUserRequest.base:type_name -> common.Base
+	13, // 6: identity.GetUserResponse.user:type_name -> identity.User
+	14, // 7: identity.GetUserResponse.base_resp:type_name -> common.BaseResp
+	12, // 8: identity.GetUserByNameRequest.base:type_name -> common.Base
+	13, // 9: identity.GetUserByNameResponse.user:type_name -> identity.User
+	14, // 10: identity.GetUserByNameResponse.base_resp:type_name -> common.BaseResp
+	15, // 11: identity.ListUsersRequest.pagination:type_name -> common.Pagination
+	12, // 12: identity.ListUsersRequest.base:type_name -> common.Base
+	13, // 13: identity.ListUsersResponse.users:type_name -> identity.User
+	15, // 14: identity.ListUsersResponse.pagination:type_name -> common.Pagination
+	14, // 15: identity.ListUsersResponse.base_resp:type_name -> common.BaseResp
+	10, // 16: identity.UpdateUserStatusRequest.status:type_name -> identity.UserStatus
+	12, // 17: identity.UpdateUserStatusRequest.base:type_name -> common.Base
+	10, // 18: identity.UpdateUserStatusResponse.status:type_name -> identity.UserStatus
+	14, // 19: identity.UpdateUserStatusResponse.base_resp:type_name -> common.BaseResp
+	0,  // 20: identity.UserService.CreateUser:input_type -> identity.CreateUserRequest
+	2,  // 21: identity.UserService.GetUser:input_type -> identity.GetUserRequest
+	4,  // 22: identity.UserService.GetUserByName:input_type -> identity.GetUserByNameRequest
+	6,  // 23: identity.UserService.ListUsers:input_type -> identity.ListUsersRequest
+	8,  // 24: identity.UserService.UpdateUserStatus:input_type -> identity.UpdateUserStatusRequest
+	1,  // 25: identity.UserService.CreateUser:output_type -> identity.CreateUserResponse
+	3,  // 26: identity.UserService.GetUser:output_type -> identity.GetUserResponse
+	5,  // 27: identity.UserService.GetUserByName:output_type -> identity.GetUserByNameResponse
+	7,  // 28: identity.UserService.ListUsers:output_type -> identity.ListUsersResponse
+	9,  // 29: identity.UserService.UpdateUserStatus:output_type -> identity.UpdateUserStatusResponse
+	25, // [25:30] is the sub-list for method output_type
+	20, // [20:25] is the sub-list for method input_type
+	20, // [20:20] is the sub-list for extension type_name
+	20, // [20:20] is the sub-list for extension extendee
+	0,  // [0:20] is the sub-list for field type_name
 }
 
 func init() { file_identity_user_proto_init() }
@@ -631,7 +749,7 @@ func file_identity_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_identity_user_proto_rawDesc), len(file_identity_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

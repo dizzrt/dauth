@@ -210,6 +210,14 @@
                 </li>
               
                 <li>
+                  <a href="#identity.GetUserByNameRequest"><span class="badge">M</span>GetUserByNameRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#identity.GetUserByNameResponse"><span class="badge">M</span>GetUserByNameResponse</a>
+                </li>
+              
+                <li>
                   <a href="#identity.GetUserRequest"><span class="badge">M</span>GetUserRequest</a>
                 </li>
               
@@ -516,6 +524,68 @@
 
         
       
+        <h3 id="identity.GetUserByNameRequest">GetUserByNameRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>username</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#common.Base">common.Base</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="identity.GetUserByNameResponse">GetUserByNameResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user</td>
+                  <td><a href="#identity.User">User</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_resp</td>
+                  <td><a href="#common.BaseResp">common.BaseResp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="identity.GetUserRequest">GetUserRequest</h3>
         <p></p>
 
@@ -745,6 +815,13 @@
               </tr>
             
               <tr>
+                <td>GetUserByName</td>
+                <td><a href="#identity.GetUserByNameRequest">GetUserByNameRequest</a></td>
+                <td><a href="#identity.GetUserByNameResponse">GetUserByNameResponse</a></td>
+                <td><p>GetUserByName gets a user by username.</p></td>
+              </tr>
+            
+              <tr>
                 <td>ListUsers</td>
                 <td><a href="#identity.ListUsersRequest">ListUsersRequest</a></td>
                 <td><a href="#identity.ListUsersResponse">ListUsersResponse</a></td>
@@ -792,6 +869,16 @@
                 <td>GetUser</td>
                 <td>GET</td>
                 <td>/identity/user/{uid}</td>
+                <td></td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>GetUserByName</td>
+                <td>GET</td>
+                <td>/identity/user/name/{username}</td>
                 <td></td>
               </tr>
               

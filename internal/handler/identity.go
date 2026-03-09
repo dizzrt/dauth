@@ -30,6 +30,10 @@ func (handler *IdentityHandler) GetUser(ctx context.Context, req *identity.GetUs
 	return errors.WrapGRPCResponse(handler.identityApp.GetUser(ctx, req))
 }
 
+func (handler *IdentityHandler) GetUserByName(ctx context.Context, req *identity.GetUserByNameRequest) (*identity.GetUserByNameResponse, error) {
+	return errors.WrapGRPCResponse(handler.identityApp.GetUserByName(ctx, req))
+}
+
 func (handler *IdentityHandler) ListUsers(ctx context.Context, req *identity.ListUsersRequest) (*identity.ListUsersResponse, error) {
 	return errors.WrapGRPCResponse(handler.identityApp.ListUsers(ctx, req))
 }

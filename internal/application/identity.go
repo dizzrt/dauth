@@ -6,11 +6,11 @@ import (
 	"github.com/dizzrt/dauth/api/gen/common"
 	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/api/gen/identity"
+	"github.com/dizzrt/dauth/internal/application/convert"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	"github.com/dizzrt/dauth/internal/domain/identity/dto"
 	"github.com/dizzrt/dauth/internal/infra/rpc"
 	"github.com/dizzrt/ellie/log"
-	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 var _ IdentityApplication = (*identityApplication)(nil)
@@ -18,6 +18,7 @@ var _ IdentityApplication = (*identityApplication)(nil)
 type IdentityApplication interface {
 	CreateUser(context.Context, *identity.CreateUserRequest) (*identity.CreateUserResponse, error)
 	GetUser(context.Context, *identity.GetUserRequest) (*identity.GetUserResponse, error)
+	GetUserByName(context.Context, *identity.GetUserByNameRequest) (*identity.GetUserByNameResponse, error)
 	ListUsers(context.Context, *identity.ListUsersRequest) (*identity.ListUsersResponse, error)
 	UpdateUserStatus(context.Context, *identity.UpdateUserStatusRequest) (*identity.UpdateUserStatusResponse, error)
 }
@@ -62,21 +63,8 @@ func (app *identityApplication) CreateUser(ctx context.Context, req *identity.Cr
 		return nil, err
 	}
 
-	u := &identity.User{
-		Uid:       &user.UID,
-		Username:  &user.Username,
-		Status:    &user.Status,
-		Phone:     user.Phone,
-		Email:     user.Email,
-		Nickname:  user.Nickname,
-		Avatar:    user.Avatar,
-		Extend:    nil,
-		CreatedAt: timestamppb.New(user.CreatedAt),
-		UpdatedAt: timestamppb.New(user.UpdatedAt),
-	}
-
 	resp := &identity.CreateUserResponse{
-		User:     u,
+		User:     convert.ToIdentityUser(user),
 		BaseResp: rpc.Success(),
 	}
 
@@ -95,30 +83,29 @@ func (app *identityApplication) GetUser(ctx context.Context, req *identity.GetUs
 		return nil, err
 	}
 
-	u := &identity.User{
-		Uid:       &user.UID,
-		Username:  &user.Username,
-		Status:    &user.Status,
-		Phone:     user.Phone,
-		Email:     user.Email,
-		Nickname:  user.Nickname,
-		Avatar:    user.Avatar,
-		Extend:    nil,
-		CreatedAt: timestamppb.New(user.CreatedAt),
-		UpdatedAt: timestamppb.New(user.UpdatedAt),
-	}
-
-	if user.LastLoginAt != nil {
-		u.LastLoginAt = timestamppb.New(*user.LastLoginAt)
-	}
-
-	if user.DeletedAt.Valid {
-		u.DeletedAt = timestamppb.New(user.DeletedAt.Time)
-	}
-
 	resp := &identity.GetUserResponse{
-		User: u,
-		// BaseResp: ,
+		User:     convert.ToIdentityUser(user),
+		BaseResp: rpc.Success(),
+	}
+
+	return resp, nil
+}
+
+func (app *identityApplication) GetUserByName(ctx context.Context, req *identity.GetUserByNameRequest) (*identity.GetUserByNameResponse, error) {
+	username := req.GetUsername()
+	if username == "" {
+		return nil, errdef.InvalidArgument().WithMessage("username can not be empty")
+	}
+
+	user, err := app.userBiz.GetUserByName(ctx, username)
+	if err != nil {
+		log.CtxErrorf(ctx, "get user by name failed, err: %v", err)
+		return nil, err
+	}
+
+	resp := &identity.GetUserByNameResponse{
+		User:     convert.ToIdentityUser(user),
+		BaseResp: rpc.Success(),
 	}
 
 	return resp, nil
@@ -142,37 +129,12 @@ func (app *identityApplication) ListUsers(ctx context.Context, req *identity.Lis
 	}
 
 	resp := &identity.ListUsersResponse{
-		Users: make([]*identity.User, 0, len(users)),
+		Users: convert.ToIdentityUsers(users),
 		Pagination: &common.Pagination{
 			Page:  page,
 			Size:  size,
 			Total: total,
 		},
-	}
-
-	for _, user := range users {
-		u := &identity.User{
-			Uid:       &user.UID,
-			Username:  &user.Username,
-			Status:    &user.Status,
-			Phone:     user.Phone,
-			Email:     user.Email,
-			Nickname:  user.Nickname,
-			Avatar:    user.Avatar,
-			Extend:    nil,
-			CreatedAt: timestamppb.New(user.CreatedAt),
-			UpdatedAt: timestamppb.New(user.UpdatedAt),
-		}
-
-		if user.LastLoginAt != nil {
-			u.LastLoginAt = timestamppb.New(*user.LastLoginAt)
-		}
-
-		if user.DeletedAt.Valid {
-			u.DeletedAt = timestamppb.New(user.DeletedAt.Time)
-		}
-
-		resp.Users = append(resp.Users, u)
 	}
 
 	return resp, nil

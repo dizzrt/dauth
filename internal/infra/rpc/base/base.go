@@ -5,9 +5,7 @@ import "github.com/dizzrt/dauth/internal/infra/rpc/base/core"
 const (
 	_ENDPOINT_DAUTH = "discovery:///dauth"
 
-	CK_DAUTH_IDENTITY_USER    = "dauth.identity.user"
-	CK_DAUTH_SERVICE_PROVIDER = "dauth.sp"
-	CK_DAUTH_TOKEN            = "dauth.token"
+	CK_DAUTH_IDENTITY_USER = "dauth.identity.user"
 )
 
 var clientSet = []core.Client{

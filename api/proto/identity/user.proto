@@ -39,6 +39,18 @@ message GetUserResponse {
   common.BaseResp base_resp = 255;
 }
 
+message GetUserByNameRequest {
+  string username = 1;
+
+  common.Base base = 255;
+}
+
+message GetUserByNameResponse {
+  User user = 1;
+
+  common.BaseResp base_resp = 255;
+}
+
 message ListUsersRequest {
   common.Pagination pagination = 254;
   common.Base base = 255;
@@ -76,6 +88,11 @@ service UserService {
   // GetUser gets a user by ID.
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {
     option (google.api.http) = {get: "/identity/user/{uid}"};
+  }
+
+  // GetUserByName gets a user by username.
+  rpc GetUserByName(GetUserByNameRequest) returns (GetUserByNameResponse) {
+    option (google.api.http) = {get: "/identity/user/name/{username}"};
   }
 
   // ListUsers lists all users.

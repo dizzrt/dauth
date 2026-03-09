@@ -18,6 +18,7 @@ var _ UserBiz = (*userBiz)(nil)
 type UserBiz interface {
 	CreateUser(ctx context.Context, user *dto.CreateUserDTO) (*entity.User, error)
 	GetUser(ctx context.Context, uid uint32) (*entity.User, error)
+	GetUserByName(ctx context.Context, username string) (*entity.User, error)
 	ListUsers(ctx context.Context, page, size int32) ([]*entity.User, int64, error)
 	UpdateUserStatus(ctx context.Context, uid uint32, status identity.UserStatus) (identity.UserStatus, error)
 }
@@ -68,6 +69,19 @@ func (biz *userBiz) GetUser(ctx context.Context, uid uint32) (*entity.User, erro
 	if err != nil {
 		if !errdef.IsRecordNotFound(err) {
 			log.CtxErrorf(ctx, "[Identity] get user failed, err: %v", err)
+		}
+
+		return nil, err
+	}
+
+	return user, nil
+}
+
+func (biz *userBiz) GetUserByName(ctx context.Context, username string) (*entity.User, error) {
+	user, err := biz.userRepo.GetUserByName(ctx, username)
+	if err != nil {
+		if !errdef.IsRecordNotFound(err) {
+			log.CtxErrorf(ctx, "[Identity] get user by name failed, err: %v", err)
 		}
 
 		return nil, err

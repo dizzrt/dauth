@@ -81,6 +81,31 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /identity/user/name/{username}:
+        get:
+            tags:
+                - UserService
+            description: GetUserByName gets a user by username.
+            operationId: UserService_GetUserByName
+            parameters:
+                - name: username
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetUserByNameResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /identity/user/{uid}:
         get:
             tags:
@@ -232,6 +257,13 @@ components:
                 base:
                     $ref: '#/components/schemas/Base'
         CreateUserResponse:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/User'
+                baseResp:
+                    $ref: '#/components/schemas/BaseResp'
+        GetUserByNameResponse:
             type: object
             properties:
                 user:

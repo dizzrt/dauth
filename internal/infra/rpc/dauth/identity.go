@@ -15,3 +15,11 @@ func GetUser(ctx context.Context, uid uint32) (*identity.GetUserResponse, error)
 
 	return errors.UnwrapGRPCResponse(rpc.UserServiceClient().GetUser(ctx, req))
 }
+
+func GetUserByName(ctx context.Context, username string) (*identity.GetUserByNameResponse, error) {
+	req := &identity.GetUserByNameRequest{
+		Username: username,
+	}
+
+	return errors.UnwrapGRPCResponse(rpc.UserServiceClient().GetUserByName(ctx, req))
+}

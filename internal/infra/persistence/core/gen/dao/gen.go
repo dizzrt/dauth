@@ -15,22 +15,6 @@ import (
 	"gorm.io/plugin/dbresolver"
 )
 
-var (
-	Q                 = new(Query)
-	AuthnAttempt      *authnAttempt
-	AuthnPolicy       *authnPolicy
-	AuthnPolicyTarget *authnPolicyTarget
-	IdentityUser      *identityUser
-)
-
-func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
-	*Q = *Use(db, opts...)
-	AuthnAttempt = &Q.AuthnAttempt
-	AuthnPolicy = &Q.AuthnPolicy
-	AuthnPolicyTarget = &Q.AuthnPolicyTarget
-	IdentityUser = &Q.IdentityUser
-}
-
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
 		db:                db,
