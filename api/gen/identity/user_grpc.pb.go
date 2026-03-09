@@ -23,6 +23,7 @@ const (
 	UserService_GetUser_FullMethodName          = "/identity.UserService/GetUser"
 	UserService_GetUserByName_FullMethodName    = "/identity.UserService/GetUserByName"
 	UserService_ListUsers_FullMethodName        = "/identity.UserService/ListUsers"
+	UserService_VerifyPassword_FullMethodName   = "/identity.UserService/VerifyPassword"
 	UserService_UpdateUserStatus_FullMethodName = "/identity.UserService/UpdateUserStatus"
 )
 
@@ -38,6 +39,8 @@ type UserServiceClient interface {
 	GetUserByName(ctx context.Context, in *GetUserByNameRequest, opts ...grpc.CallOption) (*GetUserByNameResponse, error)
 	// ListUsers lists all users.
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
+	// VerifyPassword verifies a user's password.
+	VerifyPassword(ctx context.Context, in *VerifyPasswordRequest, opts ...grpc.CallOption) (*VerifyPasswordResponse, error)
 	// UpdateUserStatus updates a user's status.
 	UpdateUserStatus(ctx context.Context, in *UpdateUserStatusRequest, opts ...grpc.CallOption) (*UpdateUserStatusResponse, error)
 }
@@ -90,6 +93,16 @@ func (c *userServiceClient) ListUsers(ctx context.Context, in *ListUsersRequest,
 	return out, nil
 }
 
+func (c *userServiceClient) VerifyPassword(ctx context.Context, in *VerifyPasswordRequest, opts ...grpc.CallOption) (*VerifyPasswordResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VerifyPasswordResponse)
+	err := c.cc.Invoke(ctx, UserService_VerifyPassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userServiceClient) UpdateUserStatus(ctx context.Context, in *UpdateUserStatusRequest, opts ...grpc.CallOption) (*UpdateUserStatusResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateUserStatusResponse)
@@ -112,6 +125,8 @@ type UserServiceServer interface {
 	GetUserByName(context.Context, *GetUserByNameRequest) (*GetUserByNameResponse, error)
 	// ListUsers lists all users.
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
+	// VerifyPassword verifies a user's password.
+	VerifyPassword(context.Context, *VerifyPasswordRequest) (*VerifyPasswordResponse, error)
 	// UpdateUserStatus updates a user's status.
 	UpdateUserStatus(context.Context, *UpdateUserStatusRequest) (*UpdateUserStatusResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
@@ -135,6 +150,9 @@ func (UnimplementedUserServiceServer) GetUserByName(context.Context, *GetUserByN
 }
 func (UnimplementedUserServiceServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListUsers not implemented")
+}
+func (UnimplementedUserServiceServer) VerifyPassword(context.Context, *VerifyPasswordRequest) (*VerifyPasswordResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method VerifyPassword not implemented")
 }
 func (UnimplementedUserServiceServer) UpdateUserStatus(context.Context, *UpdateUserStatusRequest) (*UpdateUserStatusResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method UpdateUserStatus not implemented")
@@ -232,6 +250,24 @@ func _UserService_ListUsers_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_VerifyPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).VerifyPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_VerifyPassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).VerifyPassword(ctx, req.(*VerifyPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserService_UpdateUserStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateUserStatusRequest)
 	if err := dec(in); err != nil {
@@ -272,6 +308,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUsers",
 			Handler:    _UserService_ListUsers_Handler,
+		},
+		{
+			MethodName: "VerifyPassword",
+			Handler:    _UserService_VerifyPassword_Handler,
 		},
 		{
 			MethodName: "UpdateUserStatus",

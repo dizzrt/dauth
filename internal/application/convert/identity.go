@@ -7,6 +7,10 @@ import (
 )
 
 func ToIdentityUser(user *entity.User) *identity.User {
+	if user == nil {
+		return nil
+	}
+
 	u := &identity.User{
 		Uid:       &user.UID,
 		Username:  &user.Username,
@@ -32,6 +36,10 @@ func ToIdentityUser(user *entity.User) *identity.User {
 }
 
 func ToIdentityUsers(users []*entity.User) []*identity.User {
+	if users == nil {
+		return nil
+	}
+
 	us := make([]*identity.User, 0, len(users))
 	for _, user := range users {
 		us = append(us, ToIdentityUser(user))

@@ -20,6 +20,7 @@ type UserBiz interface {
 	GetUser(ctx context.Context, uid uint32) (*entity.User, error)
 	GetUserByName(ctx context.Context, username string) (*entity.User, error)
 	ListUsers(ctx context.Context, page, size int32) ([]*entity.User, int64, error)
+	VerifyPassword(ctx context.Context, req *dto.VerifyPasswordDTO) (*dto.VerifyPasswordResponse, error)
 	UpdateUserStatus(ctx context.Context, uid uint32, status identity.UserStatus) (identity.UserStatus, error)
 }
 
@@ -98,6 +99,42 @@ func (biz *userBiz) ListUsers(ctx context.Context, page, size int32) ([]*entity.
 	}
 
 	return users, total, nil
+}
+
+func (biz *userBiz) VerifyPassword(ctx context.Context, req *dto.VerifyPasswordDTO) (*dto.VerifyPasswordResponse, error) {
+	resp := &dto.VerifyPasswordResponse{
+		OK: true,
+	}
+
+	var err error
+	var user *entity.User
+	if req.UID != nil {
+		user, err = biz.userRepo.GetUserByID(ctx, *req.UID)
+	} else if req.Username != nil {
+		user, err = biz.userRepo.GetUserByName(ctx, *req.Username)
+	} else {
+		return nil, errdef.InvalidArgument().WithMessage("not support yet")
+	}
+
+	if err != nil {
+		if !errdef.IsRecordNotFound(err) {
+			log.CtxErrorf(ctx, "[Identity] verify password failed, err: %v", err)
+		}
+
+		return nil, err
+	}
+
+	err = user.VerifyPassword(req.Password)
+	if err != nil {
+		resp.OK = false
+		// TODO resp.IsLocked
+		// resp.RemainingAttempts
+		// resp.RemainingLockTime
+		return resp, nil
+	}
+
+	resp.User = user
+	return resp, nil
 }
 
 func (biz *userBiz) UpdateUserStatus(ctx context.Context, uid uint32, status identity.UserStatus) (identity.UserStatus, error) {

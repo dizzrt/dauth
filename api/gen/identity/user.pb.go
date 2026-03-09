@@ -495,6 +495,174 @@ func (x *ListUsersResponse) GetBaseResp() *common.BaseResp {
 	return nil
 }
 
+type VerifyPasswordRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Password      string                 `protobuf:"bytes,1,opt,name=password,proto3" json:"password,omitempty"`
+	Uid           *uint32                `protobuf:"varint,2,opt,name=uid,proto3,oneof" json:"uid,omitempty"`
+	Username      *string                `protobuf:"bytes,3,opt,name=username,proto3,oneof" json:"username,omitempty"`
+	Email         *string                `protobuf:"bytes,4,opt,name=email,proto3,oneof" json:"email,omitempty"`
+	Phone         *string                `protobuf:"bytes,5,opt,name=phone,proto3,oneof" json:"phone,omitempty"`
+	Base          *common.Base           `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifyPasswordRequest) Reset() {
+	*x = VerifyPasswordRequest{}
+	mi := &file_identity_user_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyPasswordRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyPasswordRequest) ProtoMessage() {}
+
+func (x *VerifyPasswordRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_identity_user_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyPasswordRequest.ProtoReflect.Descriptor instead.
+func (*VerifyPasswordRequest) Descriptor() ([]byte, []int) {
+	return file_identity_user_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *VerifyPasswordRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+func (x *VerifyPasswordRequest) GetUid() uint32 {
+	if x != nil && x.Uid != nil {
+		return *x.Uid
+	}
+	return 0
+}
+
+func (x *VerifyPasswordRequest) GetUsername() string {
+	if x != nil && x.Username != nil {
+		return *x.Username
+	}
+	return ""
+}
+
+func (x *VerifyPasswordRequest) GetEmail() string {
+	if x != nil && x.Email != nil {
+		return *x.Email
+	}
+	return ""
+}
+
+func (x *VerifyPasswordRequest) GetPhone() string {
+	if x != nil && x.Phone != nil {
+		return *x.Phone
+	}
+	return ""
+}
+
+func (x *VerifyPasswordRequest) GetBase() *common.Base {
+	if x != nil {
+		return x.Base
+	}
+	return nil
+}
+
+type VerifyPasswordResponse struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Ok                bool                   `protobuf:"varint,1,opt,name=ok,proto3" json:"ok,omitempty"`
+	User              *User                  `protobuf:"bytes,2,opt,name=user,proto3,oneof" json:"user,omitempty"`
+	IsLocked          *bool                  `protobuf:"varint,3,opt,name=is_locked,json=isLocked,proto3,oneof" json:"is_locked,omitempty"`
+	RemainingAttempts *int32                 `protobuf:"varint,4,opt,name=remaining_attempts,json=remainingAttempts,proto3,oneof" json:"remaining_attempts,omitempty"`
+	RemainingLockTime *int64                 `protobuf:"varint,5,opt,name=remaining_lock_time,json=remainingLockTime,proto3,oneof" json:"remaining_lock_time,omitempty"`
+	BaseResp          *common.BaseResp       `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *VerifyPasswordResponse) Reset() {
+	*x = VerifyPasswordResponse{}
+	mi := &file_identity_user_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyPasswordResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyPasswordResponse) ProtoMessage() {}
+
+func (x *VerifyPasswordResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_identity_user_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyPasswordResponse.ProtoReflect.Descriptor instead.
+func (*VerifyPasswordResponse) Descriptor() ([]byte, []int) {
+	return file_identity_user_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *VerifyPasswordResponse) GetOk() bool {
+	if x != nil {
+		return x.Ok
+	}
+	return false
+}
+
+func (x *VerifyPasswordResponse) GetUser() *User {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
+func (x *VerifyPasswordResponse) GetIsLocked() bool {
+	if x != nil && x.IsLocked != nil {
+		return *x.IsLocked
+	}
+	return false
+}
+
+func (x *VerifyPasswordResponse) GetRemainingAttempts() int32 {
+	if x != nil && x.RemainingAttempts != nil {
+		return *x.RemainingAttempts
+	}
+	return 0
+}
+
+func (x *VerifyPasswordResponse) GetRemainingLockTime() int64 {
+	if x != nil && x.RemainingLockTime != nil {
+		return *x.RemainingLockTime
+	}
+	return 0
+}
+
+func (x *VerifyPasswordResponse) GetBaseResp() *common.BaseResp {
+	if x != nil {
+		return x.BaseResp
+	}
+	return nil
+}
+
 type UpdateUserStatusRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Uid           uint32                 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
@@ -506,7 +674,7 @@ type UpdateUserStatusRequest struct {
 
 func (x *UpdateUserStatusRequest) Reset() {
 	*x = UpdateUserStatusRequest{}
-	mi := &file_identity_user_proto_msgTypes[8]
+	mi := &file_identity_user_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -518,7 +686,7 @@ func (x *UpdateUserStatusRequest) String() string {
 func (*UpdateUserStatusRequest) ProtoMessage() {}
 
 func (x *UpdateUserStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_user_proto_msgTypes[8]
+	mi := &file_identity_user_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -531,7 +699,7 @@ func (x *UpdateUserStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUserStatusRequest.ProtoReflect.Descriptor instead.
 func (*UpdateUserStatusRequest) Descriptor() ([]byte, []int) {
-	return file_identity_user_proto_rawDescGZIP(), []int{8}
+	return file_identity_user_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *UpdateUserStatusRequest) GetUid() uint32 {
@@ -565,7 +733,7 @@ type UpdateUserStatusResponse struct {
 
 func (x *UpdateUserStatusResponse) Reset() {
 	*x = UpdateUserStatusResponse{}
-	mi := &file_identity_user_proto_msgTypes[9]
+	mi := &file_identity_user_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -577,7 +745,7 @@ func (x *UpdateUserStatusResponse) String() string {
 func (*UpdateUserStatusResponse) ProtoMessage() {}
 
 func (x *UpdateUserStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_user_proto_msgTypes[9]
+	mi := &file_identity_user_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -590,7 +758,7 @@ func (x *UpdateUserStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUserStatusResponse.ProtoReflect.Descriptor instead.
 func (*UpdateUserStatusResponse) Descriptor() ([]byte, []int) {
-	return file_identity_user_proto_rawDescGZIP(), []int{9}
+	return file_identity_user_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *UpdateUserStatusResponse) GetStatus() UserStatus {
@@ -651,20 +819,44 @@ const file_identity_user_proto_rawDesc = "" +
 	"\n" +
 	"pagination\x18\xfe\x01 \x01(\v2\x12.common.PaginationR\n" +
 	"pagination\x12.\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp\"|\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp\"\xed\x01\n" +
+	"\x15VerifyPasswordRequest\x12\x1a\n" +
+	"\bpassword\x18\x01 \x01(\tR\bpassword\x12\x15\n" +
+	"\x03uid\x18\x02 \x01(\rH\x00R\x03uid\x88\x01\x01\x12\x1f\n" +
+	"\busername\x18\x03 \x01(\tH\x01R\busername\x88\x01\x01\x12\x19\n" +
+	"\x05email\x18\x04 \x01(\tH\x02R\x05email\x88\x01\x01\x12\x19\n" +
+	"\x05phone\x18\x05 \x01(\tH\x03R\x05phone\x88\x01\x01\x12!\n" +
+	"\x04base\x18\xff\x01 \x01(\v2\f.common.BaseR\x04baseB\x06\n" +
+	"\x04_uidB\v\n" +
+	"\t_usernameB\b\n" +
+	"\x06_emailB\b\n" +
+	"\x06_phone\"\xd2\x02\n" +
+	"\x16VerifyPasswordResponse\x12\x0e\n" +
+	"\x02ok\x18\x01 \x01(\bR\x02ok\x12'\n" +
+	"\x04user\x18\x02 \x01(\v2\x0e.identity.UserH\x00R\x04user\x88\x01\x01\x12 \n" +
+	"\tis_locked\x18\x03 \x01(\bH\x01R\bisLocked\x88\x01\x01\x122\n" +
+	"\x12remaining_attempts\x18\x04 \x01(\x05H\x02R\x11remainingAttempts\x88\x01\x01\x123\n" +
+	"\x13remaining_lock_time\x18\x05 \x01(\x03H\x03R\x11remainingLockTime\x88\x01\x01\x12.\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseRespB\a\n" +
+	"\x05_userB\f\n" +
+	"\n" +
+	"_is_lockedB\x15\n" +
+	"\x13_remaining_attemptsB\x16\n" +
+	"\x14_remaining_lock_time\"|\n" +
 	"\x17UpdateUserStatusRequest\x12\x10\n" +
 	"\x03uid\x18\x01 \x01(\rR\x03uid\x12,\n" +
 	"\x06status\x18\x02 \x01(\x0e2\x14.identity.UserStatusR\x06status\x12!\n" +
 	"\x04base\x18\xff\x01 \x01(\v2\f.common.BaseR\x04base\"x\n" +
 	"\x18UpdateUserStatusResponse\x12,\n" +
 	"\x06status\x18\x01 \x01(\x0e2\x14.identity.UserStatusR\x06status\x12.\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp2\xac\x04\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp2\xdd\x04\n" +
 	"\vUserService\x12b\n" +
 	"\n" +
 	"CreateUser\x12\x1b.identity.CreateUserRequest\x1a\x1c.identity.CreateUserResponse\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/identity/user\x12\\\n" +
-	"\aGetUser\x12\x18.identity.GetUserRequest\x1a\x19.identity.GetUserResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/identity/user/{uid}\x12x\n" +
-	"\rGetUserByName\x12\x1e.identity.GetUserByNameRequest\x1a\x1f.identity.GetUserByNameResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/identity/user/name/{username}\x12]\n" +
-	"\tListUsers\x12\x1a.identity.ListUsersRequest\x1a\x1b.identity.ListUsersResponse\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/identity/users\x12\x81\x01\n" +
+	"\aGetUser\x12\x18.identity.GetUserRequest\x1a\x19.identity.GetUserResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/identity/user/{uid}\x12R\n" +
+	"\rGetUserByName\x12\x1e.identity.GetUserByNameRequest\x1a\x1f.identity.GetUserByNameResponse\"\x00\x12]\n" +
+	"\tListUsers\x12\x1a.identity.ListUsersRequest\x1a\x1b.identity.ListUsersResponse\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/identity/users\x12U\n" +
+	"\x0eVerifyPassword\x12\x1f.identity.VerifyPasswordRequest\x1a .identity.VerifyPasswordResponse\"\x00\x12\x81\x01\n" +
 	"\x10UpdateUserStatus\x12!.identity.UpdateUserStatusRequest\x1a\".identity.UpdateUserStatusResponse\"&\x82\xd3\xe4\x93\x02 :\x01*2\x1b/identity/user/{uid}/statusB3Z1github.com/dizzrt/dauth/api/gen/identity;identityb\x06proto3"
 
 var (
@@ -679,7 +871,7 @@ func file_identity_user_proto_rawDescGZIP() []byte {
 	return file_identity_user_proto_rawDescData
 }
 
-var file_identity_user_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_identity_user_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_identity_user_proto_goTypes = []any{
 	(*CreateUserRequest)(nil),        // 0: identity.CreateUserRequest
 	(*CreateUserResponse)(nil),       // 1: identity.CreateUserResponse
@@ -689,51 +881,58 @@ var file_identity_user_proto_goTypes = []any{
 	(*GetUserByNameResponse)(nil),    // 5: identity.GetUserByNameResponse
 	(*ListUsersRequest)(nil),         // 6: identity.ListUsersRequest
 	(*ListUsersResponse)(nil),        // 7: identity.ListUsersResponse
-	(*UpdateUserStatusRequest)(nil),  // 8: identity.UpdateUserStatusRequest
-	(*UpdateUserStatusResponse)(nil), // 9: identity.UpdateUserStatusResponse
-	(UserStatus)(0),                  // 10: identity.UserStatus
-	(*UserExtend)(nil),               // 11: identity.UserExtend
-	(*common.Base)(nil),              // 12: common.Base
-	(*User)(nil),                     // 13: identity.User
-	(*common.BaseResp)(nil),          // 14: common.BaseResp
-	(*common.Pagination)(nil),        // 15: common.Pagination
+	(*VerifyPasswordRequest)(nil),    // 8: identity.VerifyPasswordRequest
+	(*VerifyPasswordResponse)(nil),   // 9: identity.VerifyPasswordResponse
+	(*UpdateUserStatusRequest)(nil),  // 10: identity.UpdateUserStatusRequest
+	(*UpdateUserStatusResponse)(nil), // 11: identity.UpdateUserStatusResponse
+	(UserStatus)(0),                  // 12: identity.UserStatus
+	(*UserExtend)(nil),               // 13: identity.UserExtend
+	(*common.Base)(nil),              // 14: common.Base
+	(*User)(nil),                     // 15: identity.User
+	(*common.BaseResp)(nil),          // 16: common.BaseResp
+	(*common.Pagination)(nil),        // 17: common.Pagination
 }
 var file_identity_user_proto_depIdxs = []int32{
-	10, // 0: identity.CreateUserRequest.status:type_name -> identity.UserStatus
-	11, // 1: identity.CreateUserRequest.extend:type_name -> identity.UserExtend
-	12, // 2: identity.CreateUserRequest.base:type_name -> common.Base
-	13, // 3: identity.CreateUserResponse.user:type_name -> identity.User
-	14, // 4: identity.CreateUserResponse.base_resp:type_name -> common.BaseResp
-	12, // 5: identity.GetUserRequest.base:type_name -> common.Base
-	13, // 6: identity.GetUserResponse.user:type_name -> identity.User
-	14, // 7: identity.GetUserResponse.base_resp:type_name -> common.BaseResp
-	12, // 8: identity.GetUserByNameRequest.base:type_name -> common.Base
-	13, // 9: identity.GetUserByNameResponse.user:type_name -> identity.User
-	14, // 10: identity.GetUserByNameResponse.base_resp:type_name -> common.BaseResp
-	15, // 11: identity.ListUsersRequest.pagination:type_name -> common.Pagination
-	12, // 12: identity.ListUsersRequest.base:type_name -> common.Base
-	13, // 13: identity.ListUsersResponse.users:type_name -> identity.User
-	15, // 14: identity.ListUsersResponse.pagination:type_name -> common.Pagination
-	14, // 15: identity.ListUsersResponse.base_resp:type_name -> common.BaseResp
-	10, // 16: identity.UpdateUserStatusRequest.status:type_name -> identity.UserStatus
-	12, // 17: identity.UpdateUserStatusRequest.base:type_name -> common.Base
-	10, // 18: identity.UpdateUserStatusResponse.status:type_name -> identity.UserStatus
-	14, // 19: identity.UpdateUserStatusResponse.base_resp:type_name -> common.BaseResp
-	0,  // 20: identity.UserService.CreateUser:input_type -> identity.CreateUserRequest
-	2,  // 21: identity.UserService.GetUser:input_type -> identity.GetUserRequest
-	4,  // 22: identity.UserService.GetUserByName:input_type -> identity.GetUserByNameRequest
-	6,  // 23: identity.UserService.ListUsers:input_type -> identity.ListUsersRequest
-	8,  // 24: identity.UserService.UpdateUserStatus:input_type -> identity.UpdateUserStatusRequest
-	1,  // 25: identity.UserService.CreateUser:output_type -> identity.CreateUserResponse
-	3,  // 26: identity.UserService.GetUser:output_type -> identity.GetUserResponse
-	5,  // 27: identity.UserService.GetUserByName:output_type -> identity.GetUserByNameResponse
-	7,  // 28: identity.UserService.ListUsers:output_type -> identity.ListUsersResponse
-	9,  // 29: identity.UserService.UpdateUserStatus:output_type -> identity.UpdateUserStatusResponse
-	25, // [25:30] is the sub-list for method output_type
-	20, // [20:25] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	12, // 0: identity.CreateUserRequest.status:type_name -> identity.UserStatus
+	13, // 1: identity.CreateUserRequest.extend:type_name -> identity.UserExtend
+	14, // 2: identity.CreateUserRequest.base:type_name -> common.Base
+	15, // 3: identity.CreateUserResponse.user:type_name -> identity.User
+	16, // 4: identity.CreateUserResponse.base_resp:type_name -> common.BaseResp
+	14, // 5: identity.GetUserRequest.base:type_name -> common.Base
+	15, // 6: identity.GetUserResponse.user:type_name -> identity.User
+	16, // 7: identity.GetUserResponse.base_resp:type_name -> common.BaseResp
+	14, // 8: identity.GetUserByNameRequest.base:type_name -> common.Base
+	15, // 9: identity.GetUserByNameResponse.user:type_name -> identity.User
+	16, // 10: identity.GetUserByNameResponse.base_resp:type_name -> common.BaseResp
+	17, // 11: identity.ListUsersRequest.pagination:type_name -> common.Pagination
+	14, // 12: identity.ListUsersRequest.base:type_name -> common.Base
+	15, // 13: identity.ListUsersResponse.users:type_name -> identity.User
+	17, // 14: identity.ListUsersResponse.pagination:type_name -> common.Pagination
+	16, // 15: identity.ListUsersResponse.base_resp:type_name -> common.BaseResp
+	14, // 16: identity.VerifyPasswordRequest.base:type_name -> common.Base
+	15, // 17: identity.VerifyPasswordResponse.user:type_name -> identity.User
+	16, // 18: identity.VerifyPasswordResponse.base_resp:type_name -> common.BaseResp
+	12, // 19: identity.UpdateUserStatusRequest.status:type_name -> identity.UserStatus
+	14, // 20: identity.UpdateUserStatusRequest.base:type_name -> common.Base
+	12, // 21: identity.UpdateUserStatusResponse.status:type_name -> identity.UserStatus
+	16, // 22: identity.UpdateUserStatusResponse.base_resp:type_name -> common.BaseResp
+	0,  // 23: identity.UserService.CreateUser:input_type -> identity.CreateUserRequest
+	2,  // 24: identity.UserService.GetUser:input_type -> identity.GetUserRequest
+	4,  // 25: identity.UserService.GetUserByName:input_type -> identity.GetUserByNameRequest
+	6,  // 26: identity.UserService.ListUsers:input_type -> identity.ListUsersRequest
+	8,  // 27: identity.UserService.VerifyPassword:input_type -> identity.VerifyPasswordRequest
+	10, // 28: identity.UserService.UpdateUserStatus:input_type -> identity.UpdateUserStatusRequest
+	1,  // 29: identity.UserService.CreateUser:output_type -> identity.CreateUserResponse
+	3,  // 30: identity.UserService.GetUser:output_type -> identity.GetUserResponse
+	5,  // 31: identity.UserService.GetUserByName:output_type -> identity.GetUserByNameResponse
+	7,  // 32: identity.UserService.ListUsers:output_type -> identity.ListUsersResponse
+	9,  // 33: identity.UserService.VerifyPassword:output_type -> identity.VerifyPasswordResponse
+	11, // 34: identity.UserService.UpdateUserStatus:output_type -> identity.UpdateUserStatusResponse
+	29, // [29:35] is the sub-list for method output_type
+	23, // [23:29] is the sub-list for method input_type
+	23, // [23:23] is the sub-list for extension type_name
+	23, // [23:23] is the sub-list for extension extendee
+	0,  // [0:23] is the sub-list for field type_name
 }
 
 func init() { file_identity_user_proto_init() }
@@ -743,13 +942,15 @@ func file_identity_user_proto_init() {
 	}
 	file_identity_types_proto_init()
 	file_identity_user_proto_msgTypes[0].OneofWrappers = []any{}
+	file_identity_user_proto_msgTypes[8].OneofWrappers = []any{}
+	file_identity_user_proto_msgTypes[9].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_identity_user_proto_rawDesc), len(file_identity_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

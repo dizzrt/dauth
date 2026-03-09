@@ -20,6 +20,7 @@ type IdentityApplication interface {
 	GetUser(context.Context, *identity.GetUserRequest) (*identity.GetUserResponse, error)
 	GetUserByName(context.Context, *identity.GetUserByNameRequest) (*identity.GetUserByNameResponse, error)
 	ListUsers(context.Context, *identity.ListUsersRequest) (*identity.ListUsersResponse, error)
+	VerifyPassword(context.Context, *identity.VerifyPasswordRequest) (*identity.VerifyPasswordResponse, error)
 	UpdateUserStatus(context.Context, *identity.UpdateUserStatusRequest) (*identity.UpdateUserStatusResponse, error)
 }
 
@@ -137,6 +138,46 @@ func (app *identityApplication) ListUsers(ctx context.Context, req *identity.Lis
 		},
 	}
 
+	return resp, nil
+}
+
+func (app *identityApplication) VerifyPassword(ctx context.Context, req *identity.VerifyPasswordRequest) (*identity.VerifyPasswordResponse, error) {
+	pwd := req.GetPassword()
+	if pwd == "" {
+		return nil, errdef.InvalidArgument().WithMessage("password can not be empty")
+	}
+
+	dto := &dto.VerifyPasswordDTO{
+		Password: pwd,
+	}
+
+	if req.Uid != nil {
+		dto.UID = req.Uid
+	} else if req.Username != nil {
+		dto.Username = req.Username
+	} else if req.Email != nil {
+		dto.Email = req.Email
+	} else if req.Phone != nil {
+		dto.Phone = req.Phone
+	} else {
+		return nil, errdef.InvalidArgument().WithMessage("invalid login account")
+	}
+
+	bizResp, err := app.userBiz.VerifyPassword(ctx, dto)
+	if err != nil {
+		log.CtxErrorf(ctx, "verify password failed, err: %v", err)
+		return nil, err
+	}
+
+	resp := &identity.VerifyPasswordResponse{
+		Ok:                bizResp.OK,
+		User:              convert.ToIdentityUser(bizResp.User),
+		IsLocked:          bizResp.IsLocked,
+		RemainingAttempts: bizResp.RemainingAttempts,
+		RemainingLockTime: bizResp.RemainingLockTime,
+	}
+
+	resp.BaseResp = rpc.Success()
 	return resp, nil
 }
 

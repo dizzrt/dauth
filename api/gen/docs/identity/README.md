@@ -20,6 +20,8 @@
     - [ListUsersResponse](#identity-ListUsersResponse)
     - [UpdateUserStatusRequest](#identity-UpdateUserStatusRequest)
     - [UpdateUserStatusResponse](#identity-UpdateUserStatusResponse)
+    - [VerifyPasswordRequest](#identity-VerifyPasswordRequest)
+    - [VerifyPasswordResponse](#identity-VerifyPasswordResponse)
   
     - [UserService](#identity-UserService)
   
@@ -267,6 +269,46 @@
 
 
 
+
+<a name="identity-VerifyPasswordRequest"></a>
+
+### VerifyPasswordRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| password | [string](#string) |  |  |
+| uid | [uint32](#uint32) | optional |  |
+| username | [string](#string) | optional |  |
+| email | [string](#string) | optional |  |
+| phone | [string](#string) | optional |  |
+| base | [common.Base](#common-Base) |  |  |
+
+
+
+
+
+
+<a name="identity-VerifyPasswordResponse"></a>
+
+### VerifyPasswordResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ok | [bool](#bool) |  |  |
+| user | [User](#identity-User) | optional |  |
+| is_locked | [bool](#bool) | optional |  |
+| remaining_attempts | [int32](#int32) | optional |  |
+| remaining_lock_time | [int64](#int64) | optional |  |
+| base_resp | [common.BaseResp](#common-BaseResp) |  |  |
+
+
+
+
+
  
 
  
@@ -285,6 +327,7 @@
 | GetUser | [GetUserRequest](#identity-GetUserRequest) | [GetUserResponse](#identity-GetUserResponse) | GetUser gets a user by ID. |
 | GetUserByName | [GetUserByNameRequest](#identity-GetUserByNameRequest) | [GetUserByNameResponse](#identity-GetUserByNameResponse) | GetUserByName gets a user by username. |
 | ListUsers | [ListUsersRequest](#identity-ListUsersRequest) | [ListUsersResponse](#identity-ListUsersResponse) | ListUsers lists all users. |
+| VerifyPassword | [VerifyPasswordRequest](#identity-VerifyPasswordRequest) | [VerifyPasswordResponse](#identity-VerifyPasswordResponse) | VerifyPassword verifies a user&#39;s password. |
 | UpdateUserStatus | [UpdateUserStatusRequest](#identity-UpdateUserStatusRequest) | [UpdateUserStatusResponse](#identity-UpdateUserStatusResponse) | UpdateUserStatus updates a user&#39;s status. |
 
  

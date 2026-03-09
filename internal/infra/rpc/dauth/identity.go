@@ -23,3 +23,7 @@ func GetUserByName(ctx context.Context, username string) (*identity.GetUserByNam
 
 	return errors.UnwrapGRPCResponse(rpc.UserServiceClient().GetUserByName(ctx, req))
 }
+
+func VerifyPassword(ctx context.Context, req *identity.VerifyPasswordRequest) (*identity.VerifyPasswordResponse, error) {
+	return errors.UnwrapGRPCResponse(rpc.UserServiceClient().VerifyPassword(ctx, req))
+}

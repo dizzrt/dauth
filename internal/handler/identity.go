@@ -38,6 +38,10 @@ func (handler *IdentityHandler) ListUsers(ctx context.Context, req *identity.Lis
 	return errors.WrapGRPCResponse(handler.identityApp.ListUsers(ctx, req))
 }
 
+func (handler *IdentityHandler) VerifyPassword(ctx context.Context, req *identity.VerifyPasswordRequest) (*identity.VerifyPasswordResponse, error) {
+	return errors.WrapGRPCResponse(handler.identityApp.VerifyPassword(ctx, req))
+}
+
 func (handler *IdentityHandler) UpdateUserStatus(ctx context.Context, req *identity.UpdateUserStatusRequest) (*identity.UpdateUserStatusResponse, error) {
 	return errors.WrapGRPCResponse(handler.identityApp.UpdateUserStatus(ctx, req))
 }

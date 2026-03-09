@@ -241,6 +241,14 @@
                   <a href="#identity.UpdateUserStatusResponse"><span class="badge">M</span>UpdateUserStatusResponse</a>
                 </li>
               
+                <li>
+                  <a href="#identity.VerifyPasswordRequest"><span class="badge">M</span>VerifyPasswordRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#identity.VerifyPasswordResponse"><span class="badge">M</span>VerifyPasswordResponse</a>
+                </li>
+              
               
               
               
@@ -786,6 +794,124 @@
 
         
       
+        <h3 id="identity.VerifyPasswordRequest">VerifyPasswordRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>password</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>uid</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>username</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>email</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>phone</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base</td>
+                  <td><a href="#common.Base">common.Base</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="identity.VerifyPasswordResponse">VerifyPasswordResponse</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>ok</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user</td>
+                  <td><a href="#identity.User">User</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>is_locked</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>remaining_attempts</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>remaining_lock_time</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_resp</td>
+                  <td><a href="#common.BaseResp">common.BaseResp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
 
@@ -829,6 +955,13 @@
               </tr>
             
               <tr>
+                <td>VerifyPassword</td>
+                <td><a href="#identity.VerifyPasswordRequest">VerifyPasswordRequest</a></td>
+                <td><a href="#identity.VerifyPasswordResponse">VerifyPasswordResponse</a></td>
+                <td><p>VerifyPassword verifies a user&#39;s password.</p></td>
+              </tr>
+            
+              <tr>
                 <td>UpdateUserStatus</td>
                 <td><a href="#identity.UpdateUserStatusRequest">UpdateUserStatusRequest</a></td>
                 <td><a href="#identity.UpdateUserStatusResponse">UpdateUserStatusResponse</a></td>
@@ -869,16 +1002,6 @@
                 <td>GetUser</td>
                 <td>GET</td>
                 <td>/identity/user/{uid}</td>
-                <td></td>
-              </tr>
-              
-            
-              
-              
-              <tr>
-                <td>GetUserByName</td>
-                <td>GET</td>
-                <td>/identity/user/name/{username}</td>
                 <td></td>
               </tr>
               

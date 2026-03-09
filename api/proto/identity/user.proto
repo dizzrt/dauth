@@ -63,6 +63,26 @@ message ListUsersResponse {
   common.BaseResp base_resp = 255;
 }
 
+message VerifyPasswordRequest {
+  string password = 1;
+  optional uint32 uid = 2;
+  optional string username = 3;
+  optional string email = 4;
+  optional string phone = 5;
+
+  common.Base base = 255;
+}
+
+message VerifyPasswordResponse {
+  bool ok = 1;
+  optional User user = 2;
+  optional bool is_locked = 3;
+  optional int32 remaining_attempts = 4;
+  optional int64 remaining_lock_time = 5;
+
+  common.BaseResp base_resp = 255;
+}
+
 message UpdateUserStatusRequest {
   uint32 uid = 1;
   UserStatus status = 2;
@@ -91,14 +111,15 @@ service UserService {
   }
 
   // GetUserByName gets a user by username.
-  rpc GetUserByName(GetUserByNameRequest) returns (GetUserByNameResponse) {
-    option (google.api.http) = {get: "/identity/user/name/{username}"};
-  }
+  rpc GetUserByName(GetUserByNameRequest) returns (GetUserByNameResponse) {}
 
   // ListUsers lists all users.
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
     option (google.api.http) = {get: "/identity/users"};
   }
+
+  // VerifyPassword verifies a user's password.
+  rpc VerifyPassword(VerifyPasswordRequest) returns (VerifyPasswordResponse) {}
 
   // UpdateUserStatus updates a user's status.
   rpc UpdateUserStatus(UpdateUserStatusRequest) returns (UpdateUserStatusResponse) {
