@@ -20,7 +20,11 @@ message LoginRequest {
 }
 
 message LoginResponse {
-  AuthnResult result = 1;
+  AuthnAttemptStatus status = 1;
+  optional string token = 2;
+  optional bool user_locked = 3;
+  optional int32 remaining_pwd_attempts = 4;
+  optional int32 remaining_mfa_attempts = 5;
 
   common.BaseResp base_resp = 255;
 }

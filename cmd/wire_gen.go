@@ -9,11 +9,14 @@ package cmd
 import (
 	"github.com/dizzrt/dauth/internal/application"
 	"github.com/dizzrt/dauth/internal/conf"
+	biz2 "github.com/dizzrt/dauth/internal/domain/authn/biz"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	"github.com/dizzrt/dauth/internal/handler"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
 	"github.com/dizzrt/dauth/internal/infra/persistence/core"
+	"github.com/dizzrt/dauth/internal/infra/persistence/impl/authn"
 	"github.com/dizzrt/dauth/internal/infra/persistence/impl/identity"
+	"github.com/dizzrt/dauth/internal/infra/utils/security/jwt"
 	"github.com/dizzrt/dauth/internal/server"
 	"github.com/dizzrt/ellie"
 )
@@ -34,7 +37,10 @@ func wireApp() (*ellie.App, func(), error) {
 	userBiz := biz.NewUserBiz(userRepo)
 	identityApplication := application.NewIdentityApplication(userBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)
-	authnApplication := application.NewAuthnApplication()
+	jwtManager := jwt.NewJWTManager(appConfig)
+	authnRepo := authn.NewAuthnRepoImpl(repoCore)
+	authnBiz := biz2.NewAuthnBiz(jwtManager, authnRepo)
+	authnApplication := application.NewAuthnApplication(authnBiz)
 	authnHandler := handler.NewAuthnHandler(authnApplication)
 	grpcServer := server.NewGRPCServer(appConfig, logWriter, identityHandler, authnHandler)
 	httpServer := server.NewHTTPServer(appConfig, logWriter, identityHandler, authnHandler)

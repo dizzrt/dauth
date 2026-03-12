@@ -15,6 +15,7 @@ require (
 	github.com/google/wire v0.7.0
 	github.com/hashicorp/consul/api v1.33.0
 	github.com/redis/go-redis/v9 v9.17.1
+	github.com/rs/xid v1.6.0
 	github.com/spf13/cobra v1.10.2
 	go.opentelemetry.io/otel v1.38.0
 	go.opentelemetry.io/otel/sdk v1.38.0

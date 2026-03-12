@@ -328,7 +328,7 @@
               </tr>
             
               <tr>
-                <td>FAILURE</td>
+                <td>FAILED</td>
                 <td>2</td>
                 <td><p></p></td>
               </tr>
@@ -466,9 +466,37 @@
             <tbody>
               
                 <tr>
-                  <td>result</td>
-                  <td><a href="#authn.AuthnResult">AuthnResult</a></td>
+                  <td>status</td>
+                  <td><a href="#authn.AuthnAttemptStatus">AuthnAttemptStatus</a></td>
                   <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>token</td>
+                  <td><a href="#string">string</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>user_locked</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>remaining_pwd_attempts</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>remaining_mfa_attempts</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td>optional</td>
                   <td><p> </p></td>
                 </tr>
               

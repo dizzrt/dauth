@@ -2,7 +2,10 @@ package jwt
 
 import (
 	"context"
+	"fmt"
 
+	"github.com/dizzrt/dauth/internal/conf"
+	"github.com/dizzrt/ellie/log"
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -28,39 +31,36 @@ type jwtManager struct {
 	// revokeCache cache.TokenRevokeCache
 }
 
-// func NewJWTManager(ac *conf.AppConfig, revokeCache cache.TokenRevokeCache) JWTManager {
-// TODO read from config
-// return &jwtManager{
-// 	algorithm: _DEFAULT_ALGORITHM,
-// 	issuer:    _DEFAULT_ISSUER,
-// 	secret:    []byte(ac.App.Secret),
-// 	// publicKey:  nil,
-// 	// privateKey: nil,
-// 	revokeCache: revokeCache,
-// }
-// return nil
-// }
+func NewJWTManager(ac *conf.AppConfig /*revokeCache cache.TokenRevokeCache*/) JWTManager {
+	return &jwtManager{
+		algorithm: _DEFAULT_ALGORITHM,
+		issuer:    _DEFAULT_ISSUER,
+		secret:    []byte(ac.App.Secret),
+		// publicKey:  nil,
+		// privateKey: nil,
+		// revokeCache: revokeCache,
+	}
+}
 
 func (m *jwtManager) Sign(ctx context.Context, claims jwt.Claims, secret []byte) (string, error) {
-	// if secret == nil {
-	// 	secret = m.secret
-	// }
+	if secret == nil {
+		secret = m.secret
+	}
 
-	// signingMethod := jwt.GetSigningMethod(m.algorithm)
-	// if signingMethod == nil {
-	// 	log.CtxErrorf(ctx, "unknown algorithm: %s", m.algorithm)
-	// 	return "", fmt.Errorf("unknown algorithm: %s", m.algorithm)
-	// }
+	signingMethod := jwt.GetSigningMethod(m.algorithm)
+	if signingMethod == nil {
+		log.CtxErrorf(ctx, "unknown algorithm: %s", m.algorithm)
+		return "", fmt.Errorf("unknown algorithm: %s", m.algorithm)
+	}
 
-	// token := jwt.NewWithClaims(signingMethod, claims)
-	// signedToken, err := token.SignedString(secret)
-	// if err != nil {
-	// 	log.CtxErrorf(ctx, "sign token failed with claims: %v; err: %v", claims, err)
-	// 	return "", err
-	// }
+	token := jwt.NewWithClaims(signingMethod, claims)
+	signedToken, err := token.SignedString(secret)
+	if err != nil {
+		log.CtxErrorf(ctx, "sign token failed with claims: %v; err: %v", claims, err)
+		return "", err
+	}
 
-	// return signedToken, nil
-	return "", nil
+	return signedToken, nil
 }
 
 func (m *jwtManager) Verify(ctx context.Context, token string, secret []byte, claims jwt.Claims) error {

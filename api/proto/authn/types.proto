@@ -18,7 +18,7 @@ enum AuthnAttemptStatus {
   AUTHN_ATTEMPT_STATUS_UNSPECIFIED = 0;
 
   SUCCESS = 1;
-  FAILURE = 2;
+  FAILED = 2;
   BLOCKED = 3; // 拦截（风控等因素）
 }
 

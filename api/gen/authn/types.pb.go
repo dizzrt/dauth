@@ -78,7 +78,7 @@ type AuthnAttemptStatus int32
 const (
 	AuthnAttemptStatus_AUTHN_ATTEMPT_STATUS_UNSPECIFIED AuthnAttemptStatus = 0
 	AuthnAttemptStatus_SUCCESS                          AuthnAttemptStatus = 1
-	AuthnAttemptStatus_FAILURE                          AuthnAttemptStatus = 2
+	AuthnAttemptStatus_FAILED                           AuthnAttemptStatus = 2
 	AuthnAttemptStatus_BLOCKED                          AuthnAttemptStatus = 3 // 拦截（风控等因素）
 )
 
@@ -87,13 +87,13 @@ var (
 	AuthnAttemptStatus_name = map[int32]string{
 		0: "AUTHN_ATTEMPT_STATUS_UNSPECIFIED",
 		1: "SUCCESS",
-		2: "FAILURE",
+		2: "FAILED",
 		3: "BLOCKED",
 	}
 	AuthnAttemptStatus_value = map[string]int32{
 		"AUTHN_ATTEMPT_STATUS_UNSPECIFIED": 0,
 		"SUCCESS":                          1,
-		"FAILURE":                          2,
+		"FAILED":                           2,
 		"BLOCKED":                          3,
 	}
 )
@@ -241,11 +241,12 @@ const file_authn_types_proto_rawDesc = "" +
 	"\x16AUTHN_TYPE_UNSPECIFIED\x10\x00\x12\f\n" +
 	"\bPASSWORD\x10\x01\x12\x10\n" +
 	"\fPASSWORD_MFA\x10\x02\x12\x0f\n" +
-	"\vTHIRD_PARTY\x10\x03*a\n" +
+	"\vTHIRD_PARTY\x10\x03*`\n" +
 	"\x12AuthnAttemptStatus\x12$\n" +
 	" AUTHN_ATTEMPT_STATUS_UNSPECIFIED\x10\x00\x12\v\n" +
-	"\aSUCCESS\x10\x01\x12\v\n" +
-	"\aFAILURE\x10\x02\x12\v\n" +
+	"\aSUCCESS\x10\x01\x12\n" +
+	"\n" +
+	"\x06FAILED\x10\x02\x12\v\n" +
 	"\aBLOCKED\x10\x03B-Z+github.com/dizzrt/dauth/api/gen/authn;authnb\x06proto3"
 
 var (

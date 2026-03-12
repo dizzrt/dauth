@@ -1,9 +1,9 @@
 package middleware
 
 var authWhiteList = map[string][]string{
-	"GET":  {},
+	"GET": {},
 	"POST": {
-		// "/identity/user",
+		"/authn/login",
 	},
 	"PATCH":  {},
 	"UPDATE": {},

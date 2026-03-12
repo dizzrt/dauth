@@ -60,7 +60,7 @@
 | ---- | ------ | ----------- |
 | AUTHN_ATTEMPT_STATUS_UNSPECIFIED | 0 |  |
 | SUCCESS | 1 |  |
-| FAILURE | 2 |  |
+| FAILED | 2 |  |
 | BLOCKED | 3 | 拦截（风控等因素） |
 
 
@@ -122,7 +122,11 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| result | [AuthnResult](#authn-AuthnResult) |  |  |
+| status | [AuthnAttemptStatus](#authn-AuthnAttemptStatus) |  |  |
+| token | [string](#string) | optional |  |
+| user_locked | [bool](#bool) | optional |  |
+| remaining_pwd_attempts | [int32](#int32) | optional |  |
+| remaining_mfa_attempts | [int32](#int32) | optional |  |
 | base_resp | [common.BaseResp](#common-BaseResp) |  |  |
 
 

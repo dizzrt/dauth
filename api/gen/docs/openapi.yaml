@@ -175,26 +175,6 @@ paths:
                                 $ref: '#/components/schemas/Status'
 components:
     schemas:
-        AuthnResult:
-            type: object
-            properties:
-                success:
-                    type: boolean
-                uid:
-                    type: integer
-                    format: uint32
-                sessionId:
-                    type: string
-                remainingPwdAttempts:
-                    type: integer
-                    format: int32
-                remainingMfaAttempts:
-                    type: integer
-                    format: int32
-                userLocked:
-                    type: boolean
-                redirectUrl:
-                    type: string
         Base:
             type: object
             properties: {}
@@ -284,8 +264,24 @@ components:
         LoginResponse:
             type: object
             properties:
-                result:
-                    $ref: '#/components/schemas/AuthnResult'
+                status:
+                    enum:
+                        - AUTHN_ATTEMPT_STATUS_UNSPECIFIED
+                        - SUCCESS
+                        - FAILED
+                        - BLOCKED
+                    type: string
+                    format: enum
+                token:
+                    type: string
+                userLocked:
+                    type: boolean
+                remainingPwdAttempts:
+                    type: integer
+                    format: int32
+                remainingMfaAttempts:
+                    type: integer
+                    format: int32
                 baseResp:
                     $ref: '#/components/schemas/BaseResp'
         LogoutRequest:

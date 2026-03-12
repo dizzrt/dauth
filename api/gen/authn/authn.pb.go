@@ -116,11 +116,15 @@ func (x *LoginRequest) GetBase() *common.Base {
 }
 
 type LoginResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Result        *AuthnResult           `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
-	BaseResp      *common.BaseResp       `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Status               AuthnAttemptStatus     `protobuf:"varint,1,opt,name=status,proto3,enum=authn.AuthnAttemptStatus" json:"status,omitempty"`
+	Token                *string                `protobuf:"bytes,2,opt,name=token,proto3,oneof" json:"token,omitempty"`
+	UserLocked           *bool                  `protobuf:"varint,3,opt,name=user_locked,json=userLocked,proto3,oneof" json:"user_locked,omitempty"`
+	RemainingPwdAttempts *int32                 `protobuf:"varint,4,opt,name=remaining_pwd_attempts,json=remainingPwdAttempts,proto3,oneof" json:"remaining_pwd_attempts,omitempty"`
+	RemainingMfaAttempts *int32                 `protobuf:"varint,5,opt,name=remaining_mfa_attempts,json=remainingMfaAttempts,proto3,oneof" json:"remaining_mfa_attempts,omitempty"`
+	BaseResp             *common.BaseResp       `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *LoginResponse) Reset() {
@@ -153,11 +157,39 @@ func (*LoginResponse) Descriptor() ([]byte, []int) {
 	return file_authn_authn_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *LoginResponse) GetResult() *AuthnResult {
+func (x *LoginResponse) GetStatus() AuthnAttemptStatus {
 	if x != nil {
-		return x.Result
+		return x.Status
 	}
-	return nil
+	return AuthnAttemptStatus_AUTHN_ATTEMPT_STATUS_UNSPECIFIED
+}
+
+func (x *LoginResponse) GetToken() string {
+	if x != nil && x.Token != nil {
+		return *x.Token
+	}
+	return ""
+}
+
+func (x *LoginResponse) GetUserLocked() bool {
+	if x != nil && x.UserLocked != nil {
+		return *x.UserLocked
+	}
+	return false
+}
+
+func (x *LoginResponse) GetRemainingPwdAttempts() int32 {
+	if x != nil && x.RemainingPwdAttempts != nil {
+		return *x.RemainingPwdAttempts
+	}
+	return 0
+}
+
+func (x *LoginResponse) GetRemainingMfaAttempts() int32 {
+	if x != nil && x.RemainingMfaAttempts != nil {
+		return *x.RemainingMfaAttempts
+	}
+	return 0
 }
 
 func (x *LoginResponse) GetBaseResp() *common.BaseResp {
@@ -306,10 +338,19 @@ const file_authn_authn_proto_rawDesc = "" +
 	"\v_user_agentB\x06\n" +
 	"\x04_didB\f\n" +
 	"\n" +
-	"_client_id\"k\n" +
-	"\rLoginResponse\x12*\n" +
-	"\x06result\x18\x01 \x01(\v2\x12.authn.AuthnResultR\x06result\x12.\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp\"\xa7\x01\n" +
+	"_client_id\"\xf9\x02\n" +
+	"\rLoginResponse\x121\n" +
+	"\x06status\x18\x01 \x01(\x0e2\x19.authn.AuthnAttemptStatusR\x06status\x12\x19\n" +
+	"\x05token\x18\x02 \x01(\tH\x00R\x05token\x88\x01\x01\x12$\n" +
+	"\vuser_locked\x18\x03 \x01(\bH\x01R\n" +
+	"userLocked\x88\x01\x01\x129\n" +
+	"\x16remaining_pwd_attempts\x18\x04 \x01(\x05H\x02R\x14remainingPwdAttempts\x88\x01\x01\x129\n" +
+	"\x16remaining_mfa_attempts\x18\x05 \x01(\x05H\x03R\x14remainingMfaAttempts\x88\x01\x01\x12.\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseRespB\b\n" +
+	"\x06_tokenB\x0e\n" +
+	"\f_user_lockedB\x19\n" +
+	"\x17_remaining_pwd_attemptsB\x19\n" +
+	"\x17_remaining_mfa_attempts\"\xa7\x01\n" +
 	"\rLogoutRequest\x12\x10\n" +
 	"\x03uid\x18\x01 \x01(\rR\x03uid\x12\"\n" +
 	"\n" +
@@ -345,12 +386,12 @@ var file_authn_authn_proto_goTypes = []any{
 	(*LogoutRequest)(nil),   // 2: authn.LogoutRequest
 	(*LogoutResponse)(nil),  // 3: authn.LogoutResponse
 	(*common.Base)(nil),     // 4: common.Base
-	(*AuthnResult)(nil),     // 5: authn.AuthnResult
+	(AuthnAttemptStatus)(0), // 5: authn.AuthnAttemptStatus
 	(*common.BaseResp)(nil), // 6: common.BaseResp
 }
 var file_authn_authn_proto_depIdxs = []int32{
 	4, // 0: authn.LoginRequest.base:type_name -> common.Base
-	5, // 1: authn.LoginResponse.result:type_name -> authn.AuthnResult
+	5, // 1: authn.LoginResponse.status:type_name -> authn.AuthnAttemptStatus
 	6, // 2: authn.LoginResponse.base_resp:type_name -> common.BaseResp
 	4, // 3: authn.LogoutRequest.base:type_name -> common.Base
 	6, // 4: authn.LogoutResponse.base_resp:type_name -> common.BaseResp
@@ -372,6 +413,7 @@ func file_authn_authn_proto_init() {
 	}
 	file_authn_types_proto_init()
 	file_authn_authn_proto_msgTypes[0].OneofWrappers = []any{}
+	file_authn_authn_proto_msgTypes[1].OneofWrappers = []any{}
 	file_authn_authn_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
