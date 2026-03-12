@@ -2,8 +2,10 @@ package jwt
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/internal/conf"
 	"github.com/dizzrt/ellie/log"
 	"github.com/golang-jwt/jwt/v5"
@@ -18,7 +20,7 @@ const (
 
 type JWTManager interface {
 	Sign(ctx context.Context, claims jwt.Claims, secret []byte) (string, error)
-	Verify(ctx context.Context, token string, secret []byte, entity jwt.Claims) error
+	Verify(ctx context.Context, token string, tokenType TokenType, claims jwt.Claims, secret []byte) error
 }
 
 type jwtManager struct {
@@ -63,36 +65,37 @@ func (m *jwtManager) Sign(ctx context.Context, claims jwt.Claims, secret []byte)
 	return signedToken, nil
 }
 
-func (m *jwtManager) Verify(ctx context.Context, token string, secret []byte, claims jwt.Claims) error {
-	// if claims == nil {
-	// 	return errdef.TokenInvalid().WithMessage("claims is nil")
-	// }
+func (m *jwtManager) Verify(ctx context.Context, token string, tokenType TokenType, claims jwt.Claims, secret []byte) error {
+	if claims == nil {
+		return errdef.TokenInvalid().WithMessage("claims is nil")
+	}
 
-	// if secret == nil {
-	// 	secret = m.secret
-	// }
+	if secret == nil {
+		secret = m.secret
+	}
 
-	// jt, err := jwt.ParseWithClaims(token, claims, func(t *jwt.Token) (any, error) {
-	// 	if t.Method.Alg() != m.algorithm {
-	// 		return nil, errdef.TokenInvalid().WithMessage("unexpected signing method: %v", t.Header["alg"])
-	// 	}
+	jt, err := jwt.ParseWithClaims(token, claims, func(t *jwt.Token) (any, error) {
+		if t.Method.Alg() != m.algorithm {
+			return nil, errdef.TokenInvalid().WithMessage("unexpected signing method: %v", t.Header["alg"])
+		}
 
-	// 	return secret, nil
-	// })
+		return secret, nil
+	})
 
-	// if err != nil {
-	// 	if errors.Is(err, jwt.ErrTokenExpired) {
-	// 		return errdef.TokenExpired()
-	// 	}
+	if err != nil {
+		if errors.Is(err, jwt.ErrTokenExpired) {
+			return errdef.TokenExpired()
+		}
 
-	// 	log.CtxErrorf(ctx, "parse token '%s' failed, err: %s", token, err.Error())
-	// 	return errdef.TokenInvalid().WithMessage("parse token failed").WithCause(err)
-	// }
+		log.CtxErrorf(ctx, "parse token '%s' failed, err: %s", token, err.Error())
+		return errdef.TokenInvalid().WithMessage("parse token failed").WithCause(err)
+	}
 
-	// if !jt.Valid {
-	// 	return errdef.TokenExpired()
-	// }
+	if !jt.Valid {
+		return errdef.TokenInvalid()
+	}
 
+	// TODO revoke check
 	// isRevoked, _, err := m.revokeCache.IsRevoked(ctx, token)
 	// if err != nil {
 	// 	log.CtxErrorf(ctx, "check token revoke cache failed: %s", err.Error())

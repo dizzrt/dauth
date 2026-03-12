@@ -125,6 +125,55 @@ func (AuthnAttemptStatus) EnumDescriptor() ([]byte, []int) {
 	return file_authn_types_proto_rawDescGZIP(), []int{1}
 }
 
+type AuthnStatus int32
+
+const (
+	AuthnStatus_AUTHN_STATUS_UNSPECIFIED AuthnStatus = 0
+	AuthnStatus_VALID                    AuthnStatus = 1
+	AuthnStatus_INVALID                  AuthnStatus = 2
+)
+
+// Enum value maps for AuthnStatus.
+var (
+	AuthnStatus_name = map[int32]string{
+		0: "AUTHN_STATUS_UNSPECIFIED",
+		1: "VALID",
+		2: "INVALID",
+	}
+	AuthnStatus_value = map[string]int32{
+		"AUTHN_STATUS_UNSPECIFIED": 0,
+		"VALID":                    1,
+		"INVALID":                  2,
+	}
+)
+
+func (x AuthnStatus) Enum() *AuthnStatus {
+	p := new(AuthnStatus)
+	*p = x
+	return p
+}
+
+func (x AuthnStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (AuthnStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_authn_types_proto_enumTypes[2].Descriptor()
+}
+
+func (AuthnStatus) Type() protoreflect.EnumType {
+	return &file_authn_types_proto_enumTypes[2]
+}
+
+func (x AuthnStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use AuthnStatus.Descriptor instead.
+func (AuthnStatus) EnumDescriptor() ([]byte, []int) {
+	return file_authn_types_proto_rawDescGZIP(), []int{2}
+}
+
 type AuthnResult struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	Success              bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
@@ -247,7 +296,11 @@ const file_authn_types_proto_rawDesc = "" +
 	"\aSUCCESS\x10\x01\x12\n" +
 	"\n" +
 	"\x06FAILED\x10\x02\x12\v\n" +
-	"\aBLOCKED\x10\x03B-Z+github.com/dizzrt/dauth/api/gen/authn;authnb\x06proto3"
+	"\aBLOCKED\x10\x03*C\n" +
+	"\vAuthnStatus\x12\x1c\n" +
+	"\x18AUTHN_STATUS_UNSPECIFIED\x10\x00\x12\t\n" +
+	"\x05VALID\x10\x01\x12\v\n" +
+	"\aINVALID\x10\x02B-Z+github.com/dizzrt/dauth/api/gen/authn;authnb\x06proto3"
 
 var (
 	file_authn_types_proto_rawDescOnce sync.Once
@@ -261,12 +314,13 @@ func file_authn_types_proto_rawDescGZIP() []byte {
 	return file_authn_types_proto_rawDescData
 }
 
-var file_authn_types_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_authn_types_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_authn_types_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_authn_types_proto_goTypes = []any{
 	(AuthnType)(0),          // 0: authn.AuthnType
 	(AuthnAttemptStatus)(0), // 1: authn.AuthnAttemptStatus
-	(*AuthnResult)(nil),     // 2: authn.AuthnResult
+	(AuthnStatus)(0),        // 2: authn.AuthnStatus
+	(*AuthnResult)(nil),     // 3: authn.AuthnResult
 }
 var file_authn_types_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -287,7 +341,7 @@ func file_authn_types_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_authn_types_proto_rawDesc), len(file_authn_types_proto_rawDesc)),
-			NumEnums:      2,
+			NumEnums:      3,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,

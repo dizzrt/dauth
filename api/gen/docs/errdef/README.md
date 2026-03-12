@@ -3,6 +3,9 @@
 
 ## Table of Contents
 
+- [errdef/authn.proto](#errdef_authn-proto)
+    - [AuthnErrors](#errdef-AuthnErrors)
+  
 - [errdef/base.proto](#errdef_base-proto)
     - [BaseErrors](#errdef-BaseErrors)
   
@@ -14,6 +17,36 @@
     - [SysErrors](#errdef-SysErrors)
   
 - [Scalar Value Types](#scalar-value-types)
+
+
+
+<a name="errdef_authn-proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## errdef/authn.proto
+
+
+ 
+
+
+<a name="errdef-AuthnErrors"></a>
+
+### AuthnErrors
+authn errors (domain: 02)
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| AuthnUNSPECIFIED | 0 |  |
+| TokenInvalid | 102000 |  |
+| TokenExpired | 102001 |  |
+| TokenRevoked | 102002 |  |
+
+
+ 
+
+ 
+
+ 
 
 
 

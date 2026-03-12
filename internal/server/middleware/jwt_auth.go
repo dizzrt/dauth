@@ -3,7 +3,10 @@ package middleware
 import (
 	"slices"
 
+	"github.com/dizzrt/dauth/api/gen/authn"
+	"github.com/dizzrt/dauth/internal/infra/rpc/dauth"
 	"github.com/dizzrt/dauth/internal/infra/utils/ctxutil"
+	"github.com/dizzrt/ellie/log"
 	"github.com/dizzrt/ellie/transport/http"
 	"github.com/gin-gonic/gin"
 )
@@ -28,29 +31,29 @@ func JwtAuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// TODO authenticate
-		// resp, err := dauth.ValidateToken(ctx.Request.Context(), &token.ValidateRequest{
-		// 	Token: tokenStr,
-		// 	Type:  token.Token_TokenType_SSO,
-		// })
+		resp, err := dauth.CheckAuthnStatus(ctx.Request.Context(), tokenStr)
+		if err != nil {
+			log.CtxErrorf(ctx, "check authn status failed, token: %s, err: %v", tokenStr, err)
 
-		// if err != nil {
-		// 	if !errors.Is(err, errdef.TokenExpired()) && !errors.Is(err, errdef.TokenRevoked()) && !errors.Is(err, errdef.TokenInvalid()) {
-		// 		log.CtxErrorf(ctx, "validate token failed, token: %s, err: %v", tokenStr, err)
-		// 	}
+			unauthorized(ctx)
+			return
+		}
 
-		// 	unauthorized(ctx)
-		// 	return
-		// }
+		if resp.GetStatus() != authn.AuthnStatus_VALID {
+			unauthorized(ctx)
+			return
+		}
 
-		// uid := resp.GetToken().GetUid()
-		// if uid == 0 {
-		// 	unauthorized(ctx)
-		// 	return
-		// }
+		uid := resp.GetUid()
+		sid := resp.GetSid()
+		if uid == 0 || sid == "" {
+			unauthorized(ctx)
+			return
+		}
 
-		uid := uint32(1000000000) // TODO get uid from token
-		ctxutil.SetUid(ctx, uid)  // inject uid to context
+		// inject some context values
+		ctxutil.SetUid(ctx, uid)
+		ctxutil.SetSessionID(ctx, sid)
 		ctx.Next()
 	}
 }

@@ -7,9 +7,12 @@
     - [AuthnResult](#authn-AuthnResult)
   
     - [AuthnAttemptStatus](#authn-AuthnAttemptStatus)
+    - [AuthnStatus](#authn-AuthnStatus)
     - [AuthnType](#authn-AuthnType)
   
 - [authn/authn.proto](#authn_authn-proto)
+    - [CheckAuthnStatusRequest](#authn-CheckAuthnStatusRequest)
+    - [CheckAuthnStatusResponse](#authn-CheckAuthnStatusResponse)
     - [LoginRequest](#authn-LoginRequest)
     - [LoginResponse](#authn-LoginResponse)
     - [LogoutRequest](#authn-LogoutRequest)
@@ -65,6 +68,19 @@
 
 
 
+<a name="authn-AuthnStatus"></a>
+
+### AuthnStatus
+
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| AUTHN_STATUS_UNSPECIFIED | 0 |  |
+| VALID | 1 |  |
+| INVALID | 2 |  |
+
+
+
 <a name="authn-AuthnType"></a>
 
 ### AuthnType
@@ -90,6 +106,40 @@
 <p align="right"><a href="#top">Top</a></p>
 
 ## authn/authn.proto
+
+
+
+<a name="authn-CheckAuthnStatusRequest"></a>
+
+### CheckAuthnStatusRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| token | [string](#string) |  |  |
+| base | [common.Base](#common-Base) |  |  |
+
+
+
+
+
+
+<a name="authn-CheckAuthnStatusResponse"></a>
+
+### CheckAuthnStatusResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| status | [AuthnStatus](#authn-AuthnStatus) |  |  |
+| uid | [uint32](#uint32) | optional | user id |
+| sid | [string](#string) | optional | session id |
+| base_resp | [common.BaseResp](#common-BaseResp) |  |  |
+
+
+
 
 
 
@@ -183,6 +233,7 @@
 | ----------- | ------------ | ------------- | ------------|
 | Login | [LoginRequest](#authn-LoginRequest) | [LoginResponse](#authn-LoginResponse) | Login logs in a user with the given account and password. |
 | Logout | [LogoutRequest](#authn-LogoutRequest) | [LogoutResponse](#authn-LogoutResponse) | Logout logs out a user with the given uid, session_id, and client_id. |
+| CheckAuthnStatus | [CheckAuthnStatusRequest](#authn-CheckAuthnStatusRequest) | [CheckAuthnStatusResponse](#authn-CheckAuthnStatusResponse) | CheckAuthnStatus checks the authentication status of a user with the given token. |
 
  
 

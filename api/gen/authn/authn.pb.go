@@ -319,6 +319,126 @@ func (x *LogoutResponse) GetBaseResp() *common.BaseResp {
 	return nil
 }
 
+type CheckAuthnStatusRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	Base          *common.Base           `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckAuthnStatusRequest) Reset() {
+	*x = CheckAuthnStatusRequest{}
+	mi := &file_authn_authn_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckAuthnStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckAuthnStatusRequest) ProtoMessage() {}
+
+func (x *CheckAuthnStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_authn_authn_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckAuthnStatusRequest.ProtoReflect.Descriptor instead.
+func (*CheckAuthnStatusRequest) Descriptor() ([]byte, []int) {
+	return file_authn_authn_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CheckAuthnStatusRequest) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *CheckAuthnStatusRequest) GetBase() *common.Base {
+	if x != nil {
+		return x.Base
+	}
+	return nil
+}
+
+type CheckAuthnStatusResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Status        AuthnStatus            `protobuf:"varint,1,opt,name=status,proto3,enum=authn.AuthnStatus" json:"status,omitempty"`
+	Uid           *uint32                `protobuf:"varint,2,opt,name=uid,proto3,oneof" json:"uid,omitempty"` // user id
+	Sid           *string                `protobuf:"bytes,3,opt,name=sid,proto3,oneof" json:"sid,omitempty"`  // session id
+	BaseResp      *common.BaseResp       `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckAuthnStatusResponse) Reset() {
+	*x = CheckAuthnStatusResponse{}
+	mi := &file_authn_authn_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckAuthnStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckAuthnStatusResponse) ProtoMessage() {}
+
+func (x *CheckAuthnStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_authn_authn_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckAuthnStatusResponse.ProtoReflect.Descriptor instead.
+func (*CheckAuthnStatusResponse) Descriptor() ([]byte, []int) {
+	return file_authn_authn_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *CheckAuthnStatusResponse) GetStatus() AuthnStatus {
+	if x != nil {
+		return x.Status
+	}
+	return AuthnStatus_AUTHN_STATUS_UNSPECIFIED
+}
+
+func (x *CheckAuthnStatusResponse) GetUid() uint32 {
+	if x != nil && x.Uid != nil {
+		return *x.Uid
+	}
+	return 0
+}
+
+func (x *CheckAuthnStatusResponse) GetSid() string {
+	if x != nil && x.Sid != nil {
+		return *x.Sid
+	}
+	return ""
+}
+
+func (x *CheckAuthnStatusResponse) GetBaseResp() *common.BaseResp {
+	if x != nil {
+		return x.BaseResp
+	}
+	return nil
+}
+
 var File_authn_authn_proto protoreflect.FileDescriptor
 
 const file_authn_authn_proto_rawDesc = "" +
@@ -362,10 +482,21 @@ const file_authn_authn_proto_rawDesc = "" +
 	"_client_id\"Z\n" +
 	"\x0eLogoutResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12.\n" +
-	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp2\xac\x01\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp\"R\n" +
+	"\x17CheckAuthnStatusRequest\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12!\n" +
+	"\x04base\x18\xff\x01 \x01(\v2\f.common.BaseR\x04base\"\xb4\x01\n" +
+	"\x18CheckAuthnStatusResponse\x12*\n" +
+	"\x06status\x18\x01 \x01(\x0e2\x12.authn.AuthnStatusR\x06status\x12\x15\n" +
+	"\x03uid\x18\x02 \x01(\rH\x00R\x03uid\x88\x01\x01\x12\x15\n" +
+	"\x03sid\x18\x03 \x01(\tH\x01R\x03sid\x88\x01\x01\x12.\n" +
+	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseRespB\x06\n" +
+	"\x04_uidB\x06\n" +
+	"\x04_sid2\x83\x02\n" +
 	"\fAuthnService\x12K\n" +
 	"\x05Login\x12\x13.authn.LoginRequest\x1a\x14.authn.LoginResponse\"\x17\x82\xd3\xe4\x93\x02\x11:\x01*\"\f/authn/login\x12O\n" +
-	"\x06Logout\x12\x14.authn.LogoutRequest\x1a\x15.authn.LogoutResponse\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/authn/logoutB-Z+github.com/dizzrt/dauth/api/gen/authn;authnb\x06proto3"
+	"\x06Logout\x12\x14.authn.LogoutRequest\x1a\x15.authn.LogoutResponse\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/authn/logout\x12U\n" +
+	"\x10CheckAuthnStatus\x12\x1e.authn.CheckAuthnStatusRequest\x1a\x1f.authn.CheckAuthnStatusResponse\"\x00B-Z+github.com/dizzrt/dauth/api/gen/authn;authnb\x06proto3"
 
 var (
 	file_authn_authn_proto_rawDescOnce sync.Once
@@ -379,31 +510,39 @@ func file_authn_authn_proto_rawDescGZIP() []byte {
 	return file_authn_authn_proto_rawDescData
 }
 
-var file_authn_authn_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_authn_authn_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_authn_authn_proto_goTypes = []any{
-	(*LoginRequest)(nil),    // 0: authn.LoginRequest
-	(*LoginResponse)(nil),   // 1: authn.LoginResponse
-	(*LogoutRequest)(nil),   // 2: authn.LogoutRequest
-	(*LogoutResponse)(nil),  // 3: authn.LogoutResponse
-	(*common.Base)(nil),     // 4: common.Base
-	(AuthnAttemptStatus)(0), // 5: authn.AuthnAttemptStatus
-	(*common.BaseResp)(nil), // 6: common.BaseResp
+	(*LoginRequest)(nil),             // 0: authn.LoginRequest
+	(*LoginResponse)(nil),            // 1: authn.LoginResponse
+	(*LogoutRequest)(nil),            // 2: authn.LogoutRequest
+	(*LogoutResponse)(nil),           // 3: authn.LogoutResponse
+	(*CheckAuthnStatusRequest)(nil),  // 4: authn.CheckAuthnStatusRequest
+	(*CheckAuthnStatusResponse)(nil), // 5: authn.CheckAuthnStatusResponse
+	(*common.Base)(nil),              // 6: common.Base
+	(AuthnAttemptStatus)(0),          // 7: authn.AuthnAttemptStatus
+	(*common.BaseResp)(nil),          // 8: common.BaseResp
+	(AuthnStatus)(0),                 // 9: authn.AuthnStatus
 }
 var file_authn_authn_proto_depIdxs = []int32{
-	4, // 0: authn.LoginRequest.base:type_name -> common.Base
-	5, // 1: authn.LoginResponse.status:type_name -> authn.AuthnAttemptStatus
-	6, // 2: authn.LoginResponse.base_resp:type_name -> common.BaseResp
-	4, // 3: authn.LogoutRequest.base:type_name -> common.Base
-	6, // 4: authn.LogoutResponse.base_resp:type_name -> common.BaseResp
-	0, // 5: authn.AuthnService.Login:input_type -> authn.LoginRequest
-	2, // 6: authn.AuthnService.Logout:input_type -> authn.LogoutRequest
-	1, // 7: authn.AuthnService.Login:output_type -> authn.LoginResponse
-	3, // 8: authn.AuthnService.Logout:output_type -> authn.LogoutResponse
-	7, // [7:9] is the sub-list for method output_type
-	5, // [5:7] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	6,  // 0: authn.LoginRequest.base:type_name -> common.Base
+	7,  // 1: authn.LoginResponse.status:type_name -> authn.AuthnAttemptStatus
+	8,  // 2: authn.LoginResponse.base_resp:type_name -> common.BaseResp
+	6,  // 3: authn.LogoutRequest.base:type_name -> common.Base
+	8,  // 4: authn.LogoutResponse.base_resp:type_name -> common.BaseResp
+	6,  // 5: authn.CheckAuthnStatusRequest.base:type_name -> common.Base
+	9,  // 6: authn.CheckAuthnStatusResponse.status:type_name -> authn.AuthnStatus
+	8,  // 7: authn.CheckAuthnStatusResponse.base_resp:type_name -> common.BaseResp
+	0,  // 8: authn.AuthnService.Login:input_type -> authn.LoginRequest
+	2,  // 9: authn.AuthnService.Logout:input_type -> authn.LogoutRequest
+	4,  // 10: authn.AuthnService.CheckAuthnStatus:input_type -> authn.CheckAuthnStatusRequest
+	1,  // 11: authn.AuthnService.Login:output_type -> authn.LoginResponse
+	3,  // 12: authn.AuthnService.Logout:output_type -> authn.LogoutResponse
+	5,  // 13: authn.AuthnService.CheckAuthnStatus:output_type -> authn.CheckAuthnStatusResponse
+	11, // [11:14] is the sub-list for method output_type
+	8,  // [8:11] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_authn_authn_proto_init() }
@@ -415,13 +554,14 @@ func file_authn_authn_proto_init() {
 	file_authn_authn_proto_msgTypes[0].OneofWrappers = []any{}
 	file_authn_authn_proto_msgTypes[1].OneofWrappers = []any{}
 	file_authn_authn_proto_msgTypes[2].OneofWrappers = []any{}
+	file_authn_authn_proto_msgTypes[5].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_authn_authn_proto_rawDesc), len(file_authn_authn_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package errdef;
+
+import "ellie/errors/errors.proto";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/errdef;errdef";
+
+// authn errors (domain: 02)
+enum AuthnErrors {
+  AuthnUNSPECIFIED = 0;
+
+  TokenInvalid = 102000 [
+    (ellie.errors.code) = 102000,
+    (ellie.errors.status) = ERROR_STATUS_UNAUTHENTICATED
+  ];
+
+  TokenExpired = 102001 [
+    (ellie.errors.code) = 102001,
+    (ellie.errors.status) = ERROR_STATUS_UNAUTHENTICATED
+  ];
+
+  TokenRevoked = 102002 [
+    (ellie.errors.code) = 102002,
+    (ellie.errors.status) = ERROR_STATUS_UNAUTHENTICATED
+  ];
+}

@@ -6,10 +6,12 @@ const (
 	_ENDPOINT_DAUTH = "discovery:///dauth"
 
 	CK_DAUTH_IDENTITY_USER = "dauth.identity.user"
+	CK_DAUTH_AUTHN         = "dauth.authn"
 )
 
 var clientSet = []core.Client{
 	{Key: CK_DAUTH_IDENTITY_USER, Endpoint: _ENDPOINT_DAUTH, Builder: NewUserServiceClient},
+	{Key: CK_DAUTH_AUTHN, Endpoint: _ENDPOINT_DAUTH, Builder: NewAuthnServiceClient},
 }
 
 func init() {

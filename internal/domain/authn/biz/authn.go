@@ -17,6 +17,7 @@ var _ AuthnBiz = (*authnBiz)(nil)
 
 type AuthnBiz interface {
 	Login(ctx context.Context, account string, password string) (*dto.LoginResponse, error)
+	CheckAuthnStatus(ctx context.Context, token string) error
 }
 
 type authnBiz struct {
@@ -80,4 +81,11 @@ func (biz *authnBiz) Login(ctx context.Context, account string, password string)
 	loginResp.Token = token
 	loginResp.Status = dto.LoginStatusSuccess
 	return loginResp, nil
+}
+
+func (biz *authnBiz) CheckAuthnStatus(ctx context.Context, token string) error {
+	idToken := &jwt.IDToken{}
+	err := biz.jwtManager.Verify(ctx, token, jwt.TokenTypeID, idToken, nil)
+
+	return err
 }

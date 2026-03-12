@@ -22,6 +22,13 @@ enum AuthnAttemptStatus {
   BLOCKED = 3; // 拦截（风控等因素）
 }
 
+enum AuthnStatus {
+  AUTHN_STATUS_UNSPECIFIED = 0;
+
+  VALID = 1;
+  INVALID = 2;
+}
+
 message AuthnResult {
   bool success = 1;
   uint32 uid = 2;

@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthnService_Login_FullMethodName  = "/authn.AuthnService/Login"
-	AuthnService_Logout_FullMethodName = "/authn.AuthnService/Logout"
+	AuthnService_Login_FullMethodName            = "/authn.AuthnService/Login"
+	AuthnService_Logout_FullMethodName           = "/authn.AuthnService/Logout"
+	AuthnService_CheckAuthnStatus_FullMethodName = "/authn.AuthnService/CheckAuthnStatus"
 )
 
 // AuthnServiceClient is the client API for AuthnService service.
@@ -31,6 +32,8 @@ type AuthnServiceClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	// Logout logs out a user with the given uid, session_id, and client_id.
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error)
+	// CheckAuthnStatus checks the authentication status of a user with the given token.
+	CheckAuthnStatus(ctx context.Context, in *CheckAuthnStatusRequest, opts ...grpc.CallOption) (*CheckAuthnStatusResponse, error)
 }
 
 type authnServiceClient struct {
@@ -61,6 +64,16 @@ func (c *authnServiceClient) Logout(ctx context.Context, in *LogoutRequest, opts
 	return out, nil
 }
 
+func (c *authnServiceClient) CheckAuthnStatus(ctx context.Context, in *CheckAuthnStatusRequest, opts ...grpc.CallOption) (*CheckAuthnStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CheckAuthnStatusResponse)
+	err := c.cc.Invoke(ctx, AuthnService_CheckAuthnStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthnServiceServer is the server API for AuthnService service.
 // All implementations must embed UnimplementedAuthnServiceServer
 // for forward compatibility.
@@ -69,6 +82,8 @@ type AuthnServiceServer interface {
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	// Logout logs out a user with the given uid, session_id, and client_id.
 	Logout(context.Context, *LogoutRequest) (*LogoutResponse, error)
+	// CheckAuthnStatus checks the authentication status of a user with the given token.
+	CheckAuthnStatus(context.Context, *CheckAuthnStatusRequest) (*CheckAuthnStatusResponse, error)
 	mustEmbedUnimplementedAuthnServiceServer()
 }
 
@@ -84,6 +99,9 @@ func (UnimplementedAuthnServiceServer) Login(context.Context, *LoginRequest) (*L
 }
 func (UnimplementedAuthnServiceServer) Logout(context.Context, *LogoutRequest) (*LogoutResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Logout not implemented")
+}
+func (UnimplementedAuthnServiceServer) CheckAuthnStatus(context.Context, *CheckAuthnStatusRequest) (*CheckAuthnStatusResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CheckAuthnStatus not implemented")
 }
 func (UnimplementedAuthnServiceServer) mustEmbedUnimplementedAuthnServiceServer() {}
 func (UnimplementedAuthnServiceServer) testEmbeddedByValue()                      {}
@@ -142,6 +160,24 @@ func _AuthnService_Logout_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthnService_CheckAuthnStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckAuthnStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthnServiceServer).CheckAuthnStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthnService_CheckAuthnStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthnServiceServer).CheckAuthnStatus(ctx, req.(*CheckAuthnStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthnService_ServiceDesc is the grpc.ServiceDesc for AuthnService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -156,6 +192,10 @@ var AuthnService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Logout",
 			Handler:    _AuthnService_Logout_Handler,
+		},
+		{
+			MethodName: "CheckAuthnStatus",
+			Handler:    _AuthnService_CheckAuthnStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

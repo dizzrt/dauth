@@ -43,6 +43,20 @@ message LogoutResponse {
   common.BaseResp base_resp = 255;
 }
 
+message CheckAuthnStatusRequest {
+  string token = 1;
+
+  common.Base base = 255;
+}
+
+message CheckAuthnStatusResponse {
+  AuthnStatus status = 1;
+  optional uint32 uid = 2; // user id
+  optional string sid = 3; // session id
+
+  common.BaseResp base_resp = 255;
+}
+
 service AuthnService {
   // Login logs in a user with the given account and password.
   rpc Login(LoginRequest) returns (LoginResponse) {
@@ -59,4 +73,7 @@ service AuthnService {
       body: "*"
     };
   }
+
+  // CheckAuthnStatus checks the authentication status of a user with the given token.
+  rpc CheckAuthnStatus(CheckAuthnStatusRequest) returns (CheckAuthnStatusResponse) {}
 }
