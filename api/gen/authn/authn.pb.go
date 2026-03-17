@@ -201,9 +201,8 @@ func (x *LoginResponse) GetBaseResp() *common.BaseResp {
 
 type LogoutRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Uid           uint32                 `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
-	SessionId     *string                `protobuf:"bytes,2,opt,name=session_id,json=sessionId,proto3,oneof" json:"session_id,omitempty"`
-	ClientId      *string                `protobuf:"bytes,3,opt,name=client_id,json=clientId,proto3,oneof" json:"client_id,omitempty"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	ClientId      *string                `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3,oneof" json:"client_id,omitempty"`
 	Base          *common.Base           `protobuf:"bytes,255,opt,name=base,proto3" json:"base,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -239,16 +238,9 @@ func (*LogoutRequest) Descriptor() ([]byte, []int) {
 	return file_authn_authn_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *LogoutRequest) GetUid() uint32 {
+func (x *LogoutRequest) GetToken() string {
 	if x != nil {
-		return x.Uid
-	}
-	return 0
-}
-
-func (x *LogoutRequest) GetSessionId() string {
-	if x != nil && x.SessionId != nil {
-		return *x.SessionId
+		return x.Token
 	}
 	return ""
 }
@@ -269,7 +261,6 @@ func (x *LogoutRequest) GetBase() *common.Base {
 
 type LogoutResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	BaseResp      *common.BaseResp       `protobuf:"bytes,255,opt,name=base_resp,json=baseResp,proto3" json:"base_resp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -303,13 +294,6 @@ func (x *LogoutResponse) ProtoReflect() protoreflect.Message {
 // Deprecated: Use LogoutResponse.ProtoReflect.Descriptor instead.
 func (*LogoutResponse) Descriptor() ([]byte, []int) {
 	return file_authn_authn_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *LogoutResponse) GetSuccess() bool {
-	if x != nil {
-		return x.Success
-	}
-	return false
 }
 
 func (x *LogoutResponse) GetBaseResp() *common.BaseResp {
@@ -470,18 +454,14 @@ const file_authn_authn_proto_rawDesc = "" +
 	"\x06_tokenB\x0e\n" +
 	"\f_user_lockedB\x19\n" +
 	"\x17_remaining_pwd_attemptsB\x19\n" +
-	"\x17_remaining_mfa_attempts\"\xa7\x01\n" +
-	"\rLogoutRequest\x12\x10\n" +
-	"\x03uid\x18\x01 \x01(\rR\x03uid\x12\"\n" +
+	"\x17_remaining_mfa_attempts\"x\n" +
+	"\rLogoutRequest\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12 \n" +
+	"\tclient_id\x18\x02 \x01(\tH\x00R\bclientId\x88\x01\x01\x12!\n" +
+	"\x04base\x18\xff\x01 \x01(\v2\f.common.BaseR\x04baseB\f\n" +
 	"\n" +
-	"session_id\x18\x02 \x01(\tH\x00R\tsessionId\x88\x01\x01\x12 \n" +
-	"\tclient_id\x18\x03 \x01(\tH\x01R\bclientId\x88\x01\x01\x12!\n" +
-	"\x04base\x18\xff\x01 \x01(\v2\f.common.BaseR\x04baseB\r\n" +
-	"\v_session_idB\f\n" +
-	"\n" +
-	"_client_id\"Z\n" +
-	"\x0eLogoutResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\x12.\n" +
+	"_client_id\"@\n" +
+	"\x0eLogoutResponse\x12.\n" +
 	"\tbase_resp\x18\xff\x01 \x01(\v2\x10.common.BaseRespR\bbaseResp\"R\n" +
 	"\x17CheckAuthnStatusRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12!\n" +

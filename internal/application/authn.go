@@ -7,6 +7,7 @@ import (
 	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/internal/domain/authn/biz"
 	"github.com/dizzrt/dauth/internal/domain/authn/dto"
+	"github.com/dizzrt/dauth/internal/infra/rpc"
 	"github.com/dizzrt/ellie/log"
 )
 
@@ -54,5 +55,21 @@ func (app *authnApplication) Login(ctx context.Context, req *authn.LoginRequest)
 }
 
 func (app *authnApplication) Logout(ctx context.Context, req *authn.LogoutRequest) (*authn.LogoutResponse, error) {
-	return nil, nil
+	token := req.GetToken()
+	if token == "" {
+		return nil, errdef.InvalidArgument().WithMessage("token can not be empty")
+	}
+
+	clientID := req.GetClientId()
+	err := app.authnBiz.Logout(ctx, token, clientID)
+	if err != nil {
+		log.CtxErrorf(ctx, "logout failed, token: %s, clientID: %s, err: %v", token, clientID, err)
+		return nil, err
+	}
+
+	resp := &authn.LogoutResponse{
+		BaseResp: rpc.Success(),
+	}
+
+	return resp, nil
 }

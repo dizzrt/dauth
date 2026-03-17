@@ -30,16 +30,13 @@ message LoginResponse {
 }
 
 message LogoutRequest {
-  uint32 uid = 1;
-  optional string session_id = 2;
-  optional string client_id = 3;
+  string token = 1;
+  optional string client_id = 2;
 
   common.Base base = 255;
 }
 
 message LogoutResponse {
-  bool success = 1;
-
   common.BaseResp base_resp = 255;
 }
 

@@ -192,8 +192,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| uid | [uint32](#uint32) |  |  |
-| session_id | [string](#string) | optional |  |
+| token | [string](#string) |  |  |
 | client_id | [string](#string) | optional |  |
 | base | [common.Base](#common-Base) |  |  |
 
@@ -210,7 +209,6 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| success | [bool](#bool) |  |  |
 | base_resp | [common.BaseResp](#common-BaseResp) |  |  |
 
 

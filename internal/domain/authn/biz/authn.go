@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/api/gen/identity"
 	"github.com/dizzrt/dauth/internal/domain/authn/dto"
 	"github.com/dizzrt/dauth/internal/domain/authn/repo"
@@ -17,6 +18,7 @@ var _ AuthnBiz = (*authnBiz)(nil)
 
 type AuthnBiz interface {
 	Login(ctx context.Context, account string, password string) (*dto.LoginResponse, error)
+	Logout(ctx context.Context, token string, clientId string) error
 	CheckAuthnStatus(ctx context.Context, token string) error
 }
 
@@ -86,9 +88,22 @@ func (biz *authnBiz) Login(ctx context.Context, account string, password string)
 	return loginResp, nil
 }
 
+func (biz *authnBiz) Logout(ctx context.Context, token string, clientId string) error {
+	err := biz.jwtManager.Revoke(ctx, token, "logout", nil)
+	if err != nil {
+		log.CtxErrorf(ctx, "[Authn] logout failed, token: %s, err: %v", token, err)
+		return err
+	}
+
+	return nil
+}
+
 func (biz *authnBiz) CheckAuthnStatus(ctx context.Context, token string) error {
-	idToken := &jwt.IDToken{}
-	err := biz.jwtManager.Verify(ctx, token, idToken, nil)
+	var idToken jwt.IDToken
+	err := biz.jwtManager.Verify(ctx, token, &idToken, nil)
+	if err != nil && !errdef.IsTokenInvalid(err) && !errdef.IsTokenRevoked(err) && !errdef.IsTokenExpired(err) {
+		log.CtxErrorf(ctx, "[Authn] check authn status failed, token: %s, err: %v", token, err)
+	}
 
 	return err
 }
