@@ -58,18 +58,21 @@ func (biz *authnBiz) Login(ctx context.Context, account string, password string)
 	now := time.Now()
 	expiresAt := now.Add(24 * time.Hour)
 	idToken := jwt.IDToken{
-		RegisteredClaims: jwt.RegisteredClaims{
-			ID:        xid.New().String(),
-			Issuer:    "dauth",
-			Subject:   "dauth",
-			Audience:  jwt.ClaimStrings{"dauth"},
-			IssuedAt:  jwt.NewNumericDate(now),
-			NotBefore: jwt.NewNumericDate(now),
-			ExpiresAt: jwt.NewNumericDate(expiresAt),
+		Token: jwt.Token{
+			RegisteredClaims: jwt.RegisteredClaims{
+				ID:        xid.New().String(),
+				Issuer:    "dauth",
+				Subject:   "dauth",
+				Audience:  jwt.ClaimStrings{"dauth"},
+				IssuedAt:  jwt.NewNumericDate(now),
+				NotBefore: jwt.NewNumericDate(now),
+				ExpiresAt: jwt.NewNumericDate(expiresAt),
+			},
+			Type: jwt.TokenType_ID,
 		},
-		Type: jwt.TokenTypeID,
-		UID:  resp.GetUser().GetUid(),
-		SID:  sessionID,
+
+		UID: resp.GetUser().GetUid(),
+		SID: sessionID,
 	}
 
 	token, err := biz.jwtManager.Sign(ctx, idToken, []byte(""))
@@ -85,7 +88,7 @@ func (biz *authnBiz) Login(ctx context.Context, account string, password string)
 
 func (biz *authnBiz) CheckAuthnStatus(ctx context.Context, token string) error {
 	idToken := &jwt.IDToken{}
-	err := biz.jwtManager.Verify(ctx, token, jwt.TokenTypeID, idToken, nil)
+	err := biz.jwtManager.Verify(ctx, token, idToken, nil)
 
 	return err
 }

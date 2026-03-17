@@ -12,6 +12,7 @@ import (
 	biz2 "github.com/dizzrt/dauth/internal/domain/authn/biz"
 	"github.com/dizzrt/dauth/internal/domain/identity/biz"
 	"github.com/dizzrt/dauth/internal/handler"
+	"github.com/dizzrt/dauth/internal/infra/cache/impl"
 	"github.com/dizzrt/dauth/internal/infra/foundation"
 	"github.com/dizzrt/dauth/internal/infra/persistence/core"
 	"github.com/dizzrt/dauth/internal/infra/persistence/impl/authn"
@@ -37,7 +38,13 @@ func wireApp() (*ellie.App, func(), error) {
 	userBiz := biz.NewUserBiz(userRepo)
 	identityApplication := application.NewIdentityApplication(userBiz)
 	identityHandler := handler.NewIdentityHandler(identityApplication)
-	jwtManager := jwt.NewJWTManager(appConfig)
+	redisClient, cleanup2, err := foundation.NewRedisClient(appConfig)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	tokenCache := impl.NewTokenCacheImpl(redisClient)
+	jwtManager := jwt.NewJWTManager(appConfig, tokenCache)
 	authnRepo := authn.NewAuthnRepoImpl(repoCore)
 	authnBiz := biz2.NewAuthnBiz(jwtManager, authnRepo)
 	authnApplication := application.NewAuthnApplication(authnBiz)
@@ -48,12 +55,14 @@ func wireApp() (*ellie.App, func(), error) {
 	}
 	grpcServer := server.NewGRPCServer(appConfig, logWriter, serviceRegistrar)
 	httpServer := server.NewHTTPServer(appConfig, logWriter, serviceRegistrar)
-	app, cleanup2, err := newApp(logWriter, tracerProvider, registrar, grpcServer, httpServer)
+	app, cleanup3, err := newApp(logWriter, tracerProvider, registrar, grpcServer, httpServer)
 	if err != nil {
+		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
 	return app, func() {
+		cleanup3()
 		cleanup2()
 		cleanup()
 	}, nil

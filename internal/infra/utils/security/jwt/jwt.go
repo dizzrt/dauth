@@ -7,6 +7,7 @@ import (
 
 	"github.com/dizzrt/dauth/api/gen/errdef"
 	"github.com/dizzrt/dauth/internal/conf"
+	"github.com/dizzrt/dauth/internal/infra/utils/cache"
 	"github.com/dizzrt/ellie/log"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -20,7 +21,8 @@ const (
 
 type JWTManager interface {
 	Sign(ctx context.Context, claims jwt.Claims, secret []byte) (string, error)
-	Verify(ctx context.Context, token string, tokenType TokenType, claims jwt.Claims, secret []byte) error
+	Verify(ctx context.Context, token string, claims jwt.Claims, secret []byte) error
+	Revoke(ctx context.Context, token string, reason string, secret []byte) error
 }
 
 type jwtManager struct {
@@ -30,17 +32,17 @@ type jwtManager struct {
 	// publicKey  []byte // for RS256/RS512
 	// privateKey []byte // for RS256/RS512
 
-	// revokeCache cache.TokenRevokeCache
+	tokenCache cache.TokenCache
 }
 
-func NewJWTManager(ac *conf.AppConfig /*revokeCache cache.TokenRevokeCache*/) JWTManager {
+func NewJWTManager(ac *conf.AppConfig, tokenCache cache.TokenCache) JWTManager {
 	return &jwtManager{
 		algorithm: _DEFAULT_ALGORITHM,
 		issuer:    _DEFAULT_ISSUER,
 		secret:    []byte(ac.App.Secret),
 		// publicKey:  nil,
 		// privateKey: nil,
-		// revokeCache: revokeCache,
+		tokenCache: tokenCache,
 	}
 }
 
@@ -65,7 +67,7 @@ func (m *jwtManager) Sign(ctx context.Context, claims jwt.Claims, secret []byte)
 	return signedToken, nil
 }
 
-func (m *jwtManager) Verify(ctx context.Context, token string, tokenType TokenType, claims jwt.Claims, secret []byte) error {
+func (m *jwtManager) Verify(ctx context.Context, token string, claims jwt.Claims, secret []byte) error {
 	if claims == nil {
 		return errdef.TokenInvalid().WithMessage("claims is nil")
 	}
@@ -95,16 +97,37 @@ func (m *jwtManager) Verify(ctx context.Context, token string, tokenType TokenTy
 		return errdef.TokenInvalid()
 	}
 
-	// TODO revoke check
-	// isRevoked, _, err := m.revokeCache.IsRevoked(ctx, token)
-	// if err != nil {
-	// 	log.CtxErrorf(ctx, "check token revoke cache failed: %s", err.Error())
-	// 	return err
-	// }
+	isRevoked, _, err := m.tokenCache.IsRevoked(ctx, token)
+	if err != nil {
+		log.CtxErrorf(ctx, "check token revoke cache failed: %s", err.Error())
+		return err
+	}
 
-	// if isRevoked {
-	// 	return errdef.TokenRevoked()
-	// }
+	if isRevoked {
+		return errdef.TokenRevoked()
+	}
+
+	return nil
+}
+
+func (m *jwtManager) Revoke(ctx context.Context, token string, reason string, secret []byte) error {
+	var claims Token
+	err := m.Verify(ctx, token, &claims, secret)
+	if err != nil {
+		if !errdef.IsTokenExpired(err) && !errdef.IsTokenRevoked(err) && !errdef.IsTokenInvalid(err) {
+			log.CtxErrorf(ctx, "revoke token failed: %s", err.Error())
+			return err
+		}
+
+		log.CtxInfof(ctx, "token '%s' is '%s', skip revoke", token, err.Error())
+		return nil
+	}
+
+	err = m.tokenCache.Revoke(ctx, token, reason, claims.ExpiresAt.Time)
+	if err != nil {
+		log.CtxErrorf(ctx, "revoke token failed: %s", err.Error())
+		return err
+	}
 
 	return nil
 }
