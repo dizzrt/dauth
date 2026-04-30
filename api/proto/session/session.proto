@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package session;
+
+import "common/base.proto";
+import "google/api/annotations.proto";
+import "session/types.proto";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/session;session";

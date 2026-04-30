@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package session;
+
+// import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/session;session";

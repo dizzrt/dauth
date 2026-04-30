@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package oauth2;
+
+import "common/base.proto";
+import "google/api/annotations.proto";
+import "oauth2/types.proto";
+
+option go_package = "github.com/dizzrt/dauth/api/gen/oauth2;oauth2";
