@@ -1,0 +1,30 @@
+schema: spec-driven
+
+context: |
+  Project: DAuth - A Go-based authentication service using Ellie microservice framework, providing user authentication, identity management, OAuth2, and session management capabilities.
+  Tech stack: Go 1.25.5, Ellie (microservice framework), Ellie HTTP, Ellie gRPC, MySQL (GORM), Redis, JWT, Consul, OpenTelemetry, Wire, Buf
+  Architecture: Clean Architecture (Handler → Application → Domain → Infrastructure)
+  Domain: Authentication and identity management service
+  Code conventions:
+    - Use Go modules
+    - Follow Go style guidelines (go fmt)
+    - Use Wire for dependency injection
+    - Protocol Buffers for API definitions
+    - gRPC gateway for HTTP support
+  Key modules:
+    - auth: Authentication services
+    - identity: User management
+    - oauth2: OAuth2 support
+    - session: Session management
+
+rules:
+  proposal:
+    - Always include a "Non-goals" section
+    - Use kebab-case for capability names
+  design:
+    - Focus on architecture and approach, not line-by-line implementation
+    - Include risk assessment and mitigation strategies
+  tasks:
+    - Break tasks into chunks of max 2 hours
+    - Order tasks by dependency
+    - Use numbered headings for task groups
